@@ -8,7 +8,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Pagina de Inicio</title>
+<title>Registro de Administrador</title>
 
 <!-- Core CSS - Include with every page -->
 <link href="styles/bootstrap.min.css" rel="stylesheet">
@@ -16,7 +16,7 @@
 
 <!-- SB Admin CSS - Include with every page -->
 <link href="styles/sb-admin.css" rel="stylesheet">
-
+<!-- Cambio -->
 </head>
 <style>
 label.error {
