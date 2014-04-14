@@ -16,7 +16,7 @@
 
 <!-- SB Admin CSS - Include with every page -->
 <link href="styles/sb-admin.css" rel="stylesheet">
-<!-- Cambio -->
+<!-- Cambio W-->
 </head>
 <style>
 label.error {
