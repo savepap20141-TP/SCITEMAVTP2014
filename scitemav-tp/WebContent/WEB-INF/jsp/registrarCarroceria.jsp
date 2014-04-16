@@ -1,12 +1,51 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
+<%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%> 
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Registro de Tipo de Vehiculo</title>
 <jsp:include page="componentes/head.jsp" />
 </head>
+<style>
+label.error {
+	margin-left: 10px;
+	width: auto;
+	display: inline;
+	color: rgb(255, 0, 0);
+	font-weight: bold;
+}
+
+label.ok {
+	margin-left: 10px;
+	width: auto;
+	display: inline;
+	color: green;
+	font-weight: bold;
+}
+</style>
+<script type="text/javascript">
+function registrarTipoVehiculo(){
+	$.ajax({
+   		url: 'registroTipoVehiculo',
+   		type: 'post',
+   		dataType: 'json',
+   		data: $('#frmRegistroTipoVehiculo').serialize(),
+   		success: function(result){
+   			$('#resultOk').empty();
+			$('#resultFalse').empty();			
+   			if(result == true){   				
+   				$('#resultOk').append('Se ha registrado correctamente');
+   				$('#txtNombreTV').val('');
+   			}else{
+   				$('#resultFalse').append('Se ha producido un error al registrarse');
+   			}
+   		}
+   	});
+}
+</script>
 <body>
  <div id="wrapper">
 
@@ -37,15 +76,15 @@
 
 								<!-- Form de registro -->
 
-								<form role="form" id="frmRegistroTipoVehiculo" action="registro"
-									method="post" commandName="tipodeVehiculobean"
+								<form role="form" id="frmRegistroTipoVehiculo"
+									method="post" commandName="tipovehiculo"
 									style="width: 60%; margin-left: 20%;">
 
 									<fieldset>
 									
 										<div class="form-group">
-											<label> Tipo de carrocería: </label> <input id="txtDescripcion"
-											class="form-control" name="descripcion" placeholder="Nombre"></input>
+											<label> Tipo de carrocería: </label> <input required 
+											class="form-control" name="nombre"  placeholder="Nombre" id="txtNombreTV"/>
 										</div>
 										
                                         <div class="form-group">
@@ -55,11 +94,11 @@
 										
 									
 										
-										<label> </label> <input
-											class="btn btn-lg btn-success btn-block" type="submit"
-											value="Registrar Marca" />
-										<p>
-											<label class="error"><c:out value="${msg}" /></label>
+										<label> </label>
+										 <span	class="btn btn-lg btn-success btn-block" onclick="registrarTipoVehiculo();">Registrar Tipo Vehiculo</span>
+										<p><br>
+											<label class="ok" id="resultOk"></label>
+											<label class="error" id="resultFalse"></label>
 										</p>
 									</fieldset>
 								</form>								
