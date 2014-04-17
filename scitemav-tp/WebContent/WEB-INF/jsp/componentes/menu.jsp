@@ -110,10 +110,10 @@
                         <a href="#"><i class="fa fa-wrench fa-fw"></i>Tipo de Automóvil<span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level">
                             <li>
-                                <a href="toRegistroCarroceria">Registrar Tipo de Automóvil</a>
+                                <a href="toRegistroTipoVehiculo">Registrar Tipo de Vehiculo</a>
                             </li>
                             <li>
-                                <a href="login.html">Consultar Tipo de Automóvil</a>
+                                <a href="toConsultarTipoVehiculo">Consultar Tipo de Vehiculo</a>
                             </li>
                         </ul>
                         <!-- /.nav-second-level -->

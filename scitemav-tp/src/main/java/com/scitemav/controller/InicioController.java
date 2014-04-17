@@ -72,11 +72,6 @@ public class InicioController {
 	@RequestMapping("toRegistroModelo")
 	public String toRegistroModelo(){
 		return "registrarModelo";
-	}	
-	
-	@RequestMapping("toRegistroCarroceria")
-	public String toRegistroCarroceria(){
-		return "registrarCarroceria";
 	}		
 	
 	@RequestMapping("toRegistroRevision")

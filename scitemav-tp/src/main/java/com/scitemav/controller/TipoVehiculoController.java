@@ -1,5 +1,7 @@
 package com.scitemav.controller;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.scitemav.bean.TipoVehiculoBean;
 import com.scitemav.model.TipoVehiculo;
 import com.scitemav.service.TipoVehiculoService;
 
@@ -18,6 +21,15 @@ public class TipoVehiculoController {
 
 	@Autowired
 	TipoVehiculoService tipoVehiculoService;
+	
+	@RequestMapping("toRegistroTipoVehiculo")
+	public String toRegistroCarroceria(){
+		return "registrarTipoVehiculo";
+	}	
+	@RequestMapping("toConsultarTipoVehiculo")
+	public String toConsultarCarroceria(){
+		return "consultarTipoVehiculo";
+	}
 	
 	@RequestMapping(value="registroTipoVehiculo", method = RequestMethod.POST)
 	@ResponseBody
@@ -33,5 +45,11 @@ public class TipoVehiculoController {
 			result = false;
 		}
 		return result;
+	}
+	
+	@RequestMapping(value = "getTipoVehiculos", method = RequestMethod.POST)
+	@ResponseBody
+	public List<TipoVehiculoBean> getTipoVehiculos(){		
+		return tipoVehiculoService.listarTipoVehiculos();
 	}
 }
