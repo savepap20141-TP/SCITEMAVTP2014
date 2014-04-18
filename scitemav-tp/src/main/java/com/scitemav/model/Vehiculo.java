@@ -1,11 +1,14 @@
 package com.scitemav.model;
 
+import java.util.Collection;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 @Entity
 public class Vehiculo {
@@ -23,6 +26,10 @@ public class Vehiculo {
 	@ManyToOne
 	@JoinColumn(name = "idtipovehiculo",nullable = false)
 	private TipoVehiculo vehTipoVehiculo;
+	
+	@ManyToOne
+	@JoinColumn(name = "idmodelo",nullable = false)
+	private Modelo vehModelo;
 	
 	@Column(length = 4, nullable = false)
 	private String fabricacion;
@@ -72,6 +79,9 @@ public class Vehiculo {
 	@Column(name = "cargautil", nullable = true)
 	private Double cargaUtil;
 
+	@OneToMany(mappedBy ="revVehiculo")
+	private Collection<Revision> vehRevisiones;
+	
 	public Integer getIdVehiculo() {
 		return idVehiculo;
 	}
@@ -230,5 +240,21 @@ public class Vehiculo {
 
 	public void setCargaUtil(Double cargaUtil) {
 		this.cargaUtil = cargaUtil;
+	}
+
+	public Modelo getVehModelo() {
+		return vehModelo;
+	}
+
+	public void setVehModelo(Modelo vehModelo) {
+		this.vehModelo = vehModelo;
+	}
+
+	public Collection<Revision> getVehRevisiones() {
+		return vehRevisiones;
+	}
+
+	public void setVehRevisiones(Collection<Revision> vehRevisiones) {
+		this.vehRevisiones = vehRevisiones;
 	}
 }

@@ -6,6 +6,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 
 import com.scitemav.model.Usuario;
@@ -30,6 +31,10 @@ public class Persona {
 	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "idusuario", nullable = false)
 	private Usuario perUsuario;
+	
+	@ManyToOne
+	@JoinColumn(name = "iddistrito")
+	private Distrito perDistrito;
 	
 	@OneToOne(mappedBy="empPersona")
 	private Empleado perEmpleado;
@@ -107,5 +112,13 @@ public class Persona {
 
 	public void setPerCliente(Cliente perCliente) {
 		this.perCliente = perCliente;
+	}
+
+	public Distrito getPerDistrito() {
+		return perDistrito;
+	}
+
+	public void setPerDistrito(Distrito perDistrito) {
+		this.perDistrito = perDistrito;
 	}
 }
