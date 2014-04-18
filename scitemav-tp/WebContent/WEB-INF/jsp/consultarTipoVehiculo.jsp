@@ -13,40 +13,80 @@
 <link rel="stylesheet" type="text/css" href="styles/plugins/dataTables/jquery.dataTables.css"></link>
 </head>
 <style>
-table.dataTable.display tbody tr.odd > .sorting_1, table.dataTable.order-column.stripe tbody tr.odd > .sorting_1 {
-    background-color: #F1F1F1;
-}
-table.dataTable tr.odd td.sorting_1 {
-    background-color: #F9F9F9;
-}
-table.dataTable tr.even td.sorting_1 {
-    background-color: white;
+.tableGri {
+/*     line-height: 30px; */
+    background-color: rgb(235, 240, 242);
+    font-weight: bold;
+    font-size: 12px;
+/*     text-align: left; */
+    color: rgb(120, 138, 150);
 }
 </style>
 <script>
 var osset='';
 $(document).ready(function(e){
-	$('#dataTables-example').dataTable({
-	    "aaSorting": [],
-	    "oLanguage": {
-			           "sLengthMenu": '<select class="form-control input-sm" style="" id="valshow">'+
-			             '<option value="10">10</option>'+
-			             '<option value="25">25</option>'+
-			             '<option value="50">50</option>'+
-			             '<option value="100">100</option>'+
-			             '<option value="200">200</option>'+
-			             '</select>'
-			         ,"sInfo": "Mostrando _START_ a _END_ de _TOTAL_ Resultados"}
-	
-	});
-	consultarTipoVehiculo();
-	changeListView();
-		
-	//$('#dataTables-example_filter').empty();
-	//$('#dataTables-example_filter').append('<label>Search:<input class="form-control input-sm" type="search" aria-controls="dataTables-example"></input></label>');
-	
+	inicioConsulta();
 });
 
+function inicioConsulta(){
+	var filas = '';
+	
+	var columns = '';
+	var content = '';
+	
+    $.ajax({
+ 		url: 'getTipoVehiculos',
+ 		type: 'post',
+ 		dataType: 'json',
+ 		data: '',
+ 		success: function(tipvehiculos){
+ 			$.each(tipvehiculos, function(i, tipveh){
+ 				filas = filas +'<tr class="">'+
+				'<td class="center">'+tipveh.idTipoVehiculo+'</td>'+
+				'<td class="center">'+tipveh.nombre+'</td>'+
+				'</tr>';
+			});		        
+ 		},
+ 		complete: function() {
+ 			columns = columns + '<th class="center">Id Tipo Vehiculo</th><th class="center">Nombre</th>';
+ 			
+ 			content = content + '<div id="container" class="dataTables_scroll"> '+
+ 			'<div id="dt_example" role="grid" class="dataTables_wrapper dataTables_scrollBody" style="overflow: auto; width: 100%; height: 100%;"> '+
+ 				'<table cellpadding="0" cellspacing="0" border="0" class="display" id="example"> '+
+ 				' <thead class="tableGri"> '+
+ 		            '<tr role="row">'+
+ 				 		columns+							                            
+ 		            '</tr>'+
+ 		        '</thead> '+
+ 		        '<tbody>';
+ 		    content = content + filas;   
+ 			content = content + '</tbody>'+
+				'</table> '+
+			'</div> '+
+			'<div class="spacer"></div> '+
+			'</div>';
+ 			$("#spnResultList").append(content);
+ 			$('#example').dataTable({
+ 			    "aaSorting": [],
+ 			    "oLanguage": {
+ 					           "sLengthMenu": '<select class="form-control input-sm" style="" id="valshow">'+
+ 					             '<option value="10">10</option>'+
+ 					             '<option value="25">25</option>'+
+ 					             '<option value="50">50</option>'+
+ 					             '<option value="100">100</option>'+
+ 					             '<option value="200">200</option>'+
+ 					             '</select>'
+ 					         ,"sInfo": "Mostrando _START_ a _END_ de _TOTAL_ Resultados"}
+ 			
+ 			});
+  		}
+ 	});	
+   
+	//consultarTipoVehiculo();
+	changeListView();	
+}
+
+//Estos son los metodos necesarios para que funcione la tabla de consulta
 function changeListView(){
 	var iVal = $("#valshow").val();
 	
@@ -88,18 +128,21 @@ function consultarTipoVehiculo(){
  		dataType: 'json',
  		data: '',
  		success: function(tipvehiculos){
+ 			var table = '<thead><tr><th>Id Tipo Vehiculo</th><th>Nombre</th></tr></thead><tbody id="resultTipVehiculo"></tbody>';
+  			$('#dataTables-example').empty();
+  			$('#dataTables-example').append(table);
  			$('#resultTipVehiculo').empty();
  			$.each(tipvehiculos, function(i, tipveh){
 				if(i%2==0){
-					$('#resultTipVehiculo').append('<tr class="even gradeC">');
-					$('#resultTipVehiculo').append('<td class="center">'+tipveh.idTipoVehiculo+'</td>');
-					$('#resultTipVehiculo').append('<td class="center">'+tipveh.nombre+'</td>');
-					$('#resultTipVehiculo').append('</tr>');
+					$('#resultTipVehiculo').append('<tr class="even gradeC" style="background-colo:white">'+
+							'<td class="center">'+tipveh.idTipoVehiculo+'</td>'+
+							'<td class="center">'+tipveh.nombre+'</td>'+
+							'</tr>');
 				}else{
-					$('#resultTipVehiculo').append('<tr class="odd gradeX">');
-					$('#resultTipVehiculo').append('<td class="center">'+tipveh.idTipoVehiculo+'</td>');
-					$('#resultTipVehiculo').append('<td class="center">'+tipveh.nombre+'</td>');
-					$('#resultTipVehiculo').append('</tr>');
+					$('#resultTipVehiculo').append('<tr class="odd gradeX">'+
+							'<td class="center">'+tipveh.idTipoVehiculo+'</td>'+
+							'<td class="center">'+tipveh.nombre+'</td>'+
+							'</tr>');
 				}
 			});
  		}
@@ -369,10 +412,7 @@ function removeNulls(){
 	$("td").each(function(){
 	    if($(this).text() == 'null'){
 	    	$(this).text("");
-	    }if($(this).text() == 'null, null, null'){
-	    	$(this).text("");
 	    }
-
 	});
 }
 </script>
@@ -386,7 +426,7 @@ function removeNulls(){
 		<div id="page-wrapper">
 				            <div class="row">
                 <div class="col-lg-12">
-                    <h1 class="page-header">Tables</h1>
+                    <h1 class="page-header">Consultar Tipo Vehiculo</h1>
                 </div>
                 <!-- /.col-lg-12 -->
             </div>
@@ -395,21 +435,15 @@ function removeNulls(){
                 <div class="col-lg-12">
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            DataTables Advanced Tables
+                            Lista de Tipos de Vehiculo
                         </div>
                         <!-- /.panel-heading -->
                         <div class="panel-body">
                             <div class="table-responsive">
-                                <table class="table table-striped table-bordered table-hover" id="dataTables-example">
-                                    <thead>
-                                        <tr>
-                                            <th>Id Tipo Vehiculo</th>
-                                            <th>Nombre</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody id="resultTipVehiculo">
-                                    </tbody>
-                                </table>
+                            	<div id="spnResultList" class="resultBox section summaryPane"></div>
+                                <!-- <table class="table table-striped table-bordered table-hover" id="dataTables-example">        
+                                <thead><tr><th>Id Tipo Vehiculo</th><th>Nombre</th></tr></thead><tbody id="resultTipVehiculo"></tbody>                            
+                                </table> -->
                             </div>
                         </div>
                         <!-- /.panel-body -->
