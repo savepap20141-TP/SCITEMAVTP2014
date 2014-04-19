@@ -24,3 +24,12 @@
 
 <!-- Page-Level Demo Scripts - Dashboard - Use for reference -->
 <!-- <script src="js/demo/dashboard-demo.js"></script> -->
+<script src="js/tablasConsulta.js"></script>
+
+<!-- Page-Level Plugin Scripts - Tables -->
+<script src="js/plugins/dataTables/jquery.dataTables.js"></script>
+<script src="js/plugins/dataTables/dataTables.bootstrap.js"></script>
+
+<link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.0-beta.1/css/jquery.dataTables.css"></link>
+<script src="js/plugins/dataTables/jquery.dataTables.js"></script>
+<link rel="stylesheet" type="text/css" href="styles/plugins/dataTables/jquery.dataTables.css"></link>

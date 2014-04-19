@@ -31,7 +31,11 @@ public class TipoVehiculoServiceImpl implements TipoVehiculoService {
 		try {
 			if(!(tipv.getNombre().isEmpty())){
 				//tipovehiculo.setNombre(tipv.getNombre());
-				em.persist(tipv);
+				if(tipv.getIdTipoVehiculo()==null){
+					em.persist(tipv);
+				}else{
+					em.merge(tipv);
+				}
 				resultado = true;
 			}
 		} catch (IllegalArgumentException e) {
