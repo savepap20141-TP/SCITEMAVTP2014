@@ -1,101 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
-<!DOCTYPE html>
-<%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
-<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Registrar Vehiculo</title>
 <jsp:include page="componentes/head.jsp" />
 </head>
-<style>
-label.error {
-	margin-left: 10px;
-	width: auto;
-	display: inline;
-	color: rgb(255, 0, 0);
-	font-weight: bold;
-}
-
-label.ok {
-	margin-left: 10px;
-	width: auto;
-	display: inline;
-	color: green;
-	font-weight: bold;
-}
-</style>
-<script>
-
-$(document).ready(function(e){
-	inicioConsulta();
-});
-
-function inicioConsulta(){
-	var filas = '';	
-	var columnas = '';
-	
-    $.ajax({
- 		url: 'getVehiculos',
- 		type: 'post',
- 		dataType: 'json',
- 		data: '',
- 		success: function(vehiculos){
- 			$.each(vehiculos, function(i, veh){
- 				filas = filas +'<tr class="">'+
-				'<td class="center" id="filaId_'+i+'">'+veh.idVehiculo+'</td>'+
-				'<td class="center" id="filaNombre'+i+'">'+veh.idCliente+'</td>'+
-				'<td class="center" id="filaColor'+i+'">'+veh.color+'</td>'+
-				'<td class="center"><button class="btn btn-success btn-circle" type="button" id="btnEdit_'+i+'" data-toggle="modal" data-target="#myModal" onclick="mostrarEditar('+i+')"><i class="fa fa-list"></i></button></td>'+
-				'<td class="center"><button class="btn btn-danger btn-circle" type="button" id="btnDelete_'+i+'"><i class="fa fa-times"></i></button></td>'+
-				'</tr>';
-			});		        
- 		},
- 		complete: function() {
- 			columnas = columnas + '<th class="center">Id Vehiculo</th><th class="center">Nombre</th><th class="center">Color</th><th class="center">Editar</th><th class="center">Eliminar</th>';
- 			realizarTabla(columnas,filas); 			
-  		}
- 	});	  
-		
-}
-</script>
-<script type="text/javascript">
-function mostrarEditar(ind){
-	$('#myModalLabel').empty();
-	$('#myModalLabel').append('Editar Vehiculo');
-	$('#txtIdV').val($('#filaId_'+ind).text());
-	$('#txtNombreV').val($('#filaNombre_'+ind).text());
-	$('#txtColorV').val($('#filaColor_'+ind).text());
-}
-function registrarVehiculo(){
-	if($('#txtNombreV').val()==''){
-		alert('Completar los campos obligatorios');
-	}else{
-		$.ajax({
-	   		url: 'registroVehiculo',
-	   		type: 'post',
-	   		dataType: 'json',
-	   		data: $('#frmRegistroVehiculo').serialize(),
-	   		success: function(result){
-	   			$('#resultOk').hide();
-				$('#resultFalse').hide();			
-	   			if(result == true){   				
-	   				//$('#resultOk').append('Se ha registrado correctamente');
-	   				$('#resultOk').show();
-	   				$('#txtIdV').val('');
-	   				$('#txtNombreV').val('');
-	   				$('#txtColorV').val('');	   				
-	   				inicioConsulta();
-	   			}else{
-	   				$('#resultFalse').show();
-	   				//$('#resultFalse').append('Se ha producido un error al registrarse');
-	   			}
-	   		}
-	   	});
-	}	
-}
-</script>
 <body>
 	<div id="wrapper">
 
@@ -121,35 +32,15 @@ function registrarVehiculo(){
 				<div class="panel panel-default">
 					<div class="panel-heading">
 					<i class="fa fa-bar-chart-o fa-fw"></i>Registro de nuevo vehículo
-					<div class="pull-right">
-								<div class="btn-group"></div>
-							</div>
 					</div>
 					
-					<!-- Button trigger modal -->
-                            <button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
-                                Nuevo Vehiculo
-                            </button>
-                            <!-- Modal -->
-                            <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                                <div class="modal-dialog">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                                            <h4 class="modal-title" id="myModalLabel">Registrar Vehiculo</h4>
-                                        </div>
-                                        <div class="modal-body">
-							<form role="form" id="frmRegistroVehiculo" 
-									method="post" commandName="vehiculo"
-									 style="width: 90%; padding-left: 10%;">
+					<div class="panel-body">
+						<div class="row">
+							<form role="form" id="frmRegistroVehiculo" action="registro"
+									method="post" commandName="vehiculobean" style="width: 90%; padding-left: 10%;">
 							<fieldset>						
 								<div class="col-lg-6">						
 									<!-- PRIMERA COLUMNA -->
-									<div class="form-group" style="display:none">
-															<label> Id vehiculo</label> <input 
-															class="form-control" name="idVehiculo" id="txtIdV"/>
-														</div>
-									
 									
 										<div class="form-group input-group">
 											<label>DNI del cliente</label>
@@ -224,7 +115,7 @@ function registrarVehiculo(){
 									
 										<div class="form-group">
 											<label>Color</label> 
-											<input id="txtColorV" class="form-control"
+											<input id="txtColor" class="form-control"
 											 name="color" placeholder="Color"></input>
 										</div>									
 										
@@ -283,55 +174,23 @@ function registrarVehiculo(){
 										</div>																																																										
 																																					
 									<!-- FINAL SEGUNDA COLUMNA -->
-								</div>		
+								</div>
+																
+								
+										<input class="btn btn-lg btn-success btn-block" 
+										type="submit" value="Registrar Vehiculo" style="width: 60%; margin-left: 20%; margin-top: 10%;"/>
+										<p>
+											<label class="error"><c:out value="${msg}" /></label>
+										</p>
 							</fieldset>							
 							</form>
 						</div>
-					<div class="modal-footer">
-                                        	<button type="button" class="btn btn-primary" onclick="registrarVehiculo();">Guardar</button>
-                                            <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-                                        </div>
+					</div>
+				</div>
 			</div>			
 			
 			</div>
 
 		</div>
-		</div>
-		</div>
-		
-		<div class="panel-body">
-							<div class="alert alert-success alert-dismissable" id="resultOk" style="display:none">
-    							<button class="close" aria-hidden="true" data-dismiss="alert" type="button">×</button>
-								Se ha guardo correctamente
-							</div>
-							<div class="alert alert-danger alert-dismissable" id="resultFalse" style="display:none">
-    							<button class="close" aria-hidden="true" data-dismiss="alert" type="button">×</button>
-								Se ha producido un error al guardar
-							</div>
-							<div class="row">
-									<div class="col-lg-12">
-					                    <div class="panel panel-default">
-					                        <div class="panel-heading">
-					                            Lista de Vehiculos
-					                        </div>
-					                        <!-- /.panel-heading -->
-					                        <div class="panel-body">
-					                            <div class="table-responsive">
-					                            	<div id="spnResultList" class="resultBox section summaryPane"></div>
-					                            </div>
-					                        </div>
-					                        <!-- /.panel-body -->
-					                    </div>
-					                    <!-- /.panel -->
-					                </div>
-					                <!-- /.col-lg-12 -->
-															
-							</div>
-						</div>
-						</div>
-		</div>
-		</div>
-	
-		
 </body>
 </html>

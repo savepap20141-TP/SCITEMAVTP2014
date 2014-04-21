@@ -1,13 +1,8 @@
 package com.scitemav.bean;
 
-import com.scitemav.model.Cliente;
-import com.scitemav.model.Marca;
-import com.scitemav.model.Modelo;
-import com.scitemav.model.TipoVehiculo;
 
 public class VehiculoBean {
 	
-
 	private Integer idVehiculo;
 	private Integer idCliente;
 	private Integer idMarca;

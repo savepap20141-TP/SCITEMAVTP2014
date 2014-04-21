@@ -1,5 +1,7 @@
 package com.scitemav.model;
 
+import java.sql.Date;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -16,6 +18,8 @@ public class Persona {
 	@Id @GeneratedValue @Column(name = "idpersona")
 	private Integer idPersona;
 	
+	@Column(name = "dni", length = 8, nullable = true)
+	private Integer dni;
 	@Column(name = "nombre", length = 90, nullable = true)
 	private String nombre;
 	@Column(name = "apellidopaterno", length = 90, nullable = true)
@@ -24,9 +28,17 @@ public class Persona {
 	private String apellidoMaterno;
 	@Column(name = "telefono", length = 90, nullable = true)
 	private String telefono;
-	@Column(name = "dni", length = 8, nullable = true)
-	private Integer dni;
+	@Column(name = "celular", length = 90, nullable = true)
+	private String celular;
+	@Column(name = "sexo", length = 1, nullable = true)
+	private String sexo;
+	@Column(name = "direccion", length = 200, nullable = true)
+	private String direccion;
+	@Column(name = "fechanacimiento", nullable = true)
+	private Date fechaNacimiento;
 	
+	@Column(name = "activo", nullable = true)
+	private Boolean activo;
 	
 	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "idusuario", nullable = false)
@@ -120,5 +132,45 @@ public class Persona {
 
 	public void setPerDistrito(Distrito perDistrito) {
 		this.perDistrito = perDistrito;
+	}
+
+	public String getCelular() {
+		return celular;
+	}
+
+	public void setCelular(String celular) {
+		this.celular = celular;
+	}
+
+	public String getSexo() {
+		return sexo;
+	}
+
+	public void setSexo(String sexo) {
+		this.sexo = sexo;
+	}
+
+	public String getDireccion() {
+		return direccion;
+	}
+
+	public void setDireccion(String direccion) {
+		this.direccion = direccion;
+	}
+
+	public Date getFechaNacimiento() {
+		return fechaNacimiento;
+	}
+
+	public void setFechaNacimiento(Date fechaNacimiento) {
+		this.fechaNacimiento = fechaNacimiento;
+	}
+
+	public Boolean getActivo() {
+		return activo;
+	}
+
+	public void setActivo(Boolean activo) {
+		this.activo = activo;
 	}
 }

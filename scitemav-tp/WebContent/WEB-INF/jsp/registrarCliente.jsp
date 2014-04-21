@@ -48,6 +48,10 @@ $(document).ready(function(e){
 								<div class="col-lg-6">						
 									<!-- PRIMERA COLUMNA -->
 										<div class="form-group">
+											<label> DNI</label> <input id="txtDNI"
+												class="form-control" name="dni" placeholder="DNI"></input>
+										</div>
+										<div class="form-group">
 											<label> Nombre</label> <input id="txtNombre"
 												class="form-control" name="nombre" placeholder="Nombre"></input>
 										</div>
@@ -66,26 +70,23 @@ $(document).ready(function(e){
 												class="form-control" name="telefono" placeholder="Telefono"></input>
 										</div>
 										<div class="form-group">
-											<label> Sexo</label> <input id="txtSexo"
-												class="form-control" name="sexo"
-												placeholder="Sexo"></input>
-										</div>
-										<div class="form-group">
-											<label> Edad</label> <input id="txtEdad"
-												class="form-control" name="edad"
-												placeholder="Edad"></input>
-										</div>																		
+											<label> Celular</label> <input id="txtCelular"
+												class="form-control" name="celular" placeholder="Celular"></input>
+										</div>															
 										
 									<!-- FINAL PRIMERA COLUMNA -->								
 								</div>
 								<div class="col-lg-6">
 									<!-- SEGUNDA COLUMNA -->
-										
 										<div class="form-group">
-											<label> Celular</label> <input id="txtCelular"
-												class="form-control" name="celular"
-												placeholder="Celular"></input>
-										</div>
+											<label> Sexo</label>
+												<select class="form-control" id="txtSexo" name="sexo">
+												<option value="">Seleccione su Sexo</option>
+												<option value="M">Masculino</option>
+												<option value="F">Femenino</option>
+											</select>
+										</div>		
+										
 										<div class="form-group">
 											<label> Dirección</label> <input id="txtDireccion"
 												class="form-control" name="direccion"
@@ -93,7 +94,7 @@ $(document).ready(function(e){
 										</div>
 										<div class="form-group">
 											<label> Distrito</label> 										
-											<select class="form-control" id="comboDistrito">
+											<select class="form-control" id="comboDistrito" name="idDistrito">
 												<option value="">Seleccione su Distrito</option>
 											</select>
 										</div>
@@ -113,11 +114,6 @@ $(document).ready(function(e){
 													placeholder="Email"></input>
 											</div>
 										</div> 
-										<div class="form-group">
-											<label> Password</label> <input class="form-control"
-												placeholder="Password" name="password" type="password"
-												value="" required>
-										</div>
 																																					
 									<!-- FINAL SEGUNDA COLUMNA -->
 								</div>
