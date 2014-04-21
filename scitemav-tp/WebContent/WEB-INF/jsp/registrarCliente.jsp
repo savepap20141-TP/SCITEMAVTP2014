@@ -7,6 +7,12 @@
 <title>Registrar Cliente</title>
 <jsp:include page="componentes/head.jsp" />
 </head>
+<script>
+$(document).ready(function(e){
+	var nfechaNac = 'txtFechaNacimiento';
+	cargarFecha(nfechaNac);
+});
+</script>
 <body>
 	<div id="wrapper">
 
@@ -91,10 +97,13 @@
 												<option value="">Seleccione su Distrito</option>
 											</select>
 										</div>
-										<div class="form-group">
+										<div class="form-group input-group">
 											<label> Fecha de Nacimiento</label> <input id="txtFechaNacimiento"
 												class="form-control" name="fechaNacimiento"
 												placeholder="Fecha de Nacimiento"></input>
+												<span class="input-group-btn">
+												    <button class="btn btn-default fa fa-table fa-fw" type="button" style="margin-top:25px; height: 34px;" onclick="$('#txtFechaNacimiento').datepicker('show')"></button>
+												</span>
 										</div>
 										<div class="form-group">
 											<label> Email</label>
@@ -127,7 +136,7 @@
 			</div>			
 			
 			</div>
-
+</div>
 		</div>
 </body>
 </html>

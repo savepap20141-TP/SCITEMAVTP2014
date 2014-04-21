@@ -30,6 +30,16 @@ label.ok {
 
 $(document).ready(function(e){
 	inicioConsulta();
+	$("#frmRegistroTipoVehiculo").validate({
+		rules: {
+			nombre: {
+				required: true
+			}                                       
+		},
+		messages: {
+			nombre: "*"
+		}
+	});
 });
 
 function inicioConsulta(){
@@ -159,7 +169,7 @@ function registrarTipoVehiculo(){
                                         
                                         </div>
                                         <div class="modal-footer">
-                                        	<button type="button" class="btn btn-primary" onclick="registrarTipoVehiculo();">Guardar</button>
+                                        	<button type="button" class="btn btn-primary" data-dismiss="modal" onclick="registrarTipoVehiculo();">Guardar</button>
                                             <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
                                         </div>
                                     </div>

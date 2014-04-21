@@ -7,7 +7,29 @@ $(document).ready(function(e){
 	$("#nameUser").empty();
 	$("#nameUser").append(email);
 });
-</script>     
+function cargarFecha(idname){
+	$('#'+idname).datepicker({dateFormat: 'dd/mm/yy',changeMonth: true,changeYear: true, yearRange: '1950:2014'});
+
+	 $.datepicker.regional['es'] = {
+		 closeText: 'Cerrar',
+		 prevText: '<Ant',
+		 nextText: 'Sig>',
+		 currentText: 'Hoy',
+		 monthNames: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+		 monthNamesShort: ['Ene','Feb','Mar','Abr', 'May','Jun','Jul','Ago','Sep', 'Oct','Nov','Dic'],
+		 dayNames: ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'],
+		 dayNamesShort: ['Dom','Lun','Mar','Mié','Juv','Vie','Sáb'],
+		 dayNamesMin: ['Do','Lu','Ma','Mi','Ju','Vi','Sá'],
+		 weekHeader: 'Sm',
+		 dateFormat: 'dd/mm/yy',
+		 firstDay: 1,
+		 isRTL: false,
+		 showMonthAfterYear: false,
+		 yearSuffix: ''
+	 };
+	 $.datepicker.setDefaults($.datepicker.regional['es']);
+}
+</script> 
         <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0;" >
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".sidebar-collapse">

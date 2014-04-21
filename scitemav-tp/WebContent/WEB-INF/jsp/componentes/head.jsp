@@ -32,4 +32,6 @@
 
 <link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.0-beta.1/css/jquery.dataTables.css"></link>
 <script src="js/plugins/dataTables/jquery.dataTables.js"></script>
-<link rel="stylesheet" type="text/css" href="styles/plugins/dataTables/jquery.dataTables.css"></link>
+
+<link href="//code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css" rel="stylesheet"></link>
+<script src="//code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
