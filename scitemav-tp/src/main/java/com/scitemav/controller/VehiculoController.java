@@ -34,6 +34,16 @@ public class VehiculoController {
 		return "consultarVehiculo";
 	}
 	
+	@RequestMapping("toVehiculoDetalle")
+	public String toVehiculoDetalle(){
+		return "vehiculoDetalle";
+	}
+	
+	@RequestMapping("toRevisionDetalle")
+	public String toRevisionDetalle(){
+		return "revisionDetalle";
+	}
+	
 	@RequestMapping(value="registroVehiculo", method = RequestMethod.POST)
 	@ResponseBody
 	public boolean registroTipoVehiculo(@ModelAttribute("vehiculo") VehiculoBean vehiculo, Model model, HttpServletRequest req){
