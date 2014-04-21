@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
+<%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%> 
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%> 
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
@@ -11,7 +13,27 @@
 $(document).ready(function(e){
 	var nfechaNac = 'txtFechaNacimiento';
 	cargarFecha(nfechaNac);
+	listarDistritos();
 });
+</script>
+<script>
+
+function listarDistritos(){
+	
+	$.ajax({
+ 		url: 'getDistritos',
+ 		type: 'post',
+ 		dataType: 'json',
+ 		data: '',
+ 		success: function(distritos){
+ 			$('#comboDistrito').empty();
+ 			$.each(distritos, function(i, distrito){
+ 				$('#comboDistrito').append('<option value="'+distrito.idDistrito+'">'+distrito.nombre+'</option>');				
+			});
+ 		}
+ 	});	
+	
+}
 </script>
 <body>
 	<div id="wrapper">
@@ -42,7 +64,7 @@ $(document).ready(function(e){
 					
 					<div class="panel-body">
 						<div class="row">
-							<form role="form" id="frmRegistroCliente" action="registro"
+							<form role="form" id="frmRegistroCliente" action="registroCliente"
 									method="post" commandName="clienteBean" style="width: 90%; padding-left: 10%;">
 							<fieldset>						
 								<div class="col-lg-6">						

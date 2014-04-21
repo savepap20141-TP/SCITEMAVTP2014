@@ -45,7 +45,7 @@ public class Persona {
 	private Usuario perUsuario;
 	
 	@ManyToOne
-	@JoinColumn(name = "iddistrito")
+	@JoinColumn(name = "iddistrito", nullable = true)
 	private Distrito perDistrito;
 	
 	@OneToOne(mappedBy="empPersona")

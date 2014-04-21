@@ -8,7 +8,7 @@ $(document).ready(function(e){
 	$("#nameUser").append(email);
 });
 function cargarFecha(idname){
-	$('#'+idname).datepicker({dateFormat: 'dd/mm/yy',changeMonth: true,changeYear: true, yearRange: '1950:2014'});
+	$('#'+idname).datepicker({dateFormat: 'yy-mm-dd',changeMonth: true,changeYear: true, yearRange: '1950:2014'});
 
 	 $.datepicker.regional['es'] = {
 		 closeText: 'Cerrar',
