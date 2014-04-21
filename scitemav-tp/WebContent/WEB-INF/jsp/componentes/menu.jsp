@@ -23,7 +23,7 @@
                                 <a href="toRegistroCliente">Registrar Cliente</a>
                             </li>
                             <li>
-                                <a href="buttons.html">Consultar Clientes</a>
+                                <a href="toConsultarClientes">Consultar Clientes</a>
                             </li>
                         </ul>
                         <!-- /.nav-second-level -->
@@ -35,7 +35,7 @@
                                 <a href="toRegistroVehiculo">Registrar Vehiculo</a>
                             </li>
                             <li>
-                                <a href="morris.html">Consultar Vehiculos</a>
+                                <a href="toVehiculoDetalle">Consultar Vehiculos</a>
                             </li>
                         </ul>
                         <!-- /.nav-second-level -->

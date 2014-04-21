@@ -1,7 +1,11 @@
 package com.scitemav.service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -66,4 +70,37 @@ public class ClienteServiceImpl implements ClienteService{
 		return resultado;
 	}
 
+	@SuppressWarnings("unchecked")
+	@Transactional
+	public List<ClienteBean> listarClientes() {
+		List<Cliente> lc = new ArrayList<Cliente>();
+		List<ClienteBean> lcb = new ArrayList<ClienteBean>();		
+		try {
+			Query q = em.createQuery("SELECT c FROM Cliente c");
+			lc = q.getResultList();
+			for(int i=0; i < lc.size(); i++){
+				Cliente c = lc.get(i);
+				ClienteBean cb = new ClienteBean();
+				cb.setIdCliente(cb.getIdCliente());
+				cb.setDni(c.getCliPersona().getDni());
+				cb.setNombre(c.getCliPersona().getNombre());
+				cb.setApellidoPaterno(c.getCliPersona().getApellidoPaterno());
+				cb.setApellidoMaterno(c.getCliPersona().getApellidoMaterno());
+				cb.setSexo(c.getCliPersona().getSexo());
+				cb.setFechaNacimiento(c.getCliPersona().getFechaNacimiento());
+				cb.setIdDistrito(c.getCliPersona().getPerDistrito().getIdDistrito());
+				cb.setNombreDistrito(c.getCliPersona().getPerDistrito().getNombre());
+				cb.setDireccion(c.getCliPersona().getDireccion());
+				cb.setTelefono(c.getCliPersona().getTelefono());
+				cb.setCelular(c.getCliPersona().getCelular());
+				cb.setEmail(c.getCliPersona().getPerUsuario().getEmail());
+				
+				lcb.add(cb);
+			}
+		} catch (IllegalArgumentException e) {
+			lcb = null;			
+		}
+
+		return lcb;
+	}
 }

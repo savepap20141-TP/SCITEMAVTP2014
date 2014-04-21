@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
@@ -36,7 +36,7 @@
 					
 					<div class="panel-body">
 						<div class="row">
-							<form role="form" id="frmRegistroVehiculo" action="registro"
+							<form role="form" id="frmRegistroVehiculo" action="registroVehiculo"
 									method="post" commandName="vehiculobean" style="width: 90%; padding-left: 10%;">
 							<fieldset>						
 								<div class="col-lg-6">						
@@ -44,7 +44,7 @@
 									
 										<div class="form-group input-group">
 											<label>DNI del cliente</label>
-                                            <input type="text" class="form-control" id="txtDniCliente" name="DNI" placeholder="DNI del Cliente">
+                                            <input type="text" class="form-control" id="txtDniCliente" name="idCliente" placeholder="DNI del Cliente">
                                             <span class="input-group-btn">
                                                 <button style="margin-top:25px; height: 34px;" class="btn btn-default" type="button"><i class="fa fa-search"></i>
                                                 </button>
@@ -53,26 +53,26 @@
                                         
                                         <div class="form-group">
                                             <label>Marca</label>
-                                            <select class="form-control" id="comboMarca">
+                                            <select class="form-control" id="comboMarca" name="idMarca">
                                             </select>
                                         </div>         
 
                                         <div class="form-group">
                                             <label>Modelo</label>
-                                            <select class="form-control" id="comboModelo">
+                                            <select class="form-control" id="comboModelo" name="idModelo">
                                             </select>
                                         </div>           
                                         
                                         <div class="form-group">
                                             <label>Tipo de Vehiculo</label>
-                                            <select class="form-control" id="comboTipo">
+                                            <select class="form-control" id="comboTipo" name="idTipoVehiculo">
                                             </select>
                                         </div>                                                                                                                    																											
 										
 										<div class="form-group">
 											<label>Año de fabricacion</label> 
 											<input id="txtAño" class="form-control"
-											 name="añoFabricacion" placeholder="Año"></input>
+											 name="fabricacion" placeholder="Año"></input>
 										</div>
 										
 										<div class="form-group">
@@ -192,5 +192,6 @@
 			</div>
 
 		</div>
+	</div>	
 </body>
 </html>

@@ -21,7 +21,7 @@ public class ClienteBean {
 	private Boolean activoC;
 	//Distrito
 	private Integer idDistrito;
-	
+	private String nombreDistrito;
 	//Usuario
 	private String email;
 	private String password;
@@ -134,5 +134,11 @@ public class ClienteBean {
 	}
 	public void setActivoU(Boolean activoU) {
 		this.activoU = activoU;
+	}
+	public String getNombreDistrito() {
+		return nombreDistrito;
+	}
+	public void setNombreDistrito(String nombreDistrito) {
+		this.nombreDistrito = nombreDistrito;
 	}
 }
