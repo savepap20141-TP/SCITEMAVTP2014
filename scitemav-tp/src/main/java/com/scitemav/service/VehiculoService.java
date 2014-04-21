@@ -8,7 +8,7 @@ import com.scitemav.model.Vehiculo;
 
 public interface VehiculoService {
 	
-	boolean registro(Vehiculo vehiculo);
+	boolean registro(VehiculoBean vb);
 	public List<VehiculoBean> listarVehiculos();
 
 }

@@ -12,6 +12,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.scitemav.bean.TipoVehiculoBean;
 import com.scitemav.bean.VehiculoBean;
+import com.scitemav.model.Cliente;
+import com.scitemav.model.Marca;
+import com.scitemav.model.Modelo;
 import com.scitemav.model.TipoVehiculo;
 import com.scitemav.model.Vehiculo;
 
@@ -22,19 +25,44 @@ public class VehiculoServiceImpl implements VehiculoService {
 	EntityManager em;
 	
 	@Transactional
-	public boolean registro(Vehiculo vehiculo) {
+	public boolean registro(VehiculoBean vb) {
 		boolean resultado = false;		
-
+		Vehiculo veh = new Vehiculo();
 		try {
-			if(!(vehiculo.getFabricacion().isEmpty())){
-				//tipovehiculo.setNombre(tipv.getNombre());
-				if(vehiculo.getIdVehiculo()==null){
-					em.persist(vehiculo);
-				}else{
-					em.merge(vehiculo);
-				}
-				resultado = true;
-			}
+			Cliente cli = new Cliente();
+			cli.setIdCliente(vb.getIdCliente());			
+			veh.setVehCliente(cli);
+			//
+			Marca mar = new Marca();
+			mar.setIdMarca(vb.getIdMarca());
+			veh.setVehMarca(mar);
+			//
+			TipoVehiculo tv = new TipoVehiculo();
+			tv.setIdTipoVehiculo(vb.getIdTipoVehiculo());
+			veh.setVehTipoVehiculo(tv);
+			//
+			Modelo mod = new Modelo();
+			mod.setIdModelo(vb.getIdModelo());
+			veh.setVehModelo(mod);
+			//
+			veh.setAltura(vb.getAltura());
+			veh.setAncho(vb.getAncho());
+			veh.setCargaUtil(vb.getCargaUtil());
+			veh.setColor(vb.getColor());
+			veh.setFabricacion(vb.getFabricacion());
+			veh.setLongitud(vb.getLongitud());
+			veh.setNumeroAsientos(vb.getNumeroAsientos());
+			veh.setNumeroCilindros(vb.getNumeroCilindros());
+			veh.setNumeroEjes(vb.getNumeroEjes());
+			veh.setNumeroMotor(vb.getNumeroMotor());
+			veh.setNumeroPasajeros(vb.getNumeroPasajeros());
+			veh.setNumeroPlaca(vb.getNumeroPlaca());
+			veh.setNumeroRuedas(vb.getNumeroRuedas());
+			veh.setNumeroSerie(vb.getNumeroSerie());
+			veh.setPesoBruto(vb.getPesoBruto());
+			veh.setPesoSeco(vb.getPesoSeco());
+			
+			resultado = true;
 		} catch (IllegalArgumentException e) {
 			System.out.println(e);
 			resultado = false;
@@ -70,10 +98,10 @@ public class VehiculoServiceImpl implements VehiculoService {
 				vb.setNumeroSerie(v.getNumeroSerie());
 				vb.setPesoBruto(v.getPesoBruto());
 				vb.setPesoSeco(v.getPesoSeco());
-				vb.setVehCliente(v.getVehCliente());
-				vb.setVehMarca(v.getVehMarca());
-				vb.setVehModelo(v.getVehModelo());
-				vb.setVehTipoVehiculo(v.getVehTipoVehiculo());				
+				vb.setIdCliente(v.getVehCliente().getIdCliente());
+				vb.setIdMarca(v.getVehMarca().getIdMarca());
+				vb.setIdModelo(v.getVehModelo().getIdModelo());
+				vb.setIdTipoVehiculo(v.getVehTipoVehiculo().getIdTipoVehiculo());				
 				listaVehiculoBean.add(vb);
 			}
 		} catch (IllegalArgumentException e) {

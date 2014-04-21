@@ -9,10 +9,10 @@ public class VehiculoBean {
 	
 
 	private Integer idVehiculo;
-	private Cliente vehCliente;
-	private Marca vehMarca;
-	private TipoVehiculo vehTipoVehiculo;
-	private Modelo vehModelo;
+	private Integer idCliente;
+	private Integer idMarca;
+	private Integer idTipoVehiculo;
+	private Integer idModelo;
 	private String fabricacion;
 	private String color; 
 	private Integer numeroMotor;
@@ -36,30 +36,6 @@ public class VehiculoBean {
 	}
 	public void setIdVehiculo(Integer idVehiculo) {
 		this.idVehiculo = idVehiculo;
-	}
-	public Cliente getVehCliente() {
-		return vehCliente;
-	}
-	public void setVehCliente(Cliente vehCliente) {
-		this.vehCliente = vehCliente;
-	}
-	public Marca getVehMarca() {
-		return vehMarca;
-	}
-	public void setVehMarca(Marca vehMarca) {
-		this.vehMarca = vehMarca;
-	}
-	public TipoVehiculo getVehTipoVehiculo() {
-		return vehTipoVehiculo;
-	}
-	public void setVehTipoVehiculo(TipoVehiculo vehTipoVehiculo) {
-		this.vehTipoVehiculo = vehTipoVehiculo;
-	}
-	public Modelo getVehModelo() {
-		return vehModelo;
-	}
-	public void setVehModelo(Modelo vehModelo) {
-		this.vehModelo = vehModelo;
 	}
 	public String getFabricacion() {
 		return fabricacion;
@@ -156,6 +132,30 @@ public class VehiculoBean {
 	}
 	public void setCargaUtil(Double cargaUtil) {
 		this.cargaUtil = cargaUtil;
+	}
+	public Integer getIdMarca() {
+		return idMarca;
+	}
+	public void setIdMarca(Integer idMarca) {
+		this.idMarca = idMarca;
+	}
+	public Integer getIdTipoVehiculo() {
+		return idTipoVehiculo;
+	}
+	public void setIdTipoVehiculo(Integer idTipoVehiculo) {
+		this.idTipoVehiculo = idTipoVehiculo;
+	}
+	public Integer getIdModelo() {
+		return idModelo;
+	}
+	public void setIdModelo(Integer idModelo) {
+		this.idModelo = idModelo;
+	}
+	public Integer getIdCliente() {
+		return idCliente;
+	}
+	public void setIdCliente(Integer idCliente) {
+		this.idCliente = idCliente;
 	}
 	
 	
