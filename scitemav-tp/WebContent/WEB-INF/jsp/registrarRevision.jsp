@@ -12,10 +12,10 @@
 $(document).ready(function(e){
 	var nfechaInicio = 'txtFechaInicio';
 	cargarFecha(nfechaInicio);
-	var nfechaFin = 'txtFechaFin';
-	cargarFecha(nfechaFin);
-	var nProximaRev = 'txtProximaRevision';
-	cargarFecha(nProximaRev);
+	//var nfechaFin = 'txtFechaFin';
+	//cargarFecha(nfechaFin);
+	//var nProximaRev = 'txtProximaRevision';
+	//cargarFecha(nProximaRev);
 	listarVehiculos();
 });
 </script>

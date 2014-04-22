@@ -3,6 +3,7 @@ package com.scitemav.controller;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,6 +14,7 @@ import com.scitemav.bean.RevisionBean;
 import com.scitemav.service.ClienteService;
 import com.scitemav.service.RevisionService;
 
+@Controller
 public class RevisionController {
 	
 	@Autowired
