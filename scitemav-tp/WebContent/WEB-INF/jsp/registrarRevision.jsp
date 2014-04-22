@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
+<%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%> 
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%> 
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
@@ -97,7 +99,7 @@ function listarVehiculos(){
 												</span>
 										</div>
 										
-										<div class="form-group input-group" style="display: none;">
+									<!-- 	<div class="form-group input-group" style="display: none;">
 											<label> Fecha de Fin</label> <input id="txtFechaFin"
 												class="form-control" name="fechaFin"
 												placeholder="Fecha de Fin"></input>
@@ -105,7 +107,8 @@ function listarVehiculos(){
 												    <button class="btn btn-default fa fa-table fa-fw" type="button" style="margin-top:25px; height: 34px;" onclick="$('#txtFechaFin').datepicker('show')"></button>
 												</span>
 										</div>
-										
+										 
+										 
 										<div class="form-group input-group" style="display: none;">
 											<label> Próxima revisión</label> <input id="txtProximaRevision"
 												class="form-control" name="proximaRevision"
@@ -114,7 +117,7 @@ function listarVehiculos(){
 												    <button class="btn btn-default fa fa-table fa-fw" type="button" style="margin-top:25px; height: 34px;" onclick="$('#txtProximaRevision').datepicker('show')"></button>
 												</span>
 										</div>																				
-																		
+										-->								
 							
 										<label> </label> <input
 											class="btn btn-lg btn-success btn-block" type="submit"

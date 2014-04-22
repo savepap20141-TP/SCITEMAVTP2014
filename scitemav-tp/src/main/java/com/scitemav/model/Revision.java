@@ -32,10 +32,10 @@ public class Revision {
 	@Column(name = "fechaproxima", nullable = true)
 	private Date fechaProxima;
 	
-	@Column(name = "kilometrajeactual", nullable = false)
+	@Column(name = "kilometrajeactual", nullable = true)
 	private Integer kilometrajeActual;
 	
-	@Column(name = "kilometrajeproximo", nullable = false)
+	@Column(name = "kilometrajeproximo", nullable = true)
 	private Integer kilometrajeProximo;
 
 	
