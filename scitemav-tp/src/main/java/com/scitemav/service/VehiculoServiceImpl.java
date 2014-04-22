@@ -61,7 +61,7 @@ public class VehiculoServiceImpl implements VehiculoService {
 			veh.setNumeroSerie(vb.getNumeroSerie());
 			veh.setPesoBruto(vb.getPesoBruto());
 			veh.setPesoSeco(vb.getPesoSeco());
-			
+			em.persist(veh);
 			resultado = true;
 		} catch (IllegalArgumentException e) {
 			System.out.println(e);

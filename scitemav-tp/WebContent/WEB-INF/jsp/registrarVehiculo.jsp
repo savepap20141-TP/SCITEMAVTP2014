@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
+	<%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%> 
+	<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%> 
 <!DOCTYPE html>
 <html>
 <head>
@@ -179,9 +181,9 @@ function listarMarcas(){
 											<label style="margin-top: 7px; margin-bottom: 10px;">Número de ejes</label><br>
 											<label class="radio-inline"><input type="radio" name="numeroEjes" id="numEje1" value="1">1</label> 											
 											<label class="radio-inline"><input type="radio" name="numeroEjes" id="numEje2" value="2">2</label>
-											<label class="radio-inline"><input type="radio" name="numeroEjes" id="numEje3" value="2">3</label>
-											<label class="radio-inline"><input type="radio" name="numeroEjes" id="numEje4" value="2">4</label>
-											<label class="radio-inline"><input type="radio" name="numeroEjes" id="numEje5" value="2">5</label>
+											<label class="radio-inline"><input type="radio" name="numeroEjes" id="numEje3" value="3">3</label>
+											<label class="radio-inline"><input type="radio" name="numeroEjes" id="numEje4" value="4">4</label>
+											<label class="radio-inline"><input type="radio" name="numeroEjes" id="numEje5" value="5">5</label>
 										</div>																																
 										
 										<div class="form-group">

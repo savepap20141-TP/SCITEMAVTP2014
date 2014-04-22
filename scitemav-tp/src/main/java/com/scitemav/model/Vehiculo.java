@@ -31,14 +31,14 @@ public class Vehiculo {
 	@JoinColumn(name = "idmodelo",nullable = false)
 	private Modelo vehModelo;
 	
-	@Column(length = 4, nullable = false)
+	@Column(length = 4, nullable = true)
 	private String fabricacion;
 	
-	@Column(length = 60, nullable = false)
+	@Column(length = 60, nullable = true)
 	private String color; 
 	
-	@Column(name = "numeromotor", nullable = true)
-	private Integer numeroMotor;
+	@Column(name = "numeromotor", length = 50, nullable = true)
+	private String numeroMotor;
 	
 	@Column(name = "numeroplaca", length = 10, nullable = true)
 	private String numeroPlaca;
@@ -52,8 +52,8 @@ public class Vehiculo {
 	@Column(name = "numerocilindros", nullable = true)
 	private Integer numeroCilindros;
 	
-	@Column(name = "numeroserie", nullable = true)
-	private Integer numeroSerie;
+	@Column(name = "numeroserie", length = 50, nullable = true)
+	private String numeroSerie;
 	
 	@Column(name = "numeropasajeros", nullable = true)
 	private Integer numeroPasajeros;
@@ -130,11 +130,11 @@ public class Vehiculo {
 		this.color = color;
 	}
 
-	public Integer getNumeroMotor() {
+	public String getNumeroMotor() {
 		return numeroMotor;
 	}
 
-	public void setNumeroMotor(Integer numeroMotor) {
+	public void setNumeroMotor(String numeroMotor) {
 		this.numeroMotor = numeroMotor;
 	}
 
@@ -170,11 +170,11 @@ public class Vehiculo {
 		this.numeroCilindros = numeroCilindros;
 	}
 
-	public Integer getNumeroSerie() {
+	public String getNumeroSerie() {
 		return numeroSerie;
 	}
 
-	public void setNumeroSerie(Integer numeroSerie) {
+	public void setNumeroSerie(String numeroSerie) {
 		this.numeroSerie = numeroSerie;
 	}
 

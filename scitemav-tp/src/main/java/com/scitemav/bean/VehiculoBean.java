@@ -10,12 +10,12 @@ public class VehiculoBean {
 	private Integer idModelo;
 	private String fabricacion;
 	private String color; 
-	private Integer numeroMotor;
+	private String numeroMotor;
 	private String numeroPlaca;
 	private Integer numeroEjes;
 	private Integer numeroRuedas;
 	private Integer numeroCilindros;
-	private Integer numeroSerie;
+	private String numeroSerie;
 	private Integer numeroPasajeros;
 	private Integer numeroAsientos;
 	private Double pesoSeco;
@@ -44,10 +44,10 @@ public class VehiculoBean {
 	public void setColor(String color) {
 		this.color = color;
 	}
-	public Integer getNumeroMotor() {
+	public String getNumeroMotor() {
 		return numeroMotor;
 	}
-	public void setNumeroMotor(Integer numeroMotor) {
+	public void setNumeroMotor(String numeroMotor) {
 		this.numeroMotor = numeroMotor;
 	}
 	public String getNumeroPlaca() {
@@ -74,10 +74,10 @@ public class VehiculoBean {
 	public void setNumeroCilindros(Integer numeroCilindros) {
 		this.numeroCilindros = numeroCilindros;
 	}
-	public Integer getNumeroSerie() {
+	public String getNumeroSerie() {
 		return numeroSerie;
 	}
-	public void setNumeroSerie(Integer numeroSerie) {
+	public void setNumeroSerie(String numeroSerie) {
 		this.numeroSerie = numeroSerie;
 	}
 	public Integer getNumeroPasajeros() {

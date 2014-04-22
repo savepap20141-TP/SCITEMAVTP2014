@@ -81,7 +81,7 @@ public class ClienteServiceImpl implements ClienteService{
 			for(int i=0; i < lc.size(); i++){
 				Cliente c = lc.get(i);
 				ClienteBean cb = new ClienteBean();
-				cb.setIdCliente(cb.getIdCliente());
+				cb.setIdCliente(c.getIdCliente());
 				cb.setDni(c.getCliPersona().getDni());
 				cb.setNombre(c.getCliPersona().getNombre());
 				cb.setApellidoPaterno(c.getCliPersona().getApellidoPaterno());
