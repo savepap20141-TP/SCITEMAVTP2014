@@ -7,13 +7,14 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.scitemav.bean.TipoRepuestoBean;
 import com.scitemav.bean.TipoVehiculoBean;
 import com.scitemav.model.TipoRepuesto;
 import com.scitemav.model.TipoVehiculo;
-
+@Service
 public class TipoRepuestoServiceImpl implements TipoRepuestoService {
 
 	@PersistenceContext

@@ -19,6 +19,7 @@ import com.scitemav.service.RepuestoService;
 
 @Controller
 public class RepuestoController {
+	
 	@Autowired
 	RepuestoService repuestoService;
 	

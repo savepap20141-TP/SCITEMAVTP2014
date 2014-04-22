@@ -7,6 +7,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.scitemav.bean.ClienteBean;
@@ -17,7 +18,7 @@ import com.scitemav.model.Persona;
 import com.scitemav.model.Repuesto;
 import com.scitemav.model.TipoRepuesto;
 import com.scitemav.model.Usuario;
-
+@Service
 public class RepuestoServicelmlp implements RepuestoService {
 
 	@PersistenceContext

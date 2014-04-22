@@ -9,10 +9,7 @@
 <body>
 <div>
 					<a href="toLogin">Login</a><br/>
-					<!-- <a href="toSignUp">Sign Up</a> -->
 					<a href="toRegistro">Registro</a>
-					<!-- <a href="toGetBuckets">Get Buckets</a> -->
-					<a href="toRegistroTrabajador">Registrar Trabajador</a>
 					
 </div>
 </body>

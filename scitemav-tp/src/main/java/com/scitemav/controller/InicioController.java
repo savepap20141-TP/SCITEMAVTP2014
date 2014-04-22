@@ -78,16 +78,6 @@ public class InicioController {
 	public String toRegistroFalla(){
 		return "registrarFalla";
 	}
-	
-	@RequestMapping("toRegistroRepuesto")
-	public String toRegistroRepuesto(){
-		return "registrarRepuesto";
-	}
-	
-	@RequestMapping("toRegistroTipoRepuesto")
-	public String toRegistroTipoRepuesto(){
-		return "registrarTipoRepuesto";
-	}
 
 	@RequestMapping(value = "/toDashboard", method = RequestMethod.GET)
 	public String toDashboard(HttpServletRequest req, HttpSession session, Model model){
