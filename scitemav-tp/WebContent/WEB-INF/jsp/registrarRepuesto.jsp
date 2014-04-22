@@ -7,6 +7,30 @@
 <title>Registro de Repuesto</title>
 <jsp:include page="componentes/head.jsp" />
 </head>
+<script>
+$(document).ready(function(e){	
+	listarTiporepuestos();
+});
+</script>
+<script>
+
+function listarTiporepuestos(){
+	
+	$.ajax({
+ 		url: 'getTipoRepuestos',
+ 		type: 'post',
+ 		dataType: 'json',
+ 		data: '',
+ 		success: function(distritos){
+ 			$('#comboTiporepuestos').empty();
+ 			$.each(tiporepuestos, function(i, tiporepuestos){
+ 				$('#comboTiporepuestos').append('<option value="'+tiporepuestos.idTipoRepuesto+'">'+tiporepuestos.nombre+'</option>');				
+			});
+ 		}
+ 	});	
+	
+}
+</script>
 <body>
  <div id="wrapper">
 
@@ -38,7 +62,7 @@
 
 								<!-- Form de registro -->
 
-								<form role="form" id="frmRegistroRepuesto" action="registro"
+								<form role="form" id="frmRegistroRepuesto" action="registroRepuesto"
 									method="post" commandName="respuestoBean"
 									style="width: 60%; margin-left: 20%;">
 
@@ -51,7 +75,8 @@
 										
 										<div class="form-group">
 											<label> Tipo</label>
-											<select class="form-control" id="comboTipoRepuesto">
+											<select class="form-control" id="comboTiporepuestos" name="idTipoRepuesto">
+											   <option value="">Seleccione su tipo de repuesto</option>
 
                                             </select>
 										</div>
