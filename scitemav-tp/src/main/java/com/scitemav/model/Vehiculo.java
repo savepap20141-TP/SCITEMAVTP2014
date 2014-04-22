@@ -40,8 +40,8 @@ public class Vehiculo {
 	@Column(name = "numeromotor", nullable = true)
 	private Integer numeroMotor;
 	
-	@Column(name = "numeroplaca", nullable = true)
-	private Integer numeroPlaca;
+	@Column(length = 10, nullable = true)
+	private String numeroPlaca;
 	
 	@Column(name = "numeroejes", nullable = true)
 	private Integer numeroEjes;
@@ -138,11 +138,11 @@ public class Vehiculo {
 		this.numeroMotor = numeroMotor;
 	}
 
-	public Integer getNumeroPlaca() {
+	public String getNumeroPlaca() {
 		return numeroPlaca;
 	}
 
-	public void setNumeroPlaca(Integer numeroPlaca) {
+	public void setNumeroPlaca(String numeroPlaca) {
 		this.numeroPlaca = numeroPlaca;
 	}
 

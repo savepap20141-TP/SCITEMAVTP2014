@@ -11,7 +11,7 @@ public class VehiculoBean {
 	private String fabricacion;
 	private String color; 
 	private Integer numeroMotor;
-	private Integer numeroPlaca;
+	private String numeroPlaca;
 	private Integer numeroEjes;
 	private Integer numeroRuedas;
 	private Integer numeroCilindros;
@@ -50,10 +50,10 @@ public class VehiculoBean {
 	public void setNumeroMotor(Integer numeroMotor) {
 		this.numeroMotor = numeroMotor;
 	}
-	public Integer getNumeroPlaca() {
+	public String getNumeroPlaca() {
 		return numeroPlaca;
 	}
-	public void setNumeroPlaca(Integer numeroPlaca) {
+	public void setNumeroPlaca(String numeroPlaca) {
 		this.numeroPlaca = numeroPlaca;
 	}
 	public Integer getNumeroEjes() {
