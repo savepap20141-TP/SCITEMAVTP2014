@@ -12,10 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.scitemav.bean.TipoVehiculoBean;
 import com.scitemav.bean.VehiculoBean;
-import com.scitemav.model.TipoVehiculo;
-import com.scitemav.model.Vehiculo;
 import com.scitemav.service.VehiculoService;
 
 @Controller
@@ -46,19 +43,18 @@ public class VehiculoController {
 	
 	@RequestMapping(value="registroVehiculo", method = RequestMethod.POST)
 	@ResponseBody
-	public boolean registroTipoVehiculo(@ModelAttribute("vehiculo") VehiculoBean vehiculo, Model model, HttpServletRequest req){
-		//String path="registrarCarroceria";
-		boolean result = false;
-		if(vehiculoService.registro(vehiculo)){
-			//model.addAttribute("msgOk", "Se ha registrado correctamente");
-			result = true;
+	public String registroTipoVehiculo(@ModelAttribute("vehiculobean") VehiculoBean vehiculoBean, Model model, HttpServletRequest req){
+		String path = "";
+		if(vehiculoService.registro(vehiculoBean)){
+			model.addAttribute("msg", "Se registro correctamente");
+			path = "registrarVehiculo";
+		}else{
+			model.addAttribute("msg", "Fallo al registrarse");
+			path = "registrarVehiculo";
 		}
-		else{
-			//model.addAttribute("msg", "Se ha producido un error al registrarse");
-			result = false;
-		}
-		return result;
+		return path;
 	}
+	
 	
 	@RequestMapping(value = "getVehiculos", method = RequestMethod.POST)
 	@ResponseBody

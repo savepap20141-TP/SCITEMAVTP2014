@@ -7,6 +7,84 @@
 <title>Registrar Vehiculo</title>
 <jsp:include page="componentes/head.jsp" />
 </head>
+<script>
+$(document).ready(function(e){
+	listarClientes();
+	listarTipoVehiculos();
+	listarModelos();
+	listarMarcas();
+});
+</script>
+<script>
+
+function listarClientes(){
+	
+	$.ajax({
+ 		url: 'getClientes',
+ 		type: 'post',
+ 		dataType: 'json',
+ 		data: '',
+ 		success: function(clientes){
+ 			$('#comboCliente').empty();
+ 			$.each(clientes, function(i, cliente){
+ 				$('#comboCliente').append('<option value="'+cliente.idCliente+'">'+cliente.nombre+' '+cliente.apellidoPaterno+' - '+cliente.dni+'</option>');				
+			});
+ 		}
+ 	});	
+	
+}
+
+function listarTipoVehiculos(){
+	
+	$.ajax({
+ 		url: 'getTipoVehiculos',
+ 		type: 'post',
+ 		dataType: 'json',
+ 		data: '',
+ 		success: function(tipovehiculos){
+ 			$('#comboTipovehiculo').empty();
+ 			$.each(tipovehiculos, function(i, tipovehiculo){
+ 				$('#comboTipovehiculo').append('<option value="'+tipovehiculo.idTipoVehiculo+'">'+tipovehiculo.nombre+'</option>');				
+			});
+ 		}
+ 	});	
+	
+}
+
+function listarModelos(){
+	
+	$.ajax({
+ 		url: 'getModelos',
+ 		type: 'post',
+ 		dataType: 'json',
+ 		data: '',
+ 		success: function(modelos){
+ 			$('#comboModelo').empty();
+ 			$.each(modelos, function(i, modelo){
+ 				$('#comboModelo').append('<option value="'+modelo.idModelo+'">'+modelo.nombre+'</option>');				
+			});
+ 		}
+ 	});	
+	
+}
+
+function listarMarcas(){
+	
+	$.ajax({
+ 		url: 'getMarcas',
+ 		type: 'post',
+ 		dataType: 'json',
+ 		data: '',
+ 		success: function(marcas){
+ 			$('#comboMarca').empty();
+ 			$.each(marcas, function(i, marca){
+ 				$('#comboMarca').append('<option value="'+marca.idMarca+'">'+marca.nombre+'</option>');				
+			});
+ 		}
+ 	});	
+	
+}
+</script>
 <body>
 	<div id="wrapper">
 
@@ -42,30 +120,40 @@
 								<div class="col-lg-6">						
 									<!-- PRIMERA COLUMNA -->
 									
-										<div class="form-group input-group">
+										<!--   <div class="form-group input-group">
 											<label>DNI del cliente</label>
                                             <input type="text" class="form-control" id="txtDniCliente" name="idCliente" placeholder="DNI del Cliente">
                                             <span class="input-group-btn">
                                                 <button style="margin-top:25px; height: 34px;" class="btn btn-default" type="button"><i class="fa fa-search"></i>
                                                 </button>
                                             </span>
-                                        </div>					
+                                        </div>	-->	
+                                        
+                                        <div class="form-group">
+                                            <label>Cliente</label>
+                                            <select class="form-control" id="comboCliente" name="idCliente">
+                                                 <option value="">Seleccione el cliente</option>
+                                            </select>
+                                        </div>			
                                         
                                         <div class="form-group">
                                             <label>Marca</label>
                                             <select class="form-control" id="comboMarca" name="idMarca">
+                                                 <option value="">Seleccione la marca</option>
                                             </select>
                                         </div>         
 
                                         <div class="form-group">
                                             <label>Modelo</label>
                                             <select class="form-control" id="comboModelo" name="idModelo">
+                                                 <option value="">Seleccione el modelo</option>
                                             </select>
                                         </div>           
                                         
                                         <div class="form-group">
                                             <label>Tipo de Vehiculo</label>
-                                            <select class="form-control" id="comboTipo" name="idTipoVehiculo">
+                                            <select class="form-control" id="comboTipovehiculo" name="idTipoVehiculo">
+                                            <option value="">Seleccione el tipo</option>
                                             </select>
                                         </div>                                                                                                                    																											
 										

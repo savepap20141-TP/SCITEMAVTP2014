@@ -59,15 +59,9 @@ public class InicioController {
 		return "registrarCliente";
 	}
 	
-	@RequestMapping("toRegistroMarca")
-	public String toRegistroMarca(){
-		return "registrarMarca";
-	}
 	
-	@RequestMapping("toRegistroModelo")
-	public String toRegistroModelo(){
-		return "registrarModelo";
-	}		
+	
+		
 	
 	@RequestMapping("toRegistroRevision")
 	public String toRegistroRevision(){
