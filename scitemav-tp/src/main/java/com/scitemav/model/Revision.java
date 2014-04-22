@@ -1,7 +1,6 @@
 package com.scitemav.model;
 
 import java.sql.Date;
-import java.sql.Timestamp;
 import java.util.Collection;
 
 import javax.persistence.Column;
@@ -25,10 +24,10 @@ public class Revision {
 	private Double costoTotal;
 	
 	@Column(name = "fechainicio", nullable = true)
-	private Timestamp fechaInicio;
+	private Date fechaInicio;
 	
 	@Column(name = "fechafin", nullable = true)
-	private Timestamp fechaFin;
+	private Date fechaFin;
 	
 	@Column(name = "fechaproxima", nullable = true)
 	private Date fechaProxima;
@@ -70,19 +69,19 @@ public class Revision {
 		this.costoTotal = costoTotal;
 	}
 
-	public Timestamp getFechaInicio() {
+	public Date getFechaInicio() {
 		return fechaInicio;
 	}
 
-	public void setFechaInicio(Timestamp fechaInicio) {
+	public void setFechaInicio(Date fechaInicio) {
 		this.fechaInicio = fechaInicio;
 	}
 
-	public Timestamp getFechaFin() {
+	public Date getFechaFin() {
 		return fechaFin;
 	}
 
-	public void setFechaFin(Timestamp fechaFin) {
+	public void setFechaFin(Date fechaFin) {
 		this.fechaFin = fechaFin;
 	}
 

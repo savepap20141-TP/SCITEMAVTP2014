@@ -1,15 +1,14 @@
 package com.scitemav.bean;
 
 import java.sql.Date;
-import java.sql.Timestamp;
 
 public class RevisionBean {
 
 	// Revision
 	private Integer idRevision;
 	private Double costoTotal;
-	private Timestamp fechaInicio;
-	private Timestamp fechaFin;
+	private Date fechaInicio;
+	private Date fechaFin;
 	private Date fechaProxima;
 	private Integer kilometrajeActual;
 	private Integer kilometrajeProximo;
@@ -50,16 +49,16 @@ public class RevisionBean {
 	public void setCostoTotal(Double costoTotal) {
 		this.costoTotal = costoTotal;
 	}
-	public Timestamp getFechaInicio() {
+	public Date getFechaInicio() {
 		return fechaInicio;
 	}
-	public void setFechaInicio(Timestamp fechaInicio) {
+	public void setFechaInicio(Date fechaInicio) {
 		this.fechaInicio = fechaInicio;
 	}
-	public Timestamp getFechaFin() {
+	public Date getFechaFin() {
 		return fechaFin;
 	}
-	public void setFechaFin(Timestamp fechaFin) {
+	public void setFechaFin(Date fechaFin) {
 		this.fechaFin = fechaFin;
 	}
 	public Date getFechaProxima() {
