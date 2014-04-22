@@ -1,260 +1,212 @@
-package com.scitemav.model;
+package com.scitemav.bean;
 
-import java.util.Collection;
+import java.sql.Date;
+import java.sql.Timestamp;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
+public class RevisionBean {
 
-@Entity
-public class Vehiculo {
-	@Id @GeneratedValue @Column(name = "idvehiculo")
+	// Revision
+	private Integer idRevision;
+	private Double costoTotal;
+	private Timestamp fechaInicio;
+	private Timestamp fechaFin;
+	private Date fechaProxima;
+	private Integer kilometrajeActual;
+	private Integer kilometrajeProximo;
+
+	//Vehiculo
 	private Integer idVehiculo;
-	
-	@ManyToOne
-	@JoinColumn(name = "idcliente",nullable = false)
-	private Cliente vehCliente;
-	
-	@ManyToOne
-	@JoinColumn(name = "idmarca",nullable = false)
-	private Marca vehMarca;
-	
-	@ManyToOne
-	@JoinColumn(name = "idtipovehiculo",nullable = false)
-	private TipoVehiculo vehTipoVehiculo;
-	
-	@ManyToOne
-	@JoinColumn(name = "idmodelo",nullable = false)
-	private Modelo vehModelo;
-	
-	@Column(length = 4, nullable = false)
+	private Integer idCliente;
+	private Integer idMarca;
+	private Integer idTipoVehiculo;
+	private Integer idModelo;
 	private String fabricacion;
-	
-	@Column(length = 60, nullable = false)
 	private String color; 
-	
-	@Column(name = "numeromotor", nullable = true)
 	private Integer numeroMotor;
-	
-	@Column(name = "numeroplaca", length = 10, nullable = true)
 	private String numeroPlaca;
-	
-	@Column(name = "numeroejes", nullable = true)
 	private Integer numeroEjes;
-	
-	@Column(name = "numeroruedas", nullable = true)
 	private Integer numeroRuedas;
-	
-	@Column(name = "numerocilindros", nullable = true)
 	private Integer numeroCilindros;
-	
-	@Column(name = "numeroserie", nullable = true)
 	private Integer numeroSerie;
-	
-	@Column(name = "numeropasajeros", nullable = true)
 	private Integer numeroPasajeros;
-	
-	@Column(name = "numeroasientos", nullable = true)
 	private Integer numeroAsientos;
-	
-	@Column(name = "pesoseco", nullable = true)
 	private Double pesoSeco;
-	
-	@Column(name = "pesobruto", nullable = true)
 	private Double pesoBruto;
-
-	@Column(name = "longitud", nullable = true)
 	private Double longitud;
-	
-	@Column(name = "altura", nullable = true)
 	private Double altura;
-	
-	@Column(name = "ancho", nullable = true)
 	private Double ancho;
-
-	@Column(name = "cargautil", nullable = true)
 	private Double cargaUtil;
-
-	@OneToMany(mappedBy ="revVehiculo")
-	private Collection<Revision> vehRevisiones;
 	
+	
+	public Integer getIdRevision() {
+		return idRevision;
+	}
+	public void setIdRevision(Integer idRevision) {
+		this.idRevision = idRevision;
+	}
+	public Double getCostoTotal() {
+		return costoTotal;
+	}
+	public void setCostoTotal(Double costoTotal) {
+		this.costoTotal = costoTotal;
+	}
+	public Timestamp getFechaInicio() {
+		return fechaInicio;
+	}
+	public void setFechaInicio(Timestamp fechaInicio) {
+		this.fechaInicio = fechaInicio;
+	}
+	public Timestamp getFechaFin() {
+		return fechaFin;
+	}
+	public void setFechaFin(Timestamp fechaFin) {
+		this.fechaFin = fechaFin;
+	}
+	public Date getFechaProxima() {
+		return fechaProxima;
+	}
+	public void setFechaProxima(Date fechaProxima) {
+		this.fechaProxima = fechaProxima;
+	}
+	public Integer getKilometrajeActual() {
+		return kilometrajeActual;
+	}
+	public void setKilometrajeActual(Integer kilometrajeActual) {
+		this.kilometrajeActual = kilometrajeActual;
+	}
+	public Integer getKilometrajeProximo() {
+		return kilometrajeProximo;
+	}
+	public void setKilometrajeProximo(Integer kilometrajeProximo) {
+		this.kilometrajeProximo = kilometrajeProximo;
+	}
 	public Integer getIdVehiculo() {
 		return idVehiculo;
 	}
-
 	public void setIdVehiculo(Integer idVehiculo) {
 		this.idVehiculo = idVehiculo;
 	}
-
-	public Cliente getVehCliente() {
-		return vehCliente;
+	public Integer getIdCliente() {
+		return idCliente;
 	}
-
-	public void setVehCliente(Cliente vehCliente) {
-		this.vehCliente = vehCliente;
+	public void setIdCliente(Integer idCliente) {
+		this.idCliente = idCliente;
 	}
-
-	public Marca getVehMarca() {
-		return vehMarca;
+	public Integer getIdMarca() {
+		return idMarca;
 	}
-
-	public void setVehMarca(Marca vehMarca) {
-		this.vehMarca = vehMarca;
+	public void setIdMarca(Integer idMarca) {
+		this.idMarca = idMarca;
 	}
-
-	public TipoVehiculo getVehTipoVehiculo() {
-		return vehTipoVehiculo;
+	public Integer getIdTipoVehiculo() {
+		return idTipoVehiculo;
 	}
-
-	public void setVehTipoVehiculo(TipoVehiculo vehTipoVehiculo) {
-		this.vehTipoVehiculo = vehTipoVehiculo;
+	public void setIdTipoVehiculo(Integer idTipoVehiculo) {
+		this.idTipoVehiculo = idTipoVehiculo;
 	}
-
+	public Integer getIdModelo() {
+		return idModelo;
+	}
+	public void setIdModelo(Integer idModelo) {
+		this.idModelo = idModelo;
+	}
 	public String getFabricacion() {
 		return fabricacion;
 	}
-
 	public void setFabricacion(String fabricacion) {
 		this.fabricacion = fabricacion;
 	}
-
 	public String getColor() {
 		return color;
 	}
-
 	public void setColor(String color) {
 		this.color = color;
 	}
-
 	public Integer getNumeroMotor() {
 		return numeroMotor;
 	}
-
 	public void setNumeroMotor(Integer numeroMotor) {
 		this.numeroMotor = numeroMotor;
 	}
-
 	public String getNumeroPlaca() {
 		return numeroPlaca;
 	}
-
 	public void setNumeroPlaca(String numeroPlaca) {
 		this.numeroPlaca = numeroPlaca;
 	}
-
 	public Integer getNumeroEjes() {
 		return numeroEjes;
 	}
-
 	public void setNumeroEjes(Integer numeroEjes) {
 		this.numeroEjes = numeroEjes;
 	}
-
 	public Integer getNumeroRuedas() {
 		return numeroRuedas;
 	}
-
 	public void setNumeroRuedas(Integer numeroRuedas) {
 		this.numeroRuedas = numeroRuedas;
 	}
-
 	public Integer getNumeroCilindros() {
 		return numeroCilindros;
 	}
-
 	public void setNumeroCilindros(Integer numeroCilindros) {
 		this.numeroCilindros = numeroCilindros;
 	}
-
 	public Integer getNumeroSerie() {
 		return numeroSerie;
 	}
-
 	public void setNumeroSerie(Integer numeroSerie) {
 		this.numeroSerie = numeroSerie;
 	}
-
 	public Integer getNumeroPasajeros() {
 		return numeroPasajeros;
 	}
-
 	public void setNumeroPasajeros(Integer numeroPasajeros) {
 		this.numeroPasajeros = numeroPasajeros;
 	}
-
 	public Integer getNumeroAsientos() {
 		return numeroAsientos;
 	}
-
 	public void setNumeroAsientos(Integer numeroAsientos) {
 		this.numeroAsientos = numeroAsientos;
 	}
-
 	public Double getPesoSeco() {
 		return pesoSeco;
 	}
-
 	public void setPesoSeco(Double pesoSeco) {
 		this.pesoSeco = pesoSeco;
 	}
-
 	public Double getPesoBruto() {
 		return pesoBruto;
 	}
-
 	public void setPesoBruto(Double pesoBruto) {
 		this.pesoBruto = pesoBruto;
 	}
-
 	public Double getLongitud() {
 		return longitud;
 	}
-
 	public void setLongitud(Double longitud) {
 		this.longitud = longitud;
 	}
-
 	public Double getAltura() {
 		return altura;
 	}
-
 	public void setAltura(Double altura) {
 		this.altura = altura;
 	}
-
 	public Double getAncho() {
 		return ancho;
 	}
-
 	public void setAncho(Double ancho) {
 		this.ancho = ancho;
 	}
-
 	public Double getCargaUtil() {
 		return cargaUtil;
 	}
-
 	public void setCargaUtil(Double cargaUtil) {
 		this.cargaUtil = cargaUtil;
 	}
-
-	public Modelo getVehModelo() {
-		return vehModelo;
-	}
-
-	public void setVehModelo(Modelo vehModelo) {
-		this.vehModelo = vehModelo;
-	}
-
-	public Collection<Revision> getVehRevisiones() {
-		return vehRevisiones;
-	}
-
-	public void setVehRevisiones(Collection<Revision> vehRevisiones) {
-		this.vehRevisiones = vehRevisiones;
-	}
+	
+	
+	
 }

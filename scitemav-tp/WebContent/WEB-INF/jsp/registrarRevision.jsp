@@ -7,6 +7,39 @@
 <title>Registro de Revisión</title>
 <jsp:include page="componentes/head.jsp" />
 </head>
+
+<script>
+$(document).ready(function(e){
+	var nfechaInicio = 'txtFechaInicio';
+	cargarFecha(nfechaInicio);
+	var nfechaFin = 'txtFechaFin';
+	cargarFecha(nfechaFin);
+	var nProximaRev = 'txtProximaRevision';
+	cargarFecha(nProximaRev);
+	listarVehiculos();
+});
+</script>
+
+<script>
+
+function listarVehiculos(){
+	
+	$.ajax({
+ 		url: 'getVehiculos',
+ 		type: 'post',
+ 		dataType: 'json',
+ 		data: '',
+ 		success: function(vehiculos){
+ 			$('#comboAutomovil').empty();
+ 			$.each(vehiculos, function(i, vehiculo){
+ 				$('#comboAutomovil').append('<option value="'+vehiculo.idVehiculo+'">'+vehiculo.numeroPlaca+'</option>');				
+			});
+ 		}
+ 	});	
+	
+}
+</script>
+
 <body>
  <div id="wrapper">
 
@@ -37,7 +70,7 @@
 
 								<!-- Form de registro -->
 
-								<form role="form" id="frmRegistroRevision" action="registro"
+								<form role="form" id="frmRegistroRevision" action="registroRevision"
 									method="post" commandName="revisionBean"
 									style="width: 60%; margin-left: 20%;">
 
@@ -45,33 +78,44 @@
 									
 										<div class="form-group">
 											<label> Automóvil</label>
-											<select class="form-control" id="comboAutomovil">
+											<select class="form-control" id="comboAutomovil" name="idVehiculo">
 
                                             </select>
 										</div>
 										
-										<div class="form-group">
+										<div class="form-group" style="display: none;">
 											<label> Costo Total </label> <input id="txtCostoTotal"
 											class="form-control" name="costoTotal" placeholder="Costo total"></input>
 										</div>
 										
-										<div class="form-group">
-											<label> Fecha de Inicio </label> <input id="txtFechaInicio"
-											class="form-control" name="fechaInicio" type="date"></input>
+										<div class="form-group input-group">
+											<label> Fecha de Inicio</label> <input id="txtFechaInicio"
+												class="form-control" name="fechaInicio"
+												placeholder="Fecha de Inicio"></input>
+												<span class="input-group-btn">
+												    <button class="btn btn-default fa fa-table fa-fw" type="button" style="margin-top:25px; height: 34px;" onclick="$('#txtFechaInicio').datepicker('show')"></button>
+												</span>
 										</div>
 										
-										<div class="form-group">
-											<label> Fecha de Fin </label> <input id="txtFechaFin"
-											class="form-control" name="fechaInicio" type="date"></input>
+										<div class="form-group input-group" style="display: none;">
+											<label> Fecha de Fin</label> <input id="txtFechaFin"
+												class="form-control" name="fechaFin"
+												placeholder="Fecha de Fin"></input>
+												<span class="input-group-btn">
+												    <button class="btn btn-default fa fa-table fa-fw" type="button" style="margin-top:25px; height: 34px;" onclick="$('#txtFechaFin').datepicker('show')"></button>
+												</span>
 										</div>
 										
-										<div class="form-group">
-											<label> Próxima revisión </label> <input id="txtProximaRevision"
-											class="form-control" name="proximaRevision" type="date"></input>
-										</div>
-										
-										
-										
+										<div class="form-group input-group" style="display: none;">
+											<label> Próxima revisión</label> <input id="txtProximaRevision"
+												class="form-control" name="proximaRevision"
+												placeholder="Fecha de Inicio"></input>
+												<span class="input-group-btn">
+												    <button class="btn btn-default fa fa-table fa-fw" type="button" style="margin-top:25px; height: 34px;" onclick="$('#txtProximaRevision').datepicker('show')"></button>
+												</span>
+										</div>																				
+																		
+							
 										<label> </label> <input
 											class="btn btn-lg btn-success btn-block" type="submit"
 											value="Registrar Revisión" />
@@ -86,7 +130,7 @@
 				</div>
 		
 		</div>
-
+</div>
  </div>
 </body>
 </html>
