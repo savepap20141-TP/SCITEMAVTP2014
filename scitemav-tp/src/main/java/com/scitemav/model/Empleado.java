@@ -27,6 +27,9 @@ public class Empleado {
 	@JoinColumn(name = "idespecialidad")
 	private Especialidad empEspecialidad;
 
+	@Column(name = "administrador", nullable = true)
+	private Boolean administrador;
+	
 	public Integer getIdEmpleado() {
 		return idEmpleado;
 	}
@@ -57,5 +60,13 @@ public class Empleado {
 
 	public void setEmpEspecialidad(Especialidad empEspecialidad) {
 		this.empEspecialidad = empEspecialidad;
+	}
+
+	public Boolean getAdministrador() {
+		return administrador;
+	}
+
+	public void setAdministrador(Boolean administrador) {
+		this.administrador = administrador;
 	}
 }
