@@ -28,7 +28,7 @@ public class VehiculoController {
 	
 	@RequestMapping("toConsultarVehiculo")
 	public String toConsultarVehiculo(){
-		return "consultarVehiculo";
+		return "consultarVehiculos";
 	}
 	
 	@RequestMapping("toVehiculoDetalle")

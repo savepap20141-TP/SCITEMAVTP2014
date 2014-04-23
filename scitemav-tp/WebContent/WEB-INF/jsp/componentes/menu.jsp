@@ -35,7 +35,7 @@
                                 <a href="toRegistroVehiculo">Registrar Vehiculo</a>
                             </li>
                             <li>
-                                <a href="toVehiculoDetalle">Consultar Vehiculos</a>
+                                <a href="toConsultarVehiculo">Consultar Vehiculos</a>
                             </li>
                         </ul>
                         <!-- /.nav-second-level -->
