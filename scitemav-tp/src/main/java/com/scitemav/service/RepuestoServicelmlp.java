@@ -61,6 +61,7 @@ public class RepuestoServicelmlp implements RepuestoService {
 				rb.setIdRepuesto(r.getIdRepuesto());
 				rb.setNombre(r.getNombre());
 				rb.setIdTipoRepuesto(r.getRepTipoRepuesto().getIdTipoRepuesto());
+				rb.setNombreTipoRepuesto(r.getRepTipoRepuesto().getNombre());
 				lcb.add(rb);
 			}
 		} catch (IllegalArgumentException e) {

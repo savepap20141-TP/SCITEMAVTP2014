@@ -1,9 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
+    <!DOCTYPE html>
     <%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%> 
 	<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-    
-<!DOCTYPE html>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
@@ -53,7 +52,7 @@ function listarTiporepuestos(){
 
 			<div class="row">
 			
-				<div class="col-lg-8" style="width:90%;">
+				<div class="col-lg-12" style="width:90%;">
 					<div class="panel panel-default">
 						<div class="panel-heading">
 							<i class="fa fa-bar-chart-o fa-fw"></i> Registro de nuevo repuesto
@@ -65,8 +64,7 @@ function listarTiporepuestos(){
 								<!-- Form de registro -->
 
 								<form role="form" id="frmRegistroRepuesto" action="registroRepuesto"
-									method="post" commandName="respuestoBean"
-									style="width: 60%; margin-left: 20%;">
+									method="post" commandName="respuestoBean" style="width: 90%; margin-left: 10%;">
 
 									<fieldset>
 									

@@ -1,7 +1,5 @@
 package com.scitemav.bean;
 
-import com.scitemav.model.TipoRepuesto;
-
 public class RepuestoBean {
 	
 	private Integer idRepuesto;
@@ -12,6 +10,7 @@ public class RepuestoBean {
 	
 	private Integer idTipoRepuesto;
 
+	private String nombreTipoRepuesto;
 
 	public Integer getIdRepuesto() {
 		return idRepuesto;
@@ -40,6 +39,16 @@ public class RepuestoBean {
 
 	public void setIdTipoRepuesto(Integer idTipoRepuesto) {
 		this.idTipoRepuesto = idTipoRepuesto;
+	}
+
+
+	public String getNombreTipoRepuesto() {
+		return nombreTipoRepuesto;
+	}
+
+
+	public void setNombreTipoRepuesto(String nombreTipoRepuesto) {
+		this.nombreTipoRepuesto = nombreTipoRepuesto;
 	}
 
 

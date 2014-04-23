@@ -86,7 +86,7 @@
                                 <a href="toRegistroRepuesto">Registrar Repuesto</a>
                             </li>
                             <li>
-                                <a href="#">Consultar Respuestos</a>
+                                <a href="toConsultarRepuesto">Consultar Respuestos</a>
                             </li>
                             <li>
                                 <a href="toRegistroTipoRepuesto">Registrar Tipo de Repuesto</a>
