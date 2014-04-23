@@ -41,11 +41,11 @@ public class TipoRepuestoController {
 		//String path="registrarCarroceria";
 		boolean result = false;
 		if(tipoRepuestoService.registro(tr)){
-			//model.addAttribute("msgOk", "Se ha registrado correctamente");
+			model.addAttribute("msgOk", "Se ha registrado correctamente");
 			result = true;
 		}
 		else{
-			//model.addAttribute("msg", "Se ha producido un error al registrarse");
+			model.addAttribute("msg", "Se ha producido un error al registrarse");
 			result = false;
 		}
 		return result;

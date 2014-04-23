@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
+    <%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%> 
+	<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+    
 <!DOCTYPE html>
 <html>
 <head>
@@ -21,15 +24,16 @@ function listarTiporepuestos(){
  		type: 'post',
  		dataType: 'json',
  		data: '',
- 		success: function(distritos){
+ 		success: function(tiporepuesto){
  			$('#comboTiporepuestos').empty();
- 			$.each(tiporepuestos, function(i, tiporepuestos){
+ 			$.each(tiporepuesto, function(i, tiporepuestos){
  				$('#comboTiporepuestos').append('<option value="'+tiporepuestos.idTipoRepuesto+'">'+tiporepuestos.nombre+'</option>');				
 			});
  		}
  	});	
 	
 }
+
 </script>
 <body>
  <div id="wrapper">
@@ -49,13 +53,11 @@ function listarTiporepuestos(){
 
 			<div class="row">
 			
-				<div class="col-lg-8">
+				<div class="col-lg-8" style="width:90%;">
 					<div class="panel panel-default">
 						<div class="panel-heading">
 							<i class="fa fa-bar-chart-o fa-fw"></i> Registro de nuevo repuesto
-							<div class="pull-right">
-								<div class="btn-group"></div>
-							</div>
+							
 						</div>
 						<div class="panel-body">
 							<div class="row">
@@ -86,7 +88,7 @@ function listarTiporepuestos(){
 										
 										<label> </label> <input
 											class="btn btn-lg btn-success btn-block" type="submit"
-											value="Registrar Repuesto" />
+											value="Registrar Repuesto" style="width: 60%; margin-left: 20%; margin-top: 10%;"/>
 										<p>
 											<label class="error"><c:out value="${msg}" /></label>
 										</p>
