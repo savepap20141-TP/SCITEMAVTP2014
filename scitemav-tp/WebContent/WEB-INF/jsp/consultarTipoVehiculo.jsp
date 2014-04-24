@@ -47,15 +47,6 @@ function inicioConsulta(){
  	});
 }
 </script>
-<script>
-function removeNulls(){
-	$("td").each(function(){
-	    if($(this).text() == 'null'){
-	    	$(this).text("");
-	    }
-	});
-}
-</script>
 <body>
  <div id="wrapper">
 

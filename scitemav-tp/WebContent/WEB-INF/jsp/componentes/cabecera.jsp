@@ -29,6 +29,13 @@ function cargarFecha(idname){
 	 };
 	 $.datepicker.setDefaults($.datepicker.regional['es']);
 }
+function removeNulls(){
+	$("td").each(function(){
+	    if($(this).text() == 'null'){
+	    	$(this).text("");
+	    }
+	});
+}
 </script> 
         <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0;" >
             <div class="navbar-header">
