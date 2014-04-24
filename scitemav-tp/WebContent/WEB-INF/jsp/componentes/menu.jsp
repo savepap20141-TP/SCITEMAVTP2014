@@ -68,7 +68,7 @@
                                 <a href="toRegistroModelo">Registrar Modelos</a>
                             </li>
                             <li>
-                                <a href="#">Consultar Marcas</a>
+                                <a href="toConsultarMarca">Consultar Marcas</a>
                             </li>
                         </ul>
                         <!-- /.nav-second-level -->
