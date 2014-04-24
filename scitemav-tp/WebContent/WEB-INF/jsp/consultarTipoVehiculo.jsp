@@ -43,6 +43,7 @@ function inicioConsulta(){
  		complete: function() {
  			columnas = columnas + '<th class="center">Id Tipo Vehiculo</th><th class="center">Nombre</th>';
  			realizarTabla(columnas,filas);
+ 			removeNulls();
   		}
  	});
 }

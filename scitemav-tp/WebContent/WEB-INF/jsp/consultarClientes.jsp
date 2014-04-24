@@ -61,6 +61,7 @@ function inicioConsulta(){
 				'<th class="center">Fecha de Nacimiento</th>'+
 				'<th class="center">Email</th>';
  			realizarTabla(columnas,filas);
+ 			removeNulls();
   		}
  	});
 }

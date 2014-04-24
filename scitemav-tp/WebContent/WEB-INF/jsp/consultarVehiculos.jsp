@@ -61,6 +61,7 @@ function inicioConsulta(){
 				'<th class="center">Número Ejes</th>'+
 				'<th class="center">Número Ruedas</th>';
  			realizarTabla(columnas,filas);
+ 			removeNulls();
   		}
  	});
 }

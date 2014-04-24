@@ -45,6 +45,7 @@ function inicioConsulta(){
  			'<th class="center">Nombre</th>'+
  			'<th class="center">Tipo Repuesto</th>';
  			realizarTabla(columnas,filas);
+ 			removeNulls();
   		}
  	});
 }

@@ -55,6 +55,7 @@ function inicioConsulta(){
 				'<th class="center">Kilometraje Próximo</th>'+
 				'<th class="center">Costo total</th>';				
  			realizarTabla(columnas,filas);
+ 			removeNulls();
   		}
  	});
 }

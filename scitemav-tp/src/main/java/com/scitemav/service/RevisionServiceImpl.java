@@ -1,8 +1,6 @@
 package com.scitemav.service;
 
-import java.sql.Date;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -15,8 +13,6 @@ import org.springframework.transaction.annotation.Transactional;
 import com.scitemav.bean.RevisionBean;
 import com.scitemav.model.Revision;
 import com.scitemav.model.Vehiculo;
-import com.scitemav.util.DateUtil;
-import com.scitemav.util.nullUtil;
 
 @Service
 public class RevisionServiceImpl implements RevisionService {
