@@ -58,11 +58,7 @@ public class InicioController {
 	public String toRegistroCliente(){
 		return "registrarCliente";
 	}
-	
-	
-	
 		
-	
 	@RequestMapping("toRegistroRevision")
 	public String toRegistroRevision(){
 		return "registrarRevision";
@@ -71,6 +67,16 @@ public class InicioController {
 	@RequestMapping("toRegistroFalla")
 	public String toRegistroFalla(){
 		return "registrarFalla";
+	}
+	
+	@RequestMapping("toDetalleVehiculo")
+	public String toDetalleVehiculo(){
+		return "vehiculoDetalle";
+	}
+	
+	@RequestMapping("toDetalleRevision")
+	public String toDetalleRevision(){
+		return "revisionDetalle";
 	}
 
 	@RequestMapping(value = "/toDashboard", method = RequestMethod.GET)

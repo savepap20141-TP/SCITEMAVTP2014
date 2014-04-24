@@ -37,6 +37,9 @@
                             <li>
                                 <a href="toConsultarVehiculo">Consultar Vehiculos</a>
                             </li>
+                            <li>
+                                <a href="toDetalleVehiculo">Detalle Vehiculo</a>
+                            </li>
                         </ul>
                         <!-- /.nav-second-level -->
                     </li>
@@ -48,6 +51,9 @@
                             </li>
                             <li>
                                 <a href="#">Consultar Revisiones</a>
+                            </li>
+                            <li>
+                                <a href="toDetalleRevision">Detalle Revision</a>
                             </li>
                         </ul>
                         <!-- /.nav-second-level -->
