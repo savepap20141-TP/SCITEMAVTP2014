@@ -20,10 +20,12 @@
 			<div class="row">
 
 				<div class="col-lg-12">
-				<div class="col-lg-4 col-lg-offset-8">										
-							<br><div class="alert alert-danger" style="text-align: center;">Estado de la revisión: Incompleta</div>
-							</div>
-							
+					<div class="col-lg-4 col-lg-offset-8">
+						<br>
+						<div class="alert alert-danger" style="text-align: center;">Estado
+							de la revisión: Incompleta</div>
+					</div>
+
 					<br></br>
 				</div>
 
@@ -45,7 +47,8 @@
 
 						</div>
 						<div class="col-lg-6">
-							<h4>Datos del cliente</h4><br>
+							<h4>Datos del cliente</h4>
+							<br>
 							<p class="text-primary">DNI:</p>
 							<p class="text-primary">Nombre:</p>
 							<p class="text-primary">Apellido Paterno:</p>
@@ -77,20 +80,23 @@
 
 						<!-- Tab panes -->
 
-						<div class="tab-content">
-							<div class="tab-pane fade active in" id="revision">
-							<div class="col-lg-12">
-							<br><h4>Datos de la revisión</h4><br>
-							<p class="text-primary">Fecha de inicio:</p>
-							<p class="text-primary">Fecha de fin:</p>
-							<p class="text-primary">Fecha próxima:</p>
-							<p class="text-primary">Kilometraje Actual:</p>
-							<p class="text-primary">Kilometraje próximo:</p>
-							<p class="text-primary">Costo total:</p>
-							</div>
-						</div>
 
 						<div class="tab-content">
+
+							<div class="tab-pane fade active in" id="revision">
+								<div class="col-lg-12">
+									<br>
+									<h4>Datos de la revisión</h4>
+									<br>
+									<p class="text-primary">Fecha de inicio:</p>
+									<p class="text-primary">Fecha de fin:</p>
+									<p class="text-primary">Fecha próxima:</p>
+									<p class="text-primary">Kilometraje Actual:</p>
+									<p class="text-primary">Kilometraje próximo:</p>
+									<p class="text-primary">Costo total:</p>
+								</div>
+							</div>
+
 							<div class="tab-pane fade" id="fallas">
 								<p></p>
 								<p>Dato 1:</p>
