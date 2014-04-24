@@ -29,16 +29,6 @@ public class InicioController {
 	@Autowired
 	PersonaService personaService;
 	
-	@Autowired
-	CargoService cargoservice;
-	
-	
-	@RequestMapping(value = "getCargos", method = RequestMethod.POST)
-	@ResponseBody
-	public List<CargoBean> getCargos(){
-		List<CargoBean> cb = cargoservice.listarCargos();
-		return cb;
-	}
 	
 	@RequestMapping("toLogin")
 	public String toLogin() {
@@ -47,11 +37,6 @@ public class InicioController {
 	@RequestMapping("toRegistro")
 	public String toRegistro() {
 		return "registroA";
-	}
-	
-	@RequestMapping("toRegistroTrabajador")
-	public String toRegistroTrabajador(){
-		return "registrarTrabajador";
 	}
 	
 	@RequestMapping("toRegistroCliente")

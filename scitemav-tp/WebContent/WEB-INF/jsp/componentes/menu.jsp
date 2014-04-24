@@ -104,10 +104,10 @@
                         <a href="#"><i class="fa fa-wrench fa-fw"></i>Empleados<span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level">
                             <li>
-                                <a href="toRegistroTrabajador">Registrar Empleado</a>
+                                <a href="toRegistroEmpleado">Registrar Empleado</a>
                             </li>
                             <li>
-                                <a href="login.html">Consultar Empleados</a>
+                                <a href="toConsultarEmpleados">Consultar Empleados</a>
                             </li>
                         </ul>
                         <!-- /.nav-second-level -->

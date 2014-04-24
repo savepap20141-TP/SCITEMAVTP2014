@@ -9,20 +9,20 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.scitemav.bean.CargoBean;
-import com.scitemav.model.Cargo;
 import com.scitemav.service.CargoService;
 
 @Controller
 public class CargoController {
 
-//	@Autowired
-//	CargoService cargoservice;
-//	
-//	
-//	@RequestMapping(value = "getCargos", method = RequestMethod.POST)
-//	@ResponseBody
-//	public List<CargoBean> getCargos(){		
-//		return cargoservice.listarCargos();
-//	}
+	@Autowired
+	CargoService cargoservice;
+	
+	
+	@RequestMapping(value = "getCargos", method = RequestMethod.POST)
+	@ResponseBody
+	public List<CargoBean> getCargos(){
+		List<CargoBean> cb = cargoservice.listarCargos();
+		return cb;
+	}
 	
 }
