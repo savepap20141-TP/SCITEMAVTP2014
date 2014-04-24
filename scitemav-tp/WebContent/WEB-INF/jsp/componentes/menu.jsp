@@ -50,7 +50,7 @@
                                 <a href="toRegistroRevision">Registrar Revision</a>
                             </li>
                             <li>
-                                <a href="#">Consultar Revisiones</a>
+                                <a href="toConsultarRevision">Consultar Revisiones</a>
                             </li>
                             <li>
                                 <a href="toDetalleRevision">Detalle Revision</a>

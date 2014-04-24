@@ -1,5 +1,7 @@
 package com.scitemav.controller;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.scitemav.bean.ClienteBean;
 import com.scitemav.bean.RevisionBean;
@@ -19,6 +22,11 @@ public class RevisionController {
 	
 	@Autowired
 	RevisionService revisionService;
+	
+	@RequestMapping("toConsultarRevision")
+	public String toConsultarRevision(){
+		return "consultarRevisiones";
+	}
 
 	@RequestMapping(value="registroRevision", method = RequestMethod.POST)
 	public String registroRevision(@ModelAttribute("revisionbean") RevisionBean rbean, Model model, HttpServletRequest req){
@@ -31,6 +39,12 @@ public class RevisionController {
 			path = "registrarRevision";
 		}
 		return path;
+	}
+	
+	@RequestMapping(value = "getRevisiones", method = RequestMethod.POST)
+	@ResponseBody
+	public List<RevisionBean> getRevisiones(){
+		return revisionService.listarRevisiones();
 	}
 	
 }
