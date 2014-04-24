@@ -64,7 +64,7 @@ function listarTiporepuestos(){
 								<!-- Form de registro -->
 
 								<form role="form" id="frmRegistroRepuesto" action="registroRepuesto"
-									method="post" commandName="respuestoBean" style="width: 90%; margin-left: 10%;">
+									method="post" commandName="respuestoBean" style="width: 30%; margin-left: 10%;">
 
 									<fieldset>
 									
