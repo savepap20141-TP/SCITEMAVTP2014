@@ -66,15 +66,15 @@ public class RevisionServiceImpl implements RevisionService {
 			for (int i = 0; i < _rev.size(); i++) {
 				Revision rev = _rev.get(i);
 				RevisionBean revBean = new RevisionBean();
-				revBean.setCostoTotal(nullUtil.check(rev.getCostoTotal()));
-				revBean.setFechaFin(nullUtil.check(rev.getFechaFin()));
-				revBean.setFechaInicio(nullUtil.check(rev.getFechaInicio()));
-				revBean.setFechaProxima(nullUtil.check(rev.getFechaProxima()));
-				revBean.setKilometrajeActual(nullUtil.check(rev.getKilometrajeActual()));
-				revBean.setKilometrajeProximo(nullUtil.check(rev.getKilometrajeProximo()));
-				revBean.setIdRevision(nullUtil.check(rev.getIdRevision()));
-				revBean.setIdVehiculo(nullUtil.check(rev.getRevVehiculo().getIdVehiculo()));
-				revBean.setNumeroPlaca(nullUtil.check(rev.getRevVehiculo().getNumeroPlaca()));
+				revBean.setCostoTotal(rev.getCostoTotal());
+				revBean.setFechaFin(rev.getFechaFin());
+				revBean.setFechaInicio(rev.getFechaInicio());
+				revBean.setFechaProxima(rev.getFechaProxima());
+				revBean.setKilometrajeActual(rev.getKilometrajeActual());
+				revBean.setKilometrajeProximo(rev.getKilometrajeProximo());
+				revBean.setIdRevision(rev.getIdRevision());
+				revBean.setIdVehiculo(rev.getRevVehiculo().getIdVehiculo());
+				revBean.setNumeroPlaca(rev.getRevVehiculo().getNumeroPlaca());
 				_revBean.add(revBean);
 			}
 
