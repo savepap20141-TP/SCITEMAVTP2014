@@ -46,8 +46,9 @@ public class VehiculoController {
 	public String registroTipoVehiculo(@ModelAttribute("vehiculobean") VehiculoBean vehiculoBean, Model model, HttpServletRequest req){
 		String path = "";
 		if(vehiculoService.registro(vehiculoBean)){
-			model.addAttribute("msg", "Se registro correctamente");
-			path = "registrarVehiculo";
+			//model.addAttribute("msg", "Se registro correctamente");
+			model.addAttribute("idvehiculo", vehiculoBean.getIdVehiculo());
+			path = "vehiculoDetalle";
 		}else{
 			model.addAttribute("msg", "Fallo al registrarse");
 			path = "registrarVehiculo";

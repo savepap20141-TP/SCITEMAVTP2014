@@ -62,6 +62,7 @@ public class VehiculoServiceImpl implements VehiculoService {
 			veh.setPesoBruto(vb.getPesoBruto());
 			veh.setPesoSeco(vb.getPesoSeco());
 			em.persist(veh);
+			vb.setIdVehiculo(veh.getIdVehiculo());
 			resultado = true;
 		} catch (IllegalArgumentException e) {
 			System.out.println(e);

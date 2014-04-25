@@ -18,7 +18,7 @@
 
 			<!-- TITULO -->
 			<div class="row">
-
+				
 				<div class="col-lg-12">
 					<div class="col-lg-4 col-lg-offset-8">
 						<br>
@@ -33,7 +33,7 @@
 
 			<div class="col-lg-12">
 				<div class="panel panel-default">
-					<div class="panel-heading">Detalles generales</div>
+					<div class="panel-heading">Detalles generales del vehiculo <span id=""><c:out value="${idvehiculo}" /></span></div>
 					<div class="panel-body">
 						<div class="col-lg-6">
 							<h4>Datos del vehículo</h4>
