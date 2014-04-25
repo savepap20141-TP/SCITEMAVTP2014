@@ -112,4 +112,50 @@ public class VehiculoServiceImpl implements VehiculoService {
 		return listaVehiculoBean;
 	}
 
+	@Transactional
+	public VehiculoBean obtenerInfo(int idVehiculo) {
+		VehiculoBean vBean = null;	
+		try{
+			vBean = new VehiculoBean();
+			Query q = em.createQuery("from Vehiculo where idVehiculo="+idVehiculo);
+			Vehiculo v = new Vehiculo();
+			v = (Vehiculo)q.getSingleResult();
+			
+			vBean.setAltura(v.getAltura());
+			vBean.setAncho(v.getAncho());
+			vBean.setCargaUtil(v.getCargaUtil());
+			vBean.setColor(v.getColor());
+			vBean.setFabricacion(v.getFabricacion());
+			vBean.setIdCliente(v.getVehCliente().getIdCliente());
+			vBean.setIdMarca(v.getVehMarca().getIdMarca());
+			vBean.setIdModelo(v.getVehModelo().getIdModelo());
+			vBean.setIdVehiculo(v.getIdVehiculo());
+			vBean.setLongitud(v.getLongitud());
+			vBean.setNumeroAsientos(v.getNumeroAsientos());
+			vBean.setNumeroCilindros(v.getNumeroCilindros());
+			vBean.setNumeroEjes(v.getNumeroEjes());
+			vBean.setNumeroMotor(v.getNumeroMotor());
+			vBean.setNumeroPasajeros(v.getNumeroPasajeros());
+			vBean.setNumeroPlaca(v.getNumeroPlaca());
+			vBean.setNumeroRuedas(v.getNumeroRuedas());
+			vBean.setNumeroSerie(v.getNumeroSerie());
+			vBean.setPesoBruto(v.getPesoBruto());
+			vBean.setPesoSeco(v.getPesoSeco());	
+			vBean.setNombreCliente(v.getVehCliente().getCliPersona().getNombre()+" "+v.getVehCliente().getCliPersona().getApellidoPaterno());
+			vBean.setNombreMarca(v.getVehMarca().getNombre());
+			vBean.setNombreModelo(v.getVehModelo().getNombre());
+			vBean.setNombreTipoVehiculo(v.getVehTipoVehiculo().getNombre());
+			vBean.setPrimerNombreCliente(v.getVehCliente().getCliPersona().getNombre());
+			vBean.setApePaternoCliente(v.getVehCliente().getCliPersona().getApellidoPaterno());
+			vBean.setApeMaternoCliente(v.getVehCliente().getCliPersona().getApellidoMaterno());
+			vBean.setCelularCliente(v.getVehCliente().getCliPersona().getCelular());
+			vBean.setTelefonoCliente(v.getVehCliente().getCliPersona().getTelefono());
+			vBean.setDniCliente(v.getVehCliente().getCliPersona().getDni().toString());
+		}
+		catch(IllegalArgumentException e){
+			System.out.println(e.getMessage());
+		}
+		return vBean;
+	}
+
 }

@@ -8,8 +8,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.scitemav.bean.VehiculoBean;
@@ -31,8 +33,9 @@ public class VehiculoController {
 		return "consultarVehiculos";
 	}
 	
-	@RequestMapping("toVehiculoDetalle")
-	public String toVehiculoDetalle(){
+	@RequestMapping(value="toVehiculoDetalle-{idvehiculo}", method = RequestMethod.GET)
+	public String toVehiculoDetalle(@PathVariable("idvehiculo") Integer idVehiculo, Model model){
+		model.addAttribute("idvehiculo", idVehiculo);
 		return "vehiculoDetalle";
 	}
 	
@@ -42,13 +45,12 @@ public class VehiculoController {
 	}
 	
 	@RequestMapping(value="registroVehiculo", method = RequestMethod.POST)
-	@ResponseBody
 	public String registroTipoVehiculo(@ModelAttribute("vehiculobean") VehiculoBean vehiculoBean, Model model, HttpServletRequest req){
 		String path = "";
 		if(vehiculoService.registro(vehiculoBean)){
 			//model.addAttribute("msg", "Se registro correctamente");
-			model.addAttribute("idvehiculo", vehiculoBean.getIdVehiculo());
-			path = "vehiculoDetalle";
+			//model.addAttribute("idvehiculo", vehiculoBean.getIdVehiculo());
+			path = "redirect:toVehiculoDetalle-"+vehiculoBean.getIdVehiculo();
 		}else{
 			model.addAttribute("msg", "Fallo al registrarse");
 			path = "registrarVehiculo";
@@ -63,4 +65,10 @@ public class VehiculoController {
 		return vehiculoService.listarVehiculos();
 	}
 
+	@RequestMapping(value = "getInformacionVehiculo-{idvehiculo}", method = RequestMethod.POST)
+	@ResponseBody
+	public VehiculoBean getVehiculosPorId(@PathVariable("idvehiculo") Integer idVehiculo){		
+		return vehiculoService.obtenerInfo(idVehiculo);
+	}
+	
 }

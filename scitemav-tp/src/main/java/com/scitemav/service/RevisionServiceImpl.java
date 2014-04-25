@@ -81,6 +81,19 @@ public class RevisionServiceImpl implements RevisionService {
 
 		return _revBean;
 	}
-	
+
+	@Override
+	public RevisionBean obtenerInfo(int idRevision) {
+		RevisionBean rBean = null;		
+		try {
+			Query q = em.createQuery("from Revision where idRevision="+idRevision);
+			Revision r = new Revision();
+			r = (Revision) q.getSingleResult();
+			
+		} catch (Exception e) {
+
+		}
+		return rBean;
+	}
 
 }

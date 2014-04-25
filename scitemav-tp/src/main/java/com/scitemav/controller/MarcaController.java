@@ -35,7 +35,6 @@ public class MarcaController {
 	}
 	
 	@RequestMapping(value="registroMarca", method = RequestMethod.POST)
-	@ResponseBody
 	public String registroMarca(@ModelAttribute("marca") Marca marca, Model model, HttpServletRequest req){
 		String path = "";
 		if(marcaService.registro(marca)){

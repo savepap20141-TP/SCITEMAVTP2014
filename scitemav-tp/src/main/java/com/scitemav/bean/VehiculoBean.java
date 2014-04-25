@@ -24,8 +24,55 @@ public class VehiculoBean {
 	private Double altura;
 	private Double ancho;
 	private Double cargaUtil;
+	private String nombreMarca;
+	private String nombreCliente;
+	private String nombreTipoVehiculo;
+	private String nombreModelo;
+	//Cliente
+	private String dniCliente;
+	private String primerNombreCliente;
+	private String apePaternoCliente;
+	private String apeMaternoCliente;
+	private String telefonoCliente;
+	private String celularCliente;
 	
 	
+	public String getDniCliente() {
+		return dniCliente;
+	}
+	public void setDniCliente(String dniCliente) {
+		this.dniCliente = dniCliente;
+	}
+	public String getPrimerNombreCliente() {
+		return primerNombreCliente;
+	}
+	public void setPrimerNombreCliente(String primerNombreCliente) {
+		this.primerNombreCliente = primerNombreCliente;
+	}
+	public String getApePaternoCliente() {
+		return apePaternoCliente;
+	}
+	public void setApePaternoCliente(String apePaternoCliente) {
+		this.apePaternoCliente = apePaternoCliente;
+	}
+	public String getApeMaternoCliente() {
+		return apeMaternoCliente;
+	}
+	public void setApeMaternoCliente(String apeMaternoCliente) {
+		this.apeMaternoCliente = apeMaternoCliente;
+	}
+	public String getTelefonoCliente() {
+		return telefonoCliente;
+	}
+	public void setTelefonoCliente(String telefonoCliente) {
+		this.telefonoCliente = telefonoCliente;
+	}
+	public String getCelularCliente() {
+		return celularCliente;
+	}
+	public void setCelularCliente(String celularCliente) {
+		this.celularCliente = celularCliente;
+	}
 	public Integer getIdVehiculo() {
 		return idVehiculo;
 	}
@@ -151,6 +198,30 @@ public class VehiculoBean {
 	}
 	public void setIdCliente(Integer idCliente) {
 		this.idCliente = idCliente;
+	}
+	public String getNombreMarca() {
+		return nombreMarca;
+	}
+	public void setNombreMarca(String nombreMarca) {
+		this.nombreMarca = nombreMarca;
+	}
+	public String getNombreCliente() {
+		return nombreCliente;
+	}
+	public void setNombreCliente(String nombreCliente) {
+		this.nombreCliente = nombreCliente;
+	}
+	public String getNombreTipoVehiculo() {
+		return nombreTipoVehiculo;
+	}
+	public void setNombreTipoVehiculo(String nombreTipoVehiculo) {
+		this.nombreTipoVehiculo = nombreTipoVehiculo;
+	}
+	public String getNombreModelo() {
+		return nombreModelo;
+	}
+	public void setNombreModelo(String nombreModelo) {
+		this.nombreModelo = nombreModelo;
 	}
 	
 	
