@@ -7,6 +7,30 @@
 <title>Registro de modelo</title>
 <jsp:include page="componentes/head.jsp" />
 </head>
+<script>
+$(document).ready(function(e){
+	listarMarcas();
+});
+</script>
+<script>
+
+function listarMarcas(){
+	
+	$.ajax({
+ 		url: 'getMarcas',
+ 		type: 'post',
+ 		dataType: 'json',
+ 		data: '',
+ 		success: function(marcas){
+ 			$('#comboMarca').empty();
+ 			$.each(marcas, function(i, marca){
+ 				$('#comboMarca').append('<option value="'+marca.idMarca+'">'+marca.nombre+'</option>');				
+			});
+ 		}
+ 	});	
+	
+}
+</script>
 <body>
  <div id="wrapper">
 
@@ -37,7 +61,7 @@
 
 								<!-- Form de registro -->
 
-								<form role="form" id="frmRegistroModelo" action="registro"
+								<form role="form" id="frmRegistroModelo" action="registroModelo"
 									method="post" commandName="modelobean"
 									style="width: 60%; margin-left: 20%;">
 
@@ -50,7 +74,8 @@
 										
 										<div class="form-group">
                                             <label>Seleccione Marca</label>
-                                            <select class="form-control" id="comboMarcas">
+                                            <select class="form-control" id="comboMarca" name=idMarca>
+                                            <option value="">Seleccione su Marca</option>
 
                                             </select>
                                         </div>
@@ -60,7 +85,7 @@
 										
 										<label> </label> <input
 											class="btn btn-lg btn-success btn-block" type="submit"
-											value="Registrar Marca" />
+											value="Registrar Modelo" />
 										<p>
 											<label class="error"><c:out value="${msg}" /></label>
 										</p>
