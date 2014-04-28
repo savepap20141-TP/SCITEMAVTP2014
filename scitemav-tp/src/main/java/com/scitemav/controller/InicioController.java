@@ -44,10 +44,7 @@ public class InicioController {
 		return "registrarCliente";
 	}
 		
-	@RequestMapping("toRegistroRevision")
-	public String toRegistroRevision(){
-		return "registrarRevision";
-	}
+
 	
 	@RequestMapping("toRegistroFalla")
 	public String toRegistroFalla(){

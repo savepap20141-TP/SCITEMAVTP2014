@@ -21,18 +21,18 @@ public class RevisionBean {
 	private Integer idModelo;
 	private String fabricacion;
 	private String color; 
-	private Integer numeroMotor;
-	private String numeroPlaca;
+	private String numeroMotor;
+	private String numeroPlaca;	
 	private Integer numeroEjes;
 	private Integer numeroRuedas;
 	private Integer numeroCilindros;
-	private Integer numeroSerie;
+	private String numeroSerie;
 	private Integer numeroPasajeros;
 	private Integer numeroAsientos;
 	private Double pesoSeco;
 	private Double pesoBruto;
 	private Double longitud;
-	private Double altura;
+	private Double altura;	
 	private Double ancho;
 	private Double cargaUtil;
 	
@@ -121,10 +121,10 @@ public class RevisionBean {
 	public void setColor(String color) {
 		this.color = color;
 	}
-	public Integer getNumeroMotor() {
+	public String getNumeroMotor() {
 		return numeroMotor;
 	}
-	public void setNumeroMotor(Integer numeroMotor) {
+	public void setNumeroMotor(String numeroMotor) {
 		this.numeroMotor = numeroMotor;
 	}
 	public String getNumeroPlaca() {
@@ -151,11 +151,11 @@ public class RevisionBean {
 	public void setNumeroCilindros(Integer numeroCilindros) {
 		this.numeroCilindros = numeroCilindros;
 	}
-	public Integer getNumeroSerie() {
+	public String getNumeroSerie() {
 		return numeroSerie;
 	}
-	public void setNumeroSerie(Integer numeroSerie) {
-		this.numeroSerie = numeroSerie;
+	public void setNumeroSerie(String string) {
+		this.numeroSerie = string;
 	}
 	public Integer getNumeroPasajeros() {
 		return numeroPasajeros;

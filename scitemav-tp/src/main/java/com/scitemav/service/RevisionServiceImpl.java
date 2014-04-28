@@ -39,6 +39,7 @@ public class RevisionServiceImpl implements RevisionService {
 			rev.setKilometrajeProximo(revision.getKilometrajeProximo());
 
 			em.persist(rev);
+			revision.setIdRevision(rev.getIdRevision());
 
 			flag = true;
 
@@ -86,14 +87,75 @@ public class RevisionServiceImpl implements RevisionService {
 	public RevisionBean obtenerInfo(int idRevision) {
 		RevisionBean rBean = null;		
 		try {
+			rBean = new RevisionBean();
 			Query q = em.createQuery("from Revision where idRevision="+idRevision);
 			Revision r = new Revision();
 			r = (Revision) q.getSingleResult();
 			
+			rBean.setIdRevision(r.getIdRevision());
+			rBean.setCostoTotal(r.getCostoTotal());
+			rBean.setFechaInicio(r.getFechaInicio());
+			rBean.setFechaFin(r.getFechaFin());
+			rBean.setFechaProxima(r.getFechaProxima());
+			rBean.setKilometrajeActual(r.getKilometrajeActual());
+			rBean.setKilometrajeProximo(r.getKilometrajeProximo());
+			
+			
+			rBean.setAltura(r.getRevVehiculo().getAltura());
+			rBean.setAncho(r.getRevVehiculo().getAncho());
+			rBean.setCargaUtil(r.getRevVehiculo().getCargaUtil());
+			rBean.setColor(r.getRevVehiculo().getColor());
+			rBean.setFabricacion(r.getRevVehiculo().getFabricacion());
+			rBean.setIdCliente(r.getRevVehiculo().getVehCliente().getIdCliente());
+			rBean.setIdMarca(r.getRevVehiculo().getVehMarca().getIdMarca());
+			rBean.setIdModelo(r.getRevVehiculo().getVehModelo().getIdModelo());
+			rBean.setIdTipoVehiculo(r.getRevVehiculo().getVehTipoVehiculo().getIdTipoVehiculo());
+			rBean.setIdVehiculo(r.getRevVehiculo().getIdVehiculo());
+			rBean.setLongitud(r.getRevVehiculo().getLongitud());			
+			rBean.setNumeroAsientos(r.getRevVehiculo().getNumeroAsientos());
+			rBean.setNumeroCilindros(r.getRevVehiculo().getNumeroCilindros());
+			rBean.setNumeroEjes(r.getRevVehiculo().getNumeroEjes());
+			rBean.setNumeroMotor(r.getRevVehiculo().getNumeroMotor());
+			rBean.setNumeroPasajeros(r.getRevVehiculo().getNumeroPasajeros());
+			rBean.setNumeroPlaca(r.getRevVehiculo().getNumeroPlaca());
+			rBean.setNumeroRuedas(r.getRevVehiculo().getNumeroRuedas());
+			rBean.setNumeroSerie(r.getRevVehiculo().getNumeroSerie());
+			rBean.setPesoBruto(r.getRevVehiculo().getPesoBruto());
+			rBean.setPesoSeco(r.getRevVehiculo().getPesoSeco());	
+			
 		} catch (Exception e) {
+			System.out.println(e.getMessage());
 
 		}
 		return rBean;
+	}
+
+	@Override
+	public boolean editInformacionRevision(RevisionBean rb) {
+		boolean resultado = false;
+		Revision rev = new Revision();
+		try{
+			rev.setIdRevision(rb.getIdRevision());
+			//
+			Vehiculo veh = new Vehiculo();
+			veh.setIdVehiculo(rb.getIdVehiculo());
+			rev.setRevVehiculo(veh);
+			//
+			rev.setCostoTotal(rb.getCostoTotal());
+			rev.setFechaInicio(rb.getFechaInicio());
+			rev.setFechaFin(rb.getFechaFin());
+			rev.setFechaProxima(rb.getFechaProxima());
+			rev.setKilometrajeActual(rb.getKilometrajeActual());
+			rev.setKilometrajeProximo(rb.getKilometrajeProximo());
+			
+			em.merge(rev);
+			resultado = true;
+		} catch(IllegalArgumentException e){
+			System.out.println(e);
+			resultado = false;
+		}
+		
+		return false;
 	}
 
 }

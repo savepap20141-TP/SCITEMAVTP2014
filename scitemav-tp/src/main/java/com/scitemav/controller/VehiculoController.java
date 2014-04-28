@@ -40,10 +40,7 @@ public class VehiculoController {
 		return "vehiculoDetalle";
 	}
 	
-	@RequestMapping("toRevisionDetalle")
-	public String toRevisionDetalle(){
-		return "revisionDetalle";
-	}
+	
 	
 	@RequestMapping(value="registroVehiculo", method = RequestMethod.POST)
 	public String registroTipoVehiculo(@ModelAttribute("vehiculobean") VehiculoBean vehiculoBean, Model model, HttpServletRequest req){
