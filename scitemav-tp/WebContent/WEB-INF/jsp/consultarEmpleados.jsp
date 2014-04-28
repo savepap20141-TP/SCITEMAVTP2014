@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Consultar Vehículos</title>
+<title>Consultar Empleados</title>
 <jsp:include page="componentes/head.jsp" />
 </head>
 <style>
@@ -26,40 +26,44 @@ function inicioConsulta(){
 	var filas = '';
 	var columnas = '';	
     $.ajax({
- 		url: 'getVehiculos',
+ 		url: 'getEmpleados',
  		type: 'post',
  		dataType: 'json',
  		data: '',
- 		success: function(vehiculos){
- 			$.each(vehiculos, function(i, vehiculo){
+ 		success: function(empleados){
+ 			$.each(empleados, function(i, empleado){
  				filas = filas +'<tr class="">'+
-				'<td class="center"><a id="vehiculo_'+i+'" href="toVehiculoDetalle-'+vehiculo.idVehiculo+'">VEH-'+vehiculo.idVehiculo+'</a></td>'+
-				'<td class="center">'+vehiculo.nombreCliente+'</td>'+
-				'<td class="center">'+vehiculo.nombreMarca+'</td>'+
-				'<td class="center">'+vehiculo.nombreTipoVehiculo+'</td>'+
-				'<td class="center">'+vehiculo.nombreModelo+'</td>'+
-				'<td class="center">'+vehiculo.fabricacion+'</td>'+
-				'<td class="center">'+vehiculo.color+'</td>'+
-				'<td class="center">'+vehiculo.numeroMotor+'</td>'+
-				'<td class="center">'+vehiculo.numeroPlaca+'</td>'+
-				'<td class="center">'+vehiculo.numeroEjes+'</td>'+
-				'<td class="center">'+vehiculo.numeroRuedas+'</td>'+
+				'<td class="center">'+empleado.dni+'</td>'+
+				'<td class="center">'+empleado.nombre+'</td>'+
+				'<td class="center">'+empleado.apellidoPaterno+'</td>'+
+				'<td class="center">'+empleado.apellidoMaterno+'</td>'+
+				'<td class="center">'+empleado.sexo+'</td>'+
+				'<td class="center">'+empleado.telefono+'</td>'+
+				'<td class="center">'+empleado.celular+'</td>'+
+				'<td class="center">'+empleado.nombreDistrito+'</td>'+
+				'<td class="center">'+empleado.direccion+'</td>'+
+				'<td class="center">'+empleado.fechaNacimiento+'</td>'+
+				'<td class="center">'+empleado.email+'</td>'+
+				'<td class="center">'+empleado.nombreCargo+'</td>'+
+				'<td class="center">'+empleado.nombreEspecialidad+'</td>'+
 				'</tr>';
 			});		        
  		},
  		complete: function() {
  			columnas = columnas + 
- 				'<th class="center">Id</th>'+
-				'<th class="center">Cliente</th>'+
-				'<th class="center">Marca</th>'+
-				'<th class="center">Tipo Vehiculo</th>'+
-				'<th class="center">Modelo</th>'+
-				'<th class="center">Fabricación</th>'+
-				'<th class="center">Color</th>'+
-				'<th class="center">Número Motor</th>'+
-				'<th class="center">Número Placa</th>'+
-				'<th class="center">Número Ejes</th>'+
-				'<th class="center">Número Ruedas</th>';
+ 				'<th class="center">DNI</th>'+
+				'<th class="center">Nombre empleado</th>'+
+				'<th class="center">Apellido Paterno</th>'+
+				'<th class="center">Apellido Materno</th>'+
+				'<th class="center">Sexo</th>'+
+				'<th class="center">Telefono</th>'+
+				'<th class="center">Celular</th>'+
+				'<th class="center">Distrito</th>'+
+				'<th class="center">Direccion</th>'+
+				'<th class="center">Fecha de Nacimiento</th>'+
+				'<th class="center">Email</th>'+
+				'<th class="center">Cargo</th>'+
+				'<th class="center">Especialidad</th>';
  			realizarTabla(columnas,filas);
  			removeNulls();
   		}
@@ -76,7 +80,7 @@ function inicioConsulta(){
 		<div id="page-wrapper">
 				            <div class="row">
                 <div class="col-lg-12">
-                    <h1 class="page-header">Consultar Vehículos</h1>
+                    <h1 class="page-header">Consultar empleados</h1>
                 </div>
                 <!-- /.col-lg-12 -->
             </div>
@@ -85,7 +89,7 @@ function inicioConsulta(){
                 <div class="col-lg-12">
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            Lista de Vehículos
+                            Lista de empleados
                         </div>
                         <!-- /.panel-heading -->
                         <div class="panel-body">

@@ -100,9 +100,13 @@ public class VehiculoServiceImpl implements VehiculoService {
 				vb.setPesoBruto(v.getPesoBruto());
 				vb.setPesoSeco(v.getPesoSeco());
 				vb.setIdCliente(v.getVehCliente().getIdCliente());
+				vb.setNombreCliente(v.getVehCliente().getCliPersona().getNombre()+" "+v.getVehCliente().getCliPersona().getApellidoPaterno()+" "+v.getVehCliente().getCliPersona().getApellidoMaterno());
 				vb.setIdMarca(v.getVehMarca().getIdMarca());
+				vb.setNombreMarca(v.getVehMarca().getNombre());
 				vb.setIdModelo(v.getVehModelo().getIdModelo());
-				vb.setIdTipoVehiculo(v.getVehTipoVehiculo().getIdTipoVehiculo());				
+				vb.setNombreModelo(v.getVehModelo().getNombre());
+				vb.setIdTipoVehiculo(v.getVehTipoVehiculo().getIdTipoVehiculo());		
+				vb.setNombreTipoVehiculo(v.getVehTipoVehiculo().getNombre());
 				listaVehiculoBean.add(vb);
 			}
 		} catch (IllegalArgumentException e) {
@@ -158,4 +162,52 @@ public class VehiculoServiceImpl implements VehiculoService {
 		return vBean;
 	}
 
+	@Transactional
+	public boolean editInformacionVehiculo(VehiculoBean vb) {
+		boolean resultado = false;		
+		Vehiculo veh = new Vehiculo();
+		try {
+
+			veh.setIdVehiculo(vb.getIdVehiculo());
+			//
+			Cliente cli = new Cliente();
+			cli.setIdCliente(vb.getIdCliente());			
+			veh.setVehCliente(cli);
+			//
+			Marca mar = new Marca();
+			mar.setIdMarca(vb.getIdMarca());
+			veh.setVehMarca(mar);
+			//
+			TipoVehiculo tv = new TipoVehiculo();
+			tv.setIdTipoVehiculo(vb.getIdTipoVehiculo());
+			veh.setVehTipoVehiculo(tv);
+			//
+			Modelo mod = new Modelo();
+			mod.setIdModelo(vb.getIdModelo());
+			veh.setVehModelo(mod);
+			//
+			veh.setAltura(vb.getAltura());
+			veh.setAncho(vb.getAncho());
+			veh.setCargaUtil(vb.getCargaUtil());
+			veh.setColor(vb.getColor());
+			veh.setFabricacion(vb.getFabricacion());
+			veh.setLongitud(vb.getLongitud());
+			veh.setNumeroAsientos(vb.getNumeroAsientos());
+			veh.setNumeroCilindros(vb.getNumeroCilindros());
+			veh.setNumeroEjes(vb.getNumeroEjes());
+			veh.setNumeroMotor(vb.getNumeroMotor());
+			veh.setNumeroPasajeros(vb.getNumeroPasajeros());
+			veh.setNumeroPlaca(vb.getNumeroPlaca());
+			veh.setNumeroRuedas(vb.getNumeroRuedas());
+			veh.setNumeroSerie(vb.getNumeroSerie());
+			veh.setPesoBruto(vb.getPesoBruto());
+			veh.setPesoSeco(vb.getPesoSeco());
+			em.merge(veh);
+			resultado = true;
+		} catch (IllegalArgumentException e) {
+			System.out.println(e);
+			resultado = false;
+		}
+		return resultado;
+	}
 }

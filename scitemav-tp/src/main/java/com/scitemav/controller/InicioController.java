@@ -52,12 +52,7 @@ public class InicioController {
 	@RequestMapping("toRegistroFalla")
 	public String toRegistroFalla(){
 		return "registrarFalla";
-	}
-	
-	@RequestMapping("toDetalleVehiculo")
-	public String toDetalleVehiculo(){
-		return "vehiculoDetalle";
-	}
+	}	
 	
 	@RequestMapping("toDetalleRevision")
 	public String toDetalleRevision(){
@@ -66,12 +61,9 @@ public class InicioController {
 
 	@RequestMapping(value = "/toDashboard", method = RequestMethod.GET)
 	public String toDashboard(HttpServletRequest req, HttpSession session, Model model){
-		String path = "";
-		
-		model.addAttribute("nameUser", req.getSession().getAttribute("email"));
-		path = "dashboard";
-
-			
+		String path = "";		
+		//model.addAttribute("nameUser", req.getSession().getAttribute("email"));
+		path = "dashboard";			
 		return path;		
 	}
 	
@@ -79,8 +71,8 @@ public class InicioController {
 	public String login(@ModelAttribute("usuario") Usuario usu, Model model, HttpServletRequest req, HttpSession session){
 		String path = "";
 		if(usuarioService.login(usu, req.getSession())) {
-			model.addAttribute("nameUser", req.getSession().getAttribute("email"));
-			path = "dashboard";
+			//model.addAttribute("nameUser", req.getSession().getAttribute("email"));
+			path = "redirect:toDashboard";
 		}else{
 			model.addAttribute("msg", "El usuario no esta habilitado");
 			path = "login";

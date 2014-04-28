@@ -190,7 +190,7 @@ function listarDistritos(){
 																
 								
 										<input class="btn btn-lg btn-success btn-block" 
-										type="submit" value="Registrar Cliente" style="width: 60%; margin-left: 20%; margin-top: 10%;"/>
+										type="submit" value="Registrar Empleado" style="width: 60%; margin-left: 20%; margin-top: 10%;"/>
 										<p>
 											<label class="error"><c:out value="${msg}" /></label>
 										</p>

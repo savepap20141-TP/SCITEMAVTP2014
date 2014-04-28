@@ -11,5 +11,6 @@ public interface VehiculoService {
 	boolean registro(VehiculoBean vb);
 	public List<VehiculoBean> listarVehiculos();
 	public VehiculoBean obtenerInfo(int idVehiculo);
+	boolean editInformacionVehiculo(VehiculoBean vb);
 
 }

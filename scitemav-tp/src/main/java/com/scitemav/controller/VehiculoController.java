@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.scitemav.bean.PersonaBean;
 import com.scitemav.bean.VehiculoBean;
 import com.scitemav.service.VehiculoService;
 
@@ -69,6 +70,21 @@ public class VehiculoController {
 	@ResponseBody
 	public VehiculoBean getVehiculosPorId(@PathVariable("idvehiculo") Integer idVehiculo){		
 		return vehiculoService.obtenerInfo(idVehiculo);
+	}
+	
+	@RequestMapping(value = "ajaxEditInformacionVehiculo", method = RequestMethod.POST)
+	@ResponseBody
+	public VehiculoBean getEditInformationPerfil(@ModelAttribute VehiculoBean vehiculoBean, HttpServletRequest request){
+		
+		VehiculoBean vehiculoB = new VehiculoBean();
+		
+		if(vehiculoService.editInformacionVehiculo(vehiculoBean)){
+			vehiculoB = vehiculoService.obtenerInfo(vehiculoBean.getIdVehiculo());
+		}else{
+			vehiculoB = null;
+		}
+		
+		return vehiculoB;
 	}
 	
 }

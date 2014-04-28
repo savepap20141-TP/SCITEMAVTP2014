@@ -7,11 +7,12 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.scitemav.bean.EspecialidadBean;
 import com.scitemav.model.Especialidad;
-
+@Service
 public class EspecialidadServiceImpl implements EspecialidadService{
 
 	@PersistenceContext
@@ -26,11 +27,11 @@ public class EspecialidadServiceImpl implements EspecialidadService{
 			Query q = em.createQuery("SELECT es FROM Especialidad es");
 			lesp = q.getResultList();
 			for(int i=0; i < lesp.size(); i++){
-				Especialidad c = lesp.get(i);
-				EspecialidadBean cb = new EspecialidadBean();
-				cb.setIdEspecialidad(c.getIdEspecialidad());
-				cb.setDescripcion(c.getDescripcion());
-				lespb.add(cb);
+				Especialidad e = lesp.get(i);
+				EspecialidadBean eb = new EspecialidadBean();
+				eb.setIdEspecialidad(e.getIdEspecialidad());
+				eb.setDescripcion(e.getDescripcion());
+				lespb.add(eb);
 			}
 		} catch (IllegalArgumentException e) {
 			lespb = null;			

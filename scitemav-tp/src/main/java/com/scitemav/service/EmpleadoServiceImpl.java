@@ -71,7 +71,7 @@ public class EmpleadoServiceImpl implements EmpleadoService{
 			emp.setEmpCargo(car);
 			emp.setEmpEspecialidad(esp);
 			emp.setAdministrador(false);
-			
+			em.persist(emp);
 			resultado = true;
 		}catch(IllegalArgumentException e){
 			System.out.println(e);
@@ -112,6 +112,7 @@ public class EmpleadoServiceImpl implements EmpleadoService{
 				empb.setIdEspecialidad(emp.getEmpEspecialidad().getIdEspecialidad());
 				empb.setNombreEspecialidad(emp.getEmpEspecialidad().getDescripcion());
 				empb.setAdministrador(emp.getAdministrador());
+				lempb.add(empb);
 			}
 		} catch (IllegalArgumentException e) {
 			lempb = null;			

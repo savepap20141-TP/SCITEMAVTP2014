@@ -26,6 +26,11 @@ public class EmpleadoController {
 		return "registrarEmpleado";
 	}
 	
+	@RequestMapping("toConsultarEmpleados")
+	public String toConsultarEmpleados(){
+		return "consultarEmpleados";
+	}
+	
 	@RequestMapping(value="registroEmpleado", method = RequestMethod.POST)
 	public String registroEmpleado(@ModelAttribute("empleadobean") EmpleadoBean empb, Model model, HttpServletRequest req){
 		String path = "";

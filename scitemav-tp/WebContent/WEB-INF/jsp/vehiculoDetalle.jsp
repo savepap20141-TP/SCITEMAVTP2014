@@ -6,66 +6,164 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Revisión Detalle</title>
+<title>Vehiculo Detalle</title>
 <jsp:include page="componentes/head.jsp" />
 </head>
 <script>
 	$(document).ready(function(e) {
 		var idvehiculo = $('#spnIdVehiculo').text();
 		inicioConsulta(idvehiculo);
+		listarTipoVehiculos();
+		listarModelos();
+		listarMarcas();
 	});
 
+	function EditInformacionVehiculo(){
+		$.ajax({
+	   		url: 'ajaxEditInformacionVehiculo',
+	   		type: 'post',
+	   		dataType: 'json',
+	   		data: $('#frmEdicionVehiculo').serialize(),
+	   		success: function(vehiculo){
+	   			IniciarInfoVehiculo(vehiculo);
+	 			$('.vistaInformacion').show();
+	 			$('.edicionInformacion').hide();
+	 			$('#btnVerInformacion').hide();
+	 			$('#btnVerEdicion').show();
+	   		}
+	   	});
+	}
 	function inicioConsulta(idvehiculo) {
-		$
-				.ajax({
+		$.ajax({
 					url : 'getInformacionVehiculo-' + idvehiculo,
 					type : 'POST',
 					dataType : 'json',
 					data : '',
 					success : function(vehiculo) {
-						$('#spnNumeroPlaca').text(vehiculo.numeroPlaca);
-						$('#spnMarca').text(vehiculo.nombreMarca);
-						$('#spnModelo').text(vehiculo.nombreModelo);
-						$('#spnTipoVehiculo').text(vehiculo.nombreTipoVehiculo);
-						$('#spnFabricacion').text(vehiculo.fabricacion);
-						$('#spnNumeroMotor').text(vehiculo.numeroMotor);
-						$('#spnColor').text(vehiculo.color);
-						$('#spnNumeroEjes').text(vehiculo.numeroEjes);
-						$('#spnNumeroRuedas').text(vehiculo.numeroRuedas);
-						$('#spnNumeroCilindros').text(vehiculo.numeroCilindros);
-						$('#spnNumeroSerie').text(vehiculo.numeroSerie);
-						$('#spnNumeroPasajeros').text(vehiculo.numeroPasajeros);
-						$('#spnNumeroAsientos').text(vehiculo.numeroAsientos);
-						$('#spnPesoSeco').text(vehiculo.pesoSeco);
-						$('#spnPesoBruto').text(vehiculo.pesoBruto);
-						$('#spnLongitud').text(vehiculo.longitud);
-						$('#spnAltura').text(vehiculo.altura);
-						$('#spnAncho').text(vehiculo.ancho);
-						$('#spnCargaUtil').text(vehiculo.cargaUtil);
-
-						$('#spnColorGeneral').text(vehiculo.color);
-						$('#spnNumeroPlacaGeneral').text(vehiculo.numeroPlaca);
-						$('#spnFabricacionGeneral').text(vehiculo.fabricacion);
-						$('#spnMarcaGeneral').text(vehiculo.nombreMarca);
-						$('#spnModeloGeneral').text(vehiculo.nombreModelo);
-
-						$('#spnDniCliente').text(vehiculo.dniCliente);
-						$('#spnPrimerNombreCliente').text(
-								vehiculo.primerNombreCliente);
-						$('#spnApellidoPatCliente').text(
-								vehiculo.apePaternoCliente);
-						$('#spnApellidoMatCliente').text(
-								vehiculo.apeMaternoCliente);
-						$('#spnTelefonoCliente').text(vehiculo.telefonoCliente);
-						$('#spnCelularCliente').text(vehiculo.celularCliente);
+						IniciarInfoVehiculo(vehiculo);
+						removeNulls();
 					}
 				});
+	}
+	
+	function IniciarInfoVehiculo(vehiculo){
+		//Vista de Informacion
+		$('#spnNumeroPlaca').text(vehiculo.numeroPlaca);
+		$('#spnMarca').text(vehiculo.nombreMarca);
+		$('#spnModelo').text(vehiculo.nombreModelo);
+		$('#spnTipoVehiculo').text(vehiculo.nombreTipoVehiculo);
+		$('#spnFabricacion').text(vehiculo.fabricacion);
+		$('#spnNumeroMotor').text(vehiculo.numeroMotor);
+		$('#spnColor').text(vehiculo.color);
+		$('#spnNumeroEjes').text(vehiculo.numeroEjes);
+		$('#spnNumeroRuedas').text(vehiculo.numeroRuedas);
+		$('#spnNumeroCilindros').text(vehiculo.numeroCilindros);
+		$('#spnNumeroSerie').text(vehiculo.numeroSerie);
+		$('#spnNumeroPasajeros').text(vehiculo.numeroPasajeros);
+		$('#spnNumeroAsientos').text(vehiculo.numeroAsientos);
+		$('#spnPesoSeco').text(vehiculo.pesoSeco);
+		$('#spnPesoBruto').text(vehiculo.pesoBruto);
+		$('#spnLongitud').text(vehiculo.longitud);
+		$('#spnAltura').text(vehiculo.altura);
+		$('#spnAncho').text(vehiculo.ancho);
+		$('#spnCargaUtil').text(vehiculo.cargaUtil);
+
+		$('#spnColorGeneral').text(vehiculo.color);
+		$('#spnNumeroPlacaGeneral').text(vehiculo.numeroPlaca);
+		$('#spnFabricacionGeneral').text(vehiculo.fabricacion);
+		$('#spnMarcaGeneral').text(vehiculo.nombreMarca);
+		$('#spnModeloGeneral').text(vehiculo.nombreModelo);
+
+		$('#spnDniCliente').text(vehiculo.dniCliente);
+		$('#spnPrimerNombreCliente').text(
+				vehiculo.primerNombreCliente);
+		$('#spnApellidoPatCliente').text(
+				vehiculo.apePaternoCliente);
+		$('#spnApellidoMatCliente').text(
+				vehiculo.apeMaternoCliente);
+		$('#spnTelefonoCliente').text(vehiculo.telefonoCliente);
+		$('#spnCelularCliente').text(vehiculo.celularCliente);
+		
+		//Vista de Edicion
+		$('#txtCliente').val(vehiculo.idCliente);
+		$('#txtVehiculo').val(vehiculo.idVehiculo);
+		$('#comboMarca').val(vehiculo.idMarca);
+		$('#comboModelo').val(vehiculo.idModelo);
+		$('#comboTipovehiculo').val(vehiculo.idTipoVehiculo);
+		$('#txtAño').val(vehiculo.fabricacion);
+		$('#txtNumMotor').val(vehiculo.numeroMotor);
+		$('#txtNumPlaca').val(vehiculo.numeroPlaca);
+		$('#comboNumeroEjes').val(vehiculo.numeroEjes);
+		$('#txtNumCilindros').val(vehiculo.numeroCilindros);
+		$('#txtNumSerie').val(vehiculo.numeroSerie);
+		$('#txtColor').val(vehiculo.color);
+		$('#txtNumPasajeros').val(vehiculo.numeroPasajeros);
+		$('#txtNumAsientos').val(vehiculo.numeroAsientos);
+		$('#txtPesoSeco').val(vehiculo.pesoSeco);
+		$('#txtPesoBruto').val(vehiculo.pesoBruto);
+		$('#txtLongitud').val(vehiculo.longitud);
+		$('#txtAltura').val(vehiculo.altura);
+		$('#txtAncho').val(vehiculo.ancho);
+		$('#txtCargaUtil').val(vehiculo.cargaUtil);
+		$('#txtNumRuedas').val(vehiculo.numeroRuedas);
+	}
+	function listarTipoVehiculos(){
+		
+		$.ajax({
+	 		url: 'getTipoVehiculos',
+	 		type: 'post',
+	 		dataType: 'json',
+	 		data: '',
+	 		success: function(tipovehiculos){
+	 			$('#comboTipovehiculo').empty();
+	 			$.each(tipovehiculos, function(i, tipovehiculo){
+	 				$('#comboTipovehiculo').append('<option value="'+tipovehiculo.idTipoVehiculo+'">'+tipovehiculo.nombre+'</option>');				
+				});
+	 		}
+	 	});	
+		
+	}
+
+	function listarModelos(){
+		
+		$.ajax({
+	 		url: 'getModelos',
+	 		type: 'post',
+	 		dataType: 'json',
+	 		data: '',
+	 		success: function(modelos){
+	 			$('#comboModelo').empty();
+	 			$.each(modelos, function(i, modelo){
+	 				$('#comboModelo').append('<option value="'+modelo.idModelo+'">'+modelo.nombre+'</option>');				
+				});
+	 		}
+	 	});	
+		
+	}
+
+	function listarMarcas(){
+		
+		$.ajax({
+	 		url: 'getMarcas',
+	 		type: 'post',
+	 		dataType: 'json',
+	 		data: '',
+	 		success: function(marcas){
+	 			$('#comboMarca').empty();
+	 			$.each(marcas, function(i, marca){
+	 				$('#comboMarca').append('<option value="'+marca.idMarca+'">'+marca.nombre+'</option>');				
+				});
+	 		}
+	 	});	
+		
 	}
 	
 	function ExtractInformacion(){
 		$('.vistaInformacion').hide();
 		$('.edicionInformacion').show();
-		}
+		$('#btnVerInformacion').show();
+		$('#btnVerEdicion').hide();
+	}
 </script>
 
 <body>
@@ -166,7 +264,7 @@
 												<span id="btnVerEdicion"
 													class="btn btn-default btn-xs dropdown-toggle"
 													onclick="ExtractInformacion();">Editar</span> 
-													<span Id="btnVerInformacion"
+													<span id="btnVerInformacion"
 													class="btn btn-default btn-xs dropdown-toggle"
 													onclick="$('.vistaInformacion').show();$('.edicionInformacion').hide();$('#btnVerInformacion').hide();$('#btnVerEdicion').show();"
 													style="display: none">Regresar</span>
@@ -176,7 +274,7 @@
 
 									<div class="panel-body">
 
-										<div class="col-lg-12" id="vistaInformacion">
+										<div class="col-lg-12 vistaInformacion">
 											<br>
 											<div class="col-lg-4">
 												<p class="text-primary">Numero de placa:</p>
@@ -223,11 +321,10 @@
 												<span id="spnCargaUtil"></span>
 											</div>
 										</div>
-										<div class="col-lg-12" id="edicionInformacion" style="display: none;">
+										<div class="col-lg-12 edicionInformacion" style="display: none;">
 										<!-- BORRAR EN CASO DE ERROR -->
 										
-										<form role="form" id="frmRegistroVehiculo" action="registroVehiculo"
-									method="post" commandName="vehiculobean" style="width: 90%; padding-left: 10%;">
+										<form role="form" id="frmEdicionVehiculo" commandName="vehiculobean" style="width: 90%; padding-left: 10%;">
 							<fieldset>						
 								<div class="col-lg-6">						
 									<!-- PRIMERA COLUMNA -->
@@ -239,15 +336,21 @@
                                                 <button style="margin-top:25px; height: 34px;" class="btn btn-default" type="button"><i class="fa fa-search"></i>
                                                 </button>
                                             </span>
-                                        </div>	-->	
+                                        </div>	
                                         
                                         <div class="form-group">
                                             <label>Cliente</label>
                                             <select class="form-control" id="comboCliente" name="idCliente">
                                                  <option value="">Seleccione el cliente</option>
                                             </select>
-                                        </div>			
-                                        
+                                        </div>	-->			
+                                        <div class="form-group" style="display:none">
+											<label>Cliente</label> 
+											<input id="txtCliente" class="form-control"
+											 name="idCliente" placeholder="Cliente"></input>
+											 <input id="txtVehiculo" class="form-control"
+											 name="idVehiculo" placeholder="Vehiculo"></input>
+										</div>
                                         <div class="form-group">
                                             <label>Marca</label>
                                             <select class="form-control" id="comboMarca" name="idMarca">
@@ -289,11 +392,14 @@
 										
 										<div class="form-group">
 											<label style="margin-top: 7px; margin-bottom: 10px;">Número de ejes</label><br>
-											<label class="radio-inline"><input type="radio" name="numeroEjes" id="numEje1" value="1">1</label> 											
-											<label class="radio-inline"><input type="radio" name="numeroEjes" id="numEje2" value="2">2</label>
-											<label class="radio-inline"><input type="radio" name="numeroEjes" id="numEje3" value="3">3</label>
-											<label class="radio-inline"><input type="radio" name="numeroEjes" id="numEje4" value="4">4</label>
-											<label class="radio-inline"><input type="radio" name="numeroEjes" id="numEje5" value="5">5</label>
+											<select class="form-control" id="comboNumeroEjes" name="numeroEjes">
+                                            <option value="">Seleccione el Nro. de ejes</option>
+                                            <option value="1">1</option>
+                                            <option value="2">2</option>
+                                            <option value="3">3</option>
+                                            <option value="4">4</option>
+                                            <option value="5">5</option>                                            
+                                            </select>
 										</div>																																
 										
 										<div class="form-group">
@@ -377,11 +483,9 @@
 								</div>
 																
 								
-										<input class="btn btn-lg btn-success btn-block" 
-										type="submit" value="Registrar Vehiculo" style="width: 60%; margin-left: 20%; margin-top: 10%;"/>
-										<p>
-											<label class="error"><c:out value="${msg}" /></label>
-										</p>
+										<span class="btn btn-success" onclick="EditInformacionVehiculo();">Guardar</span>
+										<span class="btn btn-danger" onclick="$('.vistaInformacion').show();$('.edicionInformacion').hide();$('#btnVerInformacion').hide();$('#btnVerEdicion').show();">
+									    Cancelar</span>
 							</fieldset>							
 							</form>
 										
@@ -391,7 +495,8 @@
 									</div>
 								</div>
 
-								<div class="tab-pane fade" id="fallas">
+							</div>
+							<div class="tab-pane fade" id="fallas">
 									<p></p>
 									<p>Dato 1:</p>
 									<p>Dato 2:</p>
@@ -433,7 +538,6 @@
 										sint occaecat cupidatat non proident, sunt in culpa qui
 										officia deserunt mollit anim id est laborum.</p>
 								</div>
-							</div>
 						</div>
 						<!-- /.panel-body -->
 					</div>
