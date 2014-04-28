@@ -157,10 +157,10 @@ function registrarTipoRepuesto(){
 															class="form-control" name="nombre"  placeholder="Nombre" id="txtNombreTR"/>
 														</div>
 														
-				                                        <div class="form-group">
+				                                        <!-- <div class="form-group">
 				                                            <label>Imagen de ejemplo: </label>
 				                                            <input type="file">
-				                                        </div>	
+				                                        </div>	 -->
 															<p><br>
 														</p>
 													</fieldset>
