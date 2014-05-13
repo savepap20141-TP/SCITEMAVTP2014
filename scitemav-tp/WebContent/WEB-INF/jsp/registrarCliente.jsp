@@ -9,12 +9,52 @@
 <title>Registrar Cliente</title>
 <jsp:include page="componentes/head.jsp" />
 </head>
+<style>
+label .error{
+color:red;
+}
+</style>
 <script>
 $(document).ready(function(e){
 	var nfechaNac = 'txtFechaNacimiento';
 	cargarFecha(nfechaNac);
 	listarDistritos();
+	$('#frmRegistroCliente').validate({
+		rules:{
+			telefono:{
+				required:true,
+				number:true,
+				maxlength:9,
+				minlength:7
+				
+			},
+			dni:{
+				required:true,
+				number:true,				
+				maxlength:8,
+				minlength:8
+			}
+		},
+		messages:{
+			telefono:{
+				required:"Debe ingresar un teléfono",
+				number:"Sólo números en el teléfono",
+				minlength:"Tiene que tener 7 dígitos en el teléfono",
+				maxlength:"Tiene que tener 9 dígitos en el teléfono"
+			},
+			dni:{
+				required:"Debe ingresar un DNI",
+				number:"Sólo números en el DNI",
+				minlength:"Tiene que tener 8 dígitos el DNI",
+				maxlength:"Tiene que tener 8 dígitos el DNI"
+			}
+		},
+		submitHandler: function(form){
+			form.submit();
+		}		
+	});
 });
+
 </script>
 <script>
 

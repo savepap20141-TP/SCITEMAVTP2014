@@ -11,7 +11,7 @@
 
 <!-- Core Scripts - Include with every page -->
 <!-- <script src="js/jquery-1.10.2.js"></script> -->
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script src="js/jquery.min.js"></script>
 <script src="js/bootstrap.min.js"></script>
 <script src="js/plugins/metisMenu/jquery.metisMenu.js"></script>
 
@@ -30,8 +30,10 @@
 <script src="js/plugins/dataTables/jquery.dataTables.js"></script>
 <script src="js/plugins/dataTables/dataTables.bootstrap.js"></script>
 
-<link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.0-beta.1/css/jquery.dataTables.css"></link>
+<link rel="stylesheet" type="text/css" href="styles/jquery.dataTables.css"></link>
 <script src="js/plugins/dataTables/jquery.dataTables.js"></script>
 
-<link href="//code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css" rel="stylesheet"></link>
-<script src="//code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+<link href="styles/jquery-ui.css" rel="stylesheet"></link>
+<script src="js/jquery-ui.js"></script>
+
+<script src="js/Validate.js"></script>
