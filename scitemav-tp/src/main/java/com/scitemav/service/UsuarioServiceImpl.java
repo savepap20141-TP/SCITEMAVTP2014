@@ -1,5 +1,7 @@
 package com.scitemav.service;
 
+import java.util.Random;
+
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
@@ -17,6 +19,9 @@ import com.scitemav.model.Usuario;
 @Service
 public class UsuarioServiceImpl implements UsuarioService{
 
+	static final String AB = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+	static Random rnd = new Random();
+	
 	@PersistenceContext
 	EntityManager em;
 
@@ -50,6 +55,17 @@ public class UsuarioServiceImpl implements UsuarioService{
 		boolean resultado = false;
 		Persona persona = new Persona();
 		Usuario usuario = new Usuario();
+		
+		//Generacion de password automatica aleatorio
+		StringBuilder sb = new StringBuilder(10);
+		String firstPassword = "pass";
+		
+		for( int i = 0; i < 10; i++ ) 
+		      sb.append( AB.charAt( rnd.nextInt(AB.length()) ) );
+		
+		firstPassword = sb.toString();
+		
+		//
 		try{
 			usuario.setEmail(perbean.getEmail());
 			//Convertimos el password en caracteres encriptados
