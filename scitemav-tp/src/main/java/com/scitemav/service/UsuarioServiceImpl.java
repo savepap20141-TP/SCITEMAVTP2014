@@ -28,7 +28,8 @@ public class UsuarioServiceImpl implements UsuarioService{
 			Query q = em.createQuery("SELECT u FROM Usuario u WHERE u.email =:email AND u.password =:password AND u.activo =:activo");
 			q.setParameter("email", usu.getEmail());
 	    	//String md5 = DigestUtils.md5Hex(usu.getPassword());
-			q.setParameter("password", usu.getPassword());
+			String md5 = DigestUtils.md5Hex(usu.getPassword());
+			q.setParameter("password", md5);
 			q.setParameter("activo", true);
 			
 			Usuario userResult = (Usuario) q.getSingleResult();
@@ -51,7 +52,10 @@ public class UsuarioServiceImpl implements UsuarioService{
 		Usuario usuario = new Usuario();
 		try{
 			usuario.setEmail(perbean.getEmail());
-			usuario.setPassword(perbean.getPassword());
+			//Convertimos el password en caracteres encriptados
+			String md5 = DigestUtils.md5Hex(perbean.getPassword());
+			usuario.setPassword(md5);
+			//
 			usuario.setActivo(true);
 			em.persist(usuario);
 			persona.setPerUsuario(usuario);

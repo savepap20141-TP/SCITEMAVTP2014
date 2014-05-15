@@ -7,6 +7,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
+import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -31,7 +32,8 @@ public class ClienteServiceImpl implements ClienteService{
 
 		try{
 			usu.setEmail(clib.getEmail());
-			usu.setPassword("pass");
+			String md5 = DigestUtils.md5Hex("pass");
+			usu.setPassword(md5);
 			
 			java.util.Date d = new java.util.Date(System.currentTimeMillis()); 
 			java.sql.Timestamp ts = new java.sql.Timestamp(d.getTime());   
