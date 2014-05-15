@@ -33,7 +33,15 @@ $(document).ready(function(e){
 				number:true,				
 				maxlength:8,
 				minlength:8
-			}
+			},
+			nfechaNac:{
+				minDate: new Date(1900,1-1,1), maxDate: '-18Y',
+			      dateFormat: 'dd/mm/yy',
+			      defaultDate: new Date(1970,1-1,1),
+			      changeMonth: true,
+			      changeYear: true,
+			      yearRange: '-110:-18'
+			},
 		},
 		messages:{
 			telefono:{
@@ -47,6 +55,11 @@ $(document).ready(function(e){
 				number:"Sólo números en el DNI",
 				minlength:"Tiene que tener 8 dígitos el DNI",
 				maxlength:"Tiene que tener 8 dígitos el DNI"
+			},
+			nfechaNac:{
+				
+				minDate: "La edad minima es 18 años",
+			    dateFormat: 'La edad debe estar en el formato dia/mes/año)',
 			}
 		},
 		submitHandler: function(form){

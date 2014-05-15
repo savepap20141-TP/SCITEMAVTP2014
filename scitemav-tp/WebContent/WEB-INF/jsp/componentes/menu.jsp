@@ -77,7 +77,7 @@
                         <a href="#"><i class="fa fa-wrench fa-fw"></i>Fallas<span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level">
                             <li>
-                                <a href="toRegistroFalla">Registrar Falla</a>
+                                <a href="toRegistrarFalla">Registrar Falla</a>
                             </li>
                             <li>
                                 <a href="#">Consultar Fallas</a>
