@@ -37,3 +37,4 @@
 <script src="js/jquery-ui.js"></script>
 
 <script src="js/Validate.js"></script>
+<script src="js/jquery.ui.datepicker.validation.min.js"></script>

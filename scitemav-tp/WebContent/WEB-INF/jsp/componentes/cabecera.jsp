@@ -1,18 +1,29 @@
 <%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%> 
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%> 
-<<style>
+<style>
 #spnResultList {
     overflow: auto;
     width: 100%;
     height: 100%;
 }
+label.error {
+	margin-left: 10px;
+	width: auto;
+	display: inline;
+	color: rgb(255,0,0);
+	font-weight:bold;
+}
 </style>
 <script>
 var email = '${pageContext.session.getAttribute("email")}';
-
+var isValid = '${pageContext.session.getAttribute("isValid")}';
 $(document).ready(function(e){
 	$("#nameUser").empty();
 	$("#nameUser").append(email);
+	//alert(isValid);
+	if(isValid==''){
+		window.location = 'toLogin';
+	}
 });
 function cargarFecha(idname){
 	$('#'+idname).datepicker({dateFormat: 'yy-mm-dd',changeMonth: true,changeYear: true, yearRange: '1950:2014'});
