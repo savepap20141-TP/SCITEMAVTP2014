@@ -29,6 +29,10 @@ public class InicioController {
 	@Autowired
 	PersonaService personaService;
 	
+	@RequestMapping("toEmail")
+	public String toEmail(){
+		return "envioEmail";
+	}
 	
 	@RequestMapping("toLogin")
 	public String toLogin() {

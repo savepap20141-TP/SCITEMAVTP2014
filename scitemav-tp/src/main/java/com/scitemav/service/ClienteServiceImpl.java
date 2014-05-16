@@ -8,6 +8,7 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
 import org.apache.commons.codec.digest.DigestUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,6 +21,9 @@ import com.scitemav.model.Usuario;
 @Service
 public class ClienteServiceImpl implements ClienteService{
 
+	@Autowired
+	EmailService emailService;
+	
 	@PersistenceContext
 	EntityManager em;
 	
@@ -64,6 +68,7 @@ public class ClienteServiceImpl implements ClienteService{
 			cli.setRuc(clib.getRuc());
 			
 			em.persist(cli);
+			emailService.EnviarMensaje(usu.getEmail());
 			resultado = true;
 		}catch(IllegalArgumentException e){
 			System.out.println(e);
