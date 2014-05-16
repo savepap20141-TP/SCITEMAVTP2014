@@ -33,6 +33,7 @@ public class ClientController {
 		if(clienteService.registroCliente(clib)){
 			model.addAttribute("msg", "Se registro correctamente");
 			path = "registrarCliente";
+			
 		}else{
 			model.addAttribute("msg", "Fallo al registrarse");
 			path = "registrarCliente";
