@@ -30,7 +30,7 @@ public class UsuarioServiceImpl implements UsuarioService{
 	public boolean login(Usuario usu, HttpSession session) {
 		boolean resultado = false;
 		try{
-			Query q = em.createQuery("SELECT u FROM Usuario u WHERE u.email =:email AND u.password =:password AND (u.activo =:activo OR u.estado=:estado");
+			Query q = em.createQuery("SELECT u FROM Usuario u WHERE u.email =:email AND u.password =:password AND (u.activo =:activo OR u.estado=:estado)");
 			q.setParameter("email", usu.getEmail());
 	    	//String md5 = DigestUtils.md5Hex(usu.getPassword());
 			String md5 = DigestUtils.md5Hex(usu.getPassword());
