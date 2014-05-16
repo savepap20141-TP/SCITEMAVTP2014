@@ -36,7 +36,7 @@ public class UsuarioServiceImpl implements UsuarioService{
 			String md5 = DigestUtils.md5Hex(usu.getPassword());
 			q.setParameter("password", md5);
 			q.setParameter("activo", true);
-			q.setParameter("activo", "habilitado");
+			q.setParameter("estado", "habilitado");
 			
 			Usuario userResult = (Usuario) q.getSingleResult();
 			
