@@ -34,7 +34,7 @@ public class ClienteServiceImpl implements ClienteService{
 			usu.setEmail(clib.getEmail());
 			String md5 = DigestUtils.md5Hex("pass");
 			usu.setPassword(md5);
-			
+			usu.setEstado("creado");
 			java.util.Date d = new java.util.Date(System.currentTimeMillis()); 
 			java.sql.Timestamp ts = new java.sql.Timestamp(d.getTime());   
 			usu.setFechaCreacion(ts);	

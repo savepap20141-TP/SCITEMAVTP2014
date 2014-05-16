@@ -22,6 +22,8 @@ public class Usuario {
 	private Timestamp fechaCreacion;
 	@Column(name = "activo", nullable = true)
 	private Boolean activo;
+	@Column(length = 60, nullable = false)
+	private String estado;
 	
 	@OneToOne(mappedBy="perUsuario")
 	private Persona usuPersona;
@@ -61,6 +63,12 @@ public class Usuario {
 	}
 	public void setUsuPersona(Persona usuPersona) {
 		this.usuPersona = usuPersona;
+	}
+	public String getEstado() {
+		return estado;
+	}
+	public void setEstado(String estado) {
+		this.estado = estado;
 	}
 
 }
