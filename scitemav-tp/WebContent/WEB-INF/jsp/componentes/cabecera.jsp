@@ -9,7 +9,7 @@
 label.error {
 	margin-left: 10px;
 	width: auto;
-	display: inline;
+	display: inline; 
 	color: rgb(255,0,0);
 	font-weight:bold;
 }

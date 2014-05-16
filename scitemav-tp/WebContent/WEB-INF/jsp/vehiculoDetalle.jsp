@@ -16,6 +16,7 @@
 		listarTipoVehiculos();
 		listarModelos();
 		listarMarcas();
+		removeNulls();
 	});
 
 	function EditInformacionVehiculo(){
