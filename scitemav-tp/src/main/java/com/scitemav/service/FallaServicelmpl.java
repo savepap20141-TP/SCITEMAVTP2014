@@ -25,10 +25,12 @@ public class FallaServicelmpl implements FallaService{
 		Falla rp = new Falla();				
 
 		try{			
-			tr.setIdTipoFalla(fal.getIdFalla());
-			rp.setFalTipoFalla(tr);
+			TipoFalla tfa  = new TipoFalla();
+			tfa.setIdTipoFalla(fal.getIdTipoFalla());
+			
+			rp.setFalTipoFalla(tfa);
 			rp.setDescripcion(fal.getDescripcion());
-		
+		 
 			em.persist(rp);
 		
 			

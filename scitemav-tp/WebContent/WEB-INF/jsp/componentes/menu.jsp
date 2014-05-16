@@ -73,14 +73,17 @@
                         </ul>
                         <!-- /.nav-second-level -->
                     </li>
-                    <li>
+                   <li>
                         <a href="#"><i class="fa fa-wrench fa-fw"></i>Fallas<span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level">
                             <li>
                                 <a href="toRegistrarFalla">Registrar Falla</a>
                             </li>
                             <li>
-                                <a href="#">Consultar Fallas</a>
+                                <a href="toConsultarFalla">Consultar Falla</a>
+                            </li>
+                            <li>
+                                <a href="toRegistroTipoFalla">Registrar Tipo de Falla</a>
                             </li>
                         </ul>
                         <!-- /.nav-second-level -->
