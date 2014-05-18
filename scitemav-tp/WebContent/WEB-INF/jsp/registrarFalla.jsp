@@ -7,6 +7,27 @@
 <title>Registro de Fallas</title>
 <jsp:include page="componentes/head.jsp" />
 </head>
+<script>
+$(document).ready(function(e){
+
+	$('#frmRegistroFalla').validate({
+		rules:{
+			descripcion:{
+			required: true,
+			}
+		},
+	
+	messages:{
+		descripcion:{
+		required: "Se debe ingresar descripcion de falla",
+		}
+	},			
+	submitHandler: function(form){
+		form.submit();
+	}		
+});
+});
+</script>
 <style>
 label.error {
 	margin-left: 10px;

@@ -10,6 +10,27 @@
 <jsp:include page="componentes/head.jsp" />
 </head>
 <script>
+$(document).ready(function(e){
+
+	$('#frmRegistroRepuesto').validate({
+		rules:{
+			nombre:{
+			required: true,
+			}
+		},
+	
+	messages:{
+		nombre:{
+		required: "Se debe ingresar un nombre de repuesto",
+		}
+	},			
+	submitHandler: function(form){
+		form.submit();
+	}		
+});
+});
+</script>
+<script>
 $(document).ready(function(e){	
 	listarTiporepuestos();
 });
