@@ -39,7 +39,7 @@ $(document).ready(function(e){
 		rules:{
 			fabricacion:{
 				required:true,
-				number:true,
+				NumRegex:true,
 				maxlength:4,
 				minlength:4
 				
