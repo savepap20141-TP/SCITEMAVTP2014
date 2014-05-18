@@ -27,7 +27,7 @@ $(document).ready(function(e){
     }, " ");
 	$.validator.addMethod("LetRegex", function(value, element) {
         return this.optional(element) || /^[A-Z]+$/.test(value);
-    }, "Solo letras mayusculas ");
+    }, "");
 	$.validator.addMethod("DecRegex", function(value, element) {
         return this.optional(element) || /^(\d+|\d+,\d{1,4})$/.test(value);
     }, " ");
@@ -132,6 +132,18 @@ $(document).ready(function(e){
 				maxlength:7,
 				minlength:7				
 			},
+			idCliente:{
+				required:true,
+			},
+			idMarca:{
+				required:true,
+			},
+			idModelo:{
+				required:true,			
+			},
+			idTipoVehiculo:{
+				required:true,	
+			}			
 		},
 		messages:{
 			fabricacion:{
@@ -229,6 +241,18 @@ $(document).ready(function(e){
 				maxlength:"Tiene que tener 7 digitos",
 				minlength:"Tiene que tener 7 digitos"			        
 			},
+			idCliente:{
+				required:"Seleccione un Cliente",
+			},
+			idMarca:{
+				required:"Seleccione una Marca",
+			},
+			idModelo:{
+				required:"Seleccione un Modelo",				
+			},
+			idTipoVehiculo:{
+				required:"Seleccione un Tipo de Vehiculo",	
+			}
 			
 		},			
 		submitHandler: function(form){
@@ -249,6 +273,7 @@ function listarClientes(){
  		data: '',
  		success: function(clientes){
  			$('#comboCliente').empty();
+ 			$('#comboCliente').append('<option value="">Seleccione su Cliente</option>');
  			$.each(clientes, function(i, cliente){
  				$('#comboCliente').append('<option value="'+cliente.idCliente+'">'+cliente.nombre+' '+cliente.apellidoPaterno+' - '+cliente.dni+'</option>');				
 			});
@@ -266,6 +291,7 @@ function listarTipoVehiculos(){
  		data: '',
  		success: function(tipovehiculos){
  			$('#comboTipovehiculo').empty();
+ 			$('#comboTipovehiculo').append('<option value="">Seleccione su Tipo de Vehiculo</option>');
  			$.each(tipovehiculos, function(i, tipovehiculo){
  				$('#comboTipovehiculo').append('<option value="'+tipovehiculo.idTipoVehiculo+'">'+tipovehiculo.nombre+'</option>');				
 			});
@@ -283,6 +309,7 @@ function listarModelos(){
  		data: '',
  		success: function(modelos){
  			$('#comboModelo').empty();
+ 			$('#comboModelo').append('<option value="">Seleccione su Modelo</option>');
  			$.each(modelos, function(i, modelo){
  				$('#comboModelo').append('<option value="'+modelo.idModelo+'">'+modelo.nombre+'</option>');				
 			});
@@ -300,6 +327,7 @@ function listarMarcas(){
  		data: '',
  		success: function(marcas){
  			$('#comboMarca').empty();
+ 			$('#comboMarca').append('<option value="">Seleccione su Marca</option>');
  			$.each(marcas, function(i, marca){
  				$('#comboMarca').append('<option value="'+marca.idMarca+'">'+marca.nombre+'</option>');				
 			});

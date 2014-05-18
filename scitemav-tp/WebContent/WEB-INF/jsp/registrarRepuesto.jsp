@@ -16,12 +16,18 @@ $(document).ready(function(e){
 		rules:{
 			nombre:{
 			required: true,
+			},
+			idTipoRepuesto:{
+			required: true,
 			}
 		},
 	
 	messages:{
 		nombre:{
 		required: "Se debe ingresar un nombre de repuesto",
+		},
+		idTipoRepuesto:{
+		required: "Seleccione un Tipo ",
 		}
 	},			
 	submitHandler: function(form){
@@ -46,6 +52,7 @@ function listarTiporepuestos(){
  		data: '',
  		success: function(tiporepuesto){
  			$('#comboTiporepuestos').empty();
+ 			$('#comboTiporepuestos').append('<option value="">Seleccione su Tipo</option>');
  			$.each(tiporepuesto, function(i, tiporepuestos){
  				$('#comboTiporepuestos').append('<option value="'+tiporepuestos.idTipoRepuesto+'">'+tiporepuestos.nombre+'</option>');				
 			});

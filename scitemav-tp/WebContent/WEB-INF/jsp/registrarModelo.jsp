@@ -14,12 +14,18 @@ $(document).ready(function(e){
 		rules:{
 			nombre:{
 			required: true,
+			},
+			idMarca:{
+			required: true,
 			}
 		},
 	
 	messages:{
 		nombre:{
 		required: "Se debe ingresar un nombre de modelo",
+		},
+		idMarca:{
+		required: "Seleccione una Marca",	
 		}
 	},			
 	submitHandler: function(form){
@@ -39,6 +45,7 @@ function listarMarcas(){
  		data: '',
  		success: function(marcas){
  			$('#comboMarca').empty();
+ 			$('#comboMarca').append('<option value="">Seleccione su Marca</option>');
  			$.each(marcas, function(i, marca){
  				$('#comboMarca').append('<option value="'+marca.idMarca+'">'+marca.nombre+'</option>');				
 			});

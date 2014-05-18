@@ -94,7 +94,7 @@ $(document).ready(function(e){
 			},
 			email:{
 				required:"Debe ingresar un Email",
-			    email:"se necesita ingresar Email"	
+			    email:"Se necesita ingresar Email"	
 			},
 			fechaNacimiento:{
 				required:"Se debe ingresar una Fecha",
@@ -102,22 +102,22 @@ $(document).ready(function(e){
 				dpComparedate:"Debe ser mayor igual de 18 años"
 			},
 			nombre:{
-				required: "se debe ingresar un nombre",
+				required: "Se debe ingresar un nombre",
 			},
 			apellidoPaterno:{
-				required: "se debe ingresar un apellido parterno",			
+				required: "Se debe ingresar un apellido parterno",			
 			},
 			apellidoMaterno:{
-				required: "se debe ingresar un apellido materno",
+				required: "Se debe ingresar un apellido materno",
 			},
 			direccion:{
-				required: "se debe ingresar una direccion",
+				required: "Se debe ingresar una direccion",
 			},
 			idDistrito:{
-				required: "se debe ingresar un distrito",
+				required: "Seleccione un distrito",
 			},
 			sexo:{
-				required: "seleccione un tipo de sexo",
+				required: "Seleccione un tipo de sexo",
 			}
 		},			
 		submitHandler: function(form){
@@ -139,6 +139,7 @@ function listarDistritos(){
  		data: '',
  		success: function(distritos){
  			$('#comboDistrito').empty();
+ 			$('#comboDistrito').append('<option value="">Seleccione su distrito</option>');
  			$.each(distritos, function(i, distrito){
  				$('#comboDistrito').append('<option value="'+distrito.idDistrito+'">'+distrito.nombre+'</option>');				
 			});
@@ -228,8 +229,7 @@ function listarDistritos(){
 										</div>
 										<div class="form-group">
 											<label> Distrito</label> 										
-											<select class="form-control" id="comboDistrito" name="idDistrito" tabindex="-1" >
-												<option value="0" >Seleccione su Distrito</option>
+											<select class="form-control" id="comboDistrito" name="idDistrito">
 											</select>
 										</div>
 										<div class="form-group input-group">

@@ -14,12 +14,18 @@ $(document).ready(function(e){
 		rules:{
 			descripcion:{
 			required: true,
-			}
+			},
+		idTipoFalla:{
+			required: true,
+		}
 		},
 	
 	messages:{
 		descripcion:{
 		required: "Se debe ingresar descripcion de falla",
+		},
+		idTipoFalla:{
+			required: "Seleccione un Tipo",
 		}
 	},			
 	submitHandler: function(form){
@@ -61,6 +67,7 @@ function listarTipofallas(){
  		data: '',
  		success: function(tipofalla){
  			$('#comboTipofallas').empty();
+ 			$('#comboTipofallas').append('<option value="">Seleccione su Tipo</option>');
  			$.each(tipofalla, function(i, tipofallas){
  				$('#comboTipofallas').append('<option value="'+tipofallas.idTipoFalla+'">'+tipofallas.nombreTipoFalla+'</option>');				
 			});

@@ -64,9 +64,20 @@ $(document).ready(function(e){
 			},
 			email:{
 				required: true,
-			    email: true
-				
+			    email: true			
 			},
+			sexo:{
+				required: true,
+			},
+			idDistrito:{
+				required: true,
+			},
+			idCargo:{
+				required: true,
+			},
+			idEspecialidad:{
+				required: true,
+			}
 		},
 		messages:{
 			dni:{
@@ -107,7 +118,19 @@ $(document).ready(function(e){
 			},
 			email:{
 				required:"Debe ingresar un Email",
-			    email:"se necesita ingresar Email"	
+			    email:"Se necesita ingresar Email"	
+			},
+			sexo:{
+				required: "Seleccione un Tipo Sexo",
+			},
+			idDistrito:{
+				required: "Seleccione un Distrito",
+			},
+			idCargo:{
+				required: "Seleccione un Cargo",
+			},
+			idEspecialidad:{
+				required: "Seleccione una Especialidad",
 			},
 			
 		},			

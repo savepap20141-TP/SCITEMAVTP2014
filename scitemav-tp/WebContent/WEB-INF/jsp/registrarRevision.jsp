@@ -24,13 +24,19 @@ $(document).ready(function(e){
 		rules:{
 			fechaInicio:{
 			required: true,
+			},
+			idVehiculo:{
+			required: true,	
 			}
 		},
 	
 	messages:{
 		fechaInicio:{
 		required: "Se debe ingresar una Fecha",
-		}
+		},
+		idVehiculo:{
+			required: "Seleccione un Automovil",	
+	     }
 	},			
 	submitHandler: function(form){
 		form.submit();
@@ -49,6 +55,7 @@ function listarVehiculos(){
  		data: '',
  		success: function(vehiculos){
  			$('#comboAutomovil').empty();
+ 			$('#comboAutomovil').append('<option value="">Seleccione su Automovil</option>');
  			$.each(vehiculos, function(i, vehiculo){
  				$('#comboAutomovil').append('<option value="'+vehiculo.idVehiculo+'">'+vehiculo.numeroPlaca+'</option>');				
 			});
