@@ -34,7 +34,7 @@ $(document).ready(function(e){
 				required:true,
 				number:true,
 				maxlength:9,
-				minlength:7
+				minlength:9
 				
 			},
 			dni:{
@@ -52,8 +52,25 @@ $(document).ready(function(e){
 				required: true,
 			      dpDate: true,
 			      //dpComparedate:'notbefore 1996-01-01'
+			},
+			nombre:{
+				required: true,
+			},
+			apellidoPaterno:{
+				required: true,			
+			},
+			apellidoMaterno:{
+				required: true,
+			},
+			direccion:{
+				required: true,
+			},
+			idDistrito:{
+				required: true,
+			},
+			sexo:{
+				required: true,
 			}
-			
 		},
 		messages:{
 			telefono:{
@@ -83,6 +100,24 @@ $(document).ready(function(e){
 				required:"Se debe ingresar una Fecha",
 				dpDate:"Solo Fechas",	
 				dpComparedate:"Debe ser mayor igual de 18 años"
+			},
+			nombre:{
+				required: "se debe ingresar un nombre",
+			},
+			apellidoPaterno:{
+				required: "se debe ingresar un apellido parterno",			
+			},
+			apellidoMaterno:{
+				required: "se debe ingresar un apellido materno",
+			},
+			direccion:{
+				required: "se debe ingresar una direccion",
+			},
+			idDistrito:{
+				required: "se debe ingresar un distrito",
+			},
+			sexo:{
+				required: "seleccione un tipo de sexo",
 			}
 		},			
 		submitHandler: function(form){
@@ -193,8 +228,8 @@ function listarDistritos(){
 										</div>
 										<div class="form-group">
 											<label> Distrito</label> 										
-											<select class="form-control" id="comboDistrito" name="idDistrito">
-												<option value="">Seleccione su Distrito</option>
+											<select class="form-control" id="comboDistrito" name="idDistrito" tabindex="-1" >
+												<option value="0" >Seleccione su Distrito</option>
 											</select>
 										</div>
 										<div class="form-group input-group">

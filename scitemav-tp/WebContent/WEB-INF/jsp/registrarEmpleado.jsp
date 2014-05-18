@@ -51,7 +51,7 @@ $(document).ready(function(e){
 				required:true,
 				number:true,
 				maxlength:9,
-				minlength:7
+				minlength:9
 				
 			},
 			direccion:{
@@ -93,7 +93,7 @@ $(document).ready(function(e){
 			celular:{
 				required:"Debe ingresar un celular",
 				number:"Sólo números en el celular",
-				minlength:"Tiene que tener 7 dígitos en el celular",
+				minlength:"Tiene que tener 9 dígitos en el celular",
 				maxlength:"Tiene que tener 9 dígitos en el celular"
 				
 			},
