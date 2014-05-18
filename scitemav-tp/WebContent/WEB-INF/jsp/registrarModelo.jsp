@@ -10,6 +10,22 @@
 <script>
 $(document).ready(function(e){
 	listarMarcas();
+	$('#frmRegistroModelo').validate({
+		rules:{
+			nombre:{
+			required: true,
+			}
+		},
+	
+	messages:{
+		nombre:{
+		required: "Se debe ingresar un nombre de modelo",
+		}
+	},			
+	submitHandler: function(form){
+		form.submit();
+	}		
+});
 });
 </script>
 <script>

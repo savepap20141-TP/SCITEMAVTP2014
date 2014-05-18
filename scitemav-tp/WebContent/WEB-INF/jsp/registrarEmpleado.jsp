@@ -12,7 +12,7 @@
 <script>
 $(document).ready(function(e){
 	var nfechaNac = 'txtFechaNacimiento';
-	cargarFecha(nfechaNac);
+	cargarFechaNac(nfechaNac);
 	listarDistritos();
 	listarCargos();
 	listarEspecialidades();

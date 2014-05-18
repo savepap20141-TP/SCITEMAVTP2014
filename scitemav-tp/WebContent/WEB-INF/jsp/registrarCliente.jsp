@@ -16,12 +16,21 @@ color:red;
 </style>
 <script>
 $(document).ready(function(e){
+	
 	var nfechaNac = 'txtFechaNacimiento';
-	cargarFecha(nfechaNac);
+	cargarFechaNac(nfechaNac);
 	listarDistritos();
+	
 	$('#frmRegistroCliente').validate({
 		rules:{
 			telefono:{
+				required:true,
+				number:true,
+				maxlength:9,
+				minlength:7
+				
+			},
+			celular:{
 				required:true,
 				number:true,
 				maxlength:9,
@@ -33,15 +42,18 @@ $(document).ready(function(e){
 				number:true,				
 				maxlength:8,
 				minlength:8
+			},		
+			email:{
+				required: true,
+			    email: true
+				
 			},
-			nfechaNac:{
-				minDate: new Date(1900,1-1,1), maxDate: '-18Y',
-			      dateFormat: 'dd/mm/yy',
-			      defaultDate: new Date(1970,1-1,1),
-			      changeMonth: true,
-			      changeYear: true,
-			      yearRange: '-110:-18'
-			},
+			fechaNacimiento:{				
+				required: true,
+			      dpDate: true,
+			      //dpComparedate:'notbefore 1996-01-01'
+			}
+			
 		},
 		messages:{
 			telefono:{
@@ -50,18 +62,29 @@ $(document).ready(function(e){
 				minlength:"Tiene que tener 7 dígitos en el teléfono",
 				maxlength:"Tiene que tener 9 dígitos en el teléfono"
 			},
+			celular:{
+				required:"Debe ingresar un celular",
+				number:"Sólo números en el celular",
+				minlength:"Tiene que tener 7 dígitos en el celular",
+				maxlength:"Tiene que tener 9 dígitos en el celular"
+				
+			},
 			dni:{
 				required:"Debe ingresar un DNI",
 				number:"Sólo números en el DNI",
 				minlength:"Tiene que tener 8 dígitos el DNI",
 				maxlength:"Tiene que tener 8 dígitos el DNI"
 			},
-			nfechaNac:{
-				
-				minDate: "La edad minima es 18 años",
-			    dateFormat: 'La edad debe estar en el formato dia/mes/año)',
+			email:{
+				required:"Debe ingresar un Email",
+			    email:"se necesita ingresar Email"	
+			},
+			fechaNacimiento:{
+				required:"Se debe ingresar una Fecha",
+				dpDate:"Solo Fechas",	
+				dpComparedate:"Debe ser mayor igual de 18 años"
 			}
-		},
+		},			
 		submitHandler: function(form){
 			form.submit();
 		}		
@@ -69,6 +92,7 @@ $(document).ready(function(e){
 });
 
 </script>
+<script type="text/javascript"></script>
 <script>
 
 function listarDistritos(){

@@ -13,15 +13,31 @@
 <script>
 $(document).ready(function(e){
 	var nfechaInicio = 'txtFechaInicio';
-	cargarFecha(nfechaInicio);
+	cargarFechaRevis(nfechaInicio);
 	//var nfechaFin = 'txtFechaFin';
 	//cargarFecha(nfechaFin);
 	//var nProximaRev = 'txtProximaRevision';
 	//cargarFecha(nProximaRev);
 	listarVehiculos();
+
+	$('#frmRegistroRevision').validate({
+		rules:{
+			fechaInicio:{
+			required: true,
+			}
+		},
+	
+	messages:{
+		fechaInicio:{
+		required: "Se debe ingresar una Fecha",
+		}
+	},			
+	submitHandler: function(form){
+		form.submit();
+	}		
+});
 });
 </script>
-
 <script>
 
 function listarVehiculos(){

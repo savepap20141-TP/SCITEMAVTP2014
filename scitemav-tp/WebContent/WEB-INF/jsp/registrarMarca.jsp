@@ -7,7 +7,27 @@
 <title>Registro de marca</title>
 <jsp:include page="componentes/head.jsp" />
 </head>
+<script>
+$(document).ready(function(e){
 
+	$('#frmRegistroMarca').validate({
+		rules:{
+			nombre:{
+			required: true,
+			}
+		},
+	
+	messages:{
+		nombre:{
+		required: "Se debe ingresar un nombre de marca",
+		}
+	},			
+	submitHandler: function(form){
+		form.submit();
+	}		
+});
+});
+</script>
 <body>
  <div id="wrapper">
 
