@@ -10,9 +10,16 @@
 <jsp:include page="componentes/head.jsp" />
 </head>
 <script>
-	$(document).ready(function(e) {
+	$(document).ready(function(e) {		
 		var idrevision = $('#spnIdRevision').text();
 		inicioConsulta(idrevision);
+		var nfechaInicio = 'txtFechaInicio';
+		cargarFechaRevis(nfechaInicio);
+		var nfechaFin = 'txtFechaFin';
+		cargarFechaRevis(nfechaFin);
+		var nProximaRev = 'txtProximaRevision';
+		cargarFechaRevis(nProximaRev);
+		
 
 	});
 
@@ -62,6 +69,8 @@
 		$('#spnModeloGeneral').text(revision.idModelo);
 		
 		//Vista de Edicion
+	    $('#txtVehiculo').val(revision.idVehiculo);
+		$('#txtRevision').val(revision.idRevision);
 		$('#txtCostoTotal').val(revision.costoTotal);
 		$('#txtFechaInicio').val(revision.fechaInicio);
 		$('#txtFechaFin').val(revision.fechaFin);
@@ -191,6 +200,8 @@
 										<div class="col-lg-12 vistaInformacion">
 											<br>
 											<div class="col-lg-4">
+											<p class="text-primary">Id:</p>
+							<span id="spnIdRevision"></span>
 											<p class="text-primary">Costo Total:</p>
 							<span id="spnCostoTotal"></span>
 							<p class="text-primary">Fecha Inicio:</p>
@@ -210,7 +221,15 @@
 										
 										<form role="form" id="frmEdicionRevision" commandName="revisionbean" style="width: 90%; padding-left: 10%;">
 							<fieldset>						
-								<div class="col-lg-6">						
+								<div class="col-lg-6">	
+								
+								    <div class="form-group" style="display:none">
+											<label>Revision</label> 
+											<input id="txtRevision" class="form-control"
+											 name="idRevision" placeholder="Revision"></input>
+											 <input id="txtVehiculo" class="form-control"
+											 name="idVehiculo" placeholder="Vehiculo"></input>
+										</div> 					
 									<div class="form-group" >
 											<label> Costo Total </label> <input id="txtCostoTotal"
 											class="form-control" name="costoTotal" placeholder="Costo total"></input>
@@ -254,12 +273,13 @@
 																																																																				
 																																					
 									<!-- FINAL SEGUNDA COLUMNA -->
+									<span class="btn btn-success" onclick="EditInformacionRevision();">Guardar</span>
+										<span class="btn btn-danger" onclick="$('.vistaInformacion').show();$('.edicionInformacion').hide();$('#btnVerInformacion').hide();$('#btnVerEdicion').show();">
+									    Cancelar</span>
 								</div>
 																
 								
-										<span class="btn btn-success" onclick="EditInformacionRevision();">Guardar</span>
-										<span class="btn btn-danger" onclick="$('.vistaInformacion').show();$('.edicionInformacion').hide();$('#btnVerInformacion').hide();$('#btnVerEdicion').show();">
-									    Cancelar</span>
+										
 							</fieldset>							
 							</form>
 										
