@@ -29,7 +29,7 @@ $(document).ready(function(e){
         return this.optional(element) || /^[A-Z]+$/.test(value);
     }, "");
 	$.validator.addMethod("DecRegex", function(value, element) {
-        return this.optional(element) || /^(\d+|\d+,\d{1,4})$/.test(value);
+        return this.optional(element) || /^(\d+|\d+.\d{1,4})$/.test(value);
     }, " ");
 	$.validator.addMethod("NumPlacaRegex", function(value, element) {
         return this.optional(element) || /^[[A-Z0-9]{3}[-]{1}[A-Z0-9]{3}$/.test(value);
