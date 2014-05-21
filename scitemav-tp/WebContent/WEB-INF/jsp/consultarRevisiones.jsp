@@ -33,6 +33,7 @@ function inicioConsulta(){
  		success: function(revisiones){
  			$.each(revisiones, function(i, revision){
  				filas = filas +'<tr class="">'+
+ 				'<td class="center"><a id="revision_"'+i+'" href="toRevisionDetalle-'+revision.idRevision+'">REV-'+revision.idRevision+'</a></td>'+
  				'<td class="center">'+revision.idRevision+'</td>'+
  				'<td class="center">'+revision.numeroPlaca+'</td>'+
  				'<td class="center">'+revision.fechaInicio+'</td>'+

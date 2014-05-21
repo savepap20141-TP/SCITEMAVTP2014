@@ -192,17 +192,17 @@
 											<br>
 											<div class="col-lg-4">
 											<p class="text-primary">Costo Total:</p>
-						                 	<span id="spnCostoTotal"></span>
-						                	<p class="text-primary">Fecha Inicio:</p>
-											<span id="spnFechaInicio"></span>
-											<p class="text-primary">Fecha Fin:</p>
-											<span id="spnFechaFin"></span>
-											<p class="text-primary">Fecha Próxima:</p>
-											<span id="spnFechaProxima"></span>
-											<p class="text-primary">Kilometraje Actual:</p>
-											<span id="spnKilometrajeActual"></span>
-											<p class="text-primary">Kilometraje Próximo:</p>
-											<span id="spnKilometrajeProximo"></span>												
+							<span id="spnCostoTotal"></span>
+							<p class="text-primary">Fecha Inicio:</p>
+							<span id="spnFechaInicio"></span>
+							<p class="text-primary">Fecha Fin:</p>
+							<span id="spnFechaFin"></span>
+							<p class="text-primary">Fecha Próxima:</p>
+							<span id="spnFechaProxima"></span>
+							<p class="text-primary">Kilometraje Actual:</p>
+							<span id="spnKilometrajeActual"></span>
+							<p class="text-primary">Kilometraje Próximo:</p>
+							<span id="spnKilometrajeProximo"></span>												
 											</div>											
 										</div>
 										<div class="col-lg-12 edicionInformacion" style="display: none;">
@@ -211,7 +211,7 @@
 										<form role="form" id="frmEdicionRevision" commandName="revisionbean" style="width: 90%; padding-left: 10%;">
 							<fieldset>						
 								<div class="col-lg-6">						
-									<div class="form-group" style="display: none;">
+									<div class="form-group" >
 											<label> Costo Total </label> <input id="txtCostoTotal"
 											class="form-control" name="costoTotal" placeholder="Costo total"></input>
 										</div>
@@ -225,7 +225,7 @@
 												</span>
 										</div>
 										
-									 	<div class="form-group input-group" style="display: none;">
+									 	<div class="form-group input-group" >
 											<label> Fecha de Fin</label> <input id="txtFechaFin"
 												class="form-control" name="fechaFin"
 												placeholder="Fecha de Fin"></input>
@@ -235,7 +235,7 @@
 										</div>
 										 
 										 
-										<div class="form-group input-group" style="display: none;">
+										<div class="form-group input-group" >
 											<label> Próxima revisión</label> <input id="txtProximaRevision"
 												class="form-control" name="fechaProxima"
 												placeholder="Fecha próxima"></input>
@@ -243,11 +243,11 @@
 												    <button class="btn btn-default fa fa-table fa-fw" type="button" style="margin-top:25px; height: 34px;" onclick="$('#txtProximaRevision').datepicker('show')"></button>
 												</span>
 										</div>
-										<div class="form-group" style="display: none;">
+										<div class="form-group">
 											<label> Kilometraje Actual </label> <input id="txtKilometrajeActual"
 											class="form-control" name="kilometrajeActual" placeholder="Kilometraje actual"></input>
 										</div>
-										<div class="form-group" style="display: none;">
+										<div class="form-group">
 											<label> Kilometraje Próximo </label> <input id="txtKilometrajeProximo"
 											class="form-control" name="kilometrajeProximo" placeholder="Kilometraje próximo"></input>
 										</div>																				
