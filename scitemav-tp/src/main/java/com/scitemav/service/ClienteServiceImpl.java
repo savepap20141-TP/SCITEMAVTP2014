@@ -13,10 +13,13 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.scitemav.bean.ClienteBean;
+import com.scitemav.bean.RevisionBean;
 import com.scitemav.model.Cliente;
 import com.scitemav.model.Distrito;
 import com.scitemav.model.Persona;
+import com.scitemav.model.Revision;
 import com.scitemav.model.Usuario;
+import com.scitemav.model.Vehiculo;
 
 @Service
 public class ClienteServiceImpl implements ClienteService{
@@ -91,6 +94,7 @@ public class ClienteServiceImpl implements ClienteService{
 				cb.setIdCliente(c.getIdCliente());
 				cb.setDni(c.getCliPersona().getDni());
 				cb.setNombre(c.getCliPersona().getNombre());
+				
 				cb.setApellidoPaterno(c.getCliPersona().getApellidoPaterno());
 				cb.setApellidoMaterno(c.getCliPersona().getApellidoMaterno());
 				cb.setSexo(c.getCliPersona().getSexo());
@@ -110,4 +114,62 @@ public class ClienteServiceImpl implements ClienteService{
 
 		return lcb;
 	}
+	@Override
+	public ClienteBean obtenerInfo(int idCliente) {
+		ClienteBean rBean = null;		
+		try {
+			rBean = new ClienteBean();
+			Query q = em.createQuery("from Cliente where idCliente="+idCliente);
+			Cliente r = new Cliente();
+			r = (Cliente) q.getSingleResult();
+			
+			rBean.setIdCliente(r.getIdCliente());
+			rBean.setRazonSocial(r.getRazonSocial());
+			rBean.setRuc(r.getRuc());			
+			
+			rBean.setDni(r.getCliPersona().getDni());
+			rBean.setNombre(r.getCliPersona().getNombre());
+			rBean.setApellidoPaterno(r.getCliPersona().getApellidoPaterno());
+			rBean.setApellidoMaterno(r.getCliPersona().getApellidoMaterno());
+			rBean.setSexo(r.getCliPersona().getSexo());
+			rBean.setFechaNacimiento(r.getCliPersona().getFechaNacimiento());
+			rBean.setIdDistrito(r.getCliPersona().getPerDistrito().getIdDistrito());
+			rBean.setNombreDistrito(r.getCliPersona().getPerDistrito().getNombre());
+			rBean.setDireccion(r.getCliPersona().getDireccion());
+			rBean.setTelefono(r.getCliPersona().getTelefono());
+			rBean.setCelular(r.getCliPersona().getCelular());
+			rBean.setEmail(r.getCliPersona().getPerUsuario().getEmail());
+			
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+
+		}
+		return rBean;
+	}
+
+	@Override
+	public boolean editInformacionCliente(ClienteBean rb) {
+		boolean resultado = false;
+		Cliente rev = new Cliente();
+		try{
+			rev.setIdCliente(rb.getIdCliente());
+			//
+			Persona per = new Persona();
+			per.setIdPersona(rb.getIdPersona());						
+			rev.setCliPersona(per);
+			//
+			rev.setIdCliente(rb.getIdCliente());
+			rev.setRazonSocial(rb.getRazonSocial());
+			rev.setRuc(rb.getRuc());	
+			
+			em.merge(rev);
+			resultado = true;
+		} catch(IllegalArgumentException e){
+			System.out.println(e);
+			resultado = false;
+		}
+		
+		return false;
+	}
+
 }

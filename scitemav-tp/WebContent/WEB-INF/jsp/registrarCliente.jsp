@@ -82,7 +82,7 @@ $(document).ready(function(e){
 			celular:{
 				required:"Debe ingresar un celular",
 				number:"Sólo números en el celular",
-				minlength:"Tiene que tener 7 dígitos en el celular",
+				minlength:"Tiene que tener 9 dígitos en el celular",
 				maxlength:"Tiene que tener 9 dígitos en el celular"
 				
 			},

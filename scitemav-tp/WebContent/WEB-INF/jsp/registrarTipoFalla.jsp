@@ -25,20 +25,26 @@ label.ok {
 }
 </style>
 <script>
-
 $(document).ready(function(e){
 	inicioConsulta();
-	$("#frmRegistrarTipoFalla").validate({
-		rules: {
-			nombre: {
-				required: true
-			}                                       
-		},
-		messages: {
-			nombre: "*"
-		}
-	});
 });
+</script>
+
+<script>	
+$(document).ready(function(e){
+	
+	
+	$("#frmRegistrarTipoFalla").validate({
+		rules: {    			
+				nombre: {
+					required: true
+				}                                       
+			},
+			messages: {
+				nombre: "*"		
+			}
+			});
+	});
 
 function inicioConsulta(){
 	var filas = '';	
