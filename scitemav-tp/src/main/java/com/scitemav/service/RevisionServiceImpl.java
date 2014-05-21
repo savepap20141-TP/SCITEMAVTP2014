@@ -83,7 +83,7 @@ public class RevisionServiceImpl implements RevisionService {
 		return _revBean;
 	}
 
-	@Override
+	@Transactional
 	public RevisionBean obtenerInfo(int idRevision) {
 		RevisionBean rBean = null;		
 		try {
@@ -130,9 +130,9 @@ public class RevisionServiceImpl implements RevisionService {
 		return rBean;
 	}
 
-	@Override
+	@Transactional
 	public boolean editInformacionRevision(RevisionBean rb) {
-		boolean resultado = false;
+		boolean result = false;
 		Revision rev = new Revision();
 		try{
 			rev.setIdRevision(rb.getIdRevision());
@@ -149,13 +149,12 @@ public class RevisionServiceImpl implements RevisionService {
 			rev.setKilometrajeProximo(rb.getKilometrajeProximo());
 			
 			em.merge(rev);
-			resultado = true;
+			result = true;			
 		} catch(IllegalArgumentException e){
 			System.out.println(e);
-			resultado = false;
+			result = false;
 		}
-		
-		return false;
+		return result;
 	}
 
 }
