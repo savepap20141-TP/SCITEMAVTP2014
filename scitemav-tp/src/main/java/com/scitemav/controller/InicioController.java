@@ -43,13 +43,15 @@ public class InicioController {
 		return "registroA";
 	}
 	
-
-	
 	@RequestMapping("toDetalleCliente")
 	public String toDetalleCliente(){
 		return "clienteDetalle";
 	}	
 
+	@RequestMapping("toDetalleVehiculo")
+	public String toDetalleVehiculo(){
+		return "vehiculoDetalle";
+	}	
 	
 	@RequestMapping("toRegistroFalla")
 	public String toRegistroFalla(){

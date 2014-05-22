@@ -37,11 +37,7 @@ public class RevisionController {
 		model.addAttribute("idrevision", idRevision);
 		return "revisionDetalle";
 	}
-	
-	
-	
-	
-
+		
 	@RequestMapping(value="registroRevision", method = RequestMethod.POST)
 	public String registroRevision(@ModelAttribute("revisionbean") RevisionBean rbean, Model model, HttpServletRequest req){
 		String path = "";

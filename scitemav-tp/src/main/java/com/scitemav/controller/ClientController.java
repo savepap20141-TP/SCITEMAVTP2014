@@ -28,7 +28,7 @@ public class ClientController {
 	public String toRegistroCliente(){
 		return "registrarCliente";
 	}
-
+	
 	@RequestMapping("toConsultarClientes")
 	public String toConsultarClientes(){
 		return "consultarClientes";
@@ -43,10 +43,8 @@ public class ClientController {
 	@RequestMapping(value="registroCliente", method = RequestMethod.POST)
 	public String registroCliente(@ModelAttribute("clientebean") ClienteBean clib, Model model, HttpServletRequest req){
 		String path = "";
-		if(clienteService.registroCliente(clib)){
-			
-			path = "redirect:toClienteDetalle-"+clib.getIdCliente();
-			
+		if(clienteService.registroCliente(clib)){			
+			path = "redirect:toClienteDetalle-"+clib.getIdCliente();			
 		}else{
 			model.addAttribute("msg", "Fallo al registrarse");
 			path = "registrarCliente";

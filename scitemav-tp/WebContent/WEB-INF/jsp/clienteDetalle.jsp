@@ -31,6 +31,7 @@
 	   		}
 	   	});
 	}
+	
 	function inicioConsulta(idcliente) {
 		$.ajax({
 					url : 'getInformacionCliente-' + idcliente,
@@ -51,26 +52,26 @@
 		$('#spnNombre').text(cliente.nombre);
 		$('#spnApellidoPaterno').text(cliente.apellidopaterno);
 		$('#spnApellidoMaterno').text(cliente.apellidomaterno);
-		$('#spnDni').text(revision.dni);
+		$('#spnDni').text(cliente.dni);
 		$('#spnSexo').text(cliente.sexo);
 		$('#spnFechaNacimiento').text(cliente.fechanacimiento);
 		$('#spnNombreDistrito').text(cliente.nombredistrito);
-	
 		
 		$('#spnDireccion').text(cliente.direccion);
 		$('#spnTelefono').text(cliente.telefono);
 		$('#spnCelular').text(cliente.celular);
 		$('#spnEmail').text(cliente.email);
-		$('#spnRazonSocial').text(cliente.razonsocial);
-		$('#spnRuc').text(cliente.ruc);
+		
 		//Vista de Edicion
+	    $('#txtVehiculo').val(cliente.idVehiculo);
+		$('#txtRevision').val(cliente.idRevision);
 		$('#txtCostoTotal').val(cliente.costoTotal);
 		$('#txtFechaInicio').val(cliente.fechaInicio);
 		$('#txtFechaFin').val(cliente.fechaFin);
 		$('#txtProximaRevision').val(cliente.fechaProxima);
 		$('#txtKilometrajeActual').val(cliente.kilometrajeActual);
 		$('#txtKilometrajeProximo').val(cliente.kilometrajeProximo);
-
+	
 	}	
 	
 	function ExtractInformacion(){
@@ -141,11 +142,6 @@
 							<span id="spnCelular"></span>
 							<p class="text-primary">Email:</p>
 							<span id="spnEmail"></span>
-							<p class="text-primary">Razon Social:</p>
-							<span id="spnRazonSocial"></span>
-							<p class="text-primary">Ruc:</p>
-							<span id="spnRuc"></span>
-
 						</div>
 					</div>
 				</div>
@@ -208,7 +204,7 @@
 										<div class="col-lg-12 edicionInformacion" style="display: none;">
 										<!-- BORRAR EN CASO DE ERROR -->
 										
-										<form role="form" id="frmEdicionRevision" commandName="revisionbean" style="width: 90%; padding-left: 10%;">
+										<form role="form" id="frmEdicionCliente" commandName="clientebean" style="width: 90%; padding-left: 10%;">
 							<fieldset>						
 								<div class="col-lg-6">						
 									<div class="form-group" style="display: none;">
@@ -257,7 +253,7 @@
 								</div>
 																
 								
-										<span class="btn btn-success" onclick="EditInformacionRevision();">Guardar</span>
+										<span class="btn btn-success" onclick="EditInformacionCliente();">Guardar</span>
 										<span class="btn btn-danger" onclick="$('.vistaInformacion').show();$('.edicionInformacion').hide();$('#btnVerInformacion').hide();$('#btnVerEdicion').show();">
 									    Cancelar</span>
 							</fieldset>							

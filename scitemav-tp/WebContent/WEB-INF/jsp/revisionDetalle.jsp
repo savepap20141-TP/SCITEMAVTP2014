@@ -20,7 +20,6 @@
 		var nProximaRev = 'txtProximaRevision';
 		cargarFechaRevis(nProximaRev);
 		
-
 	});
 
 	function EditInformacionRevision(){

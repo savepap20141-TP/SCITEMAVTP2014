@@ -83,13 +83,13 @@ public class ClienteServiceImpl implements ClienteService{
 	@SuppressWarnings("unchecked")
 	@Transactional
 	public List<ClienteBean> listarClientes() {
-		List<Cliente> lc = new ArrayList<Cliente>();
-		List<ClienteBean> lcb = new ArrayList<ClienteBean>();		
+		List<Cliente> _lc = new ArrayList<Cliente>();
+		List<ClienteBean> _lcb = new ArrayList<ClienteBean>();		
 		try {
 			Query q = em.createQuery("SELECT c FROM Cliente c");
-			lc = q.getResultList();
-			for(int i=0; i < lc.size(); i++){
-				Cliente c = lc.get(i);
+			_lc = q.getResultList();
+			for(int i=0; i < _lc.size(); i++){
+				Cliente c = _lc.get(i);
 				ClienteBean cb = new ClienteBean();
 				cb.setIdCliente(c.getIdCliente());
 				cb.setDni(c.getCliPersona().getDni());
@@ -106,15 +106,15 @@ public class ClienteServiceImpl implements ClienteService{
 				cb.setCelular(c.getCliPersona().getCelular());
 				cb.setEmail(c.getCliPersona().getPerUsuario().getEmail());
 				
-				lcb.add(cb);
+				_lcb.add(cb);
 			}
 		} catch (IllegalArgumentException e) {
-			lcb = null;			
+			_lcb = null;			
 		}
 
-		return lcb;
+		return _lcb;
 	}
-	@Override
+	@Transactional
 	public ClienteBean obtenerInfo(int idCliente) {
 		ClienteBean rBean = null;		
 		try {
@@ -140,14 +140,14 @@ public class ClienteServiceImpl implements ClienteService{
 			rBean.setCelular(r.getCliPersona().getCelular());
 			rBean.setEmail(r.getCliPersona().getPerUsuario().getEmail());
 			
-		} catch (Exception e) {
+		} catch (IllegalArgumentException e) {
 			System.out.println(e.getMessage());
 
 		}
 		return rBean;
 	}
 
-	@Override
+	@Transactional
 	public boolean editInformacionCliente(ClienteBean rb) {
 		boolean resultado = false;
 		Cliente rev = new Cliente();
@@ -158,9 +158,8 @@ public class ClienteServiceImpl implements ClienteService{
 			per.setIdPersona(rb.getIdPersona());						
 			rev.setCliPersona(per);
 			//
-			rev.setIdCliente(rb.getIdCliente());
 			rev.setRazonSocial(rb.getRazonSocial());
-			rev.setRuc(rb.getRuc());	
+			rev.setRuc(rb.getRuc());
 			
 			em.merge(rev);
 			resultado = true;
@@ -169,7 +168,7 @@ public class ClienteServiceImpl implements ClienteService{
 			resultado = false;
 		}
 		
-		return false;
+		return resultado;
 	}
 
 }
