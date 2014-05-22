@@ -11,6 +11,260 @@
 </head>
 <script>
 	$(document).ready(function(e) {
+		$.validator.addMethod("LetyNumRegex", function(value, element) {
+	        return this.optional(element) || /^[A-Z0-9\-\s]+$/i.test(value);
+	    }, " ");
+		$.validator.addMethod("NumRegex", function(value, element) {
+	        return this.optional(element) || /^[0-9\-\s]+$/i.test(value);
+	    }, " ");
+		$.validator.addMethod("LetRegex", function(value, element) {
+	        return this.optional(element) || /^[A-Z]+$/.test(value);
+	    }, "");
+		$.validator.addMethod("DecRegex", function(value, element) {
+	        return this.optional(element) || /^(\d+|\d+.\d{1,4})$/.test(value);
+	    }, " ");
+		$.validator.addMethod("NumPlacaRegex", function(value, element) {
+	        return this.optional(element) || /^[[A-Z0-9]{3}[-]{1}[A-Z0-9]{3}$/.test(value);
+	    }, " ");
+		
+		$('#frmEdicionVehiculo').validate({
+			rules:{
+				fabricacion:{
+					required:true,
+					NumRegex:true,
+					maxlength:4,
+					minlength:4
+					
+				},
+				numeroMotor:{
+					required:true,
+					LetyNumRegex: true,
+					maxlength:11,
+					minlength:11
+					
+				},
+				numeroCilindros:{
+					required:true,
+					NumRegex: true,
+					maxlength:2,
+					minlength:1				
+				},
+				numeroSerie:{
+					required:true,
+					LetyNumRegex: true,
+					maxlength:17,
+					minlength:17
+				},
+				color:{
+					required:true,
+					LetRegex: true,
+					maxlength:25,
+					minlength:4					
+				},
+				numeroPasajeros:{
+					required:true,
+					NumRegex: true,
+					maxlength:2,
+					minlength:1				
+				},
+				numeroAsientos:{
+					required:true,
+					NumRegex: true,
+					maxlength:2,
+					minlength:1		
+				},
+				pesoSeco:{
+					required:true,
+					NumRegex: true,
+					maxlength:6,
+					minlength:3	
+				},
+				numeroEjes:{
+					required:true,
+				},
+				pesoBruto:{
+					required:true,
+					NumRegex: true,
+					maxlength:6,
+					minlength:3	
+				},
+				longitud:{
+					required:true,
+					DecRegex: true,
+					maxlength:6,
+					minlength:3				
+				},
+				altura:{
+					required:true,
+					DecRegex: true,
+					maxlength:6,
+					minlength:3		
+				},
+				ancho:{
+					required:true,
+					DecRegex: true,
+					maxlength:6,
+					minlength:3						
+				},
+				cargaUtil:{
+					required:true,
+					NumRegex: true,
+					maxlength:6,
+					minlength:3	
+				},
+				numeroRuedas:{
+					required:true,
+					NumRegex: true,
+					maxlength:1,
+					minlength:1		
+				},
+				numeroPlaca:{
+					required:true,
+					NumPlacaRegex: true,
+					maxlength:7,
+					minlength:7				
+				},
+				idCliente:{
+					required:true,
+				},
+				idMarca:{
+					required:true,
+				},
+				idModelo:{
+					required:true,			
+				},
+				idTipoVehiculo:{
+					required:true,	
+				}			
+			},
+			messages:{
+				fabricacion:{
+					required:"Debe ingresar un año",
+					NumRegex:"Sólo números en el año",
+					minlength:"Tiene que tener 4 dígitos en el teléfono",
+					maxlength:"Tiene que tener 4 dígitos en el teléfono"
+				},
+				numeroMotor:{
+					required:"Debe ingresar un numero de Motor",
+					LetyNumRegex:"Sólo números y letras mayusculas en el numero de Motor",
+					minlength:"Tiene que tener 11 dígitos en el numero de Motor",
+					maxlength:"Tiene que tener 11 dígitos en el numero de Motor"				
+				},
+				numeroCilindros:{
+					required:"Debe ingresar un numero de Cilindros",
+					NumRegex: "Solo numeros en numero de cilindros",
+					maxlength:"Tiene que tener 2 digitos como maximo",
+					minlength:"Tiene como minimo 1 digito"	
+				},			
+				numeroSerie:{
+					required:"Debe ingresar un numero de serie",
+					LetyNumRegex:"Sólo números y letras mayusculas en el numero de serie",
+					minlength:"Tiene que tener 17 dígitos en el numero de serie",
+					maxlength:"Tiene que tener 17 dígitos en el numero de serie"				
+				},
+				color:{
+					required:"Debe ingresar un color",
+					LetRegex:"Sólo letras mayuscula en color",
+					minlength:"Tiene que tener 4 dígitos como minimo",
+					maxlength:"Tiene que tener 25 dígitos como maximo",	
+				},
+				numeroPasajeros:{
+					required:"Debe ingresar un pasajero",
+					NumRegex:" Solo numeros en pasajeros",
+					maxlength:"Tiene que tener 2 digitos como maximo",
+					minlength:"Tiene como minimo 1 digito"				
+				},
+				numeroAsientos:{
+					required:"Debe ingresar un numero de asientos",
+					NumRegex:" Solo numeros en numero de asientos",
+					maxlength:"Tiene que tener 2 digitos como maximo",
+					minlength:"Tiene como minimo 1 digito"	
+					
+				},
+				pesoSeco:{
+					required:"Debe ingresar un peso seco",
+					NumRegex: "solo numeros en peso seco",
+					maxlength:"Tiene que tener 6 digitos como maximo",
+					minlength:"Tiene que tener minimo 3 digitos"
+				},
+				numeroEjes:{
+					required:"Seleccione un numero de eje",
+				},
+				pesoBruto:{
+					required:"Debe ingresar un peso bruto",
+					NumRegex: "solo numeros en peso bruto",
+					maxlength:"Tiene que tener 6 digitos como maximo",
+					minlength:"Tiene que tener minimo 3 digitos"
+				},
+				longitud:{
+					required:"Debe ingresar una longitud",
+					DecRegex: "solo numeros en decimales",
+					maxlength:"Tiene que tener 6 digitos como maximo",
+					minlength:"Tiene que tener minimo 3 digitos"				
+				},
+				altura:{
+					required:"Debe ingresar una altura",
+					DecRegex: "solo numeros en decimales",
+					maxlength:"Tiene que tener 6 digitos como maximo",
+					minlength:"Tiene que tener minimo 3 digitos"				
+				},
+				ancho:{
+					required:"Debe ingresar una ancho",
+					DecRegex: "solo numeros en decimales",
+					maxlength:"Tiene que tener 6 digitos como maximo",
+					minlength:"Tiene que tener minimo 3 digitos"				
+				},
+				cargaUtil:{
+					required:"Debe ingresar una cargaUtil",
+					NumRegex: "solo numeros en cargaUtil",
+					maxlength:"Tiene que tener 6 digitos como maximo",
+					minlength:"Tiene que tener minimo 3 digitos"
+				},
+				numeroRuedas:{
+					required:"Debe ingresar un numero de Ruedas",
+					NumRegex:"Solo numeros en numero de Ruedas",
+					maxlength:"Tiene que tener 1 digitos",
+					minlength:"Tiene que tener 1 digito"	
+					
+				},
+				numeroPlaca:{
+					required:"Debe ingresar un numero de Placa",
+					NumPlacaRegex:"Solo numeros,letras mayusculas y guión en numero  de Placa",
+					maxlength:"Tiene que tener 7 digitos",
+					minlength:"Tiene que tener 7 digitos"			        
+				},
+				idCliente:{
+					required:"Seleccione un Cliente",
+				},
+				idMarca:{
+					required:"Seleccione una Marca",
+				},
+				idModelo:{
+					required:"Seleccione un Modelo",				
+				},
+				idTipoVehiculo:{
+					required:"Seleccione un Tipo de Vehiculo",	
+				}
+				
+			},			
+			submitHandler: function(form){
+				$.ajax({
+			   		url: 'ajaxEditInformacionVehiculo',
+			   		type: 'post',
+			   		dataType: 'json',
+			   		data: $('#frmEdicionVehiculo').serialize(),
+			   		success: function(vehiculo){
+			   			IniciarInfoVehiculo(vehiculo);
+			 			$('.vistaInformacion').show();
+			 			$('.edicionInformacion').hide();
+			 			$('#btnVerInformacion').hide();
+			 			$('#btnVerEdicion').show();
+			   		}
+			   	});
+			}		
+		});
+		
+		//
 		var idvehiculo = $('#spnIdVehiculo').text();
 		inicioConsulta(idvehiculo);
 		listarTipoVehiculos();
@@ -20,19 +274,7 @@
 	});
 
 	function EditInformacionVehiculo(){
-		$.ajax({
-	   		url: 'ajaxEditInformacionVehiculo',
-	   		type: 'post',
-	   		dataType: 'json',
-	   		data: $('#frmEdicionVehiculo').serialize(),
-	   		success: function(vehiculo){
-	   			IniciarInfoVehiculo(vehiculo);
-	 			$('.vistaInformacion').show();
-	 			$('.edicionInformacion').hide();
-	 			$('#btnVerInformacion').hide();
-	 			$('#btnVerEdicion').show();
-	   		}
-	   	});
+		$('#frmEdicionVehiculo').submit();
 	}
 	function inicioConsulta(idvehiculo) {
 		$.ajax({
