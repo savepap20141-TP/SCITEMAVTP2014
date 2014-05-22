@@ -73,6 +73,7 @@ public class ClienteServiceImpl implements ClienteService{
 			em.persist(cli);
 			emailService.EnviarMensaje(usu.getEmail());
 			resultado = true;
+			clib.setIdCliente(cli.getIdCliente());
 		}catch(IllegalArgumentException e){
 			System.out.println(e);
 			resultado = false;
