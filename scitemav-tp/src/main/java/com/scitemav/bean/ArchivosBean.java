@@ -7,7 +7,7 @@ import org.springframework.web.multipart.commons.CommonsMultipartFile;
 public class ArchivosBean {
 	private CommonsMultipartFile file;
 	private List<CommonsMultipartFile> filesb;
-	private Integer idAttachment;
+	private Integer idArchivo;
 	private String nombre;
 	private String path;
 	private Long size;
@@ -24,12 +24,6 @@ public class ArchivosBean {
 	}
 	public void setFilesb(List<CommonsMultipartFile> filesb) {
 		this.filesb = filesb;
-	}
-	public Integer getIdAttachment() {
-		return idAttachment;
-	}
-	public void setIdAttachment(Integer idAttachment) {
-		this.idAttachment = idAttachment;
 	}
 	public String getNombre() {
 		return nombre;
@@ -54,5 +48,11 @@ public class ArchivosBean {
 	}
 	public void setFileType(String fileType) {
 		this.fileType = fileType;
+	}
+	public Integer getIdArchivo() {
+		return idArchivo;
+	}
+	public void setIdArchivo(Integer idArchivo) {
+		this.idArchivo = idArchivo;
 	}
 }

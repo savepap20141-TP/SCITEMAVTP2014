@@ -1,8 +1,13 @@
 package com.scitemav.controller;
 
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.imageio.ImageIO;
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -21,9 +26,14 @@ import com.scitemav.bean.AttachmentBean;
 @Controller
 public class ArchivosController {
 
+	@RequestMapping("toArchivos")
+	public String toArchivos() {
+		return "Archivos";
+	}
+	
 	@RequestMapping(value = "loadFileAjax", method = RequestMethod.POST)
 	@ResponseBody
-	public Boolean loadFileAjaxNew(@ModelAttribute("fileUpload") ArchivosBean beanAjax, HttpServletRequest req, Model model, HttpServletResponse res){
+	public String loadFileAjaxNew(@ModelAttribute("fileUpload") ArchivosBean beanAjax, HttpServletRequest req, Model model, HttpServletResponse res){
 		res.setContentType("text/plain");
 		Integer countAttachment = 0;
 		List<CommonsMultipartFile> cmpf = new ArrayList<CommonsMultipartFile>();
@@ -51,6 +61,26 @@ public class ArchivosController {
 				s3bean.setFile(cmpf.get(i));
 				
 				filesbeanlist.add(s3bean);
+				
+				String fileContentType = beanAjax.getFile().getContentType();
+			     System.out.println("******* FILE CONTENT TYPE: " + fileContentType);
+			     System.out.println("******* PATH: " + req.getSession().getServletContext().getRealPath("/images/"));
+			     System.out.println("******* PATH: " + req.getSession().getServletContext().getRealPath("/"));
+			     if(fileContentType.contains("image")){
+			        try {
+						BufferedImage bufferedImage =ImageIO.read(beanAjax.getFile().getInputStream());
+				        //File localFile = new File(req.getServletContext().getRealPath("images")+"/"+beanAjax.getFile().getOriginalFilename());
+				        //File localFile = new File("C:/Users/EPSON/git/scitemav-tp/scitemav-tp/WebContent/images/"+beanAjax.getFile().getOriginalFilename());
+				        //File localFile= new File(req.getSession().getServletContext().getRealPath("/WEB-INF/images/"), beanAjax.getFile().getName());
+				        File localFile= new File(req.getSession().getServletContext().getRealPath("/images/")+"/"+beanAjax.getFile().getOriginalFilename());
+				        boolean dir = localFile.mkdirs();
+				        beanAjax.getFile().transferTo(localFile);
+				        
+			        } catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+			      }
 			}
 			filesbean.setFilesbean(filesbeanlist);
 
@@ -60,7 +90,7 @@ public class ArchivosController {
 			}else{
 				return null;
 			}*/
-			return null;
+			return ""+beanAjax.getFile().getOriginalFilename();
 		}else{
 			return null;
 		}

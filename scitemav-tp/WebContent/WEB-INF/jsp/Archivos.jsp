@@ -7,11 +7,12 @@
 <title>Default</title>
 <jsp:include page="componentes/head.jsp" />
 </head>
-<script>function UploadFileIE(){
+<script>
+function UploadFileIE(){
 	var formElement = document.getElementById("frmUploadFile");
 	var formData = new FormData(formElement);		
 	$.ajax({
- 		url: '../loadFileAjaxNewIE',
+ 		url: 'loadFileAjax',
  		type: "POST",
 		data:  formData,
 		mimeType:"multipart/form-data",
@@ -22,7 +23,10 @@
 			//$.blockUI({ message: $('#domMessage') });
 	    },
  		success: function(result){
-	    	alert('Grabo :) '+result);	    	
+	    	alert('Grabo :) '+result);
+			$("#archivo").empty();
+			$("#archivo").append("<input type='file' name='file' id='filesToUpload_0'/>");
+			$("#resultado").append("<a target='_blank'  href='http://localhost:8080/scitemav-tp/images/"+result+"'><img width='300' height='300' src='http://localhost:8080/scitemav-tp/images/"+result+"'></img></a>");
 	    },
 	    complete: function() {
 // 			var errorU = ''+xhr.status;
@@ -46,13 +50,14 @@
 		
 		<div id="page-wrapper">
 			<form id="frmUploadFile" name="frmUploadFile" enctype="multipart/form-data" method="post">
-			    <input type="file" name="file" id="filesToUpload_0"/>
-			    <select id="sltFileType_0" name="type">
-			    </select>
+				<div id="archivo"><input type="file" name="file" id="filesToUpload_0"/></div>			    
+			    <!-- <select id="sltFileType_0" name="type">
+			    </select> -->
 			    <input id="upload" type="button" value="Uploading" onclick="UploadFileIE();"/>
-			    <input id="hdnIdEntity" name="idEntity" type="hidden"/>
-				<input id="hdnTypeEntity" name="typeEntity" type="hidden"/>
+			    <!-- <input id="hdnIdEntity" name="idEntity" type="hidden"/>
+				<input id="hdnTypeEntity" name="typeEntity" type="hidden"/> -->
 		    </form>
+		    <div id="resultado"></div>
 		
 		</div>
 
