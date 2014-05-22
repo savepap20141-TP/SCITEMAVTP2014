@@ -5,6 +5,9 @@ import java.util.List;
 import com.scitemav.bean.EmpleadoBean;
 
 public interface EmpleadoService {
-	boolean registroEmpleado(EmpleadoBean empb);
+	
+	boolean registro(EmpleadoBean empb);
 	public List<EmpleadoBean> listarEmpleados();
+	public EmpleadoBean obtenerInfo(int idEmpleado);
+	boolean editInformacionEmpleado(EmpleadoBean eb);
 }

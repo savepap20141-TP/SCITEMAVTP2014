@@ -1,13 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
+	 
+	<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%> 
 <!DOCTYPE html>
-<%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%> 
-<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%> 
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Registrar Cliente</title>
 <jsp:include page="componentes/head.jsp" />
+<%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%></head>
 </head>
 <style>
 label .error{
@@ -177,7 +178,7 @@ function listarDistritos(){
 					
 					<div class="panel-body">
 						<div class="row">
-							<form role="form" id="frmRegistroCliente" action="registroCliente"
+							<form role="form" id="frmRegistroCliente" action="registroCliente" name="RegistroCliente"
 									method="post" commandName="clienteBean" style="width: 90%; padding-left: 10%;">
 							<fieldset>						
 								<div class="col-lg-6">						

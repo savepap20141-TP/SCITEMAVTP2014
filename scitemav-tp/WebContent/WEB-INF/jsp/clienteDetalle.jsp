@@ -45,6 +45,10 @@
 				});
 	}
 	
+	function EditInformacionCliente(){
+		$('#frmEdicionCliente').submit();
+	}
+	
 	function IniciarInfoCliente(cliente){
 		//Vista de Informacion
 		
@@ -186,20 +190,37 @@
 
 										<div class="col-lg-12 vistaInformacion">
 											<br>
-											<div class="col-lg-4">
-											<p class="text-primary">Costo Total:</p>
-						                 	<span id="spnCostoTotal"></span>
-						                	<p class="text-primary">Fecha Inicio:</p>
-											<span id="spnFechaInicio"></span>
-											<p class="text-primary">Fecha Fin:</p>
-											<span id="spnFechaFin"></span>
-											<p class="text-primary">Fecha Próxima:</p>
-											<span id="spnFechaProxima"></span>
-											<p class="text-primary">Kilometraje Actual:</p>
-											<span id="spnKilometrajeActual"></span>
-											<p class="text-primary">Kilometraje Próximo:</p>
-											<span id="spnKilometrajeProximo"></span>												
-											</div>											
+											<div class="col-lg-6">
+							<h4>Datos del Cliente</h4>
+							<br>
+							<p class="text-primary">Nombre:</p>
+							<span id="spnNombre"></span>
+							<p class="text-primary">Apellido Paterno:</p>
+							<span id="spnApellidoPaterno"></span>
+							<p class="text-primary">Apellido Materno:</p>
+							<span id="spnApellidoMaterno"></span>
+							<p class="text-primary">DNI:</p>
+							<span id="spnDni"></span>
+							<p class="text-primary">Sexo:</p>
+							<span id="spnSexo"></span>
+							<p class="text-primary">Fecha Nacimiento:</p>
+							<span id="spnFechaNacimiento"></span>
+							<p class="text-primary">Nombre Distrito:</p>
+							<span id="spnNombreDistrito"></span>
+
+						</div>
+						<div class="col-lg-6">
+							<h4>Datos de referencia Cliente</h4>
+							<br>
+							<p class="text-primary">Direccion:</p>
+							<span id="spnDireccion"></span>
+							<p class="text-primary">Telefono:</p>
+							<span id="spnTelefono"></span>
+							<p class="text-primary">Celular:</p>
+							<span id="spnCelular"></span>
+							<p class="text-primary">Email:</p>
+							<span id="spnEmail"></span>
+						</div>											
 										</div>
 										<div class="col-lg-12 edicionInformacion" style="display: none;">
 										<!-- BORRAR EN CASO DE ERROR -->

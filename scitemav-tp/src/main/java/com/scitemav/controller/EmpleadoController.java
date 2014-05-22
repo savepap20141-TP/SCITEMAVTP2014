@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -31,12 +32,20 @@ public class EmpleadoController {
 		return "consultarEmpleados";
 	}
 	
+	@RequestMapping(value="toEmpleadoDetalle-{idempleado}", method = RequestMethod.GET)
+	public String toEmpleadoDetalle(@PathVariable("idempleado") Integer idEmpleado, Model model){
+		model.addAttribute("idempleado", idEmpleado);
+		return "empleadoDetalle";
+	}
+	
+	
+	
 	@RequestMapping(value="registroEmpleado", method = RequestMethod.POST)
 	public String registroEmpleado(@ModelAttribute("empleadobean") EmpleadoBean empb, Model model, HttpServletRequest req){
 		String path = "";
-		if(empleadoService.registroEmpleado(empb)){
-			model.addAttribute("msg", "Se registro correctamente");
-			path = "registrarEmpleado";
+		if(empleadoService.registro(empb)){
+			//model.addAttribute("msg", "Se registro correctamente");
+			path = "redirect:toEmpleadoDetalle-"+empb.getIdEmpleado();
 		}else{
 			model.addAttribute("msg", "Fallo al registrarse");
 			path = "registrarEmpleado";
@@ -49,4 +58,34 @@ public class EmpleadoController {
 	public List<EmpleadoBean> getEmpleados(){		
 		return empleadoService.listarEmpleados();
 	}
+	
+	@RequestMapping(value = "getInformacionEmpleado-{idempleado}", method = RequestMethod.POST)
+	@ResponseBody
+	public EmpleadoBean getEmpleadosPorId(@PathVariable("idempleado") Integer idEmpleado){		
+		return empleadoService.obtenerInfo(idEmpleado);
+	}
+	
+	@RequestMapping(value = "ajaxEditInformacionEmpleado", method = RequestMethod.POST)
+	@ResponseBody
+	public EmpleadoBean getEditInformationPerfil(@ModelAttribute EmpleadoBean empleadoBean, HttpServletRequest request){
+		
+		EmpleadoBean empleadoB = new EmpleadoBean();
+		
+		if(empleadoService.editInformacionEmpleado(empleadoBean)){
+			empleadoB = empleadoService.obtenerInfo(empleadoBean.getIdEmpleado());
+		}else{
+			empleadoB = null;
+		}
+		
+		return empleadoB;
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }

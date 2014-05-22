@@ -30,13 +30,15 @@ public class EmpleadoServiceImpl implements EmpleadoService{
 	EntityManager em;
 	
 	@Transactional
-	public boolean registroEmpleado(EmpleadoBean empb) {
+	public boolean registro(EmpleadoBean empb) {
 		boolean resultado = false;
-		Usuario usu = new Usuario();
-		Persona per = new Persona();
+		
+		
 		Empleado emp = new Empleado();		
 
 		try{
+			
+			Usuario usu = new Usuario();
 			usu.setEmail(empb.getEmail());
 			String md5 = DigestUtils.md5Hex("pass");
 			usu.setPassword(md5);
@@ -46,7 +48,8 @@ public class EmpleadoServiceImpl implements EmpleadoService{
 			usu.setFechaCreacion(ts);	
 			usu.setActivo(false);
 			em.persist(usu);
-			
+			//
+			Persona per = new Persona();
 			per.setPerUsuario(usu);			
 			per.setNombre(empb.getNombre());
 			per.setApellidoPaterno(empb.getApellidoPaterno());
@@ -58,15 +61,17 @@ public class EmpleadoServiceImpl implements EmpleadoService{
 			per.setFechaNacimiento(empb.getFechaNacimiento());
 			per.setSexo(empb.getSexo());
 			per.setActivo(false);
-		
+		    //
 			Distrito dis = new Distrito();
 			dis.setIdDistrito(empb.getIdDistrito());
 			per.setPerDistrito(dis);
 			
 			em.persist(per);
 						
+			//
 			Cargo car = new Cargo();
 			car.setIdCargo(empb.getIdCargo());
+			//
 			Especialidad esp = new Especialidad();
 			emp.setEmpPersona(per);
 			esp.setIdEspecialidad(empb.getIdEspecialidad());
@@ -74,6 +79,7 @@ public class EmpleadoServiceImpl implements EmpleadoService{
 			emp.setEmpEspecialidad(esp);
 			emp.setAdministrador(false);
 			em.persist(emp);
+			empb.setIdEmpleado(emp.getIdEmpleado());
 			resultado = true;
 		}catch(IllegalArgumentException e){
 			System.out.println(e);
@@ -121,5 +127,99 @@ public class EmpleadoServiceImpl implements EmpleadoService{
 		}
 
 		return lempb;
+	}
+
+	@Transactional
+	public EmpleadoBean obtenerInfo(int idEmpleado) {
+		EmpleadoBean eBean = null;
+		try{
+			eBean = new EmpleadoBean();
+			Query q = em.createQuery("from Empleado where idEmpleado="+idEmpleado);
+			Empleado e = new Empleado();
+			e = (Empleado)q.getSingleResult();
+			
+			eBean.setIdEmpleado(e.getIdEmpleado());
+			eBean.setIdCargo(e.getEmpCargo().getIdCargo());
+			eBean.setNombreCargo(e.getEmpCargo().getDescripcion());
+			eBean.setIdEspecialidad(e.getEmpEspecialidad().getIdEspecialidad());
+			eBean.setNombreEspecialidad(e.getEmpEspecialidad().getDescripcion());
+			eBean.setAdministrador(e.getAdministrador());
+			
+			eBean.setIdPersona(e.getEmpPersona().getIdPersona());
+			eBean.setNombre(e.getEmpPersona().getNombre());
+			eBean.setApellidoPaterno(e.getEmpPersona().getApellidoPaterno());
+			eBean.setApellidoMaterno(e.getEmpPersona().getApellidoMaterno());
+			eBean.setTelefono(e.getEmpPersona().getTelefono());
+			eBean.setDni(e.getEmpPersona().getDni());
+			eBean.setCelular(e.getEmpPersona().getCelular());
+			eBean.setSexo(e.getEmpPersona().getSexo());
+			eBean.setDireccion(e.getEmpPersona().getDireccion());
+			eBean.setFechaNacimiento(e.getEmpPersona().getFechaNacimiento());
+			eBean.setActivoC(e.getEmpPersona().getActivo());
+			
+			eBean.setIdDistrito(e.getEmpPersona().getPerDistrito().getIdDistrito());
+			eBean.setNombreDistrito(e.getEmpPersona().getPerDistrito().getNombre());
+			
+			eBean.setEmail(e.getEmpPersona().getPerUsuario().getEmail());
+			eBean.setPassword(e.getEmpPersona().getPerUsuario().getPassword());
+			eBean.setActivoU(e.getEmpPersona().getPerUsuario().getActivo());
+				
+		}
+		catch(IllegalArgumentException e){
+			System.out.println(e.getMessage());
+		}
+		return eBean;
+	}
+
+	@Transactional
+	public boolean editInformacionEmpleado(EmpleadoBean empb) {
+		boolean resultado = false;
+		Empleado emp = new Empleado();
+		try{
+			
+			Usuario usu = new Usuario();			
+			usu.setEmail(empb.getEmail());
+			
+			em.merge(usu);
+			//
+			Persona per = new Persona();
+			per.setIdPersona(empb.getIdPersona());
+			per.setPerUsuario(usu);			
+			per.setNombre(empb.getNombre());
+			per.setApellidoPaterno(empb.getApellidoPaterno());
+			per.setApellidoMaterno(empb.getApellidoMaterno());
+			per.setTelefono(empb.getTelefono());
+			per.setDni(empb.getDni());
+			per.setCelular(empb.getCelular());
+			per.setDireccion(empb.getDireccion());
+			per.setFechaNacimiento(empb.getFechaNacimiento());
+			per.setSexo(empb.getSexo());
+			per.setActivo(false);
+		    //
+			Distrito dis = new Distrito();
+			dis.setIdDistrito(empb.getIdDistrito());
+			per.setPerDistrito(dis);
+			
+			em.merge(per);
+						
+			//
+			Cargo car = new Cargo();
+			car.setIdCargo(empb.getIdCargo());
+			//
+			Especialidad esp = new Especialidad();
+			emp.setEmpPersona(per);
+			esp.setIdEspecialidad(empb.getIdEspecialidad());
+			emp.setEmpCargo(car);
+			emp.setEmpEspecialidad(esp);
+			emp.setAdministrador(false);
+			em.merge(emp);
+			
+			resultado = true;			
+		}
+		catch(IllegalArgumentException ex){
+			System.out.println(ex);
+			resultado = false;
+		}
+		return resultado;
 	}
 }
