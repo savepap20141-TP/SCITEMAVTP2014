@@ -62,7 +62,7 @@ public class ArchivosController {
 				
 				filesbeanlist.add(s3bean);
 				
-				String fileContentType = beanAjax.getFile().getContentType();
+				 String fileContentType = beanAjax.getFile().getContentType();
 			     System.out.println("******* FILE CONTENT TYPE: " + fileContentType);
 			     System.out.println("******* PATH: " + req.getSession().getServletContext().getRealPath("/images/"));
 			     System.out.println("******* PATH: " + req.getSession().getServletContext().getRealPath("/"));

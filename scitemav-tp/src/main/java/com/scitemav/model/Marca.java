@@ -16,6 +16,9 @@ public class Marca {
 	@Column(length = 60, nullable = false)
 	private String nombre;
 	
+	@Column(name = "urlimagen",length = 300, nullable = true)
+	private String urlImagen;
+	
 	@OneToMany(mappedBy ="vehMarca")
 	private Collection<Vehiculo> marVehiculos;
 
@@ -41,5 +44,13 @@ public class Marca {
 
 	public void setMarVehiculos(Collection<Vehiculo> marVehiculos) {
 		this.marVehiculos = marVehiculos;
+	}
+
+	public String getUrlImagen() {
+		return urlImagen;
+	}
+
+	public void setUrlImagen(String urlImagen) {
+		this.urlImagen = urlImagen;
 	}
 }

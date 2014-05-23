@@ -28,6 +28,34 @@ $(document).ready(function(e){
 });
 });
 </script>
+<script>
+function registrarMarca(){
+	var formElement = document.getElementById("frmRegistroMarca");
+	var formData = new FormData(formElement);		
+	$.ajax({
+ 		url: 'registroMarca',
+ 		type: "POST",
+		data:  formData,
+		mimeType:"multipart/form-data",
+		contentType: false,
+	    cache: false,
+		processData:false,
+		beforeSend: function(){
+			//$.blockUI({ message: $('#domMessage') });
+	    },
+ 		success: function(result){
+			$("#archivo").empty();
+			$("#archivo").append("<input type='file' name='file' id='filesToUpload_0'/>");
+			$("#resultado").append("<a target='_blank'  href='http://localhost:8090/scitemav-tp/images/"+result+"'><img width='300' height='300' src='http://localhost:8090/scitemav-tp/images/"+result+"'></img></a>");
+	    },
+	    complete: function() {
+		}		
+ 	});
+}
+
+
+
+</script>
 <body>
  <div id="wrapper">
 
@@ -57,8 +85,8 @@ $(document).ready(function(e){
 
 								<!-- Form de registro -->
 
-								<form role="form" id="frmRegistroMarca" action="registroMarca"
-									method="post" commandName="marcaBean" style="width: 30%; margin-left: 10%;">
+								<form role="form" id="frmRegistroMarca" 
+								 method="post" commandName="marcaBean" enctype="multipart/form-data"  style="width: 30%; margin-left: 10%;">
 
 									<fieldset>
 									
@@ -67,9 +95,14 @@ $(document).ready(function(e){
 											class="form-control" name="nombre" placeholder="Nombre"></input>
 										</div>
 										
+										<div class="form-group">
+				                            <label>Imagen de ejemplo: </label>
+				                            <input type="file" name="file">
+				                        </div>
+										
 										<label> </label> <input
-											class="btn btn-lg btn-success btn-block" type="submit"
-											value="Registrar Marca" style="width: 60%; margin-left: 20%; margin-top: 10%;"/>
+											class="btn btn-lg btn-success btn-block" type="button"
+											value="Registrar Marca" style="width: 60%; margin-left: 20%; margin-top: 10%;" onclick="registrarMarca();"/>
 										<p>
 											<label class="error"><c:out value="${msg}" /></label>
 										</p>

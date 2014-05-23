@@ -26,7 +26,7 @@ function UploadFileIE(){
 	    	alert('Grabo :) '+result);
 			$("#archivo").empty();
 			$("#archivo").append("<input type='file' name='file' id='filesToUpload_0'/>");
-			$("#resultado").append("<a target='_blank'  href='http://localhost:8080/scitemav-tp/images/"+result+"'><img width='300' height='300' src='http://localhost:8080/scitemav-tp/images/"+result+"'></img></a>");
+			$("#resultado").append("<a target='_blank'  href='http://localhost:8090/scitemav-tp/images/"+result+"'><img width='300' height='300' src='http://localhost:8090/scitemav-tp/images/"+result+"'></img></a>");
 	    },
 	    complete: function() {
 // 			var errorU = ''+xhr.status;
