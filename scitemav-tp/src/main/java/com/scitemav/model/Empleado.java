@@ -1,5 +1,7 @@
 package com.scitemav.model;
 
+import java.util.Collection;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -7,6 +9,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
 @Entity
@@ -29,6 +32,9 @@ public class Empleado {
 
 	@Column(name = "administrador", nullable = true)
 	private Boolean administrador;
+	
+	@OneToMany(mappedBy ="reeEmpleado")
+	private Collection<EmpleadoRevision> empEmpleadoRevisiones;
 	
 	public Integer getIdEmpleado() {
 		return idEmpleado;
@@ -68,5 +74,13 @@ public class Empleado {
 
 	public void setAdministrador(Boolean administrador) {
 		this.administrador = administrador;
+	}
+
+	public Collection<EmpleadoRevision> getEmpEmpleadoRevisiones() {
+		return empEmpleadoRevisiones;
+	}
+
+	public void setEmpEmpleadoRevisiones(Collection<EmpleadoRevision> empEmpleadoRevisiones) {
+		this.empEmpleadoRevisiones = empEmpleadoRevisiones;
 	}
 }
