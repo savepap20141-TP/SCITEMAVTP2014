@@ -10,7 +10,9 @@ import javax.persistence.Query;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.scitemav.bean.MarcaBean;
 import com.scitemav.bean.RevisionBean;
+import com.scitemav.model.Marca;
 import com.scitemav.model.Revision;
 import com.scitemav.model.Vehiculo;
 
@@ -26,7 +28,8 @@ public class RevisionServiceImpl implements RevisionService {
 		boolean flag = true;
 		Revision rev = new Revision();
 		Vehiculo veh = new Vehiculo();
-
+      
+		
 		try {
 			veh.setIdVehiculo(revision.getIdVehiculo());
 
@@ -37,6 +40,7 @@ public class RevisionServiceImpl implements RevisionService {
 			rev.setFechaProxima(revision.getFechaProxima());
 			rev.setKilometrajeActual(revision.getKilometrajeActual());
 			rev.setKilometrajeProximo(revision.getKilometrajeProximo());
+			
 
 			em.persist(rev);
 			revision.setIdRevision(rev.getIdRevision());
@@ -62,7 +66,8 @@ public class RevisionServiceImpl implements RevisionService {
 
 			for (int i = 0; i < _rev.size(); i++) {
 				Revision rev = _rev.get(i);
-				RevisionBean revBean = new RevisionBean();
+				RevisionBean revBean = new RevisionBean();								
+				
 				revBean.setCostoTotal(rev.getCostoTotal());
 				revBean.setFechaFin(rev.getFechaFin());
 				revBean.setFechaInicio(rev.getFechaInicio());
@@ -72,6 +77,8 @@ public class RevisionServiceImpl implements RevisionService {
 				revBean.setIdRevision(rev.getIdRevision());
 				revBean.setIdVehiculo(rev.getRevVehiculo().getIdVehiculo());
 				revBean.setNumeroPlaca(rev.getRevVehiculo().getNumeroPlaca());
+				revBean.setNombreMarca(rev.getRevVehiculo().getVehMarca().getNombre());
+				revBean.setNombreModelo(rev.getRevVehiculo().getVehModelo().getNombre());
 				_revBean.add(revBean);
 			}
 
@@ -122,6 +129,8 @@ public class RevisionServiceImpl implements RevisionService {
 			rBean.setNumeroSerie(r.getRevVehiculo().getNumeroSerie());
 			rBean.setPesoBruto(r.getRevVehiculo().getPesoBruto());
 			rBean.setPesoSeco(r.getRevVehiculo().getPesoSeco());	
+			rBean.setNombreMarca(r.getRevVehiculo().getVehMarca().getNombre());
+			rBean.setNombreModelo(r.getRevVehiculo().getVehModelo().getNombre());
 			
 		} catch (Exception e) {
 			System.out.println(e.getMessage());

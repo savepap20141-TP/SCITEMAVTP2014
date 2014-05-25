@@ -13,6 +13,12 @@
 	$(document).ready(function(e) {
 		var idcliente = $('#spnIdCliente').text();
 		inicioConsulta(idcliente);
+		var nfechaInicio = 'txtFechaInicio';
+		cargarFechaRevis(nfechaInicio);
+		var nfechaFin = 'txtFechaFin';
+		cargarFechaRevis(nfechaFin);
+		var nProximaRev = 'txtProximaRevision';
+		cargarFechaRevis(nProximaRev);
 
 	});
 
@@ -45,21 +51,17 @@
 				});
 	}
 	
-	function EditInformacionCliente(){
-		$('#frmEdicionCliente').submit();
-	}
-	
 	function IniciarInfoCliente(cliente){
 		//Vista de Informacion
 		
 		
 		$('#spnNombre').text(cliente.nombre);
-		$('#spnApellidoPaterno').text(cliente.apellidopaterno);
-		$('#spnApellidoMaterno').text(cliente.apellidomaterno);
+		$('#spnApellidoPaterno').text(cliente.apellidoPaterno);
+		$('#spnApellidoMaterno').text(cliente.apellidoMaterno);
 		$('#spnDni').text(cliente.dni);
 		$('#spnSexo').text(cliente.sexo);
-		$('#spnFechaNacimiento').text(cliente.fechanacimiento);
-		$('#spnNombreDistrito').text(cliente.nombredistrito);
+		$('#spnFechaNacimiento').text(cliente.fechaNacimiento);
+		$('#spnNombreDistrito').text(cliente.nombreDistrito);
 		
 		$('#spnDireccion').text(cliente.direccion);
 		$('#spnTelefono').text(cliente.telefono);
@@ -190,37 +192,20 @@
 
 										<div class="col-lg-12 vistaInformacion">
 											<br>
-											<div class="col-lg-6">
-							<h4>Datos del Cliente</h4>
-							<br>
-							<p class="text-primary">Nombre:</p>
-							<span id="spnNombre"></span>
-							<p class="text-primary">Apellido Paterno:</p>
-							<span id="spnApellidoPaterno"></span>
-							<p class="text-primary">Apellido Materno:</p>
-							<span id="spnApellidoMaterno"></span>
-							<p class="text-primary">DNI:</p>
-							<span id="spnDni"></span>
-							<p class="text-primary">Sexo:</p>
-							<span id="spnSexo"></span>
-							<p class="text-primary">Fecha Nacimiento:</p>
-							<span id="spnFechaNacimiento"></span>
-							<p class="text-primary">Nombre Distrito:</p>
-							<span id="spnNombreDistrito"></span>
-
-						</div>
-						<div class="col-lg-6">
-							<h4>Datos de referencia Cliente</h4>
-							<br>
-							<p class="text-primary">Direccion:</p>
-							<span id="spnDireccion"></span>
-							<p class="text-primary">Telefono:</p>
-							<span id="spnTelefono"></span>
-							<p class="text-primary">Celular:</p>
-							<span id="spnCelular"></span>
-							<p class="text-primary">Email:</p>
-							<span id="spnEmail"></span>
-						</div>											
+											<div class="col-lg-4">
+											<p class="text-primary">Costo Total:</p>
+						                 	<span id="spnCostoTotal"></span>
+						                	<p class="text-primary">Fecha Inicio:</p>
+											<span id="spnFechaInicio"></span>
+											<p class="text-primary">Fecha Fin:</p>
+											<span id="spnFechaFin"></span>
+											<p class="text-primary">Fecha Próxima:</p>
+											<span id="spnFechaProxima"></span>
+											<p class="text-primary">Kilometraje Actual:</p>
+											<span id="spnKilometrajeActual"></span>
+											<p class="text-primary">Kilometraje Próximo:</p>
+											<span id="spnKilometrajeProximo"></span>												
+											</div>											
 										</div>
 										<div class="col-lg-12 edicionInformacion" style="display: none;">
 										<!-- BORRAR EN CASO DE ERROR -->
@@ -228,11 +213,17 @@
 										<form role="form" id="frmEdicionCliente" commandName="clientebean" style="width: 90%; padding-left: 10%;">
 							<fieldset>						
 								<div class="col-lg-6">						
-									<div class="form-group" style="display: none;">
+									<div class="form-group" style="display:none">
+											<label>Revision</label> 
+											<input id="txtRevision" class="form-control"
+											 name="idRevision" placeholder="Revision"></input>
+											 <input id="txtVehiculo" class="form-control"
+											 name="idVehiculo" placeholder="Vehiculo"></input>
+										</div> 					
+									<div class="form-group" >
 											<label> Costo Total </label> <input id="txtCostoTotal"
 											class="form-control" name="costoTotal" placeholder="Costo total"></input>
 										</div>
-										
 										<div class="form-group input-group">
 											<label> Fecha de Inicio</label> <input id="txtFechaInicio"
 												class="form-control" name="fechaInicio"
@@ -242,7 +233,7 @@
 												</span>
 										</div>
 										
-									 	<div class="form-group input-group" style="display: none;">
+									 	<div class="form-group input-group" >
 											<label> Fecha de Fin</label> <input id="txtFechaFin"
 												class="form-control" name="fechaFin"
 												placeholder="Fecha de Fin"></input>
@@ -252,7 +243,7 @@
 										</div>
 										 
 										 
-										<div class="form-group input-group" style="display: none;">
+										<div class="form-group input-group" >
 											<label> Próxima revisión</label> <input id="txtProximaRevision"
 												class="form-control" name="fechaProxima"
 												placeholder="Fecha próxima"></input>
@@ -260,23 +251,21 @@
 												    <button class="btn btn-default fa fa-table fa-fw" type="button" style="margin-top:25px; height: 34px;" onclick="$('#txtProximaRevision').datepicker('show')"></button>
 												</span>
 										</div>
-										<div class="form-group" style="display: none;">
+										<div class="form-group">
 											<label> Kilometraje Actual </label> <input id="txtKilometrajeActual"
 											class="form-control" name="kilometrajeActual" placeholder="Kilometraje actual"></input>
 										</div>
-										<div class="form-group" style="display: none;">
+										<div class="form-group">
 											<label> Kilometraje Próximo </label> <input id="txtKilometrajeProximo"
 											class="form-control" name="kilometrajeProximo" placeholder="Kilometraje próximo"></input>
-										</div>																				
+										</div>																							
 																																																																				
 																																					
 									<!-- FINAL SEGUNDA COLUMNA -->
-								</div>
-																
-								
-										<span class="btn btn-success" onclick="EditInformacionCliente();">Guardar</span>
+			                            <span class="btn btn-success" onclick="EditInformacionCliente();">Guardar</span>
 										<span class="btn btn-danger" onclick="$('.vistaInformacion').show();$('.edicionInformacion').hide();$('#btnVerInformacion').hide();$('#btnVerEdicion').show();">
 									    Cancelar</span>
+									    </div>
 							</fieldset>							
 							</form>
 										

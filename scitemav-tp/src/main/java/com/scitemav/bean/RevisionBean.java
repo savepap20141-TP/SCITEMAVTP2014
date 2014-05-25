@@ -12,6 +12,8 @@ public class RevisionBean {
 	private Date fechaProxima;
 	private Integer kilometrajeActual;
 	private Integer kilometrajeProximo;
+	
+	
 
 	//Vehiculo
 	private Integer idVehiculo;
@@ -23,6 +25,8 @@ public class RevisionBean {
 	private String color; 
 	private String numeroMotor;
 	private String numeroPlaca;	
+	private String nombreMarca;
+	private String nombreModelo;
 	private Integer numeroEjes;
 	private Integer numeroRuedas;
 	private Integer numeroCilindros;
@@ -204,6 +208,18 @@ public class RevisionBean {
 	}
 	public void setCargaUtil(Double cargaUtil) {
 		this.cargaUtil = cargaUtil;
+	}
+	public String getNombreModelo() {
+		return nombreModelo;
+	}
+	public void setNombreModelo(String nombreModelo) {
+		this.nombreModelo = nombreModelo;
+	}
+	public String getNombreMarca() {
+		return nombreMarca;
+	}
+	public void setNombreMarca(String nombreMarca) {
+		this.nombreMarca = nombreMarca;
 	}
 	
 	

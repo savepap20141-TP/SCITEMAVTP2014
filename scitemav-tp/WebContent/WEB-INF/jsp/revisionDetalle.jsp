@@ -10,6 +10,121 @@
 <jsp:include page="componentes/head.jsp" />
 </head>
 <script>
+	$(document).ready(function(e) {
+		
+		var nfechaIni = 'txtFechaInicio';
+		cargarFechaRevis(nfechaIni);
+		
+		$.validator.addMethod("LetyNumRegex", function(value, element) {
+	        return this.optional(element) || /^[A-Z0-9\-\s]+$/i.test(value);
+	    }, " ");
+		$.validator.addMethod("NumRegex", function(value, element) {
+	        return this.optional(element) || /^[0-9\-\s]+$/i.test(value);
+	    }, " ");
+		$.validator.addMethod("LetRegex", function(value, element) {
+	        return this.optional(element) || /^[A-Z]+$/.test(value);
+	    }, "");
+		$.validator.addMethod("DecRegex", function(value, element) {
+	        return this.optional(element) || /^(\d+|\d+.\d{7,4})$/.test(value);
+	    }, " ");
+		$.validator.addMethod("DecKilRegex", function(value, element) {
+	        return this.optional(element) || /^(\d+|\d+.\d{5,3})$/.test(value);
+	    }, " ");
+		$.validator.addMethod("NumPlacaRegex", function(value, element) {
+	        return this.optional(element) || /^[[A-Z0-9]{3}[-]{1}[A-Z0-9]{3}$/.test(value);
+	    }, " ");
+		
+		$('#frmEdicionRevision').validate({
+			rules:{
+				costoTotal:{
+					required:true,
+					DecRegex:true,
+					maxlength:12,
+					minlength:4
+					
+				},
+				fechaInicio:{
+					required: true,
+				      dpDate: true,
+					
+				},
+				fechaFin:{
+					required: true,
+				      dpDate: true,			
+				},
+				fechaProxima:{
+					required: true,
+				      dpDate: true,
+				},
+				kilometrajeActual:{
+					required:true,
+					DecKilRegex: true,
+					maxlength:9,
+					minlength:3					
+				},
+				kilometrajeProximo:{
+					required:true,
+					DecKilRegex: true,
+					maxlength:9,
+					minlength:3				
+				}
+				
+			},
+			messages:{
+				costoTotal:{
+					required:"Debe ingresar costo total",
+					NumRegex:"Sólo números en el costo total",
+					minlength:"Tiene que tener 12 dígitos en el costototal",
+					maxlength:"Tiene que tener 4 dígitos en el costototal"
+				},
+				fechaInicio:{
+					required:"Se debe ingresar una Fecha de Inicio",
+					dpDate:"Solo Fechas",	
+					dpComparedate:"Debe ser menor a la fecha de Fin"		
+				},
+				fechaFin:{
+					required:"Se debe ingresar una Fecha de Fin",
+					dpDate:"Solo Fechas",	
+					dpComparedate:"Debe ser mayor a la fecha de Inicio"
+				},			
+				fechaProxima:{
+					required:"Se debe ingresar una Fecha de Proxima",
+					dpDate:"Solo Fechas",	
+					dpComparedate:"Debe ser menor a la fecha Fin"				
+				},
+				kilometrajeActual:{
+					required:"Debe ingresar un kilometraje actual",
+					DecKilRegex:"Sólo decimales ",
+					minlength:"Tiene que tener 9 dígitos como minimo",
+					maxlength:"Tiene que tener 3 dígitos como maximo",	
+				},
+				kilometrajeProximo:{
+					required:"Debe ingresar un kilometraje proximo",
+					DecKilRegex:" Solo decimales",
+					maxlength:"Tiene que tener 9 digitos como maximo",
+					minlength:"Tiene como minimo 3 digito como minimo"				
+				}
+				
+			},			
+			submitHandler: function(form){
+				$.ajax({
+			   		url: 'ajaxEditInformacionVehiculo',
+			   		type: 'post',
+			   		dataType: 'json',
+			   		data: $('#frmEdicionVehiculo').serialize(),
+			   		success: function(vehiculo){
+			   			IniciarInfoVehiculo(vehiculo);
+			 			$('.vistaInformacion').show();
+			 			$('.edicionInformacion').hide();
+			 			$('#btnVerInformacion').hide();
+			 			$('#btnVerEdicion').show();
+			   		}
+			   	});
+			}		
+		});
+		</script>
+<script type="text/javascript"></script>
+<script>
 	$(document).ready(function(e) {		
 		var idrevision = $('#spnIdRevision').text();
 		inicioConsulta(idrevision);
@@ -64,8 +179,8 @@
 		$('#spnColorGeneral').text(revision.color);
 		$('#spnNumeroPlacaGeneral').text(revision.numeroPlaca);
 		$('#spnFabricacionGeneral').text(revision.fabricacion);
-		$('#spnMarcaGeneral').text(revision.ideMarca);
-		$('#spnModeloGeneral').text(revision.idModelo);
+		$('#spnMarca').text(revision.nombreMarca);
+		$('#spnModelo').text(revision.nombreModelo);
 		
 		//Vista de Edicion
 	    $('#txtVehiculo').val(revision.idVehiculo);
@@ -145,9 +260,9 @@
 							<p class="text-primary">Color:</p>
 							<span id="spnColorGeneral"></span>
 							<p class="text-primary">Marca:</p>
-							<span id="spnMarcaGeneral"></span>
+							<span id="spnMarca"></span>
 							<p class="text-primary">Modelo:</p>
-							<span id="spnModeloGeneral"></span>
+							<span id="spnModelo"></span>
 
 						</div>
 					</div>
@@ -273,7 +388,7 @@
 																																					
 									<!-- FINAL SEGUNDA COLUMNA -->
 									<span class="btn btn-success" onclick="EditInformacionRevision();">Guardar</span>
-										<span class="btn btn-danger" onclick="$('.vistaInformacion').show();$('.edicionInformacion').hide();$('#btnVerInformacion').hide();$('#btnVerEdicion').show();">
+									<span class="btn btn-danger" onclick="$('.vistaInformacion').show();$('.edicionInformacion').hide();$('#btnVerInformacion').hide();$('#btnVerEdicion').show();">
 									    Cancelar</span>
 								</div>
 																
