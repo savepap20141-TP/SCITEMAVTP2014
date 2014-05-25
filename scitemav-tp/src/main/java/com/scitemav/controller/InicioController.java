@@ -62,6 +62,11 @@ public class InicioController {
 	public String toDetalleRevision(){
 		return "revisionDetalle";
 	}
+	
+	@RequestMapping("toConfiguracionCliente")
+	public String toConfiguracionCliente(){
+		return "configuracionClientes";
+	}
 
 	@RequestMapping(value = "/toDashboard", method = RequestMethod.GET)
 	public String toDashboard(HttpServletRequest req, HttpSession session, Model model){

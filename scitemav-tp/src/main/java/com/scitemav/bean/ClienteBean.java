@@ -6,7 +6,8 @@ public class ClienteBean {
 	
 	private Integer idCliente;
 	private Integer ruc;
-	private String razonSocial;	
+	private String razonSocial;
+	
 	//Persona
 	private Integer idPersona;	
 	private String nombre;
@@ -26,7 +27,16 @@ public class ClienteBean {
 	private String email;
 	private String password;
 	private Boolean activoU;
+	private String estado;
 	
+	
+	
+	public String getEstado() {
+		return estado;
+	}
+	public void setEstado(String estado) {
+		this.estado = estado;
+	}
 	public Integer getIdCliente() {
 		return idCliente;
 	}

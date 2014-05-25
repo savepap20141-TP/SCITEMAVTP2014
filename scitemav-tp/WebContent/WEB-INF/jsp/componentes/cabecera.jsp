@@ -293,7 +293,7 @@ function removeNulls(){
                     <ul class="dropdown-menu dropdown-user">
                         <li><a href="toPerfil"><i class="fa fa-user fa-fw"></i> Perfil de Usuario</a>
                         </li>
-                        <li><a href="#"><i class="fa fa-gear fa-fw"></i>Configuración</a>
+                        <li><a href="toConfiguracionCliente"><i class="fa fa-gear fa-fw"></i>Configuración</a>
                         </li>
                         <li class="divider"></li>
                         <li><a href="toLogout"><i class="fa fa-sign-out fa-fw"></i> Salir</a>
