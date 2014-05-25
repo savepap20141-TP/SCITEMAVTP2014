@@ -1,11 +1,16 @@
 package com.scitemav.service;
 
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.imageio.ImageIO;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,17 +27,42 @@ public class MarcaServiceImpl implements MarcaService {
 	EntityManager em;
 
 	@Transactional
-	public boolean registro(Marca marca) {
+	public boolean registro(MarcaBean marcab, HttpServletRequest req) {
 		boolean resultado = false;
 
 		//TipoVehiculo tipovehiculo = new TipoVehiculo();
+		Marca marca = new Marca();
 
 		try {
-			if(!(marca.getNombre().isEmpty())){
+			if(!(marcab.getNombre().isEmpty())){
 				//tipovehiculo.setNombre(tipv.getNombre());
-				if(marca.getIdMarca()==null){
+				if(marcab.getIdMarca()==null){
+					marca.setNombre(marcab.getNombre());
+					if(marcab.getFile()!=null){
+						String fileContentType = marcab.getFile().getContentType();
+					     System.out.println("******* FILE CONTENT TYPE: " + fileContentType);
+					     System.out.println("******* PATH: " + req.getSession().getServletContext().getRealPath("/images/"));
+					     System.out.println("******* PATH: " + req.getSession().getServletContext().getRealPath("/"));
+					     System.out.println("******* PATH: " + req.getRequestURL().toString()+"/images/"+marcab.getFile().getOriginalFilename());
+					     
+					     if(fileContentType.contains("image")){
+					        try {
+								BufferedImage bufferedImage = ImageIO.read(marcab.getFile().getInputStream());
+						        File localFile= new File(req.getSession().getServletContext().getRealPath("/images/")+"/"+marcab.getFile().getOriginalFilename());
+						        boolean dir = localFile.mkdirs();
+						        marcab.getFile().transferTo(localFile);		
+						        marca.setUrlImagen(req.getRequestURL().toString()+"/images/"+marcab.getFile().getOriginalFilename());
+					        } catch (IOException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+					      }					     
+						//marca.setUrlImagen(marcab.getUrlImagen());
+					}
 					em.persist(marca);
 				}else{
+					marca.setNombre(marcab.getNombre());
+					marca.setUrlImagen(marcab.getUrlImagen());
 					em.merge(marca);
 				}
 				resultado = true;

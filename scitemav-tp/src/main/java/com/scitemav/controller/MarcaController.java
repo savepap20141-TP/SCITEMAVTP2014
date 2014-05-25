@@ -35,14 +35,17 @@ public class MarcaController {
 	}
 	
 	@RequestMapping(value="registroMarca", method = RequestMethod.POST)
-	public String registroMarca(@ModelAttribute("marca") Marca marca, Model model, HttpServletRequest req){
+	@ResponseBody
+	public String registroMarca(@ModelAttribute("marcaBean") MarcaBean marca, Model model, HttpServletRequest req){
 		String path = "";
-		if(marcaService.registro(marca)){
-			model.addAttribute("msg", "Se registro correctamente");
-			path = "registrarMarca";
+		if(marcaService.registro(marca,req)){
+			//model.addAttribute("msg", "Se registro correctamente");
+			//path = "registrarMarca";
+			path = "true";
 		}else{
-			model.addAttribute("msg", "Fallo al registrarse");
-			path = "registrarMarca";
+			//model.addAttribute("msg", "Fallo al registrarse");
+			//path = "registrarMarca";
+			path = "false";
 		}
 		return path;
 	}

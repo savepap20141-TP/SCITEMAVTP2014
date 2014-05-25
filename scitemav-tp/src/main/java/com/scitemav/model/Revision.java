@@ -45,6 +45,9 @@ public class Revision {
 	@OneToMany(mappedBy ="rerRepuesto")
 	private Collection<RepuestoRevision> revRepuestoRevisiones;
 	
+	@OneToMany(mappedBy ="reeRevision")
+	private Collection<EmpleadoRevision> revEmpleadoRevisiones;
+	
 	public Integer getIdRevision() {
 		return idRevision;
 	}
@@ -123,6 +126,14 @@ public class Revision {
 
 	public void setRevRepuestoRevisiones(Collection<RepuestoRevision> revRepuestoRevisiones) {
 		this.revRepuestoRevisiones = revRepuestoRevisiones;
+	}
+
+	public Collection<EmpleadoRevision> getRevEmpleadoRevisiones() {
+		return revEmpleadoRevisiones;
+	}
+
+	public void setRevEmpleadoRevisiones(Collection<EmpleadoRevision> revEmpleadoRevisiones) {
+		this.revEmpleadoRevisiones = revEmpleadoRevisiones;
 	}
 	
 }
