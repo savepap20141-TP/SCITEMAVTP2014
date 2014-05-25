@@ -1,5 +1,7 @@
 package com.scitemav.service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 import javax.persistence.EntityManager;
@@ -89,5 +91,28 @@ public class UsuarioServiceImpl implements UsuarioService{
 		}
 		
 		return resultado;
+	}
+	
+	@Transactional
+	public List<String> administrarLogin(String[] ids, String[] state) {
+		List<String> enviados = new ArrayList<String>();
+		try {
+			for (int i = 0; i < ids.length; i++) {				
+				Usuario usu = em.find(Usuario.class, Integer.parseInt(ids[i]));
+				if(usu.getEstado().equals("creado")){										
+						//Enviar Email al usuario
+						if(!state[i].equals("deshabilitado")){
+							enviados.add( usu.getUsuPersona().getNombre()+" "+usu.getUsuPersona().getApellidoPaterno()+" "+usu.getUsuPersona().getApellidoMaterno());
+							//Agregar metodo que envia correos electronicos
+							
+						}
+				}
+				Usuario userx = em.merge(usu);
+				userx.setEstado(state[i]);
+			}
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+		return enviados;
 	}
 }

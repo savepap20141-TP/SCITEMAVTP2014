@@ -28,7 +28,7 @@ public class ClienteBean {
 	private String password;
 	private Boolean activoU;
 	private String estado;
-	
+	private Integer idUsuario;
 	
 	
 	public String getEstado() {
@@ -150,5 +150,11 @@ public class ClienteBean {
 	}
 	public void setNombreDistrito(String nombreDistrito) {
 		this.nombreDistrito = nombreDistrito;
+	}
+	public Integer getIdUsuario() {
+		return idUsuario;
+	}
+	public void setIdUsuario(Integer idUsuario) {
+		this.idUsuario = idUsuario;
 	}
 }

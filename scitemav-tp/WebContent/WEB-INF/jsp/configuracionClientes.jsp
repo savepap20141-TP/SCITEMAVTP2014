@@ -32,40 +32,110 @@ function inicioConsulta(){
  		data: '',
  		success: function(clientes){
  			$.each(clientes, function(i, cliente){
+ 				var checkHabilitado = '';
+ 				var valueCreado = '';
+ 				var valueHabilitado = '';
+ 				if(cliente.estado == "habilitado"){
+ 					checkHabilitado = 'checked';
+ 					valueHabilitado = 'Habilitado';
+ 				}
+ 				if(cliente.estado == "deshabilitado"){
+ 					checkHabilitado =  '';
+ 					valueHabilitado = 'Deshabilitado';
+ 				}
+ 				if(cliente.estado == "creado"){
+ 					checkHabilitado = '';
+ 					valueCreado = 'Nuevo Usuario';
+ 				}
+ 				
+ 				
  				filas = filas +'<tr class="">'+
- 				'<td class="center"><input type="checkbox" checked="'+esHabilitado(cliente.estado)+'" name="option1" value="Milk"></td>'+ 				
-				'<td class="center">'+cliente.dni+'</td>'+
+ 				'<td class="center">'+valueCreado+valueHabilitado+' <input type="checkbox" '+checkHabilitado+' onclick="updateState(this,'+ i +')"><input type="hidden" name="state"  id="state_'+i+'" value="'+cliente.estado+'" /></td>'+ 		
+ 				'<td class="center">'+cliente.email+'<input id="change_'+i+'" type="hidden" name="change"></td>'+
+				'<td class="center">'+cliente.dni+'<input type="hidden" name="id" value="'+cliente.idUsuario+'" id="idUsu_'+i+'" /></td>'+
 				'<td class="center">'+cliente.nombre+'</td>'+
 				'<td class="center">'+cliente.apellidoPaterno+'</td>'+
-				'<td class="center">'+cliente.apellidoMaterno+'</td>'+
-				'<td class="center">'+cliente.email+'</td>'+
+				'<td class="center">'+cliente.apellidoMaterno+'</td>'+				
 				'</tr>';
 			});		        
  		},
  		complete: function() {
  			columnas = columnas +
- 				'<th class="center">Habilitado</th>'+ 				
+ 				'<th class="center">Estado</th>'+ 			
+ 				'<th class="center">Email</th>'+
  				'<th class="center">DNI</th>'+
 				'<th class="center">Nombre Cliente</th>'+
 				'<th class="center">Apellido Paterno</th>'+
-				'<th class="center">Apellido Materno</th>'+
-				'<th class="center">Email</th>';
+				'<th class="center">Apellido Materno</th>';
  			realizarTabla(columnas,filas);
  			removeNulls();
   		}
  	});
 }
 
-function esHabilitado(estadoCliente){
-	if(estadoCliente == "habilitado"){
-	return true;	
-	}
-	if(estadoCliente == "deshabilitado"){
-		return false;
-	}
+function updateState(source,i){
+	   var state;
+	   if(source.checked==true){
+	    state="habilitado";
+	   }
+	   else{
+	    state="deshabilitado";
+	      }
+	   $('#state_'+i).val(state);
+	   $('#change_'+i).val(true);
 }
 
 </script>
+
+<script>
+var contsave = 'first';
+var cont ='first';
+$(document).on('click','#btnEnviarInv', function(e){
+		var list_State = '';
+		var list_IdUsu = '';
+		list_isChanged = document.getElementsByName('change');
+		  for (var x=0; x < list_isChanged.length; x++) {
+			  if($('#change_'+x).val()==true || $('#change_'+x).val()=='true'){
+				list_State += $('#state_'+x).val()+'_';
+				list_IdUsu += $('#idUsu_'+x).val()+'_';
+				$('#change_'+x).val('');
+			  }
+		 }
+		$('#isState_list').val(list_State);
+		$('#idUsuario_list').val(list_IdUsu);	
+		//alert(list_State);
+		//alert(list_IdUsu);
+		  $.ajax({
+			   url: 'enviarInvitaciones',
+			   type: 'post',
+			   dataType: 'json',
+			   data: $('#frmAdministradorLogin').serialize(),
+			   complete: function() {
+		   			//$.unblockUI();
+		   	   },
+			   success: function(enviados){
+				   if(enviados != ""){
+				    var msgASR = [];
+				    $('#resultOk').hide();
+				    var contactos = "";
+					  $.each(enviados, function(z, env){
+						  msgASR.push('Invitacion enviada a: ' + env);
+						  contactos += 'Invitacion enviada a: ' +env+'<br>';
+						  //alert(env);
+					  });		
+					if(msgASR.length>0){
+						$('#resultOk').show();
+						$('#mensajeEmails').empty();
+						$('#mensajeEmails').append(contactos);
+					}  
+				   }
+				   inicioConsulta();
+				}
+		  });
+  });
+
+</script>
+
 <body>
  <div id="wrapper">
 
@@ -90,7 +160,17 @@ function esHabilitado(estadoCliente){
                         <!-- /.panel-heading -->
                         <div class="panel-body">
                             <div class="table-responsive">
+                            	<input class="btn btn-lg btn-success btn-block" type="button" style="width: 20%;" value="Habilitar Cliente" id="btnEnviarInv"></input><br>
+                            	<div class="alert alert-success alert-dismissable" id="resultOk" style="display:none">
+	    							<button class="close" aria-hidden="true" data-dismiss="alert" type="button">×</button>
+	    							<span id="mensajeEmails"></span>
+								</div>
+								<br>
                             	<div id="spnResultList" class="resultBox section summaryPane"></div>
+                            	<form id="frmAdministradorLogin">		
+									<input id="isState_list" type="hidden" name="isStateList"/>
+									<input id="idUsuario_list" type="hidden" name="idUsuarioList"/>
+								</form>
                             </div>
                         </div>
                         <!-- /.panel-body -->
