@@ -100,14 +100,14 @@ public class ClienteServiceImpl implements ClienteService{
 				cb.setApellidoMaterno(c.getCliPersona().getApellidoMaterno());
 				cb.setSexo(c.getCliPersona().getSexo());
 				cb.setFechaNacimiento(c.getCliPersona().getFechaNacimiento());
-				cb.setIdDistrito(c.getCliPersona().getPerDistrito().getIdDistrito());
-				cb.setNombreDistrito(c.getCliPersona().getPerDistrito().getNombre());
+				/*cb.setIdDistrito(c.getCliPersona().getPerDistrito().getIdDistrito());
+				cb.setNombreDistrito(c.getCliPersona().getPerDistrito().getNombre());*/
 				cb.setDireccion(c.getCliPersona().getDireccion());
 				cb.setTelefono(c.getCliPersona().getTelefono());
 				cb.setCelular(c.getCliPersona().getCelular());
 				cb.setEmail(c.getCliPersona().getPerUsuario().getEmail());
 				cb.setEstado(c.getCliPersona().getPerUsuario().getEstado());
-				cb.setIdUsuario(c.getCliPersona().getPerUsuario().getIdUsuario());
+				
 				_lcb.add(cb);
 			}
 		} catch (IllegalArgumentException e) {
@@ -127,7 +127,9 @@ public class ClienteServiceImpl implements ClienteService{
 			
 			rBean.setIdCliente(r.getIdCliente());
 			rBean.setRazonSocial(r.getRazonSocial());
-			rBean.setRuc(r.getRuc());			
+			rBean.setRuc(r.getRuc());
+			rBean.setIdPersona(r.getCliPersona().getIdPersona());
+			rBean.setIdUsuario(r.getCliPersona().getPerUsuario().getIdUsuario());
 			
 			rBean.setDni(r.getCliPersona().getDni());
 			rBean.setNombre(r.getCliPersona().getNombre());
@@ -141,6 +143,8 @@ public class ClienteServiceImpl implements ClienteService{
 			rBean.setTelefono(r.getCliPersona().getTelefono());
 			rBean.setCelular(r.getCliPersona().getCelular());
 			rBean.setEmail(r.getCliPersona().getPerUsuario().getEmail());
+			rBean.setEstado(r.getCliPersona().getPerUsuario().getEstado());
+			rBean.setPassword(r.getCliPersona().getPerUsuario().getPassword());
 			
 		} catch (IllegalArgumentException e) {
 			System.out.println(e.getMessage());
@@ -157,11 +161,38 @@ public class ClienteServiceImpl implements ClienteService{
 			rev.setIdCliente(rb.getIdCliente());
 			//
 			Persona per = new Persona();
-			per.setIdPersona(rb.getIdPersona());						
-			rev.setCliPersona(per);
+			per.setIdPersona(rb.getIdPersona());
+			per.setDni(rb.getDni());
+			per.setNombre(rb.getNombre());
+			per.setApellidoPaterno(rb.getApellidoPaterno());
+			per.setApellidoMaterno(rb.getApellidoMaterno());
+			per.setTelefono(rb.getTelefono());
+			per.setCelular(rb.getCelular());
+			per.setSexo(rb.getSexo());
+			per.setDireccion(rb.getDireccion());			
+			per.setFechaNacimiento(rb.getFechaNacimiento());
+			
+			//
+			Usuario usu = new Usuario();
+			usu.setIdUsuario(rb.getIdUsuario());
+			usu.setEmail(rb.getEmail());
+			usu.setEstado(rb.getEstado());
+			usu.setPassword(rb.getPassword());
+			em.merge(usu);
+			
+			Distrito dis = new Distrito();
+			dis.setIdDistrito(rb.getIdDistrito());
+			per.setPerDistrito(dis);
+			per.setPerUsuario(usu);
+			em.merge(per);			
+			
+			
 			//
 			rev.setRazonSocial(rb.getRazonSocial());
 			rev.setRuc(rb.getRuc());
+			
+			rev.setCliPersona(per);
+			rev.getCliPersona().setPerUsuario(usu);
 			
 			em.merge(rev);
 			resultado = true;

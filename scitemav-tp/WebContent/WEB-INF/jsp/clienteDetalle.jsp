@@ -11,14 +11,13 @@
 </head>
 <script>
 	$(document).ready(function(e) {
+		listarDistritos();
 		var idcliente = $('#spnIdCliente').text();
 		inicioConsulta(idcliente);
-		var nfechaInicio = 'txtFechaInicio';
-		cargarFechaRevis(nfechaInicio);
-		var nfechaFin = 'txtFechaFin';
-		cargarFechaRevis(nfechaFin);
-		var nProximaRev = 'txtProximaRevision';
-		cargarFechaRevis(nProximaRev);
+		var nFechaNacimiento = 'txtFechaNacimiento';
+		cargarFechaNac(nFechaNacimiento);
+		
+		
 
 	});
 
@@ -52,8 +51,7 @@
 	}
 	
 	function IniciarInfoCliente(cliente){
-		//Vista de Informacion
-		
+		//Vista de Informacion		
 		
 		$('#spnNombre').text(cliente.nombre);
 		$('#spnApellidoPaterno').text(cliente.apellidoPaterno);
@@ -69,14 +67,22 @@
 		$('#spnEmail').text(cliente.email);
 		
 		//Vista de Edicion
-	    $('#txtVehiculo').val(cliente.idVehiculo);
-		$('#txtRevision').val(cliente.idRevision);
-		$('#txtCostoTotal').val(cliente.costoTotal);
-		$('#txtFechaInicio').val(cliente.fechaInicio);
-		$('#txtFechaFin').val(cliente.fechaFin);
-		$('#txtProximaRevision').val(cliente.fechaProxima);
-		$('#txtKilometrajeActual').val(cliente.kilometrajeActual);
-		$('#txtKilometrajeProximo').val(cliente.kilometrajeProximo);
+		$('#txtPassword').val(cliente.password);
+		$('#txtEstado').val(cliente.estado);
+		$('#txtCliente').val(cliente.idCliente);
+		$('#txtPersona').val(cliente.idPersona);
+		$('#txtNombre').val(cliente.nombre);
+		$('#txtApellidoPaterno').val(cliente.apellidoPaterno);
+		$('#txtApellidoMaterno').val(cliente.apellidoMaterno);
+		$('#txtDni').val(cliente.dni);
+		$('#txtSexo').val(cliente.sexo);
+		$('#txtFechaNacimiento').val(cliente.fechaNacimiento);
+		$('#comboDistrito').val(cliente.idDistrito);
+		
+		$('#txtDireccion').val(cliente.direccion);
+		$('#txtTelefono').val(cliente.telefono);
+		$('#txtCelular').val(cliente.celular);
+		$('#txtEmail').val(cliente.email);
 	
 	}	
 	
@@ -85,6 +91,24 @@
 		$('.edicionInformacion').show();
 		$('#btnVerInformacion').show();
 		$('#btnVerEdicion').hide();
+	}
+	
+	function listarDistritos(){
+		
+		$.ajax({
+	 		url: 'getDistritos',
+	 		type: 'post',
+	 		dataType: 'json',
+	 		data: '',
+	 		success: function(distritos){
+	 			$('#comboDistrito').empty();
+	 			$('#comboDistrito').append('<option value="">Seleccione su distrito</option>');
+	 			$.each(distritos, function(i, distrito){
+	 				$('#comboDistrito').append('<option value="'+distrito.idDistrito+'">'+distrito.nombre+'</option>');				
+				});
+	 		}
+	 	});	
+		
 	}
 </script>
 <body>
@@ -121,6 +145,7 @@
 						<div class="col-lg-6">
 							<h4>Datos del Cliente</h4>
 							<br>
+							
 							<p class="text-primary">Nombre:</p>
 							<span id="spnNombre"></span>
 							<p class="text-primary">Apellido Paterno:</p>
@@ -161,7 +186,7 @@
 					<div class="panel-body">
 						<!-- Nav tabs -->
 						<ul class="nav nav-tabs">						
-						<li class="active"><a href="#revision" data-toggle="tab">Revisión</a></li>
+						<li class="active"><a href="#revision" data-toggle="tab">Cliente</a></li>
 						<li class=""><a href="#fallas" data-toggle="tab">Vehículo</a></li>		
 						<li class=""><a href="#informacion" data-toggle="tab">informacion</a></li>					
 						</ul>
@@ -174,7 +199,7 @@
 							<div class="tab-pane fade active in" id="revision">
 								<div class="panel panel-default">
 									<div class="panel-heading">
-										Datos de la revisión
+										Datos del cliente
 										<div class="pull-right">
 											<div class="btn-group">
 												<span id="btnVerEdicion"
@@ -193,73 +218,112 @@
 										<div class="col-lg-12 vistaInformacion">
 											<br>
 											<div class="col-lg-4">
-											<p class="text-primary">Costo Total:</p>
-						                 	<span id="spnCostoTotal"></span>
-						                	<p class="text-primary">Fecha Inicio:</p>
-											<span id="spnFechaInicio"></span>
-											<p class="text-primary">Fecha Fin:</p>
-											<span id="spnFechaFin"></span>
-											<p class="text-primary">Fecha Próxima:</p>
-											<span id="spnFechaProxima"></span>
-											<p class="text-primary">Kilometraje Actual:</p>
-											<span id="spnKilometrajeActual"></span>
-											<p class="text-primary">Kilometraje Próximo:</p>
-											<span id="spnKilometrajeProximo"></span>												
-											</div>											
+							<h4>Datos del Cliente</h4>
+							<br>
+							<p class="text-primary">Nombre:</p>
+							<span id="spnNombre"></span>
+							<p class="text-primary">Apellido Paterno:</p>
+							<span id="spnApellidoPaterno"></span>
+							<p class="text-primary">Apellido Materno:</p>
+							<span id="spnApellidoMaterno"></span>
+							<p class="text-primary">DNI:</p>
+							<span id="spnDni"></span>
+							<p class="text-primary">Sexo:</p>
+							<span id="spnSexo"></span>
+							<p class="text-primary">Fecha Nacimiento:</p>
+							<span id="spnFechaNacimiento"></span>
+							<p class="text-primary">Nombre Distrito:</p>
+							<span id="spnNombreDistrito"></span>
+
+						</div>											
 										</div>
 										<div class="col-lg-12 edicionInformacion" style="display: none;">
 										<!-- BORRAR EN CASO DE ERROR -->
 										
 										<form role="form" id="frmEdicionCliente" commandName="clientebean" style="width: 90%; padding-left: 10%;">
 							<fieldset>						
-								<div class="col-lg-6">						
+								<div class="col-lg-6">	
+								
+													
+									<!-- PRIMERA COLUMNA -->
 									<div class="form-group" style="display:none">
-											<label>Revision</label> 
-											<input id="txtRevision" class="form-control"
-											 name="idRevision" placeholder="Revision"></input>
-											 <input id="txtVehiculo" class="form-control"
-											 name="idVehiculo" placeholder="Vehiculo"></input>
-										</div> 					
-									<div class="form-group" >
-											<label> Costo Total </label> <input id="txtCostoTotal"
-											class="form-control" name="costoTotal" placeholder="Costo total"></input>
+											<label>Cliente</label> 
+											<input id="txtCliente" class="form-control"
+											 name="idCliente" placeholder="Cliente"></input>
+											 <input id="txtPersona" class="form-control"
+											 name="idPersona" placeholder="Persona"></input>
+											 <input id="txtEstado" class="form-control"
+											 name="estado" placeholder="Estado"></input>
+											 <input id="txtPassword" class="form-control"
+											 name="password" placeholder="Password"></input>
+										</div>
+										<div class="form-group">
+											<label> DNI</label> <input id="txtDni"
+												class="form-control" name="dni" placeholder="DNI"></input>
+										</div>
+										<div class="form-group">
+											<label> Nombre</label> <input id="txtNombre"
+												class="form-control" name="nombre" placeholder="Nombre"></input>
+										</div>
+										<div class="form-group">
+											<label> Apellido Paterno</label> <input id="txtApellidoPaterno"
+												class="form-control" name="apellidoPaterno"
+												placeholder="Apellido Paterno"></input>
+										</div>
+										<div class="form-group">
+											<label> Apellido Materno</label> <input id="txtApellidoMaterno"
+												class="form-control" name="apellidoMaterno"
+												placeholder="Apellido Materno"></input>
+										</div>
+										<div class="form-group">
+											<label> Telefono</label> <input id="txtTelefono"
+												class="form-control" name="telefono" placeholder="Telefono"></input>
+										</div>
+										<div class="form-group">
+											<label> Celular</label> <input id="txtCelular"
+												class="form-control" name="celular" placeholder="Celular"></input>
+										</div>															
+										
+									<!-- FINAL PRIMERA COLUMNA -->								
+								</div>
+								<div class="col-lg-6">
+									<!-- SEGUNDA COLUMNA -->
+										<div class="form-group">
+											<label> Sexo</label>
+												<select class="form-control" id="txtSexo" name="sexo">
+												<option value="">Seleccione su Sexo</option>
+												<option value="M">Masculino</option>
+												<option value="F">Femenino</option>
+											</select>
+										</div>		
+										
+										<div class="form-group">
+											<label> Dirección</label> <input id="txtDireccion"
+												class="form-control" name="direccion"
+												placeholder="Dirección"></input>
+										</div>
+										<div class="form-group">
+											<label> Distrito</label> 										
+											<select class="form-control" id="comboDistrito" name="idDistrito">
+											</select>
 										</div>
 										<div class="form-group input-group">
-											<label> Fecha de Inicio</label> <input id="txtFechaInicio"
-												class="form-control" name="fechaInicio"
-												placeholder="Fecha de Inicio"></input>
+											<label> Fecha de Nacimiento</label> <input id="txtFechaNacimiento"
+												class="form-control" name="fechaNacimiento"
+												placeholder="Fecha de Nacimiento"></input>
 												<span class="input-group-btn">
-												    <button class="btn btn-default fa fa-table fa-fw" type="button" style="margin-top:25px; height: 34px;" onclick="$('#txtFechaInicio').datepicker('show')"></button>
-												</span>
-										</div>
-										
-									 	<div class="form-group input-group" >
-											<label> Fecha de Fin</label> <input id="txtFechaFin"
-												class="form-control" name="fechaFin"
-												placeholder="Fecha de Fin"></input>
-												<span class="input-group-btn">
-												    <button class="btn btn-default fa fa-table fa-fw" type="button" style="margin-top:25px; height: 34px;" onclick="$('#txtFechaFin').datepicker('show')"></button>
-												</span>
-										</div>
-										 
-										 
-										<div class="form-group input-group" >
-											<label> Próxima revisión</label> <input id="txtProximaRevision"
-												class="form-control" name="fechaProxima"
-												placeholder="Fecha próxima"></input>
-												<span class="input-group-btn">
-												    <button class="btn btn-default fa fa-table fa-fw" type="button" style="margin-top:25px; height: 34px;" onclick="$('#txtProximaRevision').datepicker('show')"></button>
+												    <button class="btn btn-default fa fa-table fa-fw" type="button" style="margin-top:25px; height: 34px;" onclick="$('#txtFechaNacimiento').datepicker('show')"></button>
 												</span>
 										</div>
 										<div class="form-group">
-											<label> Kilometraje Actual </label> <input id="txtKilometrajeActual"
-											class="form-control" name="kilometrajeActual" placeholder="Kilometraje actual"></input>
-										</div>
-										<div class="form-group">
-											<label> Kilometraje Próximo </label> <input id="txtKilometrajeProximo"
-											class="form-control" name="kilometrajeProximo" placeholder="Kilometraje próximo"></input>
-										</div>																							
-																																																																				
+											<label> Email</label>
+											<div class="form-group input-group">
+												<span class="input-group-addon">@</span> <input
+													id="txtEmail" class="form-control" name="email"
+													placeholder="Email"></input>
+											</div>
+										</div> 
+																																																											
 																																					
 									<!-- FINAL SEGUNDA COLUMNA -->
 			                            <span class="btn btn-success" onclick="EditInformacionCliente();">Guardar</span>
