@@ -33,6 +33,7 @@ function inicioConsulta(){
  		success: function(empleados){
  			$.each(empleados, function(i, empleado){
  				filas = filas +'<tr class="">'+
+ 				'<td class="center"><a id="empleado_"'+i+'" href="toEmpleadoDetalle-'+empleado.idEmpleado+'">EMP-'+empleado.idEmpleado+'</a></td>'+
 				'<td class="center">'+empleado.dni+'</td>'+
 				'<td class="center">'+empleado.nombre+'</td>'+
 				'<td class="center">'+empleado.apellidoPaterno+'</td>'+

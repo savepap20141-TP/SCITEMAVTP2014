@@ -160,6 +160,7 @@ public class EmpleadoServiceImpl implements EmpleadoService{
 			eBean.setIdDistrito(e.getEmpPersona().getPerDistrito().getIdDistrito());
 			eBean.setNombreDistrito(e.getEmpPersona().getPerDistrito().getNombre());
 			
+			eBean.setEstado(e.getEmpPersona().getPerUsuario().getEstado());
 			eBean.setEmail(e.getEmpPersona().getPerUsuario().getEmail());
 			eBean.setPassword(e.getEmpPersona().getPerUsuario().getPassword());
 			eBean.setActivoU(e.getEmpPersona().getPerUsuario().getActivo());
@@ -176,9 +177,12 @@ public class EmpleadoServiceImpl implements EmpleadoService{
 		boolean resultado = false;
 		Empleado emp = new Empleado();
 		try{
+			emp.setIdEmpleado(empb.getIdEmpleado());
 			
 			Usuario usu = new Usuario();			
 			usu.setEmail(empb.getEmail());
+			usu.setEstado(empb.getEstado());
+			usu.setPassword(empb.getPassword());
 			
 			em.merge(usu);
 			//
@@ -195,11 +199,12 @@ public class EmpleadoServiceImpl implements EmpleadoService{
 			per.setFechaNacimiento(empb.getFechaNacimiento());
 			per.setSexo(empb.getSexo());
 			per.setActivo(false);
+			
 		    //
 			Distrito dis = new Distrito();
 			dis.setIdDistrito(empb.getIdDistrito());
 			per.setPerDistrito(dis);
-			
+			emp.setEmpPersona(per);
 			em.merge(per);
 						
 			//
@@ -207,8 +212,8 @@ public class EmpleadoServiceImpl implements EmpleadoService{
 			car.setIdCargo(empb.getIdCargo());
 			//
 			Especialidad esp = new Especialidad();
-			emp.setEmpPersona(per);
 			esp.setIdEspecialidad(empb.getIdEspecialidad());
+			
 			emp.setEmpCargo(car);
 			emp.setEmpEspecialidad(esp);
 			emp.setAdministrador(false);

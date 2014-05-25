@@ -6,13 +6,19 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Revisión Detalle</title>
+<title>Empleado Detalle</title>
 <jsp:include page="componentes/head.jsp" />
 </head>
 <script>
 	$(document).ready(function(e) {		
+		listarCargos();
+		listarEspecialidades();
+		listarDistritos();
 		var idempleado = $('#spnIdEmpleado').text();
 		inicioConsulta(idempleado);
+		var nFechaNacimiento = 'txtFechaNacimiento';
+		cargarFechaNac(nFechaNacimiento);
+		
 		
 		
 	});
@@ -39,7 +45,7 @@
 					dataType : 'json',
 					data : '',
 					success : function(empleado) {
-						IniciarInfoRevision(empleado);
+						IniciarInfoEmpleado(empleado);
 						removeNulls();
 					}
 				});
@@ -65,14 +71,23 @@
 		$('#spnNombreEspecialidad').text(empleado.nombreEspecialidad);
 		
 		//Vista de Edicion
-	    $('#txtVehiculo').val(empleado.idVehiculo);
-		$('#txtRevision').val(empleado.idRevision);
-		$('#txtCostoTotal').val(empleado.costoTotal);
-		$('#txtFechaInicio').val(revision.fechaInicio);
-		$('#txtFechaFin').val(revision.fechaFin);
-		$('#txtProximaRevision').val(revision.fechaProxima);
-		$('#txtKilometrajeActual').val(revision.kilometrajeActual);
-		$('#txtKilometrajeProximo').val(revision.kilometrajeProximo);
+		$('#txtPersona').val(empleado.idPersona);
+		$('#txtPassword').val(empleado.password);
+		$('#txtEstado').val(empleado.estado);
+		$('#txtEmpleado').val(empleado.idEmpleado);
+	    $('#txtDni').val(empleado.dni);
+		$('#txtNombre').val(empleado.nombre);
+		$('#txtApellidoPaterno').val(empleado.apellidoPaterno);
+		$('#txtApellidoMaterno').val(empleado.apellidoMaterno);
+		$('#txtTelefono').val(empleado.telefono);
+		$('#txtCelular').val(empleado.celular);
+		$('#txtSexo').val(empleado.sexo);
+		$('#comboDistrito').val(empleado.idDistrito);
+		$('#txtDireccion').val(empleado.direccion);
+		$('#txtFechaNacimiento').val(empleado.fechaNacimiento);		
+		$('#comboCargo').val(empleado.idCargo);
+		$('#comboEspecialidad').val(empleado.idEspecialidad);
+		$('#txtEmail').val(empleado.email);
 
 	}	
 	
@@ -81,6 +96,58 @@
 		$('.edicionInformacion').show();
 		$('#btnVerInformacion').show();
 		$('#btnVerEdicion').hide();
+	}
+	
+	function listarEspecialidades(){	
+		$.ajax({
+	 		url: 'getEspecialidades',
+	 		type: 'post',
+	 		dataType: 'json',
+	 		data: '',
+	 		success: function(especialidades){
+	 			$('#comboEspecialidad').empty();
+	 			$('#comboEspecialidad').append('<option value="">Seleccione su Especialidad</option>');
+	 			$.each(especialidades, function(i, espe){
+	 				$('#comboEspecialidad').append('<option value="'+espe.idEspecialidad+'">'+espe.descripcion+'</option>');				
+				});
+	 		}
+	 	});	
+		
+	}
+
+	function listarCargos(){	
+		$.ajax({
+	 		url: 'getCargos',
+	 		type: 'post',
+	 		dataType: 'json',
+	 		data: '',
+	 		success: function(cargos){
+	 			$('#comboCargo').empty();
+	 			$('#comboCargo').append('<option value="">Seleccione su Cargo</option>');
+	 			$.each(cargos, function(i, cargo){
+	 				$('#comboCargo').append('<option value="'+cargo.idCargo+'">'+cargo.descripcion+'</option>');				
+				});
+	 		}
+	 	});	
+		
+	}
+	
+function listarDistritos(){
+		
+		$.ajax({
+	 		url: 'getDistritos',
+	 		type: 'post',
+	 		dataType: 'json',
+	 		data: '',
+	 		success: function(distritos){
+	 			$('#comboDistrito').empty();
+	 			$('#comboDistrito').append('<option value="">Seleccione su distrito</option>');
+	 			$.each(distritos, function(i, distrito){
+	 				$('#comboDistrito').append('<option value="'+distrito.idDistrito+'">'+distrito.nombre+'</option>');				
+				});
+	 		}
+	 	});	
+		
 	}
 </script>
 
@@ -136,7 +203,8 @@
 
 						</div>
 						<div class="col-lg-6">
-							
+						<h4></h4>
+							<br>
 							<p class="text-primary">Distrito:</p>
 							<span id="spnNombreDistrito"></span>
 							<p class="text-primary">Dirección:</p>
@@ -161,7 +229,7 @@
 					<div class="panel-body">
 						<!-- Nav tabs -->
 						<ul class="nav nav-tabs">
-							<li class="active"><a href="#revision" data-toggle="tab">Revisión</a></li>
+							<li class="active"><a href="#revision" data-toggle="tab">Empleado</a></li>
 							<li class=""><a href="#fallas" data-toggle="tab">Vehículo</a></li>
 							<li class=""><a href="#repuestos" data-toggle="tab">Repuestos</a>
 							</li>
@@ -231,17 +299,29 @@
 							<span id="spnNombreEspecialidad"></span>
 
 						</div>
-					</div>								
+											
 										</div>
 										<div class="col-lg-12 edicionInformacion" style="display: none;">
 										<!-- BORRAR EN CASO DE ERROR -->
 										
-										<form role="form" id="frmEdicionEmpleado" commandName="bean" style="width: 90%; padding-left: 10%;">
+										<form role="form" id="frmEdicionEmpleado" commandName="empleadobean" style="width: 90%; padding-left: 10%;">
 							<fieldset>						
-								<div class="col-lg-6">	
-								
-								    <div class="form-group">
-											<label> DNI</label> <input id="txtDNI"
+								<div class="col-lg-6">						
+									<!-- PRIMERA COLUMNA -->
+									<div class="form-group" style="display:none">
+											<label>Empleado</label> 
+											<input id="txtEmpleado" class="form-control"
+											 name="idEmpleado" placeholder="Empleado"></input>
+											 <input id="txtPersona" class="form-control"
+											 name="idPersona" placeholder="Persona"></input>
+											 <input id="txtEstado" class="form-control"
+											 name="estado" placeholder="Estado"></input>
+											 <input id="txtPassword" class="form-control"
+											 name="password" placeholder="Password"></input>
+											 
+										</div>
+										<div class="form-group">
+											<label> DNI</label> <input id="txtDni"
 												class="form-control" name="dni" placeholder="DNI"></input>
 										</div>
 										<div class="form-group">
@@ -249,12 +329,12 @@
 												class="form-control" name="nombre" placeholder="Nombre"></input>
 										</div>
 										<div class="form-group">
-											<label> Apellido Paterno</label> <input id="txtApellPaterno"
+											<label> Apellido Paterno</label> <input id="txtApellidoPaterno"
 												class="form-control" name="apellidoPaterno"
 												placeholder="Apellido Paterno"></input>
 										</div>
 										<div class="form-group">
-											<label> Apellido Materno</label> <input id="txtApellMaterno"
+											<label> Apellido Materno</label> <input id="txtApellidoMaterno"
 												class="form-control" name="apellidoMaterno"
 												placeholder="Apellido Materno"></input>
 										</div>
@@ -265,9 +345,11 @@
 										<div class="form-group">
 											<label> Celular</label> <input id="txtCelular"
 												class="form-control" name="celular" placeholder="Celular"></input>
-										</div>
+										</div>															
 										
-										<div class="col-lg-6">
+									<!-- FINAL PRIMERA COLUMNA -->								
+								</div>
+								<div class="col-lg-6">
 									<!-- SEGUNDA COLUMNA -->
 										<div class="form-group">
 											<label> Sexo</label>
@@ -318,12 +400,9 @@
 											</div>
 										</div> 
 																																					
-									<!-- FINAL SEGUNDA COLUMNA -->
-								</div>																									
-																																																																				
-																																					
-									<!-- FINAL SEGUNDA COLUMNA -->
-									<span class="btn btn-success" onclick="EditInformacionRevision();">Guardar</span>
+									<!-- FINAL SEGUNDA COLUMNA -->																																																				
+																	
+									<span class="btn btn-success" onclick="EditInformacionEmpleado();">Guardar</span>
 										<span class="btn btn-danger" onclick="$('.vistaInformacion').show();$('.edicionInformacion').hide();$('#btnVerInformacion').hide();$('#btnVerEdicion').show();">
 									    Cancelar</span>
 								</div>

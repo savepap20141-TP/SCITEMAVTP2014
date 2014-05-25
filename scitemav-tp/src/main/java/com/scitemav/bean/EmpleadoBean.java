@@ -29,6 +29,7 @@ public class EmpleadoBean {
 	private String email;
 	private String password;
 	private Boolean activoU;
+	private String estado;
 	public Integer getIdEmpleado() {
 		return idEmpleado;
 	}
@@ -160,5 +161,11 @@ public class EmpleadoBean {
 	}
 	public void setActivoU(Boolean activoU) {
 		this.activoU = activoU;
+	}
+	public String getEstado() {
+		return estado;
+	}
+	public void setEstado(String estado) {
+		this.estado = estado;
 	}
 }
