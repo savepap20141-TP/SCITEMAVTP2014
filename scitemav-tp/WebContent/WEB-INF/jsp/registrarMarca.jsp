@@ -69,7 +69,6 @@ function mostrarEditar(ind){
 	$('#txtNombre').val($('#filaNombre_'+ind).text());
 }
 function registrarMarca(){
-	$('#txturlImagen').val('registroMarca/');
 	var formElement = document.getElementById("frmRegistroMarca");
 	var formData = new FormData(formElement);		
 	$.ajax({
@@ -165,11 +164,6 @@ function registrarMarca(){
 							                            <label>Imagen de ejemplo: </label>
 							                            <input type="file" name="file" id="fileimagen">
 							                        </div>
-													
-													<div class="form-group" style="display:none">
-														<label> Nombre Marca</label> <input id="txturlImagen"
-														class="form-control" name="urlImagen"></input>
-													</div>
 															
 												</fieldset>
 											</form>
