@@ -32,17 +32,22 @@ function inicioConsulta(){
  		data: '',
  		success: function(marca){
  			$.each(marca, function(i, mar){
+ 				var imagen = '';
+ 				if(mar.urlImagen!=null || mar.urlImagen!=''){
+ 					imagen = '<img width="150" height="150" src="'+mar.urlImagen+'"></img>';
+ 				}
  				filas = filas +'<tr class="">'+
 				'<td class="center">'+mar.idMarca+'</td>'+
 				'<td class="center">'+mar.nombre+'</td>'+
-			
+				'<td class="center">'+imagen+'</td>'+
 				'</tr>';
 			});		        
  		},
  		complete: function() {
  			columnas = columnas + 
  			'<th class="center">Id Marca</th>'+
- 			'<th class="center">Nombre</th>';
+ 			'<th class="center">Nombre</th>'+
+ 			'<th class="center">Logo</th>';
  			realizarTabla(columnas,filas);
  			removeNulls();
   		}

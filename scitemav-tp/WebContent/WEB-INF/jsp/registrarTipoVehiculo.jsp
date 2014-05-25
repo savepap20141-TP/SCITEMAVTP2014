@@ -170,7 +170,7 @@ function registrarTipoVehiculo(){
                                         </div>
                                         <div class="modal-footer">
                                         	<button type="button" class="btn btn-primary" data-dismiss="modal" onclick="registrarTipoVehiculo();">Guardar</button>
-                                            <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                                            <button type="button" class="btn btn-default" data-dismiss="modal" onclick="$('#txtIdTV').val('');$('#txtNombreTV').val('');$('#txtIdTV').val('');">Cancelar</button>
                                         </div>
                                     </div>
                                     <!-- /.modal-content -->
