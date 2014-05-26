@@ -11,30 +11,36 @@
 </head>
 <script>
 	$(document).ready(function(e) {
-		listarDistritos();
-		var idcliente = $('#spnIdCliente').text();
-		inicioConsulta(idcliente);
-		var nFechaNacimiento = 'txtFechaNacimiento';
-		cargarFechaNac(nFechaNacimiento);
+		inicioConsulta();
 		
+		$('#frmEdicionCliente').validate({
+		submitHandler: function(form){
+			$.ajax({
+		   		url: 'ajaxEditInformacionCliente',
+		   		type: 'post',
+		   		dataType: 'json',
+		   		data: $('#frmEdicionCliente').serialize(),
+		   		success: function(cliente){
+		   			IniciarInfoCliente(cliente);
+		 			$('.vistaInformacion').show();
+		 			$('.edicionInformacion').hide();
+		 			$('#btnVerInformacion').hide();
+		 			$('#btnVerEdicion').show();
+		   		}
+		   	});
+			
+		}
+		});
 		
-
+			listarDistritos();
+			var idcliente = $('#spnIdCliente').text();
+			inicioConsulta(idcliente);
+			var nFechaNacimiento = 'txtFechaNacimiento';
+			cargarFechaNac(nFechaNacimiento);
 	});
 
 	function EditInformacionCliente(){
-		$.ajax({
-	   		url: 'ajaxEditInformacionCliente',
-	   		type: 'post',
-	   		dataType: 'json',
-	   		data: $('#frmEdicionCliente').serialize(),
-	   		success: function(cliente){
-	   			IniciarInfoCliente(cliente);
-	 			$('.vistaInformacion').show();
-	 			$('.edicionInformacion').hide();
-	 			$('#btnVerInformacion').hide();
-	 			$('#btnVerEdicion').show();
-	   		}
-	   	});
+		$('#frmEdicionCliente').submit();
 	}
 	
 	function inicioConsulta(idcliente) {
@@ -110,6 +116,8 @@
 	 	});	
 		
 	}
+	
+
 </script>
 <body>
 <div id="wrapper">
@@ -186,9 +194,12 @@
 					<div class="panel-body">
 						<!-- Nav tabs -->
 						<ul class="nav nav-tabs">						
-						<li class="active"><a href="#revision" data-toggle="tab">Cliente</a></li>
-						<li class=""><a href="#fallas" data-toggle="tab">Vehículo</a></li>		
-						<li class=""><a href="#informacion" data-toggle="tab">informacion</a></li>					
+						<li class="active"><a href="#cliente" data-toggle="tab">cliente</a>
+						</li>
+						<li class=""><a href="#vehiculo" data-toggle="tab">vehiculo</a>
+						</li>		
+						<li class=""><a href="#informacion" data-toggle="tab">informacion</a>
+						</li>					
 						</ul>
 
 						<!-- Tab panes -->
@@ -196,7 +207,7 @@
 
 						<div class="tab-content">
 
-							<div class="tab-pane fade active in" id="revision">
+							<div class="tab-pane fade active in" id="cliente">
 								<div class="panel panel-default">
 									<div class="panel-heading">
 										Datos del cliente
@@ -217,7 +228,8 @@
 
 										<div class="col-lg-12 vistaInformacion">
 											<br>
-											<div class="col-lg-4">
+											<div class="col-lg-6">
+											
 							<h4>Datos del Cliente</h4>
 							<br>
 							<p class="text-primary">Nombre:</p>
@@ -234,9 +246,22 @@
 							<span id="spnFechaNacimiento"></span>
 							<p class="text-primary">Nombre Distrito:</p>
 							<span id="spnNombreDistrito"></span>
+						</div>
+							<div class="col-lg-6">
+								<h4>Datos de referencia Cliente</h4>
+								<br>
+								<p class="text-primary">Direccion:</p>
+								<span id="spnDireccion"></span>
+								<p class="text-primary">Telefono:</p>
+								<span id="spnTelefono"></span>
+								<p class="text-primary">Celular:</p>
+								<span id="spnCelular"></span>
+								<p class="text-primary">Email:</p>
+								<span id="spnEmail"></span>
+							</div>
+						</div>
 
-						</div>											
-										</div>
+								
 										<div class="col-lg-12 edicionInformacion" style="display: none;">
 										<!-- BORRAR EN CASO DE ERROR -->
 										
@@ -324,12 +349,12 @@
 											</div>
 										</div> 
 																																																											
-																																					
+									</div> 																												
 									<!-- FINAL SEGUNDA COLUMNA -->
 			                            <span class="btn btn-success" onclick="EditInformacionCliente();">Guardar</span>
 										<span class="btn btn-danger" onclick="$('.vistaInformacion').show();$('.edicionInformacion').hide();$('#btnVerInformacion').hide();$('#btnVerEdicion').show();">
 									    Cancelar</span>
-									    </div>
+									    
 							</fieldset>							
 							</form>
 										
@@ -340,7 +365,7 @@
 								</div>
 
 							</div>
-							<div class="tab-pane fade" id="fallas">
+							<div class="tab-pane fade" id="vehiculo">
 									<p></p>
 									<p>Dato 1:</p>
 									<p>Dato 2:</p>
