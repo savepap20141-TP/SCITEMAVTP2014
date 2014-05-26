@@ -9,10 +9,18 @@
 <title>Cliente Detalle</title>
 <jsp:include page="componentes/head.jsp" />
 </head>
+<style>
+.tableGri {
+/*     line-height: 30px; */
+    background-color: rgb(235, 240, 242);
+    font-weight: bold;
+    font-size: 12px;
+/*     text-align: left; */
+    color: rgb(120, 138, 150);
+}
+</style>
 <script>
 	$(document).ready(function(e) {
-		inicioConsulta();
-		
 		$('#frmEdicionCliente').validate({
 		submitHandler: function(form){
 			$.ajax({
@@ -37,6 +45,8 @@
 			inicioConsulta(idcliente);
 			var nFechaNacimiento = 'txtFechaNacimiento';
 			cargarFechaNac(nFechaNacimiento);
+			
+			inicioConsultaVehiculos(idcliente);
 	});
 
 	function EditInformacionCliente(){
@@ -63,7 +73,12 @@
 		$('#spnApellidoPaterno').text(cliente.apellidoPaterno);
 		$('#spnApellidoMaterno').text(cliente.apellidoMaterno);
 		$('#spnDni').text(cliente.dni);
-		$('#spnSexo').text(cliente.sexo);
+		if(cliente.sexo=='M'){
+			$('#spnSexo').text("MASCULINO");
+		}else{
+			$('#spnSexo').text("FEMENINO");
+		}
+		
 		$('#spnFechaNacimiento').text(cliente.fechaNacimiento);
 		$('#spnNombreDistrito').text(cliente.nombreDistrito);
 		
@@ -71,6 +86,24 @@
 		$('#spnTelefono').text(cliente.telefono);
 		$('#spnCelular').text(cliente.celular);
 		$('#spnEmail').text(cliente.email);
+		
+		//Informacion en el Primer Tab
+		$('#spnNombreT').text(cliente.nombre);
+		$('#spnApellidoPaternoT').text(cliente.apellidoPaterno);
+		$('#spnApellidoMaternoT').text(cliente.apellidoMaterno);
+		$('#spnDniT').text(cliente.dni);
+		if(cliente.sexo=='M'){
+			$('#spnSexoT').text("MASCULINO");
+		}else{
+			$('#spnSexoT').text("FEMENINO");
+		}
+		$('#spnFechaNacimientoT').text(cliente.fechaNacimiento);
+		$('#spnNombreDistritoT').text(cliente.nombreDistrito);
+		
+		$('#spnDireccionT').text(cliente.direccion);
+		$('#spnTelefonoT').text(cliente.telefono);
+		$('#spnCelularT').text(cliente.celular);
+		$('#spnEmailT').text(cliente.email);
 		
 		//Vista de Edicion
 		$('#txtPassword').val(cliente.password);
@@ -117,6 +150,47 @@
 		
 	}
 	
+	function inicioConsultaVehiculos(idCliente){
+		var filas = '';
+		var columnas = '';	
+	    $.ajax({
+	 		url: 'getVehiculosCliente-'+idCliente,
+	 		type: 'post',
+	 		dataType: 'json',
+	 		data: '',
+	 		success: function(vehiculos){
+	 			$.each(vehiculos, function(i, vehiculo){
+	 				filas = filas +'<tr class="">'+
+					'<td class="center"><a id="vehiculo_'+i+'" href="toVehiculoDetalle-'+vehiculo.idVehiculo+'">VEH-'+vehiculo.idVehiculo+'</a></td>'+
+					'<td class="center">'+vehiculo.nombreMarca+'</td>'+
+					'<td class="center">'+vehiculo.nombreTipoVehiculo+'</td>'+
+					'<td class="center">'+vehiculo.nombreModelo+'</td>'+
+					'<td class="center">'+vehiculo.fabricacion+'</td>'+
+					'<td class="center">'+vehiculo.color+'</td>'+
+					'<td class="center">'+vehiculo.numeroMotor+'</td>'+
+					'<td class="center">'+vehiculo.numeroPlaca+'</td>'+
+					'<td class="center">'+vehiculo.numeroEjes+'</td>'+
+					'<td class="center">'+vehiculo.numeroRuedas+'</td>'+
+					'</tr>';
+				});		        
+	 		},
+	 		complete: function() {
+	 			columnas = columnas + 
+	 				'<th class="center">Id</th>'+
+					'<th class="center">Marca</th>'+
+					'<th class="center">Tipo Vehiculo</th>'+
+					'<th class="center">Modelo</th>'+
+					'<th class="center">Fabricación</th>'+
+					'<th class="center">Color</th>'+
+					'<th class="center">Número Motor</th>'+
+					'<th class="center">Número Placa</th>'+
+					'<th class="center">Número Ejes</th>'+
+					'<th class="center">Número Ruedas</th>';
+	 			realizarTabla(columnas,filas);
+	 			removeNulls();
+	  		}
+	 	});
+	}
 
 </script>
 <body>
@@ -230,35 +304,35 @@
 											<br>
 											<div class="col-lg-6">
 											
-							<h4>Datos del Cliente</h4>
-							<br>
-							<p class="text-primary">Nombre:</p>
-							<span id="spnNombre"></span>
-							<p class="text-primary">Apellido Paterno:</p>
-							<span id="spnApellidoPaterno"></span>
-							<p class="text-primary">Apellido Materno:</p>
-							<span id="spnApellidoMaterno"></span>
-							<p class="text-primary">DNI:</p>
-							<span id="spnDni"></span>
-							<p class="text-primary">Sexo:</p>
-							<span id="spnSexo"></span>
-							<p class="text-primary">Fecha Nacimiento:</p>
-							<span id="spnFechaNacimiento"></span>
-							<p class="text-primary">Nombre Distrito:</p>
-							<span id="spnNombreDistrito"></span>
-						</div>
-							<div class="col-lg-6">
-								<h4>Datos de referencia Cliente</h4>
-								<br>
-								<p class="text-primary">Direccion:</p>
-								<span id="spnDireccion"></span>
-								<p class="text-primary">Telefono:</p>
-								<span id="spnTelefono"></span>
-								<p class="text-primary">Celular:</p>
-								<span id="spnCelular"></span>
-								<p class="text-primary">Email:</p>
-								<span id="spnEmail"></span>
-							</div>
+											<h4>Datos del Cliente</h4>
+											<br>
+											<p class="text-primary">Nombre:</p>
+											<span id="spnNombreT"></span>
+											<p class="text-primary">Apellido Paterno:</p>
+											<span id="spnApellidoPaternoT"></span>
+											<p class="text-primary">Apellido Materno:</p>
+											<span id="spnApellidoMaternoT"></span>
+											<p class="text-primary">DNI:</p>
+											<span id="spnDniT"></span>
+											<p class="text-primary">Sexo:</p>
+											<span id="spnSexoT"></span>
+											<p class="text-primary">Fecha Nacimiento:</p>
+											<span id="spnFechaNacimientoT"></span>
+											<p class="text-primary">Nombre Distrito:</p>
+											<span id="spnNombreDistritoT"></span>
+										</div>
+										<div class="col-lg-6">
+											<h4>Datos de referencia Cliente</h4>
+											<br>
+											<p class="text-primary">Direccion:</p>
+											<span id="spnDireccionT"></span>
+											<p class="text-primary">Telefono:</p>
+											<span id="spnTelefonoT"></span>
+											<p class="text-primary">Celular:</p>
+											<span id="spnCelularT"></span>
+											<p class="text-primary">Email:</p>
+											<span id="spnEmailT"></span>
+										</div>
 						</div>
 
 								
@@ -366,15 +440,9 @@
 
 							</div>
 							<div class="tab-pane fade" id="vehiculo">
-									<p></p>
-									<p>Dato 1:</p>
-									<p>Dato 2:</p>
-									<p>Dato 3:</p>
-									<p>Dato 4:</p>
-									<p>Continuará ...</p>
-									<p>...:</p>
-								</div>
-								<div class="tab-pane fade" id="informacion">
+									<div id="spnResultList" class="resultBox section summaryPane"></div>
+							</div>
+							<div class="tab-pane fade" id="informacion">
 									<h4>Informacion</h4>
 									<p>Lorem ipsum dolor sit amet, consectetur adipisicing
 										elit, sed do eiusmod tempor incididunt ut labore et dolore
@@ -384,7 +452,7 @@
 										velit esse cillum dolore eu fugiat nulla pariatur. Excepteur
 										sint occaecat cupidatat non proident, sunt in culpa qui
 										officia deserunt mollit anim id est laborum.</p>
-								</div>
+							</div>
 						</div>
 						<!-- /.panel-body -->
 					</div>

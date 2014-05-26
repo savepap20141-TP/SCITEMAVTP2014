@@ -12,5 +12,6 @@ public interface VehiculoService {
 	public List<VehiculoBean> listarVehiculos();
 	public VehiculoBean obtenerInfo(int idVehiculo);
 	boolean editInformacionVehiculo(VehiculoBean vb);
+	public List<VehiculoBean> listarVehiculosCliente(Integer idCliente);
 
 }

@@ -84,4 +84,10 @@ public class VehiculoController {
 		return vehiculoB;
 	}
 	
+	@RequestMapping(value = "getVehiculosCliente-{idcliente}", method = RequestMethod.POST)
+	@ResponseBody
+	public List<VehiculoBean> getVehiculos(@PathVariable("idcliente") Integer idCliente){		
+		return vehiculoService.listarVehiculosCliente(idCliente);
+	}
+	
 }

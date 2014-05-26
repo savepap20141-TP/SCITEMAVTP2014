@@ -210,4 +210,50 @@ public class VehiculoServiceImpl implements VehiculoService {
 		}
 		return resultado;
 	}
+	
+	@SuppressWarnings("unchecked")
+	@Transactional
+	public List<VehiculoBean> listarVehiculosCliente(Integer idCliente) {
+		List<Vehiculo> listaVehiculo = new ArrayList<Vehiculo>();
+		List<VehiculoBean> listaVehiculoBean = new ArrayList<VehiculoBean>();		
+		try {
+			Query q = em.createQuery("SELECT v FROM Vehiculo v JOIN v.vehCliente c WHERE c.idCliente=:idCliente");
+			q.setParameter("idCliente", idCliente);
+			listaVehiculo = q.getResultList();
+			for(int i=0; i < listaVehiculo.size(); i++){
+				Vehiculo v = listaVehiculo.get(i);
+				VehiculoBean vb = new VehiculoBean();
+				vb.setIdVehiculo(v.getIdVehiculo());
+				vb.setAltura(v.getAltura());
+				vb.setAncho(v.getAncho());
+				vb.setCargaUtil(v.getCargaUtil());
+				vb.setColor(v.getColor());
+				vb.setFabricacion(v.getFabricacion());
+				vb.setLongitud(v.getLongitud());
+				vb.setNumeroAsientos(v.getNumeroAsientos());
+				vb.setNumeroCilindros(v.getNumeroCilindros());
+				vb.setNumeroEjes(v.getNumeroEjes());
+				vb.setNumeroMotor(v.getNumeroMotor());
+				vb.setNumeroPasajeros(v.getNumeroPasajeros());
+				vb.setNumeroPlaca(v.getNumeroPlaca());
+				vb.setNumeroRuedas(v.getNumeroRuedas());
+				vb.setNumeroSerie(v.getNumeroSerie());
+				vb.setPesoBruto(v.getPesoBruto());
+				vb.setPesoSeco(v.getPesoSeco());
+				vb.setIdCliente(v.getVehCliente().getIdCliente());
+				vb.setNombreCliente(v.getVehCliente().getCliPersona().getNombre()+" "+v.getVehCliente().getCliPersona().getApellidoPaterno()+" "+v.getVehCliente().getCliPersona().getApellidoMaterno());
+				vb.setIdMarca(v.getVehMarca().getIdMarca());
+				vb.setNombreMarca(v.getVehMarca().getNombre());
+				vb.setIdModelo(v.getVehModelo().getIdModelo());
+				vb.setNombreModelo(v.getVehModelo().getNombre());
+				vb.setIdTipoVehiculo(v.getVehTipoVehiculo().getIdTipoVehiculo());		
+				vb.setNombreTipoVehiculo(v.getVehTipoVehiculo().getNombre());
+				listaVehiculoBean.add(vb);
+			}
+		} catch (IllegalArgumentException e) {
+			listaVehiculoBean = null;			
+		}
+
+		return listaVehiculoBean;
+	}
 }
