@@ -62,13 +62,38 @@
 		$('#spnTelefono').text(empleado.telefono);
 		$('#spnCelular').text(empleado.celular);
 		
-		$('#spnSexo').text(empleado.sexo);
+		if(empleado.sexo=='M'){
+			$('#spnSexo').text("MASCULINO");
+		}else{
+			$('#spnSexo').text("FEMENINO");
+		}
 		$('#spnEmail').text(empleado.email);
 		$('#spnNombreDistrito').text(empleado.nombreDistrito);
 		$('#spnDireccion').text(empleado.direccion);
 		$('#spnFechaNacimiento').text(empleado.fechaNacimiento);
 		$('#spnCargo').text(empleado.nombreCargo);
 		$('#spnNombreEspecialidad').text(empleado.nombreEspecialidad);
+		
+		//informacion del primer tab
+		$('#spnNombreT').text(empleado.nombre);
+		$('#spnApellidoPaternoT').text(empleado.apellidoPaterno);
+		$('#spnApellidoMaternoT').text(empleado.apellidoMaterno);
+		$('#spnDniT').text(empleado.dni);
+		$('#spnTelefonoT').text(empleado.telefono);
+		$('#spnCelularT').text(empleado.celular);
+		
+		if(empleado.sexo=='M'){
+			$('#spnSexoT').text("MASCULINO");
+		}else{
+			$('#spnSexoT').text("FEMENINO");
+		}
+		$('#spnEmailT').text(empleado.email);
+		$('#spnNombreDistritoT').text(empleado.nombreDistrito);
+		$('#spnDireccionT').text(empleado.direccion);
+		$('#spnFechaNacimientoT').text(empleado.fechaNacimiento);
+		$('#spnCargoT').text(empleado.nombreCargo);
+		$('#spnNombreEspecialidadT').text(empleado.nombreEspecialidad);
+		
 		
 		//Vista de Edicion
 		$('#txtPersona').val(empleado.idPersona);
@@ -203,7 +228,7 @@ function listarDistritos(){
 
 						</div>
 						<div class="col-lg-6">
-						<h4></h4>
+							<h4>Datos de referencia Empleado</h4>
 							<br>
 							<p class="text-primary">Distrito:</p>
 							<span id="spnNombreDistrito"></span>
@@ -264,41 +289,42 @@ function listarDistritos(){
 									<div class="panel-body">
 
 										<div class="col-lg-12 vistaInformacion">
-																	<div class="col-lg-6">
-							<h4>Datos del empleado</h4>
-							<br>
-							<p class="text-primary">Nombre:</p>
-							<span id="spnNombre"></span>
-							<p class="text-primary">Apellido Paterno:</p>
-							<span id="spnApellidoPaterno"></span>
-							<p class="text-primary">Apellido Materno:</p>
-							<span id="spnApellidoMaterno"></span>
-							<p class="text-primary">DNI:</p>
-							<span id="spnDni"></span>
-							<p class="text-primary">Teléfono</p>
-							<span id="spnTelefono"></span>
-							<p class="text-primary">Celular:</p>
-							<span id="spnCelular"></span>
-							<p class="text-primary">Sexo:</p>
-							<span id="spnSexo"></span>
-							<p class="text-primary">Email:</p>
-							<span id="spnEmail"></span>
-
-						</div>
-						<div class="col-lg-6">
-							
-							<p class="text-primary">Distrito:</p>
-							<span id="spnNombreDistrito"></span>
-							<p class="text-primary">Dirección:</p>
-							<span id="spnDireccion"></span>
-							<p class="text-primary">Fecha de nacimiento:</p>
-							<span id="spnFechaNacimiento"></span>
-							<p class="text-primary">Cargo:</p>
-							<span id="spnCargo"></span>
-							<p class="text-primary">Especialidad:</p>
-							<span id="spnNombreEspecialidad"></span>
-
-						</div>
+											<div class="col-lg-6">
+												<h4>Datos del empleado</h4>
+												<br>
+												<p class="text-primary">Nombre:</p>
+												<span id="spnNombreT"></span>
+												<p class="text-primary">Apellido Paterno:</p>
+												<span id="spnApellidoPaternoT"></span>
+												<p class="text-primary">Apellido Materno:</p>
+												<span id="spnApellidoMaternoT"></span>
+												<p class="text-primary">DNI:</p>
+												<span id="spnDniT"></span>
+												<p class="text-primary">Teléfono</p>
+												<span id="spnTelefonoT"></span>
+												<p class="text-primary">Celular:</p>
+												<span id="spnCelularT"></span>
+												<p class="text-primary">Sexo:</p>
+												<span id="spnSexoT"></span>
+												<p class="text-primary">Email:</p>
+												<span id="spnEmailT"></span>
+					
+											</div>
+											<div class="col-lg-6">
+												<h4>Datos de referencia Empleado</h4>
+												<br>
+												<p class="text-primary">Distrito:</p>
+												<span id="spnNombreDistritoT"></span>
+												<p class="text-primary">Dirección:</p>
+												<span id="spnDireccionT"></span>
+												<p class="text-primary">Fecha de nacimiento:</p>
+												<span id="spnFechaNacimientoT"></span>
+												<p class="text-primary">Cargo:</p>
+												<span id="spnCargoT"></span>
+												<p class="text-primary">Especialidad:</p>
+												<span id="spnNombreEspecialidadT"></span>
+					
+											</div>
 											
 										</div>
 										<div class="col-lg-12 edicionInformacion" style="display: none;">
