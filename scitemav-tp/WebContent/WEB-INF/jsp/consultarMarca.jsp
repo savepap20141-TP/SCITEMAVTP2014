@@ -33,7 +33,7 @@ function inicioConsulta(){
  		success: function(marca){
  			$.each(marca, function(i, mar){
  				var imagen = '';
- 				if(mar.urlImagen!=null || mar.urlImagen!=''){
+ 				if(mar.urlImagen!=null){
  					imagen = '<img width="150" height="150" src="'+mar.urlImagen+'"></img>';
  				}
  				filas = filas +'<tr class="">'+
