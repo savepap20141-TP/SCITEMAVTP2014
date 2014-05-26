@@ -68,10 +68,13 @@
                                 <a href="toRegistroMarca">Registrar Marca</a>
                             </li>
                             <li>
-                                <a href="toRegistroModelo">Registrar Modelos</a>
+                                <a href="toConsultarMarca">Consultar Marcas</a>
                             </li>
                             <li>
-                                <a href="toConsultarMarca">Consultar Marcas</a>
+                                <a href="toRegistroModelo">Registrar Modelos</a>
+                            </li>
+                             <li>
+                                <a href="toConsultarModelos">Consultar Modelos</a>
                             </li>
                         </ul>
                         <!-- /.nav-second-level -->
@@ -81,12 +84,15 @@
                         <ul class="nav nav-second-level">
                             <li>
                                 <a href="toRegistrarFalla">Registrar Falla</a>
-                            </li>
+                            </li>                       
                             <li>
                                 <a href="toConsultarFalla">Consultar Falla</a>
-                            </li>
-                            <li>
+                            </li> 
+                                 <li>
                                 <a href="toRegistroTipoFalla">Registrar Tipo de Falla</a>
+                            </li>                       
+                            <li>
+                                <a href="toConsultarTipoFalla">Consultar Tipo de Falla</a>
                             </li>
                         </ul>
                         <!-- /.nav-second-level -->
@@ -102,6 +108,9 @@
                             </li>
                             <li>
                                 <a href="toRegistroTipoRepuesto">Registrar Tipo de Repuesto</a>
+                            </li>
+                             <li>
+                                <a href="toConsultarTipoRepuesto">Consultar Tipo de Repuesto</a>
                             </li>
                         </ul>
                         <!-- /.nav-second-level -->

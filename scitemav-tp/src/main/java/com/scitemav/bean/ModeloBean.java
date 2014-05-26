@@ -5,6 +5,7 @@ public class ModeloBean {
 	private Integer idModelo;
 	private String Nombre;
 	private Integer idMarca;
+	private String nombreMarca;
 	
 	public Integer getIdModelo() {
 		return idModelo;
@@ -23,5 +24,11 @@ public class ModeloBean {
 	}
 	public void setIdMarca(Integer idMarca) {
 		this.idMarca = idMarca;
+	}
+	public String getNombreMarca() {
+		return nombreMarca;
+	}
+	public void setNombreMarca(String nombreMarca) {
+		this.nombreMarca = nombreMarca;
 	}
 }

@@ -29,7 +29,7 @@ public class ModeloController {
 	
 	@RequestMapping("toConsultarModelos")
 	public String toConsultarModelos(){
-		return "consultarModelos";
+		return "consultarModelo";
 	}
 	
 	@RequestMapping(value="registroModelo", method = RequestMethod.POST)

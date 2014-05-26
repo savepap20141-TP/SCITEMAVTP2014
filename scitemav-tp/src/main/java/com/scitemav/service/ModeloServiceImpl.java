@@ -65,7 +65,7 @@ public class ModeloServiceImpl implements ModeloService  {
 				mb.setIdModelo(m.getIdModelo());
 				mb.setNombre(m.getNombre());
 				mb.setIdMarca(m.getModMarca().getIdMarca());
-				
+				mb.setNombreMarca(m.getModMarca().getNombre());
 				lmb.add(mb);
 			}
 		} catch (IllegalArgumentException e) {
