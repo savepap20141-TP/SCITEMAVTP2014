@@ -107,7 +107,7 @@ public class ClienteServiceImpl implements ClienteService{
 				cb.setCelular(c.getCliPersona().getCelular());
 				cb.setEmail(c.getCliPersona().getPerUsuario().getEmail());
 				cb.setEstado(c.getCliPersona().getPerUsuario().getEstado());
-				
+				cb.setIdUsuario(c.getCliPersona().getPerUsuario().getIdUsuario());
 				_lcb.add(cb);
 			}
 		} catch (IllegalArgumentException e) {
