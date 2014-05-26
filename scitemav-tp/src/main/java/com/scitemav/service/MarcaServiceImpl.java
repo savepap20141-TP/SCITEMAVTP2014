@@ -45,8 +45,8 @@ public class MarcaServiceImpl implements MarcaService {
 					     System.out.println("******* PATH: " + req.getSession().getServletContext().getRealPath("/"));
 					     System.out.println("******* PATH: " + req.getRequestURL().toString()+"/images/"+marcab.getFile().getOriginalFilename());
 					     
-					     String ruta = req.getRequestURL().toString()+"/images/"+marcab.getFile().getOriginalFilename();
-					     ruta = ruta.replace(marcab.getUrlImagen(), "");
+					     //String ruta = req.getRequestURL().toString()+"/images/"+marcab.getFile().getOriginalFilename();
+					     //ruta = ruta.replace(marcab.getUrlImagen(), "");
 					     if(fileContentType.contains("image")){
 					        try {
 								BufferedImage bufferedImage = ImageIO.read(marcab.getFile().getInputStream());
