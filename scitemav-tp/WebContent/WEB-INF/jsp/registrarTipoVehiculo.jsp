@@ -41,7 +41,6 @@ $(document).ready(function(e){
 		}
 	});
 });
-
 function inicioConsulta(){
 	var filas = '';	
 	var columnas = '';
@@ -53,21 +52,28 @@ function inicioConsulta(){
  		data: '',
  		success: function(tipvehiculos){
  			$.each(tipvehiculos, function(i, tipveh){
+ 				var imagen = '';
+ 				if(tipveh.urlImagen!=null){
+ 					imagen = '<img width="150" height="150" src="'+tipveh.urlImagen+'"></img>';
+ 				}
  				filas = filas +'<tr class="">'+
 				'<td class="center" id="filaId_'+i+'">'+tipveh.idTipoVehiculo+'</td>'+
 				'<td class="center" id="filaNombre_'+i+'">'+tipveh.nombre+'</td>'+
+				'<td class="center">'+imagen+'</td>'+
 				'<td class="center"><button class="btn btn-success btn-circle" type="button" id="btnEdit_'+i+'" data-toggle="modal" data-target="#myModal" onclick="mostrarEditar('+i+')"><i class="fa fa-list"></i></button></td>'+
 				'<td class="center"><button class="btn btn-danger btn-circle" type="button" id="btnDelete_'+i+'"><i class="fa fa-times"></i></button></td>'+
 				'</tr>';
 			});		        
  		},
  		complete: function() {
- 			columnas = columnas + '<th class="center">Id Tipo Vehiculo</th><th class="center">Nombre</th><th class="center">Editar</th><th class="center">Eliminar</th>';
- 			realizarTabla(columnas,filas); 			
+ 			columnas = columnas + '<th class="center">Id Tipo de Vehiculo</th><th class="center">Nombre</th><th class="center">Logo</th><th class="center">Editar</th><th class="center">Eliminar</th>';
+ 			realizarTabla(columnas,filas); 		
+ 			removeNulls();
   		}
  	});	  
 		
 }
+
 </script>
 <script type="text/javascript">
 function mostrarEditar(ind){
@@ -80,15 +86,25 @@ function registrarTipoVehiculo(){
 	if($('#txtNombreTV').val()==''){
 		alert('Completar los campos obligatorios');
 	}else{
+		var formElement = document.getElementById("frmRegistroTipoVehiculo");
+		var formData = new FormData(formElement);	
 		$.ajax({
 	   		url: 'registroTipoVehiculo',
 	   		type: 'post',
-	   		dataType: 'json',
-	   		data: $('#frmRegistroTipoVehiculo').serialize(),
+	   		data:  formData,
+			mimeType:"multipart/form-data",
+			contentType: false,
+		    cache: false,
+			processData:false,
+			beforeSend: function(){
+				//$.blockUI({ message: $('#domMessage') });
+		    },
 	   		success: function(result){
 	   			$('#resultOk').hide();
-				$('#resultFalse').hide();			
-	   			if(result == true){   				
+				$('#resultFalse').hide();	
+				//alert(result);
+				var res  = ''+result;
+	   			if(res == 'true'){   				
 	   				//$('#resultOk').append('Se ha registrado correctamente');
 	   				$('#resultOk').show();
 	   				$('#txtNombreTV').val('');
@@ -159,7 +175,7 @@ function registrarTipoVehiculo(){
 														
 				                                        <div class="form-group">
 				                                            <label>Imagen de ejemplo: </label>
-				                                            <input type="file">
+				                                            <input type="file" name="file" id="fileimagen">
 				                                        </div>	
 															<p><br>
 														</p>

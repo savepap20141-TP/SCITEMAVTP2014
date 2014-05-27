@@ -33,10 +33,10 @@ public class TipoVehiculoController {
 	
 	@RequestMapping(value="registroTipoVehiculo", method = RequestMethod.POST)
 	@ResponseBody
-	public boolean registroTipoVehiculo(@ModelAttribute("tipovehiculo") TipoVehiculo tipv, Model model, HttpServletRequest req){
+	public boolean registroTipoVehiculo(@ModelAttribute("tipovehiculo") TipoVehiculoBean tipv, Model model, HttpServletRequest req){
 		//String path="registrarCarroceria";
 		boolean result = false;
-		if(tipoVehiculoService.registro(tipv)){
+		if(tipoVehiculoService.registro(tipv,req)){
 			//model.addAttribute("msgOk", "Se ha registrado correctamente");
 			result = true;
 		}

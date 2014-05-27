@@ -19,6 +19,9 @@ public class TipoVehiculo {
 	@Column(length = 60, nullable = false)
 	private String nombre;
 	
+	@Column(name = "urlimagen",length = 300, nullable = true)
+	private String urlImagen;
+	
 	@OneToMany(mappedBy ="vehTipoVehiculo")
 	private Collection<Vehiculo> tipVehiculos;
 
@@ -44,5 +47,13 @@ public class TipoVehiculo {
 
 	public void setTipVehiculos(Collection<Vehiculo> tipVehiculos) {
 		this.tipVehiculos = tipVehiculos;
+	}
+
+	public String getUrlImagen() {
+		return urlImagen;
+	}
+
+	public void setUrlImagen(String urlImagen) {
+		this.urlImagen = urlImagen;
 	}
 }
