@@ -134,7 +134,7 @@
 		cargarFechaRevis(nfechaFin);
 		var nProximaRev = 'txtProximaRevision';
 		cargarFechaRevis(nProximaRev);
-		
+		inicioConsultaEmpleados();
 	});
 
 	function EditInformacionRevision(){
@@ -200,6 +200,162 @@
 		$('#btnVerInformacion').show();
 		$('#btnVerEdicion').hide();
 	}
+	
+	function inicioConsultaEmpleados(idRevision){
+		var filas = '';
+		var columnas = '';	
+	    $.ajax({
+	 		url: 'getEmpleadoRevision-'+idRevision,
+	 		type: 'post',
+	 		dataType: 'json',
+	 		data: '',
+	 		success: function(empleados){
+	 			$.each(empleados, function(i, empleado){
+	 				filas = filas +'<tr class="">'+
+			//		'<td class="center"><a id="vehiculo_'+i+'" href="toVehiculoDetalle-'+vehiculo.idVehiculo+'">VEH-'+vehiculo.idVehiculo+'</a></td>'+
+					'<td class="center">'+empleado.nombbre+'</td>'+
+					'<td class="center">'+empleado.apellidoPaterno+'</td>'+
+					'<td class="center">'+empleado.apellidoMaterno+'</td>'+
+					'<td class="center">'+empleado.dni+'</td>'+
+					'<td class="center">'+empleado.sexo+'</td>'+
+					'<td class="center">'+empleado.telefono+'</td>'+
+					'<td class="center">'+empleado.nombreCargo+'</td>'+
+					'<td class="center">'+empleado.nombreEspecialidad+'</td>'+
+					'</tr>';
+				});		        
+	 		},
+	 		complete: function() {
+	 			columnas = columnas + 
+	 				'<th class="center">Id</th>'+
+					'<th class="center">Apellido Paterno</th>'+
+					'<th class="center">Apellido Materno</th>'+
+					'<th class="center">DNI</th>'+
+					'<th class="center">Sexo</th>'+
+					'<th class="center">Telefono</th>'+
+					'<th class="center">Nombre Cargo</th>'+
+					'<th class="center">Nombre Especialidad</th>';
+	 			realizarTabla(columnas,filas);
+	 			removeNulls();
+	  		}
+	 	});
+	}
+
+	
+	function inicioConsultaEmpleados(){
+		var filas = '';
+		var columnas = '';	
+	    $.ajax({
+	 		url: 'getEmpleados',
+	 		type: 'post',
+	 		dataType: 'json',
+	 		data: '',
+	 		success: function(empleados){
+	 			$.each(empleados, function(i, empleado){
+	 				var checkHabilitado = '';
+	 				var valueCreado = '';
+	 				var valueHabilitado = '';
+	 				if(empleado.estado == "habilitado"){
+	 					checkHabilitado = 'checked';
+	 					valueHabilitado = 'Habilitado';
+	 				}
+	 				if(empleado.estado == "deshabilitado"){
+	 					checkHabilitado =  '';
+	 					valueHabilitado = 'Deshabilitado';
+	 				}
+	 				if(empleado.estado == "creado"){
+	 					checkHabilitado = '';
+	 					valueCreado = 'Nuevo Usuario';
+	 				}
+	 				
+	 				
+	 				filas = filas +'<tr class="">'+
+	 				'<td class="center">'+valueCreado+valueHabilitado+' <input type="checkbox" '+checkHabilitado+' onclick="updateState(this,'+ i +')"><input type="hidden" name="state"  id="state_'+i+'" value="'+empleado.estado+'" /></td>'+ 		
+	 				'<td class="center"><a id="empleado_"'+i+'" href="toEmpleadoDetalle-'+empleado.idEmpleado+'">EMP-'+empleado.idEmpleado+'</a></td>'+
+	 				'<td class="center">'+empleado.email+'<input id="change_'+i+'" type="hidden" name="change"></td>'+
+					'<td class="center">'+empleado.dni+'<input type="hidden" name="id" value="'+empleado.idEmpleado+'" id="idEmp_'+i+'" /></td>'+
+					'<td class="center">'+empleado.nombre+'</td>'+
+					'<td class="center">'+empleado.apellidoPaterno+'</td>'+
+					'<td class="center">'+empleado.apellidoMaterno+'</td>'+				
+					'</tr>';
+				});		        
+	 		},
+	 		complete: function() {
+	 			columnas = columnas +
+	 				'<th class="center">Estado</th>'+ 		
+	 				'<th class="center">Id Empleado</th>'+
+	 				'<th class="center">Email</th>'+
+	 				'<th class="center">DNI</th>'+
+					'<th class="center">Nombre Cliente</th>'+
+					'<th class="center">Apellido Paterno</th>'+
+					'<th class="center">Apellido Materno</th>';
+	 			realizarTabla(columnas,filas);
+	 			removeNulls();
+	  		}
+	 	});
+	}
+
+	function updateState(source,i){
+		   var state;
+		   if(source.checked==true){
+		    state="habilitado";
+		   }
+		   else{
+		    state="deshabilitado";
+		      }
+		   $('#state_'+i).val(state);
+		   $('#change_'+i).val(true);
+	}
+
+	
+</script>
+
+<script>
+var contsave = 'first';
+var cont ='first';
+$(document).on('click','#btnEnviarInv', function(e){
+		var list_State = '';
+		var list_IdEmp = '';
+		list_isChanged = document.getElementsByName('change');
+		  for (var x=0; x < list_isChanged.length; x++) {
+			  if($('#change_'+x).val()==true || $('#change_'+x).val()=='true'){
+				list_State += $('#state_'+x).val()+'_';
+				list_IdEmp += $('#idEmp_'+x).val()+'_';
+				$('#change_'+x).val('');
+			  }
+		 }
+		$('#isState_list').val(list_State);
+		$('#idEmpleado_list').val(list_IdEmp);	
+		//alert(list_State);
+		//alert(list_IdUsu);
+		  var idrevisionAE = $('#spnIdRevision').text();
+		  $.ajax({
+			   url: 'asignarEmpleadosRevision-'+idrevisionAE,
+			   type: 'post',
+			   dataType: 'json',
+			   data: $('#frmAdministrarEmpleadosRevision').serialize(),
+			   complete: function() {
+		   			//$.unblockUI();
+		   	   },
+			   success: function(enviados){
+				   if(enviados != ""){
+				    var msgASR = [];
+				    $('#resultOk').hide();
+				    var contactos = "";
+					  $.each(enviados, function(z, env){
+						  msgASR.push('Asignacion realizada a: ' + env);
+						  contactos += 'Asignacion realizada a: ' +env+'<br>';
+						  //alert(env);
+					  });		
+					if(msgASR.length>0){
+						$('#resultOk').show();
+						$('#mensajeEmails').empty();
+						$('#mensajeEmails').append(contactos);
+					}  
+				   }
+				}
+		  });
+  });
+
 </script>
 
 <body>
@@ -284,6 +440,8 @@
 							<li class=""><a href="#archivos" data-toggle="tab">Archivos</a>
 							</li>
 							<li class=""><a href="#comentarios" data-toggle="tab">Comentarios</a>
+							</li>
+							<li class=""><a href="#empleado" data-toggle="tab">Empleado</a>
 							</li>
 						</ul>
 
@@ -388,8 +546,7 @@
 																																					
 									<!-- FINAL SEGUNDA COLUMNA -->
 									<span class="btn btn-success" onclick="EditInformacionRevision();">Guardar</span>
-									<span class="btn btn-danger" onclick="$('.vistaInformacion').show();$('.edicionInformacion').hide();$('#btnVerInformacion').hide();$('#btnVerEdicion').show();">
-									    Cancelar</span>
+									<span class="btn btn-danger" onclick="$('.vistaInformacion').show();$('.edicionInformacion').hide();$('#btnVerInformacion').hide();$('#btnVerEdicion').show();">Cancelar</span>
 								</div>
 																
 								
@@ -445,6 +602,14 @@
 										velit esse cillum dolore eu fugiat nulla pariatur. Excepteur
 										sint occaecat cupidatat non proident, sunt in culpa qui
 										officia deserunt mollit anim id est laborum.</p>
+								</div>
+								<div class="tab-pane fade" id="empleado">
+									<input class="btn btn-lg btn-success btn-block" type="button" style="width: 20%;" value="Asignar Empleado" id="btnEnviarInv"></input><br>
+									<div id="spnResultList" class="resultBox section summaryPane"></div>
+									<form id="frmAdministrarEmpleadosRevision">		
+									<input id="isState_list" type="hidden" name="isStateList"/>
+									<input id="idEmpleado_list" type="hidden" name="idEmpleadoList"/>
+								</form>
 								</div>
 						</div>
 						<!-- /.panel-body -->

@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.scitemav.bean.RevisionBean;
+import com.scitemav.bean.VehiculoBean;
 import com.scitemav.service.RevisionService;
 
 @Controller
@@ -77,5 +78,5 @@ public class RevisionController {
 		
 		return revisionB;
 	}
-	
+
 }

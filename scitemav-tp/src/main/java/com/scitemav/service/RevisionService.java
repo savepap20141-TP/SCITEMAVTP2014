@@ -3,6 +3,7 @@ package com.scitemav.service;
 import java.util.List;
 
 import com.scitemav.bean.RevisionBean;
+import com.scitemav.bean.VehiculoBean;
 
 
 public interface RevisionService {
@@ -10,6 +11,5 @@ public interface RevisionService {
 	public boolean registrarRevision(RevisionBean revision);
 	public List<RevisionBean> listarRevisiones();
 	public RevisionBean obtenerInfo(int idRevision);
-	boolean editInformacionRevision(RevisionBean rb);
-	
+	boolean editInformacionRevision(RevisionBean rb);	
 }

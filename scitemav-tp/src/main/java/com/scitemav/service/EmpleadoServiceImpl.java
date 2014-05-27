@@ -14,14 +14,18 @@ import org.springframework.transaction.annotation.Transactional;
 import com.scitemav.bean.EmpleadoBean;
 import com.scitemav.bean.EmpleadoBean;
 import com.scitemav.bean.EmpleadoBean;
+import com.scitemav.bean.VehiculoBean;
 import com.scitemav.model.Cargo;
 import com.scitemav.model.Empleado;
 import com.scitemav.model.Empleado;
 import com.scitemav.model.Distrito;
 import com.scitemav.model.Empleado;
+import com.scitemav.model.EmpleadoRevision;
 import com.scitemav.model.Especialidad;
 import com.scitemav.model.Persona;
+import com.scitemav.model.Revision;
 import com.scitemav.model.Usuario;
+import com.scitemav.model.Vehiculo;
 
 @Service
 public class EmpleadoServiceImpl implements EmpleadoService{
@@ -120,7 +124,7 @@ public class EmpleadoServiceImpl implements EmpleadoService{
 				//
 				empb.setIdEspecialidad(emp.getEmpEspecialidad().getIdEspecialidad());
 				empb.setNombreEspecialidad(emp.getEmpEspecialidad().getDescripcion());
-				empb.setAdministrador(emp.getAdministrador());				
+				empb.setAdministrador(emp.getAdministrador());
 				lempb.add(empb);
 			}
 		} catch (IllegalArgumentException e) {
@@ -227,5 +231,57 @@ public class EmpleadoServiceImpl implements EmpleadoService{
 			resultado = false;
 		}
 		return resultado;
+	}
+	
+	@SuppressWarnings("unchecked")
+	@Transactional
+	public List<EmpleadoBean> listarEmpleadosRevision(Integer idRevision) {
+		List<Empleado> listaEmpleado = new ArrayList<Empleado>();
+		List<EmpleadoBean> listaEmpleadoBean = new ArrayList<EmpleadoBean>();		
+		try {
+			Query q = em.createQuery("SELECT er.reeEmpleado FROM EmpleadoRevision er JOIN reeRevision r WHERE r.idRevision=:idRevision");
+			q.setParameter("idRevision", idRevision);
+			listaEmpleado = q.getResultList();
+			for(int i=0; i < listaEmpleado.size(); i++){
+				Empleado v = listaEmpleado.get(i);
+				EmpleadoBean vb = new EmpleadoBean();
+				vb.setNombre(v.getEmpPersona().getNombre());
+				vb.setApellidoPaterno(v.getEmpPersona().getApellidoPaterno());
+				vb.setApellidoMaterno(v.getEmpPersona().getApellidoMaterno());
+				vb.setDni(v.getEmpPersona().getDni());
+				vb.setSexo(v.getEmpPersona().getSexo());
+				vb.setTelefono(v.getEmpPersona().getTelefono());
+				vb.setNombreCargo(v.getEmpCargo().getDescripcion());
+				vb.setNombreEspecialidad(v.getEmpEspecialidad().getDescripcion());
+				
+				listaEmpleadoBean.add(vb);
+			}
+		} catch (IllegalArgumentException e) {
+			listaEmpleadoBean = null;			
+		}
+
+		return listaEmpleadoBean;
+	}
+	
+	@Transactional
+	public List<String> administrarEmpleadosRevision(String[] ids, Integer IdRevision) {
+		List<String> enviados = new ArrayList<String>();
+		try {
+			for (int i = 0; i < ids.length; i++) {				
+				EmpleadoRevision emprev = new EmpleadoRevision();
+				Empleado emp = em.find(Empleado.class, Integer.parseInt(ids[i]));
+				//emp.setIdEmpleado(Integer.parseInt(ids[i]));
+				Revision rev = new Revision();
+				rev.setIdRevision(IdRevision);
+				
+				emprev.setReeEmpleado(emp);
+				emprev.setReeRevision(rev);
+				enviados.add( emp.getEmpPersona().getNombre()+" "+emp.getEmpPersona().getApellidoPaterno()+" "+emp.getEmpPersona().getApellidoMaterno());
+				em.persist(emprev);
+			}
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+		return enviados;
 	}
 }

@@ -13,6 +13,14 @@ label.error {
 	color: rgb(255,0,0);
 	font-weight:bold;
 }
+.tableGri {
+/*     line-height: 30px; */
+    background-color: rgb(235, 240, 242);
+    font-weight: bold;
+    font-size: 12px;
+/*     text-align: left; */
+    color: rgb(120, 138, 150);
+}
 </style>
 <script>
 var email = '${pageContext.session.getAttribute("email")}';

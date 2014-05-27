@@ -1,8 +1,10 @@
 package com.scitemav.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -89,4 +91,17 @@ public class EmpleadoController {
 		//return empleadoService.listarEmpleadosRevision(idRevision);
 	}				
 	
+	@RequestMapping(value = "asignarEmpleadosRevision-{idrevision}", method = RequestMethod.POST)
+	@ResponseBody
+	public List<String> toSentInvitatios(@PathVariable("idrevision") Integer idRevision, HttpServletRequest request, HttpSession session) {
+		session = request.getSession();
+		List<String> enviados = new ArrayList<String>();
+		String[] idUsuList = request.getParameter("idEmpleadoList").toString().split("_");
+		String[] states = request.getParameter("isStateList").toString().split("_");
+		
+		if(idUsuList[0].length() > 0){
+			enviados = empleadoService.administrarEmpleadosRevision(idUsuList, idRevision);
+		}
+		return enviados;
+	}
 }

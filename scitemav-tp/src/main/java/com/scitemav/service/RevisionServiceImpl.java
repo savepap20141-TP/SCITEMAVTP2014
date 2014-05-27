@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.scitemav.bean.MarcaBean;
 import com.scitemav.bean.RevisionBean;
+import com.scitemav.bean.VehiculoBean;
 import com.scitemav.model.Marca;
 import com.scitemav.model.Revision;
 import com.scitemav.model.Vehiculo;
@@ -165,5 +166,5 @@ public class RevisionServiceImpl implements RevisionService {
 		}
 		return result;
 	}
-
+	
 }
