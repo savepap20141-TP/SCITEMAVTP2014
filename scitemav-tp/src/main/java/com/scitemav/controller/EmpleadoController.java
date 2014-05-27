@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.scitemav.bean.EmpleadoBean;
+import com.scitemav.bean.RevisionBean;
 import com.scitemav.service.EmpleadoService;
 
 @Controller
@@ -81,11 +82,11 @@ public class EmpleadoController {
 	}
 	
 	
-	
-	
-	
-	
-	
-	
+	@RequestMapping(value = "getEmpleadoRevision-{idrevision}", method = RequestMethod.POST)
+	@ResponseBody
+	public List<EmpleadoBean> getEmpleadoRevision(@PathVariable("idrevision") Integer idRevision){		
+		return null;
+		//return empleadoService.listarEmpleadosRevision(idRevision);
+	}				
 	
 }

@@ -3,6 +3,7 @@ package com.scitemav.service;
 import java.util.List;
 
 import com.scitemav.bean.EmpleadoBean;
+import com.scitemav.bean.RevisionBean;
 
 public interface EmpleadoService {
 	
@@ -10,4 +11,5 @@ public interface EmpleadoService {
 	public List<EmpleadoBean> listarEmpleados();
 	public EmpleadoBean obtenerInfo(int idEmpleado);
 	boolean editInformacionEmpleado(EmpleadoBean eb);
+	//public List<EmpleadoBean> listarEmpleadosRevision(Integer idRevision);
 }
