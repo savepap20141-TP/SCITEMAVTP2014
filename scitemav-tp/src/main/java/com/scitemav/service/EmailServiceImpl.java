@@ -1,14 +1,22 @@
 package com.scitemav.service;
 
 import java.util.Properties;
+import java.util.Random;
 
 import javax.mail.Message;
 import javax.mail.Session;
 import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 
+import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.scitemav.model.Usuario;
+
 @Service
 public class EmailServiceImpl implements EmailService {
 
@@ -19,6 +27,11 @@ public class EmailServiceImpl implements EmailService {
 	private String cabecera;
 	private String cuerpo;
 	Properties emailProperties;
+	static final String AB = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+	static Random rnd = new Random();
+
+	@PersistenceContext
+	EntityManager em;
 
 	@Override
 	public void propiedades() {
@@ -33,26 +46,28 @@ public class EmailServiceImpl implements EmailService {
 	}
 
 	@Override
-	public String mensajeEmail() { 
+	public String mensajeEmail() {
 		return "Mensaje";
 	}
-	
+
 	@Override
-	public String cabeceraEmail() {		
+	public String cabeceraEmail() {
 		return "Asunto";
 	}
-	
 
 	@Override
 	public void preparaEnviar(String para, String cabecera, String cuerpo) {
 		try {
 			MimeMessage emailMessage = new MimeMessage(mailSession);
-			emailMessage.addRecipient(Message.RecipientType.TO,	new InternetAddress(para));
+			emailMessage.addRecipient(Message.RecipientType.TO,
+					new InternetAddress(para));
 			emailMessage.setSubject(cabecera);
 			emailMessage.setContent(cuerpo, "text/html");
 			Transport transport = mailSession.getTransport("smtp");
-			transport.connect(getEmailHost(), getFromUser(), getFromUserEmailPassword());
-			transport.sendMessage(emailMessage, emailMessage.getAllRecipients());
+			transport.connect(getEmailHost(), getFromUser(),
+					getFromUserEmailPassword());
+			transport
+					.sendMessage(emailMessage, emailMessage.getAllRecipients());
 			transport.close();
 			System.out.println("Email sent successfully.");
 		} catch (Exception e) {
@@ -60,14 +75,13 @@ public class EmailServiceImpl implements EmailService {
 		}
 
 	}
-	
+
 	@Override
 	public boolean EnviarMensaje(String to) {
 		propiedades();
 		preparaEnviar(to, cabeceraEmail(), mensajeEmail());
 		return true;
 	}
-	
 
 	public String getFromUser() {
 		return fromUser;
@@ -91,6 +105,40 @@ public class EmailServiceImpl implements EmailService {
 
 	public void setEmailHost(String emailHost) {
 		this.emailHost = emailHost;
-	}	
+	}
+
+	@Override
+	public boolean EnviarMensaje(String to, String cabecera, String cuerpo) {
+		propiedades();
+		preparaEnviar(to, cabecera, cuerpo);
+		return true;
+	}
+
+	@Transactional
+	public boolean habilitarUsuario(Integer idUsuario) {
+		// Generacion de password automatica aleatorio
+		StringBuilder sb = new StringBuilder(10);
+		String firstPassword = "";
+
+		for (int i = 0; i < 10; i++) {
+			sb.append(AB.charAt(rnd.nextInt(AB.length())));
+		}
+
+		firstPassword = sb.toString();
+
+		Usuario user = em.find(Usuario.class, idUsuario);
+		String asunto = "Bienvenido usuario de scitemav: "
+				+ user.getUsuPersona().getNombre();
+		String body = "Bienvenido nuevo usuario, ha sido habilitado para entrar al sistema<br />" +
+					  "Email: "+user.getEmail()+"<br />"+
+					  "Password: "+firstPassword;
+		
+		String md5 = DigestUtils.md5Hex(firstPassword);
+		user.setPassword(md5);		
+		em.merge(user);
+		
+		EnviarMensaje(user.getEmail(), asunto, body);
+		return false;
+	}
 
 }

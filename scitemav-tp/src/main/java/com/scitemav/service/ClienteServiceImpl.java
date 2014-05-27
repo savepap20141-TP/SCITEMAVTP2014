@@ -71,7 +71,7 @@ public class ClienteServiceImpl implements ClienteService{
 			cli.setRuc(clib.getRuc());
 			
 			em.persist(cli);
-			emailService.EnviarMensaje(usu.getEmail());
+			//emailService.EnviarMensaje(usu.getEmail());
 			resultado = true;
 			clib.setIdCliente(cli.getIdCliente());
 		}catch(IllegalArgumentException e){

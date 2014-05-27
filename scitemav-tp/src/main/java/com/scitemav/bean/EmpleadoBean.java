@@ -29,7 +29,17 @@ public class EmpleadoBean {
 	private String email;
 	private String password;
 	private Boolean activoU;
+	private Integer idUsuario;
 	private String estado;
+	
+	
+	
+	public Integer getIdUsuario() {
+		return idUsuario;
+	}
+	public void setIdUsuario(Integer idUsuario) {
+		this.idUsuario = idUsuario;
+	}
 	public Integer getIdEmpleado() {
 		return idEmpleado;
 	}

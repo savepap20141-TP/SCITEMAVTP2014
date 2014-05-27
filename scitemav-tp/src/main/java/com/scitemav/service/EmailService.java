@@ -8,6 +8,8 @@ public interface EmailService {
 	public String cabeceraEmail();
 	public void preparaEnviar(String para, String cabecera, String cuerpo);
 	public boolean EnviarMensaje(String to);
-	
+	//Método final para enviar mensaje
+	public boolean EnviarMensaje(String to, String cabecera, String cuerpo);
+	public boolean habilitarUsuario(Integer idUsuario);
 
 }

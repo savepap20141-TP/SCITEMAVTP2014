@@ -11,6 +11,7 @@ import javax.persistence.Query;
 import javax.servlet.http.HttpSession;
 
 import org.apache.commons.codec.digest.DigestUtils;//MD5
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -23,6 +24,9 @@ public class UsuarioServiceImpl implements UsuarioService{
 
 	static final String AB = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 	static Random rnd = new Random();
+	
+	@Autowired
+	EmailService emailservice;
 	
 	@PersistenceContext
 	EntityManager em;
@@ -104,7 +108,7 @@ public class UsuarioServiceImpl implements UsuarioService{
 						if(!state[i].equals("deshabilitado")){
 							enviados.add( usu.getUsuPersona().getNombre()+" "+usu.getUsuPersona().getApellidoPaterno()+" "+usu.getUsuPersona().getApellidoMaterno());
 							//Agregar metodo que envia correos electronicos
-							
+							emailservice.habilitarUsuario(usu.getIdUsuario());							
 						}
 				}
 				Usuario userx = em.merge(usu);

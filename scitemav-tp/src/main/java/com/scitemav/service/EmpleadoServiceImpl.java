@@ -112,14 +112,15 @@ public class EmpleadoServiceImpl implements EmpleadoService{
 				empb.setTelefono(emp.getEmpPersona().getTelefono());
 				empb.setCelular(emp.getEmpPersona().getCelular());
 				empb.setEmail(emp.getEmpPersona().getPerUsuario().getEmail());
-				
+				empb.setEstado(emp.getEmpPersona().getPerUsuario().getEstado());
+				empb.setIdUsuario(emp.getEmpPersona().getPerUsuario().getIdUsuario());
 				//
 				empb.setIdCargo(emp.getEmpCargo().getIdCargo());
 				empb.setNombreCargo(emp.getEmpCargo().getDescripcion());
 				//
 				empb.setIdEspecialidad(emp.getEmpEspecialidad().getIdEspecialidad());
 				empb.setNombreEspecialidad(emp.getEmpEspecialidad().getDescripcion());
-				empb.setAdministrador(emp.getAdministrador());
+				empb.setAdministrador(emp.getAdministrador());				
 				lempb.add(empb);
 			}
 		} catch (IllegalArgumentException e) {
