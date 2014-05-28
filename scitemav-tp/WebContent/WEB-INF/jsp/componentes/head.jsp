@@ -39,6 +39,7 @@
 <script src="js/Validate.js"></script>
 <script src="js/jquery.ui.datepicker.validation.min.js"></script>
 
-<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.1/themes/base/jquery-ui.css" />
+<!-- <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.1/themes/base/jquery-ui.css" /> -->
 <script src="js/jquery.form.js"></script>
 
+<link href="styles/jquery-ui.min.css" rel="stylesheet">
