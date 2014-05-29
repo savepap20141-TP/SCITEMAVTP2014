@@ -1,44 +1,5 @@
 var osset='';
 
-function realizarTabla(columnas,filas){
-	var contenido = '';
-	$("#spnResultList").empty();
-	
-	contenido = contenido + '<div id="container" class="dataTables_scroll"> '+
-		'<div id="dt_example" role="grid" class="dataTables_wrapper dataTables_scrollBody" style="width: 100%; height: 100%;"> '+
-			'<table cellpadding="0" cellspacing="0" border="0" class="display" id="example"> '+
-			' <thead class="tableGri"> '+
-	            '<tr role="row">'+
-	            	columnas+							                            
-	            '</tr>'+
-	        '</thead> '+
-	        '<tbody>';
-	contenido = contenido + filas;   
-	contenido = contenido + '</tbody>'+
-			'</table> '+
-		'</div> '+
-		'<div class="spacer"></div> '+
-		'</div>';
-	
-	$("#spnResultList").append(contenido);
-		$('#example').dataTable({
-		    "aaSorting": [],
-		    "oLanguage": {
-				           "sLengthMenu": '<select class="form-control input-sm" style="" id="valshow">'+
-				             '<option value="10">10</option>'+
-				             '<option value="25">25</option>'+
-				             '<option value="50">50</option>'+
-				             '<option value="100">100</option>'+
-				             '<option value="200">200</option>'+
-				             '</select>'
-				         ,"sInfo": "Mostrando _START_ a _END_ de _TOTAL_ Resultados"
-				         ,"sZeroRecords": "No se encontraron resultados"
-				         ,"sInfoEmpty": "Mostrando 0 a 0 de 0 Resultados"
-				         ,"sInfoFiltered": "(filtrado de _MAX_ totales Resultados)"}
-		
-		});
-	changeListView();
-}
 function realizarTabla2(id,columnas,filas){
 	var contenido = '';
 	$("#spnResultList_"+id).empty();
@@ -51,7 +12,7 @@ function realizarTabla2(id,columnas,filas){
 	            	columnas+							                            
 	            '</tr>'+
 	        '</thead> '+
-	        '<tbody>';
+	        '<tbody id="'+id+'">';
 	contenido = contenido + filas;   
 	contenido = contenido + '</tbody>'+
 			'</table> '+
@@ -79,39 +40,7 @@ function realizarTabla2(id,columnas,filas){
 	changeListView2();
 }
 //Estos son los metodos necesarios para que funcione la tabla de consulta
-function changeListView(){
-	var iVal = $("#valshow").val();
-	
-	/* Update all other length options for the new display */
-	var n = osset.aanFeatures.l;
-	for ( i=0, iLen=n.length ; i<iLen ; i++ )
-	{
-		if ( n[i] != $("#valshow").parentNode )
-		{
-			$('select', n[i]).val( iVal );
-		}
-	}
-	
-	/* Redraw the table */
-	osset._iDisplayLength = parseInt(iVal, 10);
-	_fnCalculateEnd( osset );
-	
-	/* If we have space to show extra rows (backing up from the end point - then do so */
-	if ( osset.fnDisplayEnd() == osset.fnRecordsDisplay() )
-	{
-		osset._iDisplayStart = osset.fnDisplayEnd() - osset._iDisplayLength;
-		if ( osset._iDisplayStart < 0 )
-		{
-			osset._iDisplayStart = 0;
-		}
-	}
-	
-	if ( osset._iDisplayLength == -1 )
-	{
-		osset._iDisplayStart = 0;
-	}
-	_fnDraw( osset );
-}
+
 function changeListView2(id){
 	var iVal = $("#valshow_"+id).val();
 	

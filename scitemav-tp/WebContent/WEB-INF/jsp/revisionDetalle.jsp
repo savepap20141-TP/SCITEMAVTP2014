@@ -15,7 +15,7 @@
 		var nfechaIni = 'txtFechaInicio';
 		cargarFechaRevis(nfechaIni);
 		
-		$.validator.addMethod("LetyNumRegex", function(value, element) {
+		/* $.validator.addMethod("LetyNumRegex", function(value, element) {
 	        return this.optional(element) || /^[A-Z0-9\-\s]+$/i.test(value);
 	    }, " ");
 		$.validator.addMethod("NumRegex", function(value, element) {
@@ -32,7 +32,7 @@
 	    }, " ");
 		$.validator.addMethod("NumPlacaRegex", function(value, element) {
 	        return this.optional(element) || /^[[A-Z0-9]{3}[-]{1}[A-Z0-9]{3}$/.test(value);
-	    }, " ");
+	    }, " "); */
 		
 		$('#frmEdicionRevision').validate({
 			rules:{
@@ -122,6 +122,7 @@
 			   	});
 			}		
 		});
+	});
 		</script>
 <script type="text/javascript"></script>
 <script>
@@ -135,6 +136,7 @@
 		var nProximaRev = 'txtProximaRevision';
 		cargarFechaRevis(nProximaRev);
 		inicioConsultaEmpleados();
+		inicioConsultaEmpleadosRevision(idrevision);
 	});
 
 	function EditInformacionRevision(){
@@ -201,7 +203,7 @@
 		$('#btnVerEdicion').hide();
 	}
 	
-	function inicioConsultaEmpleados(idRevision){
+	function inicioConsultaEmpleadosRevision(idRevision){
 		var filas = '';
 		var columnas = '';	
 	    $.ajax({
@@ -212,8 +214,8 @@
 	 		success: function(empleados){
 	 			$.each(empleados, function(i, empleado){
 	 				filas = filas +'<tr class="">'+
-			//		'<td class="center"><a id="vehiculo_'+i+'" href="toVehiculoDetalle-'+vehiculo.idVehiculo+'">VEH-'+vehiculo.idVehiculo+'</a></td>'+
-					'<td class="center">'+empleado.nombbre+'</td>'+
+	 				'<td class="center"><a id="empleado_"'+i+'" href="toEmpleadoDetalle-'+empleado.idEmpleado+'">EMP-'+empleado.idEmpleado+'</a></td>'+
+	 				'<td class="center">'+empleado.nombre+'</td>'+
 					'<td class="center">'+empleado.apellidoPaterno+'</td>'+
 					'<td class="center">'+empleado.apellidoMaterno+'</td>'+
 					'<td class="center">'+empleado.dni+'</td>'+
@@ -227,14 +229,33 @@
 	 		complete: function() {
 	 			columnas = columnas + 
 	 				'<th class="center">Id</th>'+
-					'<th class="center">Apellido Paterno</th>'+
+	 				'<th class="center">Nombre</th>'+
+	 				'<th class="center">Apellido Paterno</th>'+
 					'<th class="center">Apellido Materno</th>'+
 					'<th class="center">DNI</th>'+
 					'<th class="center">Sexo</th>'+
 					'<th class="center">Telefono</th>'+
 					'<th class="center">Nombre Cargo</th>'+
 					'<th class="center">Nombre Especialidad</th>';
-	 			realizarTabla(columnas,filas);
+				//realizarTabla2('EmpRev',columnas,filas);
+				//$('#EmpRev').append(filas);
+				var id = 'EmpRev';
+				var contenido = '';
+				$("#spnResultList_"+id).empty();
+	
+				contenido = contenido + '<table cellpadding="0" cellspacing="0" border="0" class="display dataTable" id="example_'+id+'"> '+
+						' <thead class="tableGri"> '+
+				            '<tr role="row">'+
+				            	columnas+							                            
+				            '</tr>'+
+				        '</thead> '+
+				        '<tbody id="'+id+'">';
+				contenido = contenido + filas;   
+				contenido = contenido + '</tbody>'+
+						'</table> ';
+				
+				$("#spnResultList_"+id).append(contenido);
+				//realizarTabla(columnas,filas);
 	 			removeNulls();
 	  		}
 	 	});
@@ -261,12 +282,7 @@
 	 				if(empleado.estado == "deshabilitado"){
 	 					checkHabilitado =  '';
 	 					valueHabilitado = 'Deshabilitado';
-	 				}
-	 				if(empleado.estado == "creado"){
-	 					checkHabilitado = '';
-	 					valueCreado = 'Nuevo Usuario';
-	 				}
-	 				
+	 				}	 				
 	 				
 	 				filas = filas +'<tr class="">'+
 	 				'<td class="center">'+valueCreado+valueHabilitado+' <input type="checkbox" '+checkHabilitado+' onclick="updateState(this,'+ i +')"><input type="hidden" name="state"  id="state_'+i+'" value="'+empleado.estado+'" /></td>'+ 		
@@ -288,7 +304,8 @@
 					'<th class="center">Nombre Cliente</th>'+
 					'<th class="center">Apellido Paterno</th>'+
 					'<th class="center">Apellido Materno</th>';
-	 			realizarTabla(columnas,filas);
+				//realizarTabla2('Emp',columnas,filas);
+				realizarTabla(columnas,filas);
 	 			removeNulls();
 	  		}
 	 	});
@@ -609,7 +626,10 @@ $(document).on('click','#btnEnviarInv', function(e){
 									<form id="frmAdministrarEmpleadosRevision">		
 									<input id="isState_list" type="hidden" name="isStateList"/>
 									<input id="idEmpleado_list" type="hidden" name="idEmpleadoList"/>
-								</form>
+									</form>
+									<br><br>
+									<div id="spnResultList_EmpRev" class="resultBox section summaryPane"></div>
+								
 								</div>
 						</div>
 						<!-- /.panel-body -->

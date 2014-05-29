@@ -11,6 +11,6 @@ public interface EmpleadoService {
 	public List<EmpleadoBean> listarEmpleados();
 	public EmpleadoBean obtenerInfo(int idEmpleado);
 	boolean editInformacionEmpleado(EmpleadoBean eb);
-	//public List<EmpleadoBean> listarEmpleadosRevision(Integer idRevision);
+	public List<EmpleadoBean> listarEmpleadosRevision(Integer idRevision);
 	public List<String> administrarEmpleadosRevision(String[] ids, Integer IdRevision);
 }

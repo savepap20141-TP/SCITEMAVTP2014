@@ -239,7 +239,7 @@ public class EmpleadoServiceImpl implements EmpleadoService{
 		List<Empleado> listaEmpleado = new ArrayList<Empleado>();
 		List<EmpleadoBean> listaEmpleadoBean = new ArrayList<EmpleadoBean>();		
 		try {
-			Query q = em.createQuery("SELECT er.reeEmpleado FROM EmpleadoRevision er JOIN reeRevision r WHERE r.idRevision=:idRevision");
+			Query q = em.createQuery("SELECT er.reeEmpleado FROM EmpleadoRevision er JOIN er.reeRevision r WHERE r.idRevision=:idRevision");
 			q.setParameter("idRevision", idRevision);
 			listaEmpleado = q.getResultList();
 			for(int i=0; i < listaEmpleado.size(); i++){
@@ -253,7 +253,7 @@ public class EmpleadoServiceImpl implements EmpleadoService{
 				vb.setTelefono(v.getEmpPersona().getTelefono());
 				vb.setNombreCargo(v.getEmpCargo().getDescripcion());
 				vb.setNombreEspecialidad(v.getEmpEspecialidad().getDescripcion());
-				
+				vb.setIdEmpleado(v.getIdEmpleado());
 				listaEmpleadoBean.add(vb);
 			}
 		} catch (IllegalArgumentException e) {

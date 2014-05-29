@@ -87,8 +87,8 @@ public class EmpleadoController {
 	@RequestMapping(value = "getEmpleadoRevision-{idrevision}", method = RequestMethod.POST)
 	@ResponseBody
 	public List<EmpleadoBean> getEmpleadoRevision(@PathVariable("idrevision") Integer idRevision){		
-		return null;
-		//return empleadoService.listarEmpleadosRevision(idRevision);
+		//return null;
+		return empleadoService.listarEmpleadosRevision(idRevision);
 	}				
 	
 	@RequestMapping(value = "asignarEmpleadosRevision-{idrevision}", method = RequestMethod.POST)

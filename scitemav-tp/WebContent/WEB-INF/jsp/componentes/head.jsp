@@ -43,3 +43,4 @@
 <script src="js/jquery.form.js"></script>
 
 <link href="styles/jquery-ui.min.css" rel="stylesheet">
+<script src="js/tablasConsultaNew.js"></script>
