@@ -280,6 +280,65 @@
 	  		}
 	 	});
 	}
+	
+	/* FALLAS X REVISION
+	function inicioConsultaFallasRevision(idRevision){
+		var filas = '';
+		var columnas = '';	
+	    $.ajax({
+	 		url: 'getFallaRevision-'+idRevision,
+	 		type: 'post',
+	 		dataType: 'json',
+	 		data: '',
+	 		success: function(empleados){
+	 			$.each(empleados, function(i, empleado){
+	 				filas = filas +'<tr class="">'+
+	 				'<td class="center"><a id="empleado_"'+i+'" href="toEmpleadoDetalle-'+empleado.idEmpleado+'">EMP-'+empleado.idEmpleado+'</a></td>'+
+	 				'<td class="center">'+empleado.nombre+'</td>'+
+					'<td class="center">'+empleado.apellidoPaterno+'</td>'+
+					'<td class="center">'+empleado.apellidoMaterno+'</td>'+
+					'<td class="center">'+empleado.dni+'</td>'+
+					'<td class="center">'+empleado.sexo+'</td>'+
+					'<td class="center">'+empleado.telefono+'</td>'+
+					'<td class="center">'+empleado.nombreCargo+'</td>'+
+					'<td class="center">'+empleado.nombreEspecialidad+'</td>'+
+					'</tr>';
+				});		        
+	 		},
+	 		complete: function() {
+	 			columnas = columnas + 
+	 				'<th class="center">Id</th>'+
+	 				'<th class="center">Nombre</th>'+
+	 				'<th class="center">Apellido Paterno</th>'+
+					'<th class="center">Apellido Materno</th>'+
+					'<th class="center">DNI</th>'+
+					'<th class="center">Sexo</th>'+
+					'<th class="center">Telefono</th>'+
+					'<th class="center">Nombre Cargo</th>'+
+					'<th class="center">Nombre Especialidad</th>';
+				//realizarTabla2('EmpRev',columnas,filas);
+				//$('#EmpRev').append(filas);
+				var id = 'EmpRev';
+				var contenido = '';
+				$("#spnResultList_"+id).empty();
+	
+				contenido = contenido + '<table cellpadding="0" cellspacing="0" border="0" class="display dataTable" id="example_'+id+'"> '+
+						' <thead class="tableGri"> '+
+				            '<tr role="row">'+
+				            	columnas+							                            
+				            '</tr>'+
+				        '</thead> '+
+				        '<tbody id="'+id+'">';
+				contenido = contenido + filas;   
+				contenido = contenido + '</tbody>'+
+						'</table> ';
+				
+				$("#spnResultList_"+id).append(contenido);
+				//realizarTabla(columnas,filas);
+	 			removeNulls();
+	  		}
+	 	});
+	} */
 
 	
 	function inicioConsultaEmpleados(){

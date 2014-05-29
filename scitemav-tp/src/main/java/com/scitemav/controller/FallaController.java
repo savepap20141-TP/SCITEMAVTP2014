@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.scitemav.bean.EmpleadoBean;
 import com.scitemav.bean.FallaBean;
 import com.scitemav.bean.TipoFallaBean;
 import com.scitemav.model.Falla;
@@ -55,6 +56,13 @@ public class FallaController {
 	@ResponseBody
 	public List<FallaBean> getFalla(){		
 		return fallaService.listarFallas();
+	}
+	
+	@RequestMapping(value = "getFallaRevision-{idrevision}", method = RequestMethod.POST)
+	@ResponseBody
+	public List<FallaBean> getFallaRevision(@PathVariable("idrevision") Integer idRevision){		
+		//return null;
+		return fallaService.listarFallasRevision(idRevision);
 	}
 	
 	@RequestMapping(value = "asignarFallasRevision-{idrevision}", method = RequestMethod.POST)
