@@ -184,6 +184,19 @@
 		$('#spnMarca').text(revision.nombreMarca);
 		$('#spnModelo').text(revision.nombreModelo);
 		
+		$('#spnCostoTotal2').text(revision.costoTotal);
+		$('#spnFechaInicio2').text(revision.fechaInicio);
+		$('#spnFechaFin2').text(revision.fechaFin);
+		$('#spnFechaProxima2').text(revision.fechaProxima);
+		$('#spnKilometrajeActual2').text(revision.kilometrajeActual);
+		$('#spnKilometrajeProximo2').text(revision.kilometrajeProximo);
+		
+		$('#spnColorGeneral2').text(revision.color);
+		$('#spnNumeroPlacaGeneral2').text(revision.numeroPlaca);
+		$('#spnFabricacionGeneral2').text(revision.fabricacion);
+		$('#spnMarca2').text(revision.nombreMarca);
+		$('#spnModelo2').text(revision.nombreModelo);
+		
 		//Vista de Edicion
 	    $('#txtVehiculo').val(revision.idVehiculo);
 		$('#txtRevision').val(revision.idRevision);
@@ -201,6 +214,13 @@
 		$('.edicionInformacion').show();
 		$('#btnVerInformacion').show();
 		$('#btnVerEdicion').hide();
+	}
+	
+	function ExtractInformacion2(){
+		$('.vistaInformacion2').hide();
+		$('.edicionInformacion2').show();
+		$('#btnVerInformacion2').show();
+		$('#btnVerEdicion2').hide();
 	}
 	
 	function inicioConsultaEmpleadosRevision(idRevision){
@@ -301,7 +321,7 @@
 	 				'<th class="center">Id Empleado</th>'+
 	 				'<th class="center">Email</th>'+
 	 				'<th class="center">DNI</th>'+
-					'<th class="center">Nombre Cliente</th>'+
+					'<th class="center">Nombre</th>'+
 					'<th class="center">Apellido Paterno</th>'+
 					'<th class="center">Apellido Materno</th>';
 				//realizarTabla2('Emp',columnas,filas);
@@ -492,17 +512,17 @@ $(document).on('click','#btnEnviarInv', function(e){
 											<p class="text-primary">Id:</p>
 							<span id="spnIdRevision"></span>
 											<p class="text-primary">Costo Total:</p>
-							<span id="spnCostoTotal"></span>
+							<span id="spnCostoTotal2"></span>
 							<p class="text-primary">Fecha Inicio:</p>
-							<span id="spnFechaInicio"></span>
+							<span id="spnFechaInicio2"></span>
 							<p class="text-primary">Fecha Fin:</p>
-							<span id="spnFechaFin"></span>
+							<span id="spnFechaFin2"></span>
 							<p class="text-primary">Fecha Próxima:</p>
-							<span id="spnFechaProxima"></span>
+							<span id="spnFechaProxima2"></span>
 							<p class="text-primary">Kilometraje Actual:</p>
-							<span id="spnKilometrajeActual"></span>
+							<span id="spnKilometrajeActual2"></span>
 							<p class="text-primary">Kilometraje Próximo:</p>
-							<span id="spnKilometrajeProximo"></span>												
+							<span id="spnKilometrajeProximo2"></span>												
 											</div>											
 										</div>
 										<div class="col-lg-12 edicionInformacion" style="display: none;">
@@ -621,13 +641,29 @@ $(document).on('click','#btnEnviarInv', function(e){
 										officia deserunt mollit anim id est laborum.</p>
 								</div>
 								<div class="tab-pane fade" id="empleado">
+								<div class="pull-right">
+											<div class="btn-group">
+												<span id="btnVerEdicion2"
+													class="btn btn-default btn-xs dropdown-toggle"
+													onclick="ExtractInformacion2();">Editar</span> 
+													<span id="btnVerInformacion2"
+													class="btn btn-default btn-xs dropdown-toggle"
+													onclick="$('.edicionInformacion2').hide();$('.vistaInformacion2').show();$('#btnVerInformacion2').hide();$('#btnVerEdicion2').show();"
+													style="display: none">Regresar</span>
+											</div>
+							   </div>
+								
+								
+								<div class="edicionInformacion2" style="display: none">
 									<input class="btn btn-lg btn-success btn-block" type="button" style="width: 20%;" value="Asignar Empleado" id="btnEnviarInv"></input><br>
-									<div id="spnResultList" class="resultBox section summaryPane"></div>
+									<div id="spnResultList" class="resultBox section summaryPane" "></div>
 									<form id="frmAdministrarEmpleadosRevision">		
 									<input id="isState_list" type="hidden" name="isStateList"/>
 									<input id="idEmpleado_list" type="hidden" name="idEmpleadoList"/>
 									</form>
+									</div>
 									<br><br>
+									<div class="vistaInformacion2">
 									<div id="spnResultList_EmpRev" class="resultBox section summaryPane"></div>
 								
 								</div>
@@ -636,7 +672,8 @@ $(document).on('click','#btnEnviarInv', function(e){
 					</div>
 					<!-- /.panel -->
 				</div>
-
+</div>
+</div>
 
 			</div>
 
