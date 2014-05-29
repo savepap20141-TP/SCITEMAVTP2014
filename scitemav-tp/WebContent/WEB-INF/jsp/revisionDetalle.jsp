@@ -137,6 +137,7 @@
 		cargarFechaRevis(nProximaRev);
 		inicioConsultaEmpleados();
 		inicioConsultaEmpleadosRevision(idrevision);
+		inicioConsultaFallasRevision(idrevision);
 	});
 
 	function EditInformacionRevision(){
@@ -223,6 +224,14 @@
 		$('#btnVerEdicion2').hide();
 	}
 	
+	
+	function ExtractInformacion3(){
+		$('.vistaInformacion3').hide();
+		$('.edicionInformacion3').show();
+		$('#btnVerInformacion3').show();
+		$('#btnVerEdicion3').hide();
+	} 
+	
 	function inicioConsultaEmpleadosRevision(idRevision){
 		var filas = '';
 		var columnas = '';	
@@ -281,7 +290,7 @@
 	 	});
 	}
 	
-	/* FALLAS X REVISION
+	
 	function inicioConsultaFallasRevision(idRevision){
 		var filas = '';
 		var columnas = '';	
@@ -290,18 +299,13 @@
 	 		type: 'post',
 	 		dataType: 'json',
 	 		data: '',
-	 		success: function(empleados){
-	 			$.each(empleados, function(i, empleado){
+	 		success: function(fallas){
+	 			$.each(fallas, function(i, falla){
 	 				filas = filas +'<tr class="">'+
-	 				'<td class="center"><a id="empleado_"'+i+'" href="toEmpleadoDetalle-'+empleado.idEmpleado+'">EMP-'+empleado.idEmpleado+'</a></td>'+
-	 				'<td class="center">'+empleado.nombre+'</td>'+
-					'<td class="center">'+empleado.apellidoPaterno+'</td>'+
-					'<td class="center">'+empleado.apellidoMaterno+'</td>'+
-					'<td class="center">'+empleado.dni+'</td>'+
-					'<td class="center">'+empleado.sexo+'</td>'+
-					'<td class="center">'+empleado.telefono+'</td>'+
-					'<td class="center">'+empleado.nombreCargo+'</td>'+
-					'<td class="center">'+empleado.nombreEspecialidad+'</td>'+
+	 				//'<td class="center"><a id="falla"'+i+'" href="toEmpleadoDetalle-'+empleado.idEmpleado+'">EMP-'+empleado.idEmpleado+'</a></td>'+
+	 				'<td class="center">FAL-'+falla.idFalla+'</td>'+
+	 				'<td class="center">'+falla.descripcion+'</td>'+
+					'<td class="center">'+falla.nombreTipoFalla+'</td>'+					
 					'</tr>';
 				});		        
 	 		},
@@ -309,18 +313,12 @@
 	 			columnas = columnas + 
 	 				'<th class="center">Id</th>'+
 	 				'<th class="center">Nombre</th>'+
-	 				'<th class="center">Apellido Paterno</th>'+
-					'<th class="center">Apellido Materno</th>'+
-					'<th class="center">DNI</th>'+
-					'<th class="center">Sexo</th>'+
-					'<th class="center">Telefono</th>'+
-					'<th class="center">Nombre Cargo</th>'+
-					'<th class="center">Nombre Especialidad</th>';
+	 				'<th class="center">Tipo de falla</th>';
 				//realizarTabla2('EmpRev',columnas,filas);
 				//$('#EmpRev').append(filas);
-				var id = 'EmpRev';
+				var id = 'FalRev';
 				var contenido = '';
-				$("#spnResultList_"+id).empty();
+				$("#spnResultList1_"+id).empty();
 	
 				contenido = contenido + '<table cellpadding="0" cellspacing="0" border="0" class="display dataTable" id="example_'+id+'"> '+
 						' <thead class="tableGri"> '+
@@ -333,12 +331,12 @@
 				contenido = contenido + '</tbody>'+
 						'</table> ';
 				
-				$("#spnResultList_"+id).append(contenido);
+				$("#spnResultList1_"+id).append(contenido);
 				//realizarTabla(columnas,filas);
 	 			removeNulls();
 	  		}
 	 	});
-	} */
+	} 
 
 	
 	function inicioConsultaEmpleados(){
@@ -451,6 +449,52 @@ $(document).on('click','#btnEnviarInv', function(e){
 				}
 		  });
   });
+  
+var contsave1 = 'first';
+var cont1 ='first';
+$(document).on('click','#btnEnviarInv2', function(e){
+		var list_State1 = '';
+		var list_IdFal = '';
+		list_isChanged1 = document.getElementsByName('change');
+		  for (var x=0; x < list_isChanged1.length; x++) {
+			  if($('#change_'+x).val()==true || $('#change_'+x).val()=='true'){
+				list_State1 += $('#state_'+x).val()+'_';
+				list_IdFal += $('#idFal_'+x).val()+'_';
+				$('#change_'+x).val('');
+			  }
+		 }
+		$('#isState_list1').val(list_State1);
+		$('#idFalla_list').val(list_IdFal);	
+		//alert(list_State);
+		//alert(list_IdUsu);
+		  var idrevisionAE1 = $('#spnIdRevision').text();
+		  $.ajax({
+			   url: 'asignarFallasRevision-'+idrevisionAE1,
+			   type: 'post',
+			   dataType: 'json',
+			   data: $('#frmAdministrarFallasRevision').serialize(),
+			   complete: function() {
+		   			//$.unblockUI();
+		   	   },
+			   success: function(enviados){
+				   if(enviados != ""){
+				    var msgASR = [];
+				    $('#resultOk').hide();
+				    var contactos = "";
+					  $.each(enviados, function(z, env){
+						  msgASR.push('Asignacion realizada a: ' + env);
+						  contactos += 'Asignacion realizada a: ' +env+'<br>';
+						  //alert(env);
+					  });		
+					if(msgASR.length>0){
+						$('#resultOk').show();
+						$('#mensajeEmails').empty();
+						$('#mensajeEmails').append(contactos);
+					}  
+				   }
+				}
+		  });
+  }); 
 
 </script>
 
@@ -533,7 +577,7 @@ $(document).on('click','#btnEnviarInv', function(e){
 							<li class=""><a href="#fallas" data-toggle="tab">Vehículo</a></li>
 							<li class=""><a href="#repuestos" data-toggle="tab">Repuestos</a>
 							</li>
-							<li class=""><a href="#archivos" data-toggle="tab">Archivos</a>
+							<li class=""><a href="#archivos" data-toggle="tab">Fallas</a>
 							</li>
 							<li class=""><a href="#comentarios" data-toggle="tab">Comentarios</a>
 							</li>
@@ -678,15 +722,33 @@ $(document).on('click','#btnEnviarInv', function(e){
 										officia deserunt mollit anim id est laborum.</p>
 								</div>
 								<div class="tab-pane fade" id="archivos">
-									<h4>Fallas</h4>
-									<p>Lorem ipsum dolor sit amet, consectetur adipisicing
-										elit, sed do eiusmod tempor incididunt ut labore et dolore
-										magna aliqua. Ut enim ad minim veniam, quis nostrud
-										exercitation ullamco laboris nisi ut aliquip ex ea commodo
-										consequat. Duis aute irure dolor in reprehenderit in voluptate
-										velit esse cillum dolore eu fugiat nulla pariatur. Excepteur
-										sint occaecat cupidatat non proident, sunt in culpa qui
-										officia deserunt mollit anim id est laborum.</p>
+								
+									<div class="pull-right">
+											<div class="btn-group">
+												<span id="btnVerEdicion3"
+													class="btn btn-default btn-xs dropdown-toggle"
+													onclick="ExtractInformacion3();">Editar</span> 
+													<span id="btnVerInformacion3"
+													class="btn btn-default btn-xs dropdown-toggle"
+													onclick="$('.edicionInformacion3').hide();$('.vistaInformacion3').show();$('#btnVerInformacion3').hide();$('#btnVerEdicion3').show();"
+													style="display: none">Regresar</span>
+											</div>
+							   </div>
+									<br>
+								
+								<div class="edicionInformacion3" style="display: none">
+									<input class="btn btn-lg btn-success btn-block" type="button" style="width: 20%;" value="Asignar Falla" id="btnEnviarInv2"></input><br>
+									<div id="spnResultList1" class="resultBox section summaryPane" "></div>
+									<form id="frmAdministrarFallasRevision">		
+									<input id="isState_list1" type="hidden" name="isStateList1"/>
+									<input id="idFalla_list" type="hidden" name="idFallaList"/>
+									</form>
+									</div>
+									<br><br>
+									<div class="vistaInformacion3">
+									<div id="spnResultList1_FalRev" class="resultBox section summaryPane"></div>
+								
+								</div>
 								</div>
 								<div class="tab-pane fade" id="comentarios">
 									<h4>Comentarios</h4>
@@ -701,6 +763,7 @@ $(document).on('click','#btnEnviarInv', function(e){
 								</div>
 								<div class="tab-pane fade" id="empleado">
 								<div class="pull-right">
+								
 											<div class="btn-group">
 												<span id="btnVerEdicion2"
 													class="btn btn-default btn-xs dropdown-toggle"
@@ -712,6 +775,7 @@ $(document).on('click','#btnEnviarInv', function(e){
 											</div>
 							   </div>
 								
+								<br>
 								
 								<div class="edicionInformacion2" style="display: none">
 									<input class="btn btn-lg btn-success btn-block" type="button" style="width: 20%;" value="Asignar Empleado" id="btnEnviarInv"></input><br>

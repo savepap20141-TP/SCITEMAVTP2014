@@ -71,7 +71,7 @@ public class FallaController {
 		session = request.getSession();
 		List<String> enviados = new ArrayList<String>();
 		String[] idUsuList = request.getParameter("idFallaList").toString().split("_");
-		String[] states = request.getParameter("isStateList").toString().split("_");
+		String[] states = request.getParameter("isStateList1").toString().split("_");
 		
 		if(idUsuList[0].length() > 0){
 			enviados = fallaService.administrarFallasRevision(idUsuList, idRevision);

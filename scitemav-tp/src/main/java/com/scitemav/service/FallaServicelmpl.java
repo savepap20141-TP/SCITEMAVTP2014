@@ -75,7 +75,7 @@ public class FallaServicelmpl implements FallaService{
 		List<Falla> listaFalla = new ArrayList<Falla>();
 		List<FallaBean> listaFallaBean = new ArrayList<FallaBean>();
 		try{
-			Query q = em.createQuery("SELECT fr.farRevision FROM FallaRevision fr JOIN fr.farRevision f WHERE f.idRevision=:idRevision");
+			Query q = em.createQuery("SELECT fr.farFalla FROM FallaRevision fr JOIN fr.farRevision f WHERE f.idRevision=:idRevision");
 			q.setParameter("idRevision", idRevision);
 			listaFalla  = q.getResultList();
 			for(int i = 0; i<listaFalla.size(); i++){
@@ -84,7 +84,7 @@ public class FallaServicelmpl implements FallaService{
 				fb.setIdTipoFalla(f.getIdFalla());
 				fb.setDescripcion(f.getDescripcion());
 				fb.setNombreTipoFalla(f.getFalTipoFalla().getNombreSistema());
-				fb.setIdTipoFalla(f.getFalTipoFalla().getIdTipoFalla());
+				fb.setIdFalla(f.getIdFalla());
 				listaFallaBean.add(fb);
 			}
 		} catch (IllegalArgumentException e){
