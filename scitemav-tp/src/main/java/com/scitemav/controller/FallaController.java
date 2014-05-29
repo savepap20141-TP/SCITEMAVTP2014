@@ -1,13 +1,16 @@
 package com.scitemav.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -52,6 +55,20 @@ public class FallaController {
 	@ResponseBody
 	public List<FallaBean> getFalla(){		
 		return fallaService.listarFallas();
+	}
+	
+	@RequestMapping(value = "asignarFallasRevision-{idrevision}", method = RequestMethod.POST)
+	@ResponseBody
+	public List<String> toSentInvitatios(@PathVariable("idrevision") Integer idRevision, HttpServletRequest request, HttpSession session) {
+		session = request.getSession();
+		List<String> enviados = new ArrayList<String>();
+		String[] idUsuList = request.getParameter("idFallaList").toString().split("_");
+		String[] states = request.getParameter("isStateList").toString().split("_");
+		
+		if(idUsuList[0].length() > 0){
+			enviados = fallaService.administrarFallasRevision(idUsuList, idRevision);
+		}
+		return enviados;
 	}
 	
 }

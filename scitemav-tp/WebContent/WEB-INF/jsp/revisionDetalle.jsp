@@ -619,7 +619,7 @@ $(document).on('click','#btnEnviarInv', function(e){
 										officia deserunt mollit anim id est laborum.</p>
 								</div>
 								<div class="tab-pane fade" id="archivos">
-									<h4>Archivos</h4>
+									<h4>Fallas</h4>
 									<p>Lorem ipsum dolor sit amet, consectetur adipisicing
 										elit, sed do eiusmod tempor incididunt ut labore et dolore
 										magna aliqua. Ut enim ad minim veniam, quis nostrud

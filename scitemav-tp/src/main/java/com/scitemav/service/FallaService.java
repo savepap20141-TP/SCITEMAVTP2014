@@ -9,4 +9,6 @@ import com.scitemav.model.TipoFalla;
 public interface FallaService {
 	boolean registro (FallaBean fal) ;
 	public List<FallaBean> listarFallas();
+	public List<FallaBean> listarFallasRevision(Integer idRevision);
+	public List<String> administrarFallasRevision(String[] ids, Integer IdRevision);
 }

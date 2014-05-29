@@ -12,6 +12,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.scitemav.bean.FallaBean;
 import com.scitemav.model.Falla;
+import com.scitemav.model.FallaRevision;
+import com.scitemav.model.Revision;
 import com.scitemav.model.TipoFalla;
 @Service
 public class FallaServicelmpl implements FallaService{
@@ -65,5 +67,55 @@ public class FallaServicelmpl implements FallaService{
 		}
 
 		return lcb;
+	}
+
+	@SuppressWarnings("unchecked")
+	@Transactional
+	public List<FallaBean> listarFallasRevision(Integer idRevision) {
+		List<Falla> listaFalla = new ArrayList<Falla>();
+		List<FallaBean> listaFallaBean = new ArrayList<FallaBean>();
+		try{
+			Query q = em.createQuery("SELECT fr.farRevision FROM FallaRevision fr JOIN fr.farRevision f WHERE f.idRevision=:idRevision");
+			q.setParameter("idRevision", idRevision);
+			listaFalla  = q.getResultList();
+			for(int i = 0; i<listaFalla.size(); i++){
+				Falla f = listaFalla.get(i);
+				FallaBean fb = new FallaBean();
+				fb.setIdTipoFalla(f.getIdFalla());
+				fb.setDescripcion(f.getDescripcion());
+				fb.setNombreTipoFalla(f.getFalTipoFalla().getNombreSistema());
+				fb.setIdTipoFalla(f.getFalTipoFalla().getIdTipoFalla());
+				listaFallaBean.add(fb);
+			}
+		} catch (IllegalArgumentException e){
+			listaFallaBean = null;
+		}
+		
+		
+		return listaFallaBean;
+	}
+
+	@Transactional
+	public List<String> administrarFallasRevision(String[] ids, Integer IdRevision) {
+		List<String> enviados = new ArrayList<String>();
+		try{
+			for(int i =0; i< ids.length; i++){
+				FallaRevision falrev = new FallaRevision();
+				Falla fal = em.find(Falla.class, Integer.parseInt(ids[i]));
+				
+				Revision rev = new Revision();
+				rev.setIdRevision(IdRevision);
+				
+				falrev.setFarFalla(fal);
+				falrev.setFarRevision(rev);
+				enviados.add(fal.getFalTipoFalla().getNombreSistema());
+				em.persist(falrev);
+				
+			}
+			
+		} catch(Exception e){
+			System.out.println(e.getMessage());
+		}
+		return enviados;
 	}
 }
