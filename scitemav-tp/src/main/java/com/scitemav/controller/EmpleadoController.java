@@ -89,7 +89,7 @@ public class EmpleadoController {
 	public List<EmpleadoBean> getEmpleadoRevision(@PathVariable("idrevision") Integer idRevision){		
 		//return null;
 		return empleadoService.listarEmpleadosRevision(idRevision);
-	}				
+	} 		
 	
 	@RequestMapping(value = "asignarEmpleadosRevision-{idrevision}", method = RequestMethod.POST)
 	@ResponseBody

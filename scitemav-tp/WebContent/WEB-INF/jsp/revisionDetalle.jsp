@@ -10,6 +10,7 @@
 <jsp:include page="componentes/head.jsp" />
 </head>
 <script>
+var arregloAsignados = [];
 	$(document).ready(function(e) {
 		
 		var nfechaIni = 'txtFechaInicio';
@@ -135,7 +136,6 @@
 		cargarFechaRevis(nfechaFin);
 		var nProximaRev = 'txtProximaRevision';
 		cargarFechaRevis(nProximaRev);
-		inicioConsultaEmpleados();
 		inicioConsultaEmpleadosRevision(idrevision);
 		inicioConsultaFallasRevision(idrevision);
 	});
@@ -236,12 +236,14 @@
 		var filas = '';
 		var columnas = '';	
 	    $.ajax({
-	 		url: 'getEmpleadoRevision-'+idRevision,
+	 		url: 'getRepuestoRevision-'+idRevision,
 	 		type: 'post',
 	 		dataType: 'json',
 	 		data: '',
 	 		success: function(empleados){
+	 			
 	 			$.each(empleados, function(i, empleado){
+	 				arregloAsignados.push(empleado.idEmpleado);
 	 				filas = filas +'<tr class="">'+
 	 				'<td class="center"><a id="empleado_"'+i+'" href="toEmpleadoDetalle-'+empleado.idEmpleado+'">EMP-'+empleado.idEmpleado+'</a></td>'+
 	 				'<td class="center">'+empleado.nombre+'</td>'+
@@ -252,6 +254,7 @@
 					'<td class="center">'+empleado.telefono+'</td>'+
 					'<td class="center">'+empleado.nombreCargo+'</td>'+
 					'<td class="center">'+empleado.nombreEspecialidad+'</td>'+
+					'<td class="center"><button class="btn btn-danger btn-circle" type="button" id="btnDelete_'+i+'"><i class="fa fa-times"></i></button></td>'+
 					'</tr>';
 				});		        
 	 		},
@@ -265,7 +268,8 @@
 					'<th class="center">Sexo</th>'+
 					'<th class="center">Telefono</th>'+
 					'<th class="center">Nombre Cargo</th>'+
-					'<th class="center">Nombre Especialidad</th>';
+					'<th class="center">Nombre Especialidad</th>'+
+					'<th class="center">Eliminar</th>';
 				//realizarTabla2('EmpRev',columnas,filas);
 				//$('#EmpRev').append(filas);
 				var id = 'EmpRev';
@@ -286,11 +290,64 @@
 				$("#spnResultList_"+id).append(contenido);
 				//realizarTabla(columnas,filas);
 	 			removeNulls();
+	 			inicioConsultaEmpleados();
 	  		}
 	 	});
 	}
 	
+	function inicioConsultaRepuestoRevision(idRevision){
+		var filas = '';
+		var columnas = '';	
+	    $.ajax({
+	 		url: 'getRepuestoRevision-'+idRevision,
+	 		type: 'post',
+	 		dataType: 'json',
+	 		data: '',
+	 		success: function(repuestos){
+	 			
+	 			$.each(repuestos, function(i, repuesto){
+	 				arregloAsignados.push(repuesto.idRepuesto);
+	 				filas = filas +'<tr class="">'+
+	 				'<td class="center"><a id="revision"'+i+'" href="toRevisionDetalle-'+revision.idRevision+'">REP-'+revision.idRevision+'</a></td>'+
+	 				'<td class="center">'+revision.nombre+'</td>'+
+					'<td class="center">'+revision.comentario+'</td>'+
+					'<td class="center">'+revision.nombreRepuesto+'</td>'+
+					'<td class="center">'+revision.costoTotal+'</td>'+
+					'<td class="center"><button class="btn btn-danger btn-circle" type="button" id="btnDelete_'+i+'"><i class="fa fa-times"></i></button></td>'+
+					'</tr>';
+				});		        
+	 		},
+	 		complete: function() {
+	 			columnas = columnas + 
+	 				'<th class="center">Id</th>'+
+	 				'<th class="center">Comentario</th>'+
+	 				'<th class="center">Nombre Respuesto</th>'+
+					'<th class="center">Costo Total</th>';
+				//realizarTabla2('EmpRev',columnas,filas);
+				//$('#EmpRev').append(filas);
+				var id = 'RepRev';
+				var contenido = '';
+				$("#spnResultList_"+id).empty();
 	
+				contenido = contenido + '<table cellpadding="0" cellspacing="0" border="0" class="display dataTable" id="example_'+id+'"> '+
+						' <thead class="tableGri"> '+
+				            '<tr role="row">'+
+				            	columnas+							                            
+				            '</tr>'+
+				        '</thead> '+
+				        '<tbody id="'+id+'">';
+				contenido = contenido + filas;   
+				contenido = contenido + '</tbody>'+
+						'</table> ';
+				
+				$("#spnResultList_"+id).append(contenido);
+				//realizarTabla(columnas,filas);
+	 			removeNulls();
+	 			inicioConsultaRepuesto();
+	  		}
+	 	});
+		
+	}
 	function inicioConsultaFallasRevision(idRevision){
 		var filas = '';
 		var columnas = '';	
@@ -349,28 +406,18 @@
 	 		data: '',
 	 		success: function(empleados){
 	 			$.each(empleados, function(i, empleado){
-	 				var checkHabilitado = '';
-	 				var valueCreado = '';
-	 				var valueHabilitado = '';
-	 				if(empleado.estado == "habilitado"){
-	 					checkHabilitado = 'checked';
-	 					valueHabilitado = 'Habilitado';
-	 				}
-	 				if(empleado.estado == "deshabilitado"){
-	 					checkHabilitado =  '';
-	 					valueHabilitado = 'Deshabilitado';
-	 				}	 				
+		 				filas = filas +'<tr class="">'+
+		 				'<td class="center"><input id="chkEmp_'+empleado.idEmpleado+'" type="checkbox" onclick="updateState(this,'+ i +')"><input type="hidden" name="state"  id="state_'+i+'" value="'+empleado.estado+'" /></td>'+ 		
+		 				'<td class="center"><a id="empleado_"'+i+'" href="toEmpleadoDetalle-'+empleado.idEmpleado+'">EMP-'+empleado.idEmpleado+'</a></td>'+
+		 				'<td class="center">'+empleado.email+'<input id="change_'+i+'" type="hidden" name="change"></td>'+
+						'<td class="center">'+empleado.dni+'<input type="hidden" name="id" value="'+empleado.idEmpleado+'" id="idEmp_'+i+'" /></td>'+
+						'<td class="center">'+empleado.nombre+'</td>'+
+						'<td class="center">'+empleado.apellidoPaterno+'</td>'+
+						'<td class="center">'+empleado.apellidoMaterno+'</td>'+				
+						'</tr>';
 	 				
-	 				filas = filas +'<tr class="">'+
-	 				'<td class="center">'+valueCreado+valueHabilitado+' <input type="checkbox" '+checkHabilitado+' onclick="updateState(this,'+ i +')"><input type="hidden" name="state"  id="state_'+i+'" value="'+empleado.estado+'" /></td>'+ 		
-	 				'<td class="center"><a id="empleado_"'+i+'" href="toEmpleadoDetalle-'+empleado.idEmpleado+'">EMP-'+empleado.idEmpleado+'</a></td>'+
-	 				'<td class="center">'+empleado.email+'<input id="change_'+i+'" type="hidden" name="change"></td>'+
-					'<td class="center">'+empleado.dni+'<input type="hidden" name="id" value="'+empleado.idEmpleado+'" id="idEmp_'+i+'" /></td>'+
-					'<td class="center">'+empleado.nombre+'</td>'+
-					'<td class="center">'+empleado.apellidoPaterno+'</td>'+
-					'<td class="center">'+empleado.apellidoMaterno+'</td>'+				
-					'</tr>';
-				});		        
+				}); 			
+ 				
 	 		},
 	 		complete: function() {
 	 			columnas = columnas +
@@ -383,6 +430,11 @@
 					'<th class="center">Apellido Materno</th>';
 				//realizarTabla2('Emp',columnas,filas);
 				realizarTabla(columnas,filas);
+				for(var x = 0; x < arregloAsignados.length;x++){
+ 					//alert(arregloAsignados[x]);
+ 					document.getElementById("chkEmp_"+arregloAsignados[x]).checked=true;
+ 					$("#chkEmp_"+arregloAsignados[x]).attr('disabled','disabled');
+ 				}
 	 			removeNulls();
 	  		}
 	 	});
@@ -406,7 +458,7 @@
 <script>
 var contsave = 'first';
 var cont ='first';
-$(document).on('click','#btnEnviarInv', function(e){
+$(document).on('click','#btnAsignarEmpleados', function(e){
 		var list_State = '';
 		var list_IdEmp = '';
 		list_isChanged = document.getElementsByName('change');
@@ -429,11 +481,13 @@ $(document).on('click','#btnEnviarInv', function(e){
 			   data: $('#frmAdministrarEmpleadosRevision').serialize(),
 			   complete: function() {
 		   			//$.unblockUI();
+		   		   idrevision = $('#spnIdRevision').text();
+				   inicioConsultaEmpleadosRevision(idrevision);
 		   	   },
 			   success: function(enviados){
 				   if(enviados != ""){
 				    var msgASR = [];
-				    $('#resultOk').hide();
+				    $('#resultAsigEmp').hide();
 				    var contactos = "";
 					  $.each(enviados, function(z, env){
 						  msgASR.push('Asignacion realizada a: ' + env);
@@ -441,9 +495,9 @@ $(document).on('click','#btnEnviarInv', function(e){
 						  //alert(env);
 					  });		
 					if(msgASR.length>0){
-						$('#resultOk').show();
-						$('#mensajeEmails').empty();
-						$('#mensajeEmails').append(contactos);
+						$('#resultAsigEmp').show();
+						$('#mensajeAsignadosEmp').empty();
+						$('#mensajeAsignadosEmp').append(contactos);
 					}  
 				   }
 				}
@@ -778,8 +832,14 @@ $(document).on('click','#btnEnviarInv2', function(e){
 								<br>
 								
 								<div class="edicionInformacion2" style="display: none">
-									<input class="btn btn-lg btn-success btn-block" type="button" style="width: 20%;" value="Asignar Empleado" id="btnEnviarInv"></input><br>
-									<div id="spnResultList" class="resultBox section summaryPane" "></div>
+									<br>
+									<input class="btn btn-lg btn-success btn-block" type="button" style="width: 20%;" value="Asignar Empleado" id="btnAsignarEmpleados"></input><br>
+									<div class="alert alert-success alert-dismissable" id="resultAsigEmp" style="display:none">
+		    							<button class="close" aria-hidden="true" data-dismiss="alert" type="button">×</button>
+		    							<span id="mensajeAsignadosEmp"></span>
+									</div>
+									<br>
+									<div id="spnResultList" class="resultBox section summaryPane"></div>
 									<form id="frmAdministrarEmpleadosRevision">		
 									<input id="isState_list" type="hidden" name="isStateList"/>
 									<input id="idEmpleado_list" type="hidden" name="idEmpleadoList"/>
