@@ -25,9 +25,9 @@
                             <li>
                                 <a href="toConsultarClientes">Consultar Clientes</a>
                             </li>
-                              <li>
-                                <a href="toDetalleCliente">Detalle Clientes</a>
-                            </li>
+                            <!--  <li>
+                                <a href="toDetalleCliente">Detalle Clientes</a> 
+                            </li> -->
                         </ul>
                         <!-- /.nav-second-level -->
                     </li>
@@ -40,9 +40,9 @@
                             <li>
                                 <a href="toConsultarVehiculo">Consultar Vehiculos</a>
                             </li>
-                            <li>
-                                <a href="toDetalleVehiculo">Detalle Vehiculo</a>
-                            </li>
+                         <!--    <li>
+                                 <a href="toDetalleVehiculo">Detalle Vehiculo</a> 
+                            </li>  -->
                         </ul>
                         <!-- /.nav-second-level -->
                     </li>
@@ -55,9 +55,9 @@
                             <li>
                                 <a href="toConsultarRevision">Consultar Revisiones</a>
                             </li>
-                            <li>
+                          <!--   <li>
                                 <a href="toDetalleRevision">Detalle Revision</a>
-                            </li>
+                            </li> -->
                         </ul>
                         <!-- /.nav-second-level -->
                     </li>
