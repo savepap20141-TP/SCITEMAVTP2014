@@ -13,21 +13,21 @@
 $(function() {
     jQuery('#txtFechaInicio').datepicker({
     	dateFormat: "yy-mm-dd",  
-		    beforeShow : function(){
-	            jQuery( this ).datepicker('option','maxDate', jQuery('#txtFechaFin').val() );
+		    beforeShow : function(){	 
+		    	var date = $('#txtFechaFin').datepicker('getDate');
+	    		date.setDate(date.getDate()-1);
+		    jQuery( this ).datepicker('option','maxDate', date);
 	        }
 	    });		
     $("#txtFechaFin").datepicker({
     	
         dateFormat: "yy-mm-dd",       
         beforeShow : function(){
-            jQuery( this ).datepicker('option','minDate', jQuery('#txtFechaInicio').val() );
+        	var date2 = $('#txtFechaInicio').datepicker('getDate');
+    		date2.setDate(date2.getDate()+1);
+            jQuery( this ).datepicker('option','minDate', date2 );                
         },
-        onSelect: function(date){
-            var date2 = $('#txtFechaFin').datepicker('getDate');
-            date2.setDate(date2.getDate()+15);
-            $('#txtProximaRevision').datepicker('setDate', date2);
-        }
+
     });
     $('#txtProximaRevision').datepicker({
     	dateFormat: "yy-mm-dd",
