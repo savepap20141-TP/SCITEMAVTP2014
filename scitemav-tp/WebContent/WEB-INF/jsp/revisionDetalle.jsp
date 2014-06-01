@@ -12,6 +12,7 @@
 <script>
 $(function() {
     jQuery('#txtFechaInicio').datepicker({
+    	dateFormat: "yy-mm-dd",  
 		    beforeShow : function(){
 	            jQuery( this ).datepicker('option','maxDate', jQuery('#txtFechaFin').val() );
 	        }

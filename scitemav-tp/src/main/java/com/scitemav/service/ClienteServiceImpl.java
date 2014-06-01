@@ -100,8 +100,8 @@ public class ClienteServiceImpl implements ClienteService{
 				cb.setApellidoMaterno(c.getCliPersona().getApellidoMaterno());
 				cb.setSexo(c.getCliPersona().getSexo());
 				cb.setFechaNacimiento(c.getCliPersona().getFechaNacimiento());
-				/*cb.setIdDistrito(c.getCliPersona().getPerDistrito().getIdDistrito());
-				cb.setNombreDistrito(c.getCliPersona().getPerDistrito().getNombre());*/
+				/*cb.setIdDistrito(c.getCliPersona().getPerDistrito().getIdDistrito());*/
+				cb.setNombreDistrito(c.getCliPersona().getPerDistrito().getNombre());
 				cb.setDireccion(c.getCliPersona().getDireccion());
 				cb.setTelefono(c.getCliPersona().getTelefono());
 				cb.setCelular(c.getCliPersona().getCelular());
