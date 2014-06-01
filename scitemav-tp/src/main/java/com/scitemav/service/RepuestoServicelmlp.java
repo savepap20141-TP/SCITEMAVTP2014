@@ -16,9 +16,11 @@ import com.scitemav.bean.RepuestoBean;
 import com.scitemav.model.Cliente;
 import com.scitemav.model.Distrito;
 import com.scitemav.model.Empleado;
+import com.scitemav.model.EmpleadoRevision;
 import com.scitemav.model.Persona;
 import com.scitemav.model.Repuesto;
 import com.scitemav.model.RepuestoRevision;
+import com.scitemav.model.Revision;
 import com.scitemav.model.TipoRepuesto;
 import com.scitemav.model.Usuario;
 @Service
@@ -100,5 +102,25 @@ public class RepuestoServicelmlp implements RepuestoService {
 
 		return listaRepuestoBean;
 	}
-	
+
+	@Transactional
+	public List<String> administrarRepuestosRevision(String[] ids, Integer IdRevision) {
+		List<String> enviados = new ArrayList<String>();
+		try {
+			for (int i = 0; i < ids.length; i++) {				
+				RepuestoRevision repuestov = new RepuestoRevision();
+				Repuesto rep = em.find(Repuesto.class, Integer.parseInt(ids[i]));
+				Revision rev = new Revision();
+				rev.setIdRevision(IdRevision);
+				
+				repuestov.setRerRepuesto(rep);
+				repuestov.setRerRevision(rev);
+				enviados.add( rep.getNombre()+" "+rep.getRepTipoRepuesto().getNombre());
+				em.persist(repuestov);
+			}
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+		return enviados;
+	}
 }

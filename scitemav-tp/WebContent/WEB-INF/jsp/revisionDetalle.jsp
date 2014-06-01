@@ -320,7 +320,7 @@ var arregloAsignados = [];
 					'<td class="center">'+repuesto.nombre+'</td>'+
 					'<td class="center">'+repuesto.nombreTipoRepuesto+'</td>'+
 					'<td class="center">'+repuesto.costoUnitario+'</td>'+
-					'<td class="center">'+repuesto.costoTotal+'</td>'+
+					
 					'<td class="center"><button class="btn btn-danger btn-circle" type="button" id="btnDelete_'+i+'"><i class="fa fa-times"></i></button></td>'+
 					'</tr>';
 				});		        
@@ -332,7 +332,7 @@ var arregloAsignados = [];
 	 				'<th class="center">Nombre Respuesto</th>'+
 	 				'<th class="center">Nombre Tipo Respuesto</th>'+
 	 				'<th class="center">Costo Unitario</th>' +
-					'<th class="center">Costo Total</th>';
+					'<th class="center">Eliminar</th>';
 				
 				var id = 'RepRev';
 				var contenido = '';
@@ -351,7 +351,7 @@ var arregloAsignados = [];
 				
 				$("#spnResultList2_"+id).append(contenido);
 	 			removeNulls();
-	 			inicioConsultaRepuesto();
+	 			inicioConsultaRepuestos();
 	  		}
 	 	});
 		
@@ -448,6 +448,47 @@ var arregloAsignados = [];
 	 	});
 	}
 
+	function inicioConsultaRepuestos(){
+		var filas = '';
+		var columnas = '';	
+	    $.ajax({
+	 		url: 'getRepuesto',
+	 		type: 'post',
+	 		dataType: 'json',
+	 		data: '',
+	 		success: function(repuestos){
+	 			$.each(repuestos, function(i, repuesto){
+		 				filas = filas +'<tr class="">'+
+		 				'<td class="center"><input id="chkEmp_'+repuesto.idRepuesto+'" type="checkbox" onclick="updateState(this,'+ i +')"><input type="hidden" name="state"  id="state_'+i+'" value="'+repuesto.estado+'" /></td>'+ 		
+		 			//	'<td class="center"><a id="repuesto"'+i+'" href="toEmpleadoDetalle-'+empleado.idEmpleado+'">EMP-'+empleado.idEmpleado+'</a></td>'+
+		 				//'<td class="center">'+repuesto.nombre+'<input id="change_'+i+'" type="hidden" name="change"></td>'+
+						//'<td class="center">'+repuesto.dni+'<input type="hidden" name="id" value="'+empleado.idEmpleado+'" id="idEmp_'+i+'" /></td>'+
+						'<td class="center">'+repuesto.idRepuesto+'</td>'+
+						'<td class="center">'+repuesto.nombre+'</td>'+
+						'<td class="center">'+repuesto.nombreTipoRepuesto+'</td>'+				
+						'</tr>';
+	 				
+				}); 			
+ 				
+	 		},
+	 		complete: function() {
+	 			columnas = columnas +
+	 				'<th class="center">Estado</th>'+ 		
+	 				'<th class="center">Id Repuesto</th>'+
+	 				'<th class="center">Nombre</th>'+
+					'<th class="center">Nombre Tipo Repuesto</th>';
+				//realizarTabla2('Emp',columnas,filas);
+				realizarTabla(columnas,filas);
+				for(var x = 0; x < arregloAsignados.length;x++){
+ 					//alert(arregloAsignados[x]);
+ 					document.getElementById("chkEmp_"+arregloAsignados[x]).checked=true;
+ 					$("#chkEmp_"+arregloAsignados[x]).attr('disabled','disabled');
+ 				}
+	 			removeNulls();
+	  		}
+	 	});
+	}
+	
 	function updateState(source,i){
 		   var state;
 		   if(source.checked==true){
@@ -559,6 +600,54 @@ $(document).on('click','#btnEnviarInv2', function(e){
   }); 
 
 </script>
+
+<script>
+var contsave2 = 'first';
+var cont2 ='first';
+$(document).on('click','#btnAsignarRepuestos', function(e){
+		var list_State2 = '';
+		var list_IdRep = '';
+		list_isChanged1 = document.getElementsByName('change');
+		  for (var x=0; x < list_isChanged2.length; x++) {
+			  if($('#change_'+x).val()==true || $('#change_'+x).val()=='true'){
+				list_State1 += $('#state_'+x).val()+'_';
+				list_IdRep += $('#idRep_'+x).val()+'_';
+				$('#change_'+x).val('');
+			  }
+		 }
+		$('#isState_list2').val(list_State2);
+		$('#idRepuesto_list2').val(list_IdRep2);	
+	
+		  var idrevisionAE1 = $('#spnIdRevision').text();
+		  $.ajax({
+			   url: 'asignarRepuestoRevision-'+idrevisionAE1,
+			   type: 'post',
+			   dataType: 'json',
+			   data: $('#frmAdministrarRepuestoRevision').serialize(),
+			   complete: function() {
+		   			//$.unblockUI();
+		   	   },
+			   success: function(enviados){
+				   if(enviados != ""){
+				    var msgASR = [];
+				    $('#resultOk').hide();
+				    var contactos = "";
+					  $.each(enviados, function(z, env){
+						  msgASR.push('Asignacion realizada a: ' + env);
+						  contactos += 'Asignacion realizada a: ' +env+'<br>';
+						  //alert(env);
+					  });		
+					if(msgASR.length>0){
+						$('#resultOk').show();
+						$('#mensajeEmails').empty();
+						$('#mensajeEmails').append(contactos);
+					}  
+				   }
+				}
+		  });
+  }); 
+</script>
+
 
 <body>
 	<div id="wrapper">
@@ -773,9 +862,40 @@ $(document).on('click','#btnEnviarInv2', function(e){
 									<p>...:</p>
 								</div>
 								<div class="tab-pane fade" id="repuestos">
+									<div class="pull-right">
 								
+											<div class="btn-group">
+												<span id="btnVerEdicion3"
+													class="btn btn-default btn-xs dropdown-toggle"
+													onclick="ExtractInformacion4();">Editar</span> 
+													<span id="btnVerInformacion4"
+													class="btn btn-default btn-xs dropdown-toggle"
+													onclick="$('.edicionInformacion4').hide();$('.vistaInformacion4').show();$('#btnVerInformacion4').hide();$('#btnVerEdicion3').show();"
+													style="display: none">Regresar</span>
+											</div>
+							   </div>
+								
+								<br>
+								
+								<div class="edicionInformacion4" style="display: none">
+									
+									<input class="btn btn-lg btn-success btn-block" type="button" style="width: 20%;" value="Asignar Repuesto" id="btnAsignarRepuestos"></input><br>
+									<div class="alert alert-success alert-dismissable" id="resultAsigRep" style="display:none">
+		    							<button class="close" aria-hidden="true" data-dismiss="alert" type="button">×</button>
+		    							<span id="mensajeAsignadosRep"></span>
+									</div>
+									<br>
+									
+									<div id="spnResultList" class="resultBox section summaryPane"></div>
+									<form id="frmAdministrarRepuestoRevision">		
+									<input id="isState_list2" type="hidden" name="isStateList"/>
+									<input id="idRepuesto_list2" type="hidden" name="idRepuestoList"/>
+									</form>
+									</div>
+									<br><br>
+									<div class="vistaInformacion4">
 									<div id="spnResultList2_RepRev" class="resultBox section summaryPane"></div>
-								
+								</div>
 								</div>
 								
 								
