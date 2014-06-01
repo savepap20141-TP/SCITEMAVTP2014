@@ -14,10 +14,59 @@
 
 </head>
 <script>
-/* Script para inicializar para Pagina con la informacion*/
 $(document).ready(function(e){
 	InitInformacionPerfil();
+
+$('#frmPersona').validate({
+	rules:{
+		nombre:{
+			required: true,
+		},
+		apellidoPaterno:{
+			required: true,			
+		},
+		apellidoMaterno:{
+			required: true,
+		},
+		telefono:{
+			required:true,
+			number:true,
+			maxlength:9,
+			minlength:7				
+		},
+		email:{
+			required: true,
+		    email: true				
+		}	
+	},
+messages:{
+	telefono:{
+		required:"Debe ingresar un teléfono",
+		number:"Sólo números en el teléfono",
+		minlength:"Tiene que tener 7 dígitos en el teléfono",
+		maxlength:"Tiene que tener 9 dígitos en el teléfono"		
+	},
+	email:{
+		required:"Debe ingresar un Email",
+	    email:"Se necesita ingresar Email"	
+	},
+	nombre:{
+		required: "Se debe ingresar un nombre",
+	},
+	apellidoPaterno:{
+		required: "Se debe ingresar un apellido parterno",			
+	},
+	apellidoMaterno:{
+		required: "Se debe ingresar un apellido materno",
+	}
+},
 });
+});
+
+</script>
+
+<script>
+/* Script para inicializar para Pagina con la informacion*/
 // Ajax para Traer Informacion de Persona
 function InitInformacionPerfil(){
 	$.ajax({

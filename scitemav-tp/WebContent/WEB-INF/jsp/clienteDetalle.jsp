@@ -22,6 +22,105 @@
 <script>
 	$(document).ready(function(e) {
 		$('#frmEdicionCliente').validate({
+			rules:{
+				telefono:{
+					required:true,
+					number:true,
+					maxlength:9,
+					minlength:7
+					
+				},
+				celular:{
+					required:true,
+					number:true,
+					maxlength:9,
+					minlength:9
+					
+				},
+				dni:{
+					required:true,
+					number:true,				
+					maxlength:8,
+					minlength:8
+				},		
+				email:{
+					required: true,
+				    email: true
+					
+				},
+				fechaNacimiento:{				
+					required: true,
+				      dpDate: true,
+				      //dpComparedate:'notbefore 1996-01-01'
+				},
+				nombre:{
+					required: true,
+				},
+				apellidoPaterno:{
+					required: true,			
+				},
+				apellidoMaterno:{
+					required: true,
+				},
+				direccion:{
+					required: true,
+				},
+				idDistrito:{
+					required: true,
+				},
+				sexo:{
+					required: true,
+				}
+			},
+			messages:{
+				telefono:{
+					required:"Debe ingresar un teléfono",
+					number:"Sólo números en el teléfono",
+					minlength:"Tiene que tener 7 dígitos en el teléfono",
+					maxlength:"Tiene que tener 9 dígitos en el teléfono"
+				},
+				celular:{
+					required:"Debe ingresar un celular",
+					number:"Sólo números en el celular",
+					minlength:"Tiene que tener 9 dígitos en el celular",
+					maxlength:"Tiene que tener 9 dígitos en el celular"
+					
+				},
+				dni:{
+					required:"Debe ingresar un DNI",
+					number:"Sólo números en el DNI",
+					minlength:"Tiene que tener 8 dígitos el DNI",
+					maxlength:"Tiene que tener 8 dígitos el DNI"
+				},
+				email:{
+					required:"Debe ingresar un Email",
+				    email:"Se necesita ingresar Email"	
+				},
+				fechaNacimiento:{
+					required:"Se debe ingresar una Fecha",
+					dpDate:"Solo Fechas",	
+					dpComparedate:"Debe ser mayor igual de 18 años"
+				},
+				nombre:{
+					required: "Se debe ingresar un nombre",
+				},
+				apellidoPaterno:{
+					required: "Se debe ingresar un apellido parterno",			
+				},
+				apellidoMaterno:{
+					required: "Se debe ingresar un apellido materno",
+				},
+				direccion:{
+					required: "Se debe ingresar una direccion",
+				},
+				idDistrito:{
+					required: "Seleccione un distrito",
+				},
+				sexo:{
+					required: "Seleccione un tipo de sexo",
+				}		
+			
+			},
 		submitHandler: function(form){
 			$.ajax({
 		   		url: 'ajaxEditInformacionCliente',
