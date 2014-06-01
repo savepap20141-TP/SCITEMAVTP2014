@@ -108,7 +108,7 @@ public class FallaServicelmpl implements FallaService{
 				
 				falrev.setFarFalla(fal);
 				falrev.setFarRevision(rev);
-				enviados.add(fal.getFalTipoFalla().getNombreSistema());
+				enviados.add(fal.getDescripcion()+" "+fal.getFalTipoFalla().getNombreSistema());
 				em.persist(falrev);
 				
 			}

@@ -69,11 +69,10 @@ public class RepuestoController {
 	public List<String> toSentInvitatios(@PathVariable("idrevision") Integer idRevision, HttpServletRequest request, HttpSession session) {
 		session = request.getSession();
 		List<String> enviados = new ArrayList<String>();
-		String[] idUsuList = request.getParameter("idRepuestoList").toString().split("_");
-		String[] states = request.getParameter("isStateList").toString().split("_");
+		String[] idRepList = request.getParameter("idRepuestoList").toString().split("_");
 		
-		if(idUsuList[0].length() > 0){
-			enviados = repuestoService.administrarRepuestosRevision(idUsuList, idRevision);
+		if(idRepList[0].length() > 0){
+			enviados = repuestoService.administrarRepuestosRevision(idRepList, idRevision);
 		}
 		return enviados;
 	}

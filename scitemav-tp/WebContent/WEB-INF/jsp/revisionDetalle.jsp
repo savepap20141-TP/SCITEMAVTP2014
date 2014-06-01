@@ -10,7 +10,9 @@
 <jsp:include page="componentes/head.jsp" />
 </head>
 <script>
-var arregloAsignados = [];
+var arregloAsignadosEmp = [];
+var arregloAsignadosFalla = [];
+var arregloAsignadosRep = [];
 	$(document).ready(function(e) {
 		
 		var nfechaIni = 'txtFechaInicio';
@@ -136,9 +138,12 @@ var arregloAsignados = [];
 		cargarFechaRevis(nfechaFin);
 		var nProximaRev = 'txtProximaRevision';
 		cargarFechaRevis(nProximaRev);
+		//Empleado por revision Ejemplo ya funcionando
 		inicioConsultaEmpleadosRevision(idrevision);
+		//Falla por Revision arreglar para que funcione
 		inicioConsultaFallasRevision(idrevision);
-		inicioConsultaRepuestosRevision(idrevision);
+		//Repuestos por Revision
+		inicioConsultaRepuestoRevision(idrevision);
 	});
 
 	function EditInformacionRevision(){
@@ -218,14 +223,6 @@ var arregloAsignados = [];
 		$('#btnVerEdicion').hide();
 	}
 	
-	function ExtractInformacion2(){
-		$('.vistaInformacion2').hide();
-		$('.edicionInformacion2').show();
-		$('#btnVerInformacion2').show();
-		$('#btnVerEdicion2').hide();
-	}
-	
-	
 	function ExtractInformacion3(){
 		$('.vistaInformacion3').hide();
 		$('.edicionInformacion3').show();
@@ -233,34 +230,36 @@ var arregloAsignados = [];
 		$('#btnVerEdicion3').hide();
 	} 
 	
+
+</script>
+
+<script>  
+	//tab Repuesto por revision
 	function ExtractInformacion4(){
 		$('.vistaInformacion4').hide();
 		$('.edicionInformacion4').show();
 		$('#btnVerInformacion4').show();
 		$('#btnVerEdicion4').hide();
 	} 
-	function inicioConsultaEmpleadosRevision(idRevision){
+	
+	function inicioConsultaRepuestoRevision(idRevision){
 		var filas = '';
 		var columnas = '';	
 	    $.ajax({
-	 		url: 'getEmpleadoRevision-'+idRevision,
+	 		url: 'getRepuestoRevision-'+idRevision,
 	 		type: 'post',
 	 		dataType: 'json',
 	 		data: '',
-	 		success: function(empleados){
+	 		success: function(repuestos){
 	 			
-	 			$.each(empleados, function(i, empleado){
-	 				arregloAsignados.push(empleado.idEmpleado);
+	 			$.each(repuestos, function(i, repuesto){
+	 				arregloAsignadosRep.push(repuesto.idRepuesto);
 	 				filas = filas +'<tr class="">'+
-	 				'<td class="center"><a id="empleado_"'+i+'" href="toEmpleadoDetalle-'+empleado.idEmpleado+'">EMP-'+empleado.idEmpleado+'</a></td>'+
-	 				'<td class="center">'+empleado.nombre+'</td>'+
-					'<td class="center">'+empleado.apellidoPaterno+'</td>'+
-					'<td class="center">'+empleado.apellidoMaterno+'</td>'+
-					'<td class="center">'+empleado.dni+'</td>'+
-					'<td class="center">'+empleado.sexo+'</td>'+
-					'<td class="center">'+empleado.telefono+'</td>'+
-					'<td class="center">'+empleado.nombreCargo+'</td>'+
-					'<td class="center">'+empleado.nombreEspecialidad+'</td>'+
+	 				'<td class="center">REP-'+repuesto.idRepuesto+'</td>'+
+	 				'<td class="center">'+repuesto.comentario+'</td>'+
+					'<td class="center">'+repuesto.nombre+'</td>'+
+					'<td class="center">'+repuesto.nombreTipoRepuesto+'</td>'+
+					'<td class="center">'+repuesto.costoUnitario+'</td>'+					
 					'<td class="center"><button class="btn btn-danger btn-circle" type="button" id="btnDelete_'+i+'"><i class="fa fa-times"></i></button></td>'+
 					'</tr>';
 				});		        
@@ -268,18 +267,13 @@ var arregloAsignados = [];
 	 		complete: function() {
 	 			columnas = columnas + 
 	 				'<th class="center">Id</th>'+
-	 				'<th class="center">Nombre</th>'+
-	 				'<th class="center">Apellido Paterno</th>'+
-					'<th class="center">Apellido Materno</th>'+
-					'<th class="center">DNI</th>'+
-					'<th class="center">Sexo</th>'+
-					'<th class="center">Telefono</th>'+
-					'<th class="center">Nombre Cargo</th>'+
-					'<th class="center">Nombre Especialidad</th>'+
+	 				'<th class="center">Comentario</th>'+
+	 				'<th class="center">Nombre Respuesto</th>'+
+	 				'<th class="center">Tipo Respuesto</th>'+
+					'<th class="center">Costo Unitario</th>'+
 					'<th class="center">Eliminar</th>';
-				//realizarTabla2('EmpRev',columnas,filas);
-				//$('#EmpRev').append(filas);
-				var id = 'EmpRev';
+
+				var id = 'RepRev';
 				var contenido = '';
 				$("#spnResultList_"+id).empty();
 	
@@ -297,157 +291,16 @@ var arregloAsignados = [];
 				$("#spnResultList_"+id).append(contenido);
 				//realizarTabla(columnas,filas);
 	 			removeNulls();
-	 			inicioConsultaEmpleados();
-	  		}
-	 	});
-	}
-	
-	function inicioConsultaRepuestosRevision(idRevision){
-		var filas = '';
-		var columnas = '';	
-	    $.ajax({
-	 		url: 'getRepuestoRevision-'+idRevision,
-	 		type: 'post',
-	 		dataType: 'json',
-	 		data: '',
-	 		success: function(repuestos){
-	 			
-	 			$.each(repuestos, function(i, repuesto){
-	 				arregloAsignados.push(repuesto.idRepuesto);
-	 				filas = filas +'<tr class="">'+
-	 				//'<td class="center"><a id="revision"'+i+'" href="toRevisionDetalle-'+revision.idRevision+'">REP-'+revision.idRevision+'</a></td>'+	 				
-					'<td class="center">'+repuesto.comentario+'</td>'+
-					'<td class="center">'+repuesto.nombre+'</td>'+
-					'<td class="center">'+repuesto.nombreTipoRepuesto+'</td>'+
-					'<td class="center">'+repuesto.costoUnitario+'</td>'+
-					
-					'<td class="center"><button class="btn btn-danger btn-circle" type="button" id="btnDelete_'+i+'"><i class="fa fa-times"></i></button></td>'+
-					'</tr>';
-				});		        
-	 		},
-	 		complete: function() {
-	 			columnas = columnas + 
-	 				//'<th class="center">Id</th>'+
-	 				'<th class="center">Comentario</th>'+
-	 				'<th class="center">Nombre Respuesto</th>'+
-	 				'<th class="center">Nombre Tipo Respuesto</th>'+
-	 				'<th class="center">Costo Unitario</th>' +
-					'<th class="center">Eliminar</th>';
-				
-				var id = 'RepRev';
-				var contenido = '';
-				$("#spnResultList2_"+id).empty();
-	
-				contenido = contenido + '<table cellpadding="0" cellspacing="0" border="0" class="display dataTable" id="example_'+id+'"> '+
-						' <thead class="tableGri"> '+
-				            '<tr role="row">'+
-				            	columnas+							                            
-				            '</tr>'+
-				        '</thead> '+
-				        '<tbody id="'+id+'">';
-				contenido = contenido + filas;   
-				contenido = contenido + '</tbody>'+
-						'</table> ';
-				
-				$("#spnResultList2_"+id).append(contenido);
-	 			removeNulls();
 	 			inicioConsultaRepuestos();
 	  		}
 	 	});
 		
 	}
-	function inicioConsultaFallasRevision(idRevision){
-		var filas = '';
-		var columnas = '';	
-	    $.ajax({
-	 		url: 'getFallaRevision-'+idRevision,
-	 		type: 'post',
-	 		dataType: 'json',
-	 		data: '',
-	 		success: function(fallas){
-	 			$.each(fallas, function(i, falla){
-	 				filas = filas +'<tr class="">'+
-	 				//'<td class="center"><a id="falla"'+i+'" href="toEmpleadoDetalle-'+empleado.idEmpleado+'">EMP-'+empleado.idEmpleado+'</a></td>'+
-	 				'<td class="center">FAL-'+falla.idFalla+'</td>'+
-	 				'<td class="center">'+falla.descripcion+'</td>'+
-					'<td class="center">'+falla.nombreTipoFalla+'</td>'+					
-					'</tr>';
-				});		        
-	 		},
-	 		complete: function() {
-	 			columnas = columnas + 
-	 				'<th class="center">Id</th>'+
-	 				'<th class="center">Nombre</th>'+
-	 				'<th class="center">Tipo de falla</th>';
-				//realizarTabla2('EmpRev',columnas,filas);
-				//$('#EmpRev').append(filas);
-				var id = 'FalRev';
-				var contenido = '';
-				$("#spnResultList1_"+id).empty();
-	
-				contenido = contenido + '<table cellpadding="0" cellspacing="0" border="0" class="display dataTable" id="example_'+id+'"> '+
-						' <thead class="tableGri"> '+
-				            '<tr role="row">'+
-				            	columnas+							                            
-				            '</tr>'+
-				        '</thead> '+
-				        '<tbody id="'+id+'">';
-				contenido = contenido + filas;   
-				contenido = contenido + '</tbody>'+
-						'</table> ';
-				
-				$("#spnResultList1_"+id).append(contenido);
-				//realizarTabla(columnas,filas);
-	 			removeNulls();
-	  		}
-	 	});
-	} 
 
-	
-	function inicioConsultaEmpleados(){
-		var filas = '';
-		var columnas = '';	
-	    $.ajax({
-	 		url: 'getEmpleados',
-	 		type: 'post',
-	 		dataType: 'json',
-	 		data: '',
-	 		success: function(empleados){
-	 			$.each(empleados, function(i, empleado){
-		 				filas = filas +'<tr class="">'+
-		 				'<td class="center"><input id="chkEmp_'+empleado.idEmpleado+'" type="checkbox" onclick="updateState(this,'+ i +')"><input type="hidden" name="state"  id="state_'+i+'" value="'+empleado.estado+'" /></td>'+ 		
-		 				'<td class="center"><a id="empleado_"'+i+'" href="toEmpleadoDetalle-'+empleado.idEmpleado+'">EMP-'+empleado.idEmpleado+'</a></td>'+
-		 				'<td class="center">'+empleado.email+'<input id="change_'+i+'" type="hidden" name="change"></td>'+
-						'<td class="center">'+empleado.dni+'<input type="hidden" name="id" value="'+empleado.idEmpleado+'" id="idEmp_'+i+'" /></td>'+
-						'<td class="center">'+empleado.nombre+'</td>'+
-						'<td class="center">'+empleado.apellidoPaterno+'</td>'+
-						'<td class="center">'+empleado.apellidoMaterno+'</td>'+				
-						'</tr>';
-	 				
-				}); 			
- 				
-	 		},
-	 		complete: function() {
-	 			columnas = columnas +
-	 				'<th class="center">Estado</th>'+ 		
-	 				'<th class="center">Id Empleado</th>'+
-	 				'<th class="center">Email</th>'+
-	 				'<th class="center">DNI</th>'+
-					'<th class="center">Nombre</th>'+
-					'<th class="center">Apellido Paterno</th>'+
-					'<th class="center">Apellido Materno</th>';
-				//realizarTabla2('Emp',columnas,filas);
-				realizarTabla(columnas,filas);
-				for(var x = 0; x < arregloAsignados.length;x++){
- 					//alert(arregloAsignados[x]);
- 					document.getElementById("chkEmp_"+arregloAsignados[x]).checked=true;
- 					$("#chkEmp_"+arregloAsignados[x]).attr('disabled','disabled');
- 				}
-	 			removeNulls();
-	  		}
-	 	});
+	function updateStateRep(source,i){
+		$('#changeR_'+i).val(true);
 	}
-
+	
 	function inicioConsultaRepuestos(){
 		var filas = '';
 		var columnas = '';	
@@ -459,12 +312,9 @@ var arregloAsignados = [];
 	 		success: function(repuestos){
 	 			$.each(repuestos, function(i, repuesto){
 		 				filas = filas +'<tr class="">'+
-		 				'<td class="center"><input id="chkEmp_'+repuesto.idRepuesto+'" type="checkbox" onclick="updateState(this,'+ i +')"><input type="hidden" name="state"  id="state_'+i+'" value="'+repuesto.estado+'" /></td>'+ 		
-		 			//	'<td class="center"><a id="repuesto"'+i+'" href="toEmpleadoDetalle-'+empleado.idEmpleado+'">EMP-'+empleado.idEmpleado+'</a></td>'+
-		 				//'<td class="center">'+repuesto.nombre+'<input id="change_'+i+'" type="hidden" name="change"></td>'+
-						//'<td class="center">'+repuesto.dni+'<input type="hidden" name="id" value="'+empleado.idEmpleado+'" id="idEmp_'+i+'" /></td>'+
-						'<td class="center">'+repuesto.idRepuesto+'</td>'+
-						'<td class="center">'+repuesto.nombre+'</td>'+
+		 				'<td class="center"><input id="chkRep_'+repuesto.idRepuesto+'" type="checkbox" onclick="updateStateRep(this,'+ i +')"></td>'+ 		
+						'<td class="center">'+repuesto.idRepuesto+'<input id="changeR_'+i+'" type="hidden" name="changeR"></td>'+
+						'<td class="center">'+repuesto.nombre+'<input type="hidden" value="'+repuesto.idRepuesto+'" id="idRep_'+i+'" /></td>'+
 						'<td class="center">'+repuesto.nombreTipoRepuesto+'</td>'+				
 						'</tr>';
 	 				
@@ -477,34 +327,355 @@ var arregloAsignados = [];
 	 				'<th class="center">Id Repuesto</th>'+
 	 				'<th class="center">Nombre</th>'+
 					'<th class="center">Nombre Tipo Repuesto</th>';
-				//realizarTabla2('Emp',columnas,filas);
-				realizarTabla(columnas,filas);
-				for(var x = 0; x < arregloAsignados.length;x++){
+					
+					//
+		 			var id = 'Rep';
+					var contenido = '';
+					$("#spnResultList_"+id).empty();
+		
+					contenido = contenido + '<table cellpadding="0" cellspacing="0" border="0" class="display dataTable" id="example_'+id+'"> '+
+							' <thead class="tableGri"> '+
+					            '<tr role="row">'+
+					            	columnas+							                            
+					            '</tr>'+
+					        '</thead> '+
+					        '<tbody id="'+id+'">';
+					contenido = contenido + filas;   
+					contenido = contenido + '</tbody>'+
+							'</table> ';
+					
+					$("#spnResultList_"+id).append(contenido);
+		 			//
+					
+				for(var x = 0; x < arregloAsignadosRep.length;x++){
  					//alert(arregloAsignados[x]);
- 					document.getElementById("chkEmp_"+arregloAsignados[x]).checked=true;
- 					$("#chkEmp_"+arregloAsignados[x]).attr('disabled','disabled');
+ 					document.getElementById("chkRep_"+arregloAsignadosRep[x]).checked=true;
+ 					$("#chkRep_"+arregloAsignadosRep[x]).attr('disabled','disabled');
  				}
 	 			removeNulls();
 	  		}
 	 	});
 	}
-	
-	function updateState(source,i){
-		   var state;
-		   if(source.checked==true){
-		    state="habilitado";
-		   }
-		   else{
-		    state="deshabilitado";
-		      }
-		   $('#state_'+i).val(state);
-		   $('#change_'+i).val(true);
-	}
 
+	
+	$(document).on('click','#btnAsignarRepuestos', function(e){
+		var list_IdRep = '';
+		list_isChangedR = document.getElementsByName('changeR');
+		  for (var x=0; x < list_isChangedR.length; x++) {
+			  if($('#changeR_'+x).val()==true || $('#changeR_'+x).val()=='true'){
+				list_IdRep += $('#idRep_'+x).val()+'_';
+				$('#changeR_'+x).val('');
+			  }
+		 }
+		$('#idRepuesto_list').val(list_IdRep);	
+	
+		  var idrevisionAE2 = $('#spnIdRevision').text();
+		  $.ajax({
+			   url: 'asignarRepuestoRevision-'+idrevisionAE2,
+			   type: 'post',
+			   dataType: 'json',
+			   data: $('#frmAdministrarRepuestoRevision').serialize(),
+			   complete: function() {
+				   inicioConsultaRepuestoRevision(idrevisionAE2);
+		   	   },
+			   success: function(enviados){
+				   if(enviados != ""){
+					    var msgASR = [];
+					    $('#resultAsigRep').hide();
+					    var contactos = "";
+						  $.each(enviados, function(z, env){
+							  msgASR.push('Asignacion Repuesto realizada a: ' + env);
+							  contactos += 'Asignacion Repuesto realizada a: ' +env+'<br>';
+							  //alert(env);
+						  });		
+						if(msgASR.length>0){
+							$('#resultAsigRep').show();
+							$('#mensajeAsignadosRep').empty();
+							$('#mensajeAsignadosRep').append(contactos);
+						}  
+					   }				   
+				}
+		  });
+  }); 
 	
 </script>
 
 <script>
+//tab Fallas por Revisión
+	function inicioConsultaFallasRevision(idRevision){
+		var filas = '';
+		var columnas = '';	
+	    $.ajax({
+	 		url: 'getFallaRevision-'+idRevision,
+	 		type: 'post',
+	 		dataType: 'json',
+	 		data: '',
+	 		success: function(fallas){
+	 			$.each(fallas, function(i, falla){
+	 				arregloAsignadosFalla.push(falla.idFalla);
+	 				filas = filas +'<tr class="">'+
+	 				'<td class="center">FAL-'+falla.idFalla+'</td>'+
+	 				'<td class="center">'+falla.descripcion+'</td>'+
+					'<td class="center">'+falla.nombreTipoFalla+'</td>'+					
+					'</tr>';
+				});		        
+	 		},
+	 		complete: function() {
+	 			columnas = columnas + 
+	 				'<th class="center">Id</th>'+
+	 				'<th class="center">Nombre</th>'+
+	 				'<th class="center">Tipo de falla</th>';
+				var id = 'FalRev';
+				var contenido = '';
+				$("#spnResultList_"+id).empty();
+	
+				contenido = contenido + '<table cellpadding="0" cellspacing="0" border="0" class="display dataTable" id="example_'+id+'"> '+
+						' <thead class="tableGri"> '+
+				            '<tr role="row">'+
+				            	columnas+							                            
+				            '</tr>'+
+				        '</thead> '+
+				        '<tbody id="'+id+'">';
+				contenido = contenido + filas;   
+				contenido = contenido + '</tbody>'+
+						'</table> ';
+				
+				$("#spnResultList_"+id).append(contenido);
+				//realizarTabla(columnas,filas);
+				inicioConsultaFalla();
+	 			removeNulls();
+	  		}
+	 	});
+	} 
+	
+	function updateStateFallas(source,i){
+		$('#changeF_'+i).val(true);
+	}
+	
+	function inicioConsultaFalla(){
+		var filas = '';
+		var columnas = '';	
+	    $.ajax({
+	 		url: 'getFalla',
+	 		type: 'post',
+	 		dataType: 'json',
+	 		data: '',
+	 		success: function(fallas){
+	 			$.each(fallas, function(i, fal){
+	 				filas = filas +'<tr class="">'+
+	 				'<td class="center"><input id="chkFalla_'+fal.idFalla+'" type="checkbox" onclick="updateStateFallas(this,'+ i +')"></td>'+
+					'<td class="center">FALL-'+fal.idFalla+'<input id="changeF_'+i+'" type="hidden" name="changeF"></td>'+
+					'<td class="center">'+fal.descripcion+'<input type="hidden" value="'+fal.idFalla+'" id="idFalla_'+i+'" /></td>'+
+					'<td class="center">'+fal.nombreTipoFalla+'</td>'+
+					'</tr>';
+				});		        
+	 		},
+	 		complete: function() {
+	 			columnas = columnas + 
+	 			'<th class="center">Estado</th>'+ 	
+	 			'<th class="center">Id Falla</th>'+
+	 			'<th class="center">Descripcion</th>'+
+	 			'<th class="center">Tipo Falla</th>';
+	 			
+	 			//
+	 			var id = 'Fallas';
+				var contenido = '';
+				$("#spnResultList_"+id).empty();
+	
+				contenido = contenido + '<table cellpadding="0" cellspacing="0" border="0" class="display dataTable" id="example_'+id+'"> '+
+						' <thead class="tableGri"> '+
+				            '<tr role="row">'+
+				            	columnas+							                            
+				            '</tr>'+
+				        '</thead> '+
+				        '<tbody id="'+id+'">';
+				contenido = contenido + filas;   
+				contenido = contenido + '</tbody>'+
+						'</table> ';
+				
+				$("#spnResultList_"+id).append(contenido);
+	 			//
+				for(var x = 0; x < arregloAsignadosFalla.length;x++){
+					//alert(arregloAsignadosEmp[x]);
+					document.getElementById("chkFalla_"+arregloAsignadosFalla[x]).checked=true;
+					$("#chkFalla_"+arregloAsignadosFalla[x]).attr('disabled','disabled');
+				}
+	 			//realizarTabla(columnas,filas);
+	 			removeNulls();
+	  		}
+	 	});
+	}
+	
+	$(document).on('click','#btnAsignarFallas', function(e){
+		var list_IdFal = '';
+		list_isChanged1 = document.getElementsByName('changeF');
+		  for (var x=0; x < list_isChanged1.length; x++) {
+			  if($('#changeF_'+x).val()==true || $('#changeF_'+x).val()=='true'){
+				list_IdFal += $('#idFalla_'+x).val()+'_';
+				$('#change_'+x).val('');
+			  }
+		 }
+		$('#idFalla_list').val(list_IdFal);	
+		
+		  var idrevisionAE1 = $('#spnIdRevision').text();
+		  $.ajax({
+			   url: 'asignarFallasRevision-'+idrevisionAE1,
+			   type: 'post',
+			   dataType: 'json',
+			   data: $('#frmAdministrarFallasRevision').serialize(),
+			   complete: function() {
+		   			//$.unblockUI();
+		   		   idrevision = $('#spnIdRevision').text();
+		   		   inicioConsultaFallasRevision(idrevisionAE1);
+		   	   },
+			   success: function(enviados){
+				   if(enviados != ""){
+				    var msgASR = [];
+				    $('#resultAsigFalla').hide();
+				    var contactos = "";
+					  $.each(enviados, function(z, env){
+						  msgASR.push('Asignacion realizada a: ' + env);
+						  contactos += 'Asignacion realizada a: ' +env+'<br>';
+						  //alert(env);
+					  });		
+					if(msgASR.length>0){
+						$('#resultAsigFalla').show();
+						$('#mensajeAsignadosFalla').empty();
+						$('#mensajeAsignadosFalla').append(contactos);
+					}  
+				   }
+				}
+		  });
+  }); 
+</script>
+
+<script>
+//ultimo tab Empleados por Revisión
+function updateState(source,i){
+	var state;
+	if(source.checked==true){
+	    state="habilitado";
+	}
+	else{
+	    state="deshabilitado";
+	}
+	$('#state_'+i).val(state);
+	$('#change_'+i).val(true);
+}	
+function ExtractInformacion2(){
+	$('.vistaInformacion2').hide();
+	$('.edicionInformacion2').show();
+	$('#btnVerInformacion2').show();
+	$('#btnVerEdicion2').hide();
+}
+	
+function inicioConsultaEmpleadosRevision(idRevision){
+	var filas = '';
+	var columnas = '';	
+    $.ajax({
+ 		url: 'getEmpleadoRevision-'+idRevision,
+ 		type: 'post',
+ 		dataType: 'json',
+ 		data: '',
+ 		success: function(empleados){
+ 			
+ 			$.each(empleados, function(i, empleado){
+ 				arregloAsignadosEmp.push(empleado.idEmpleado);
+ 				filas = filas +'<tr class="">'+
+ 				'<td class="center"><a id="empleado_"'+i+'" href="toEmpleadoDetalle-'+empleado.idEmpleado+'">EMP-'+empleado.idEmpleado+'</a></td>'+
+ 				'<td class="center">'+empleado.nombre+'</td>'+
+				'<td class="center">'+empleado.apellidoPaterno+'</td>'+
+				'<td class="center">'+empleado.apellidoMaterno+'</td>'+
+				'<td class="center">'+empleado.dni+'</td>'+
+				'<td class="center">'+empleado.sexo+'</td>'+
+				'<td class="center">'+empleado.telefono+'</td>'+
+				'<td class="center">'+empleado.nombreCargo+'</td>'+
+				'<td class="center">'+empleado.nombreEspecialidad+'</td>'+
+				'<td class="center"><button class="btn btn-danger btn-circle" type="button" id="btnDelete_'+i+'"><i class="fa fa-times"></i></button></td>'+
+				'</tr>';
+			});		        
+ 		},
+ 		complete: function() {
+ 			columnas = columnas + 
+ 				'<th class="center">Id</th>'+
+ 				'<th class="center">Nombre</th>'+
+ 				'<th class="center">Apellido Paterno</th>'+
+				'<th class="center">Apellido Materno</th>'+
+				'<th class="center">DNI</th>'+
+				'<th class="center">Sexo</th>'+
+				'<th class="center">Telefono</th>'+
+				'<th class="center">Nombre Cargo</th>'+
+				'<th class="center">Nombre Especialidad</th>'+
+				'<th class="center">Eliminar</th>';
+			//realizarTabla2('EmpRev',columnas,filas);
+			//$('#EmpRev').append(filas);
+			var id = 'EmpRev';
+			var contenido = '';
+			$("#spnResultList_"+id).empty();
+
+			contenido = contenido + '<table cellpadding="0" cellspacing="0" border="0" class="display dataTable" id="example_'+id+'"> '+
+					' <thead class="tableGri"> '+
+			            '<tr role="row">'+
+			            	columnas+							                            
+			            '</tr>'+
+			        '</thead> '+
+			        '<tbody id="'+id+'">';
+			contenido = contenido + filas;   
+			contenido = contenido + '</tbody>'+
+					'</table> ';
+			
+			$("#spnResultList_"+id).append(contenido);
+			//realizarTabla(columnas,filas);
+ 			removeNulls();
+ 			inicioConsultaEmpleados();
+  		}
+ 	});
+}
+
+function inicioConsultaEmpleados(){
+	var filas = '';
+	var columnas = '';	
+    $.ajax({
+ 		url: 'getEmpleados',
+ 		type: 'post',
+ 		dataType: 'json',
+ 		data: '',
+ 		success: function(empleados){
+ 			$.each(empleados, function(i, empleado){
+	 				filas = filas +'<tr class="">'+
+	 				'<td class="center"><input id="chkEmp_'+empleado.idEmpleado+'" type="checkbox" onclick="updateState(this,'+ i +')"><input type="hidden" name="state"  id="state_'+i+'" value="'+empleado.estado+'" /></td>'+ 		
+	 				'<td class="center"><a id="empleado_"'+i+'" href="toEmpleadoDetalle-'+empleado.idEmpleado+'">EMP-'+empleado.idEmpleado+'</a></td>'+
+	 				'<td class="center">'+empleado.email+'<input id="change_'+i+'" type="hidden" name="change"></td>'+
+					'<td class="center">'+empleado.dni+'<input type="hidden" name="id" value="'+empleado.idEmpleado+'" id="idEmp_'+i+'" /></td>'+
+					'<td class="center">'+empleado.nombre+'</td>'+
+					'<td class="center">'+empleado.apellidoPaterno+'</td>'+
+					'<td class="center">'+empleado.apellidoMaterno+'</td>'+				
+					'</tr>';
+ 				
+			}); 			
+				
+ 		},
+ 		complete: function() {
+ 			columnas = columnas +
+ 				'<th class="center">Estado</th>'+ 		
+ 				'<th class="center">Id Empleado</th>'+
+ 				'<th class="center">Email</th>'+
+ 				'<th class="center">DNI</th>'+
+				'<th class="center">Nombre</th>'+
+				'<th class="center">Apellido Paterno</th>'+
+				'<th class="center">Apellido Materno</th>';
+			//realizarTabla2('Emp',columnas,filas);
+			realizarTabla(columnas,filas);
+			for(var x = 0; x < arregloAsignadosEmp.length;x++){
+					//alert(arregloAsignadosEmp[x]);
+					document.getElementById("chkEmp_"+arregloAsignadosEmp[x]).checked=true;
+					$("#chkEmp_"+arregloAsignadosEmp[x]).attr('disabled','disabled');
+			}
+ 			removeNulls();
+  		}
+ 	});
+}
+
 var contsave = 'first';
 var cont ='first';
 $(document).on('click','#btnAsignarEmpleados', function(e){
@@ -553,101 +724,7 @@ $(document).on('click','#btnAsignarEmpleados', function(e){
 		  });
   });
   
-var contsave1 = 'first';
-var cont1 ='first';
-$(document).on('click','#btnEnviarInv2', function(e){
-		var list_State1 = '';
-		var list_IdFal = '';
-		list_isChanged1 = document.getElementsByName('change');
-		  for (var x=0; x < list_isChanged1.length; x++) {
-			  if($('#change_'+x).val()==true || $('#change_'+x).val()=='true'){
-				list_State1 += $('#state_'+x).val()+'_';
-				list_IdFal += $('#idFal_'+x).val()+'_';
-				$('#change_'+x).val('');
-			  }
-		 }
-		$('#isState_list1').val(list_State1);
-		$('#idFalla_list').val(list_IdFal);	
-		//alert(list_State);
-		//alert(list_IdUsu);
-		  var idrevisionAE1 = $('#spnIdRevision').text();
-		  $.ajax({
-			   url: 'asignarFallasRevision-'+idrevisionAE1,
-			   type: 'post',
-			   dataType: 'json',
-			   data: $('#frmAdministrarFallasRevision').serialize(),
-			   complete: function() {
-		   			//$.unblockUI();
-		   	   },
-			   success: function(enviados){
-				   if(enviados != ""){
-				    var msgASR = [];
-				    $('#resultOk').hide();
-				    var contactos = "";
-					  $.each(enviados, function(z, env){
-						  msgASR.push('Asignacion realizada a: ' + env);
-						  contactos += 'Asignacion realizada a: ' +env+'<br>';
-						  //alert(env);
-					  });		
-					if(msgASR.length>0){
-						$('#resultOk').show();
-						$('#mensajeEmails').empty();
-						$('#mensajeEmails').append(contactos);
-					}  
-				   }
-				}
-		  });
-  }); 
-
 </script>
-
-<script>
-var contsave2 = 'first';
-var cont2 ='first';
-$(document).on('click','#btnAsignarRepuestos', function(e){
-		var list_State2 = '';
-		var list_IdRep = '';
-		list_isChanged1 = document.getElementsByName('change');
-		  for (var x=0; x < list_isChanged2.length; x++) {
-			  if($('#change_'+x).val()==true || $('#change_'+x).val()=='true'){
-				list_State1 += $('#state_'+x).val()+'_';
-				list_IdRep += $('#idRep_'+x).val()+'_';
-				$('#change_'+x).val('');
-			  }
-		 }
-		$('#isState_list2').val(list_State2);
-		$('#idRepuesto_list2').val(list_IdRep2);	
-	
-		  var idrevisionAE1 = $('#spnIdRevision').text();
-		  $.ajax({
-			   url: 'asignarRepuestoRevision-'+idrevisionAE1,
-			   type: 'post',
-			   dataType: 'json',
-			   data: $('#frmAdministrarRepuestoRevision').serialize(),
-			   complete: function() {
-		   			//$.unblockUI();
-		   	   },
-			   success: function(enviados){
-				   if(enviados != ""){
-				    var msgASR = [];
-				    $('#resultOk').hide();
-				    var contactos = "";
-					  $.each(enviados, function(z, env){
-						  msgASR.push('Asignacion realizada a: ' + env);
-						  contactos += 'Asignacion realizada a: ' +env+'<br>';
-						  //alert(env);
-					  });		
-					if(msgASR.length>0){
-						$('#resultOk').show();
-						$('#mensajeEmails').empty();
-						$('#mensajeEmails').append(contactos);
-					}  
-				   }
-				}
-		  });
-  }); 
-</script>
-
 
 <body>
 	<div id="wrapper">
@@ -725,10 +802,10 @@ $(document).on('click','#btnAsignarRepuestos', function(e){
 						<!-- Nav tabs -->
 						<ul class="nav nav-tabs">
 							<li class="active"><a href="#revision" data-toggle="tab">Revisión</a></li>
-							<li class=""><a href="#vehiculo" data-toggle="tab">Vehículo</a></li>
+							<li class=""><a href="#fallas" data-toggle="tab">Vehículo</a></li>
 							<li class=""><a href="#repuestos" data-toggle="tab">Repuestos</a>
 							</li>
-							<li class=""><a href="#fallas" data-toggle="tab">Fallas</a>
+							<li class=""><a href="#archivos" data-toggle="tab">Fallas</a>
 							</li>
 							<li class=""><a href="#comentarios" data-toggle="tab">Comentarios</a>
 							</li>
@@ -852,7 +929,7 @@ $(document).on('click','#btnAsignarRepuestos', function(e){
 								</div>
 
 							</div>
-							<div class="tab-pane fade" id="vehiculo">
+							<div class="tab-pane fade" id="fallas">
 									<p></p>
 									<p>Dato 1:</p>
 									<p>Dato 2:</p>
@@ -862,71 +939,86 @@ $(document).on('click','#btnAsignarRepuestos', function(e){
 									<p>...:</p>
 								</div>
 								<div class="tab-pane fade" id="repuestos">
-									<div class="pull-right">
-								
-											<div class="btn-group">
-												<span id="btnVerEdicion3"
-													class="btn btn-default btn-xs dropdown-toggle"
-													onclick="ExtractInformacion4();">Editar</span> 
+									
+									<div class="panel panel-default">
+										<div class="panel-heading">
+											Repuestos por Revisión
+											<div class="pull-right">
+												<div class="btn-group">
+													<span id="btnVerEdicion4"
+														class="btn btn-default btn-xs dropdown-toggle"
+														onclick="ExtractInformacion4();">Editar</span> 
 													<span id="btnVerInformacion4"
-													class="btn btn-default btn-xs dropdown-toggle"
-													onclick="$('.edicionInformacion4').hide();$('.vistaInformacion4').show();$('#btnVerInformacion4').hide();$('#btnVerEdicion3').show();"
-													style="display: none">Regresar</span>
+														class="btn btn-default btn-xs dropdown-toggle"
+														onclick="$('.edicionInformacion4').hide();$('.vistaInformacion4').show();$('#btnVerInformacion4').hide();$('#btnVerEdicion4').show();"
+														style="display: none">Regresar</span>
+												</div>
+											</div>												
+										</div>
+
+									<div class="panel-body">
+										<div class="edicionInformacion4" style="display: none">
+											<br>
+											<input class="btn btn-lg btn-success btn-block" type="button" style="width: 20%;" value="Asignar Respuestos" id="btnAsignarRepuestos"></input><br>
+											<div class="alert alert-success alert-dismissable" id="resultAsigRep" style="display:none">
+				    							<button class="close" aria-hidden="true" data-dismiss="alert" type="button">×</button>
+				    							<span id="mensajeAsignadosRep"></span>
 											</div>
-							   </div>
-								
-								<br>
-								
-								<div class="edicionInformacion4" style="display: none">
-									
-									<input class="btn btn-lg btn-success btn-block" type="button" style="width: 20%;" value="Asignar Repuesto" id="btnAsignarRepuestos"></input><br>
-									<div class="alert alert-success alert-dismissable" id="resultAsigRep" style="display:none">
-		    							<button class="close" aria-hidden="true" data-dismiss="alert" type="button">×</button>
-		    							<span id="mensajeAsignadosRep"></span>
+											<br>	
+												<div id="spnResultList_Rep" class="resultBox section summaryPane"></div>
+											<form id="frmAdministrarRepuestoRevision">		
+												<input id="idRepuesto_list" type="hidden" name="idRepuestoList"/>
+											</form>
+										</div>
+											<br><br>
+										<div class="vistaInformacion4">
+												<div id="spnResultList_RepRev" class="resultBox section summaryPane"></div>								
+										</div>
 									</div>
-									<br>
+											
+							   		</div>
 									
-									<div id="spnResultList" class="resultBox section summaryPane"></div>
-									<form id="frmAdministrarRepuestoRevision">		
-									<input id="isState_list2" type="hidden" name="isStateList"/>
-									<input id="idRepuesto_list2" type="hidden" name="idRepuestoList"/>
-									</form>
-									</div>
-									<br><br>
-									<div class="vistaInformacion4">
-									<div id="spnResultList2_RepRev" class="resultBox section summaryPane"></div>
 								</div>
-								</div>
+								<div class="tab-pane fade" id="archivos">
 								
-								
-								<div class="tab-pane fade" id="fallas">
-								
-									<div class="pull-right">
-											<div class="btn-group">
-												<span id="btnVerEdicion3"
-													class="btn btn-default btn-xs dropdown-toggle"
-													onclick="ExtractInformacion3();">Editar</span> 
+									<div class="panel panel-default">
+										<div class="panel-heading">
+											Fallas por Revisión
+											<div class="pull-right">
+												<div class="btn-group">
+													<span id="btnVerEdicion3"
+														class="btn btn-default btn-xs dropdown-toggle"
+														onclick="ExtractInformacion3();">Editar</span> 
 													<span id="btnVerInformacion3"
-													class="btn btn-default btn-xs dropdown-toggle"
-													onclick="$('.edicionInformacion3').hide();$('.vistaInformacion3').show();$('#btnVerInformacion3').hide();$('#btnVerEdicion3').show();"
-													style="display: none">Regresar</span>
+														class="btn btn-default btn-xs dropdown-toggle"
+														onclick="$('.edicionInformacion3').hide();$('.vistaInformacion3').show();$('#btnVerInformacion3').hide();$('#btnVerEdicion3').show();"
+														style="display: none">Regresar</span>
+												</div>
+											</div>												
+										</div>
+
+									<div class="panel-body">
+										<div class="edicionInformacion3" style="display: none">
+											<br>
+											<input class="btn btn-lg btn-success btn-block" type="button" style="width: 20%;" value="Asignar Falla" id="btnAsignarFallas"></input><br>
+											<div class="alert alert-success alert-dismissable" id="resultAsigFalla" style="display:none">
+				    							<button class="close" aria-hidden="true" data-dismiss="alert" type="button">×</button>
+				    							<span id="mensajeAsignadosFalla"></span>
 											</div>
-							   </div>
-									<br>
-								
-								<div class="edicionInformacion3" style="display: none">
-									<input class="btn btn-lg btn-success btn-block" type="button" style="width: 20%;" value="Asignar Falla" id="btnEnviarInv2"></input><br>
-									<div id="spnResultList1" class="resultBox section summaryPane" "></div>
-									<form id="frmAdministrarFallasRevision">		
-									<input id="isState_list1" type="hidden" name="isStateList1"/>
-									<input id="idFalla_list" type="hidden" name="idFallaList"/>
-									</form>
+											<br>	
+												<div id="spnResultList_Fallas" class="resultBox section summaryPane"></div>
+											<form id="frmAdministrarFallasRevision">		
+												<input id="idFalla_list" type="hidden" name="idFallaList"/>
+											</form>
+										</div>
+											<br><br>
+										<div class="vistaInformacion3">
+												<div id="spnResultList_FalRev" class="resultBox section summaryPane"></div>								
+										</div>
 									</div>
-									<br><br>
-									<div class="vistaInformacion3">
-									<div id="spnResultList1_FalRev" class="resultBox section summaryPane"></div>
+											
+							   		</div>
 								
-								</div>
 								</div>
 								<div class="tab-pane fade" id="comentarios">
 									<h4>Comentarios</h4>
