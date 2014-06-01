@@ -140,10 +140,10 @@
                         <!-- /.nav-second-level -->
                     </li>
                     
-                    <li>
+                    <!-- <li>
                         <a href="toEmail"><i class="fa fa-wrench fa-fw"></i>Envio de email<span class="fa arrow"></span></a>
                     	<a href="toArchivos"><i class="fa fa-wrench fa-fw"></i>Archivos<span class="fa arrow"></span></a>
-                    </li>
+                    </li> -->
                     
                 </ul>
                 <!-- /#side-menu -->
