@@ -10,7 +10,147 @@
 <jsp:include page="componentes/head.jsp" />
 </head>
 <script>
-	$(document).ready(function(e) {		
+$(document).ready(function(e){
+	var nfechaNac = 'txtFechaNacimiento';
+	cargarFechaNac(nfechaNac);
+	listarDistritos();
+	listarCargos();
+	listarEspecialidades();
+});
+</script>
+<script>
+$(document).ready(function(e){
+	
+	
+	$('#frmEdicionEmpleado').validate({
+		rules:{
+			dni:{
+				required:true,
+				number:true,				
+				maxlength:8,
+				minlength:8
+			},
+			nombre:{
+				required: true,
+				},
+			apellidoPaterno:{
+				required: true,
+				},
+			apellidoMaterno:{
+				required: true,
+				},
+			telefono:{
+				required:true,
+				number:true,
+				maxlength:9,
+				minlength:7
+				
+			},
+			celular:{
+				required:true,
+				number:true,
+				maxlength:9,
+				minlength:9
+				
+			},
+			direccion:{
+				required: true,
+				},
+			fechaNacimiento:{				
+				required: true,
+			      dpDate: true,
+			      //dpComparedate:'notbefore 1996-01-01'
+			},
+			email:{
+				required: true,
+			    email: true			
+			},
+			sexo:{
+				required: true,
+			},
+			idDistrito:{
+				required: true,
+			},
+			idCargo:{
+				required: true,
+			},
+			idEspecialidad:{
+				required: true,
+			}
+			
+		},
+		messages:{
+			dni:{
+				required:"Debe ingresar un DNI",
+				number:"Sólo números en el DNI",
+				minlength:"Tiene que tener 8 dígitos el DNI",
+				maxlength:"Tiene que tener 8 dígitos el DNI"
+			},
+			nombre:{
+				required: "Se debe ingresar un nombre de empleado",
+			},
+			apellidoPaterno:{
+				required: "Se debe ingresar apellido paterno de empleado",
+			},
+			apellidoMaterno:{
+				required: "Se debe ingresar apellido materno de empleado",
+			},
+			telefono:{
+				required:"Debe ingresar un teléfono",
+				number:"Sólo números en el teléfono",
+				minlength:"Tiene que tener 7 dígitos en el teléfono",
+				maxlength:"Tiene que tener 9 dígitos en el teléfono"
+			},
+			celular:{
+				required:"Debe ingresar un celular",
+				number:"Sólo números en el celular",
+				minlength:"Tiene que tener 9 dígitos en el celular",
+				maxlength:"Tiene que tener 9 dígitos en el celular"
+				
+			},
+			direccion:{
+				required: "Se debe ingresar dirección de empleado",
+			},
+			fechaNacimiento:{
+				required:"Se debe ingresar una Fecha",
+				dpDate:"Solo Fechas",	
+				dpComparedate:"Debe ser mayor igual de 18 años"
+			},
+			email:{
+				required:"Debe ingresar un Email",
+			    email:"Se necesita ingresar Email"	
+			},
+			sexo:{
+				required: "Seleccione un Tipo Sexo",
+			},
+			idDistrito:{
+				required: "Seleccione un Distrito",
+			},
+			idCargo:{
+				required: "Seleccione un Cargo",
+			},
+			idEspecialidad:{
+				required: "Seleccione una Especialidad",
+			}
+			
+		},			
+		submitHandler: function(form){
+			$.ajax({
+		   		url: 'ajaxEditInformacionEmpleado',
+		   		type: 'post',
+		   		dataType: 'json',
+		   		data: $('#frmEdicionEmpleado').serialize(),
+		   		success: function(cliente){
+		   			IniciarInfoCliente(cliente);
+		 			$('.vistaInformacion').show();
+		 			$('.edicionInformacion').hide();
+		 			$('#btnVerInformacion').hide();
+		 			$('#btnVerEdicion').show();
+		   		}
+		   	});
+		}		
+	});
+	
 		listarCargos();
 		listarEspecialidades();
 		listarDistritos();
@@ -19,25 +159,16 @@
 		var nFechaNacimiento = 'txtFechaNacimiento';
 		cargarFechaNac(nFechaNacimiento);
 		
+		inicioConsultaVehiculos(idempleado);
+		
 		
 		
 	});
 
 	function EditInformacionEmpleado(){
-		$.ajax({
-	   		url: 'ajaxEditInformacionEmpleado',
-	   		type: 'post',
-	   		dataType: 'json',
-	   		data: $('#frmEdicionEmpleado').serialize(),
-	   		success: function(empleado){
-	   			IniciarInfoEmpleado(empleado);
-	 			$('.vistaInformacion').show();
-	 			$('.edicionInformacion').hide();
-	 			$('#btnVerInformacion').hide();
-	 			$('#btnVerEdicion').show();
-	   		}
-	   	});
+		$('#frmEdicionEmpleado').submit();
 	}
+
 	function inicioConsulta(idempleado) {
 		$.ajax({
 					url : 'getInformacionEmpleado-' + idempleado,
