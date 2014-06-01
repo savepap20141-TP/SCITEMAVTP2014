@@ -8,11 +8,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 
+import com.scitemav.bean.EmpleadoBean;
 import com.scitemav.bean.RepuestoBean;
 
 import com.scitemav.service.RepuestoService;
@@ -53,4 +55,10 @@ public class RepuestoController {
 		return repuestoService.listarRepuestos();
 	}
 
+	@RequestMapping(value = "getRepuestoRevision-{idrevision}", method = RequestMethod.POST)
+	@ResponseBody
+	public List<RepuestoBean> getRepuestoRevision(@PathVariable("idrevision") Integer idRevision){		
+		//return null;
+		return repuestoService.listarRepuestosRevision(idRevision);
+	}
 }

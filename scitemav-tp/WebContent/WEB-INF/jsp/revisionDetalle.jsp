@@ -138,6 +138,7 @@ var arregloAsignados = [];
 		cargarFechaRevis(nProximaRev);
 		inicioConsultaEmpleadosRevision(idrevision);
 		inicioConsultaFallasRevision(idrevision);
+		inicioConsultaRepuestosRevision(idrevision);
 	});
 
 	function EditInformacionRevision(){
@@ -232,7 +233,7 @@ var arregloAsignados = [];
 		$('#btnVerEdicion3').hide();
 	} 
 	
-	function ExtractInformacion3(){
+	function ExtractInformacion4(){
 		$('.vistaInformacion4').hide();
 		$('.edicionInformacion4').show();
 		$('#btnVerInformacion4').show();
@@ -301,7 +302,7 @@ var arregloAsignados = [];
 	 	});
 	}
 	
-	function inicioConsultaRepuestoRevision(idRevision){
+	function inicioConsultaRepuestosRevision(idRevision){
 		var filas = '';
 		var columnas = '';	
 	    $.ajax({
@@ -314,10 +315,10 @@ var arregloAsignados = [];
 	 			$.each(repuestos, function(i, repuesto){
 	 				arregloAsignados.push(repuesto.idRepuesto);
 	 				filas = filas +'<tr class="">'+
-	 				//'<td class="center"><a id="revision"'+i+'" href="toRevisionDetalle-'+revision.idRevision+'">REP-'+revision.idRevision+'</a></td>'+
-	 				'<td class="center">'+repuesto.nombre+'</td>'+
+	 				//'<td class="center"><a id="revision"'+i+'" href="toRevisionDetalle-'+revision.idRevision+'">REP-'+revision.idRevision+'</a></td>'+	 				
 					'<td class="center">'+repuesto.comentario+'</td>'+
-					'<td class="center">'+repuesto.nombreRepuesto+'</td>'+
+					'<td class="center">'+repuesto.nombre+'</td>'+
+					'<td class="center">'+repuesto.nombreTipoRepuesto+'</td>'+
 					'<td class="center">'+repuesto.costoUnitario+'</td>'+
 					'<td class="center">'+repuesto.costoTotal+'</td>'+
 					'<td class="center"><button class="btn btn-danger btn-circle" type="button" id="btnDelete_'+i+'"><i class="fa fa-times"></i></button></td>'+
@@ -326,15 +327,16 @@ var arregloAsignados = [];
 	 		},
 	 		complete: function() {
 	 			columnas = columnas + 
-	 				'<th class="center">Id</th>'+
+	 				//'<th class="center">Id</th>'+
 	 				'<th class="center">Comentario</th>'+
 	 				'<th class="center">Nombre Respuesto</th>'+
+	 				'<th class="center">Nombre Tipo Respuesto</th>'+
 	 				'<th class="center">Costo Unitario</th>' +
 					'<th class="center">Costo Total</th>';
 				
 				var id = 'RepRev';
 				var contenido = '';
-				$("#spnResultList_"+id).empty();
+				$("#spnResultList2_"+id).empty();
 	
 				contenido = contenido + '<table cellpadding="0" cellspacing="0" border="0" class="display dataTable" id="example_'+id+'"> '+
 						' <thead class="tableGri"> '+
@@ -347,7 +349,7 @@ var arregloAsignados = [];
 				contenido = contenido + '</tbody>'+
 						'</table> ';
 				
-				$("#spnResultList_"+id).append(contenido);
+				$("#spnResultList2_"+id).append(contenido);
 	 			removeNulls();
 	 			inicioConsultaRepuesto();
 	  		}
@@ -771,35 +773,12 @@ $(document).on('click','#btnEnviarInv2', function(e){
 									<p>...:</p>
 								</div>
 								<div class="tab-pane fade" id="repuestos">
-									
-									<div class="pull-right">
-											<div class="btn-group">
-												<span id="btnVerEdicion4"
-													class="btn btn-default btn-xs dropdown-toggle"
-													onclick="ExtractInformacion4();">Editar</span> 
-													<span id="btnVerInformacion4"
-													class="btn btn-default btn-xs dropdown-toggle"
-													onclick="$('.edicionInformacion4').hide();$('.vistaInformacion4').show();$('#btnVerInformacion4').hide();$('#btnVerEdicion4').show();"
-													style="display: none">Regresar</span>
-											</div>
-							   </div>
-									<br>
 								
-								<div class="edicionInformacion4" style="display: none">
-									<input class="btn btn-lg btn-success btn-block" type="button" style="width: 20%;" value="Asignar Repuesto" id="btnEnviarInv4"></input><br>
-									<div id="spnResultList1" class="resultBox section summaryPane" "></div>
-									<form id="frmAdministrarRepuestoRevision">		
-									<input id="isState_list1" type="hidden" name="isStateList1"/>
-									<input id="idRepuesto_list" type="hidden" name="idRepuestoList"/>
-									</form>
-									</div>
-									<br><br>
-									<div class="vistaInformacion4">
-									<div id="spnResultList1_RepRev" class="resultBox section summaryPane"></div>
+									<div id="spnResultList2_RepRev" class="resultBox section summaryPane"></div>
 								
 								</div>
 								
-								</div>
+								
 								<div class="tab-pane fade" id="fallas">
 								
 									<div class="pull-right">
