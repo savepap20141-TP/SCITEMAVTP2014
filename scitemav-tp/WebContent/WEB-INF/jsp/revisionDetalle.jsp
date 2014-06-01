@@ -30,8 +30,13 @@ $(function() {
         }
     });
     $('#txtProximaRevision').datepicker({
-        dateFormat: "yy-mm-dd", 
-    });
+    	dateFormat: "yy-mm-dd",
+    	beforeShow : function(){
+    		var date3 = $('#txtFechaFin').datepicker('getDate');
+    		date3.setDate(date3.getDate()+1);
+            jQuery( this ).datepicker('option','minDate', date3 );
+        }
+    });	
 })
 
 </script>
