@@ -10,6 +10,31 @@
 <jsp:include page="componentes/head.jsp" />
 </head>
 <script>
+$(function() {
+    jQuery('#txtFechaInicio').datepicker({
+		    beforeShow : function(){
+	            jQuery( this ).datepicker('option','maxDate', jQuery('#txtFechaFin').val() );
+	        }
+	    });		
+    $("#txtFechaFin").datepicker({
+    	
+        dateFormat: "yy-mm-dd",       
+        beforeShow : function(){
+            jQuery( this ).datepicker('option','minDate', jQuery('#txtFechaInicio').val() );
+        },
+        onSelect: function(date){
+            var date2 = $('#txtFechaFin').datepicker('getDate');
+            date2.setDate(date2.getDate()+15);
+            $('#txtProximaRevision').datepicker('setDate', date2);
+        }
+    });
+    $('#txtProximaRevision').datepicker({
+        dateFormat: "yy-mm-dd", 
+    });
+})
+
+</script>
+<script>
 var arregloAsignadosEmp = [];
 var arregloAsignadosFalla = [];
 var arregloAsignadosRep = [];
