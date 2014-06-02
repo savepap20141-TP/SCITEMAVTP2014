@@ -44,7 +44,7 @@ public class Revision {
 	@OneToMany(mappedBy ="farRevision")
 	private Collection<FallaRevision> revFallaRevisiones;
 	
-	@OneToMany(mappedBy ="rerRepuesto")
+	@OneToMany(mappedBy ="rerRevision")
 	private Collection<RepuestoRevision> revRepuestoRevisiones;
 	
 	@OneToMany(mappedBy ="reeRevision")

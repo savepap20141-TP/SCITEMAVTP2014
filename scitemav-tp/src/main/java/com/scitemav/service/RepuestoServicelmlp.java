@@ -117,9 +117,9 @@ public class RepuestoServicelmlp implements RepuestoService {
 			for (int i = 0; i < ids.length; i++) {				
 				RepuestoRevision repuestov = new RepuestoRevision();
 				Repuesto rep = em.find(Repuesto.class, Integer.parseInt(ids[i]));
-				Revision rev = new Revision();
-				rev.setIdRevision(IdRevision);
-				
+				//Revision rev = new Revision();
+				//rev.setIdRevision(IdRevision);
+				Revision rev = em.find(Revision.class, IdRevision);
 				repuestov.setRerRepuesto(rep);
 				repuestov.setRerRevision(rev);
 				enviados.add( rep.getNombre()+" "+rep.getRepTipoRepuesto().getNombre());
