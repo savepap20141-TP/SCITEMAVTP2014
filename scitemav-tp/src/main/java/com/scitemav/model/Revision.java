@@ -38,6 +38,8 @@ public class Revision {
 	@Column(name = "kilometrajeproximo", nullable = true)
 	private Integer kilometrajeProximo;
 
+	@Column(name = "notificacion", nullable = true)
+	private Boolean notificacion;
 	
 	@OneToMany(mappedBy ="farRevision")
 	private Collection<FallaRevision> revFallaRevisiones;
@@ -134,6 +136,14 @@ public class Revision {
 
 	public void setRevEmpleadoRevisiones(Collection<EmpleadoRevision> revEmpleadoRevisiones) {
 		this.revEmpleadoRevisiones = revEmpleadoRevisiones;
+	}
+
+	public Boolean getNotificacion() {
+		return notificacion;
+	}
+
+	public void setNotificacion(Boolean notificacion) {
+		this.notificacion = notificacion;
 	}
 	
 }

@@ -7,13 +7,17 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.scitemav.bean.MarcaBean;
 import com.scitemav.bean.RevisionBean;
 import com.scitemav.bean.VehiculoBean;
+import com.scitemav.model.Empleado;
+import com.scitemav.model.EmpleadoRevision;
 import com.scitemav.model.Marca;
+import com.scitemav.model.Persona;
 import com.scitemav.model.Revision;
 import com.scitemav.model.Vehiculo;
 
@@ -22,6 +26,9 @@ public class RevisionServiceImpl implements RevisionService {
 
 	@PersistenceContext
 	EntityManager em;
+	
+	@Autowired
+	EmailService emailService;
 
 	@Transactional
 	public boolean registrarRevision(RevisionBean revision) {
@@ -77,9 +84,22 @@ public class RevisionServiceImpl implements RevisionService {
 				revBean.setKilometrajeProximo(rev.getKilometrajeProximo());
 				revBean.setIdRevision(rev.getIdRevision());
 				revBean.setIdVehiculo(rev.getRevVehiculo().getIdVehiculo());
+				revBean.setIdCliente(rev.getRevVehiculo().getVehCliente().getIdCliente());
 				revBean.setNumeroPlaca(rev.getRevVehiculo().getNumeroPlaca());
 				revBean.setNombreMarca(rev.getRevVehiculo().getVehMarca().getNombre());
 				revBean.setNombreModelo(rev.getRevVehiculo().getVehModelo().getNombre());
+				if(rev.getNotificacion()!=null){
+					if(rev.getNotificacion()==true){
+						revBean.setNotificacion(true);
+					}else{
+						revBean.setNotificacion(false);
+					}
+				}else{
+					revBean.setNotificacion(false);
+				}
+				Persona per = rev.getRevVehiculo().getVehCliente().getCliPersona();
+				revBean.setNombreCliente(per.getNombre()+" "+per.getApellidoPaterno()+" "+per.getApellidoMaterno());
+				
 				_revBean.add(revBean);
 			}
 
@@ -202,5 +222,24 @@ public class RevisionServiceImpl implements RevisionService {
 		}
 
 		return _revBean;
+	}
+	
+	@Transactional
+	public List<String> notificarRevisionesClientes(String[] ids) {
+		List<String> enviados = new ArrayList<String>();
+		try {
+			for (int i = 0; i < ids.length; i++) {				
+				Revision rev = em.find(Revision.class, Integer.parseInt(ids[i]));
+				Revision revY = em.merge(rev);
+				revY.setNotificacion(true);
+				Persona per = rev.getRevVehiculo().getVehCliente().getCliPersona();
+				enviados.add( per.getNombre()+" "+per.getApellidoPaterno()+" "+per.getApellidoMaterno());
+				//Metodo para enviar correo
+				emailService.NotificarRevisionesUsuario(Integer.parseInt(ids[i]), per.getPerUsuario().getIdUsuario());
+			}
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+		return enviados;
 	}
 }

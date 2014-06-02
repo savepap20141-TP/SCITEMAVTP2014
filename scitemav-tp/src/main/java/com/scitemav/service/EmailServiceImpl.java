@@ -15,6 +15,7 @@ import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.scitemav.model.Revision;
 import com.scitemav.model.Usuario;
 
 @Service
@@ -141,4 +142,21 @@ public class EmailServiceImpl implements EmailService {
 		return false;
 	}
 
+	@Transactional
+	public boolean NotificarRevisionesUsuario(Integer idRevision, Integer idUsuario) {
+
+		Revision rev = em.find(Revision.class, idRevision);
+		Usuario user = em.find(Usuario.class, idUsuario);
+		String asunto = "Notificacion de scitemav proxima revision: REV-"+idRevision+ " a : "
+				+ user.getUsuPersona().getNombre();
+		String body = "Se le notifica que se le acerca una revision proxima <br/>" +
+					  "Sr. o Sra. : "+user.getUsuPersona().getNombre()+" "+user.getUsuPersona().getApellidoPaterno()+" "+user.getUsuPersona().getApellidoMaterno()+"<br />"+
+					  "Su Vehiculo de Nro. Placa : "+rev.getRevVehiculo().getNumeroPlaca()+"<br />"+
+					  "La Fecha de su proxima revisión es : "+rev.getFechaProxima()+"<br />"+
+					  "El Kilometraje para esta revisión es : "+rev.getKilometrajeProximo()+"<br />";
+		
+		
+		EnviarMensaje(user.getEmail(), asunto, body);
+		return false;
+	}
 }
