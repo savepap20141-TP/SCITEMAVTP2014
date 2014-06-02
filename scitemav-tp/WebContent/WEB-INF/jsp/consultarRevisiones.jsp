@@ -42,7 +42,7 @@ function inicioConsulta(){
  				'<td class="center">'+revision.kilometrajeActual+'</td>'+
  				'<td class="center">'+revision.kilometrajeProximo+'</td>'+ 				
  				'<td class="center">'+revision.costoTotal+'</td>'+
- 				'<td class="center"><a href="verPDFRevision-'+revision.idRevision+'">Ver Reporte</a></td>'+
+ 				'<td class="center"><a target="_blank" href="verPDFRevision-'+revision.idRevision+'"><img width="50" height="50" src="images/pdfReport.jpg"></a></td>'+
 				'</tr>';
 			});		        
  		},

@@ -79,4 +79,9 @@ public class RevisionController {
 		return revisionB;
 	}
 
+	@RequestMapping(value = "getRevisionesVehiculos-{idVehiculo}", method = RequestMethod.POST)
+	@ResponseBody
+	public List<RevisionBean> getRevisiones(@PathVariable("idVehiculo") Integer idVehiculo){
+		return revisionService.listarRevisionesVehiculo(idVehiculo);
+	}
 }

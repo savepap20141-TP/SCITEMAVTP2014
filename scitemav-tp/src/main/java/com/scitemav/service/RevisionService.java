@@ -12,4 +12,5 @@ public interface RevisionService {
 	public List<RevisionBean> listarRevisiones();
 	public RevisionBean obtenerInfo(int idRevision);
 	boolean editInformacionRevision(RevisionBean rb);	
+	public List<RevisionBean> listarRevisionesVehiculo(Integer idVehiculo);
 }

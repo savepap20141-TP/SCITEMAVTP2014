@@ -208,7 +208,7 @@ var arregloAsignadosRep = [];
 	function IniciarInfoRevision(revision){
 		//Vista de Informacion
 		
-		$('#divReporte').html("<a href='verPDFRevision-"+revision.idRevision+"' >Ver Reporte</a>");
+		$('#divReporte').html("<a target='_blank' href='verPDFRevision-"+revision.idRevision+"' ><img width='50' height='50' src='images/pdfReport.jpg'></a>");
 		
 		$('#spnCostoTotal').text(revision.costoTotal);
 		$('#spnFechaInicio').text(revision.fechaInicio);

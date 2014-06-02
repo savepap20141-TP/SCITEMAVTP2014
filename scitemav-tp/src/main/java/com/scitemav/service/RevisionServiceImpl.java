@@ -167,4 +167,40 @@ public class RevisionServiceImpl implements RevisionService {
 		return result;
 	}
 	
+	@SuppressWarnings("unchecked")
+	@Transactional
+	public List<RevisionBean> listarRevisionesVehiculo(Integer idVehiculo) {
+		List<Revision> _rev = new ArrayList<Revision>();
+		List<RevisionBean> _revBean = new ArrayList<RevisionBean>();
+
+		try {
+			Query query = em.createQuery("SELECT r FROM Revision r JOIN r.revVehiculo v WHERE v.idVehiculo=:idVehiculo");
+			query.setParameter("idVehiculo", idVehiculo);
+			_rev = query.getResultList();
+
+			for (int i = 0; i < _rev.size(); i++) {
+				Revision rev = _rev.get(i);
+				RevisionBean revBean = new RevisionBean();								
+				
+				revBean.setCostoTotal(rev.getCostoTotal());
+				revBean.setFechaFin(rev.getFechaFin());
+				revBean.setFechaInicio(rev.getFechaInicio());
+				revBean.setFechaProxima(rev.getFechaProxima());
+				revBean.setKilometrajeActual(rev.getKilometrajeActual());
+				revBean.setKilometrajeProximo(rev.getKilometrajeProximo());
+				revBean.setIdRevision(rev.getIdRevision());
+				revBean.setIdVehiculo(rev.getRevVehiculo().getIdVehiculo());
+				revBean.setNumeroPlaca(rev.getRevVehiculo().getNumeroPlaca());
+				revBean.setNombreMarca(rev.getRevVehiculo().getVehMarca().getNombre());
+				revBean.setNombreModelo(rev.getRevVehiculo().getVehModelo().getNombre());
+				_revBean.add(revBean);
+			}
+
+		} catch (IllegalArgumentException e) {
+			System.out.println(e.getMessage());
+			_revBean = null;
+		}
+
+		return _revBean;
+	}
 }
