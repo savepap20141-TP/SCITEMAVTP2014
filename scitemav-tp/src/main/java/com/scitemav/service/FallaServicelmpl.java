@@ -28,14 +28,16 @@ public class FallaServicelmpl implements FallaService{
 		Falla rp = new Falla();				
 
 		try{			
-			TipoFalla tfa  = new TipoFalla();
-			tfa.setIdTipoFalla(fal.getIdTipoFalla());
-			
-			rp.setFalTipoFalla(tfa);
+			tr.setIdTipoFalla(fal.getIdTipoFalla());		
+			rp.setFalTipoFalla(tr);
 			rp.setDescripcion(fal.getDescripcion());
-		 
-			em.persist(rp);
-		
+			
+			if(fal.getIdFalla()==null){
+				em.persist(rp);
+			}else{
+				rp.setIdFalla(fal.getIdFalla());
+				em.merge(rp);
+			}
 			
 			falla = true;
 		}catch(IllegalArgumentException e){

@@ -40,15 +40,14 @@ public class FallaController {
 	
 	@RequestMapping(value="registroFalla", method = RequestMethod.POST)
 	@ResponseBody
-	public String registroFalla(@ModelAttribute("fallaBean") FallaBean fal, Model model, HttpServletRequest req){
-		String path = "";
-		
+	public Boolean registroFalla(@ModelAttribute("fallaBean") FallaBean fal, Model model, HttpServletRequest req){
+		Boolean path = false;		
 		if(fallaService.registro(fal)){
 			model.addAttribute("msg", "Se registro correctamente");
-			path = "registrarFalla";
+			path = true;
 		}else{
 			model.addAttribute("msg", "Fallo al registrarse");
-			path = "registrarFalla";
+			path = false;
 		}
 		return path;
 	}
