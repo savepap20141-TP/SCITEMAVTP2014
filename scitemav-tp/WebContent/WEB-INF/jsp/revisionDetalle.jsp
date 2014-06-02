@@ -710,6 +710,7 @@ function inicioConsultaEmpleadosRevision(idRevision){
  				arregloAsignadosEmp.push(empleado.idEmpleado);
  				filas = filas +'<tr class="">'+
  				'<td class="center"><a id="empleado_"'+i+'" href="toEmpleadoDetalle-'+empleado.idEmpleado+'">EMP-'+empleado.idEmpleado+'</a></td>'+
+ 				'<td class="center" id="filaIdE_'+i+'" style="display:none;">'+empleado.idEmpleado+'</td>'+
  				'<td class="center">'+empleado.nombre+'</td>'+
 				'<td class="center">'+empleado.apellidoPaterno+'</td>'+
 				'<td class="center">'+empleado.apellidoMaterno+'</td>'+
@@ -718,7 +719,7 @@ function inicioConsultaEmpleadosRevision(idRevision){
 				'<td class="center">'+empleado.telefono+'</td>'+
 				'<td class="center">'+empleado.nombreCargo+'</td>'+
 				'<td class="center">'+empleado.nombreEspecialidad+'</td>'+
-				'<td class="center"><button class="btn btn-danger btn-circle" type="button" id="btnDelete_'+i+'"><i class="fa fa-times"></i></button></td>'+
+				'<td class="center"><button class="btn btn-danger btn-circle" type="button" id="btnDelete_'+i+'" data-toggle="modal" data-target="#myModalE" onclick="mostrarEliminarE('+i+','+idRevision+')"><i class="fa fa-times"></i></button></td>'+
 				'</tr>';
 			});		        
  		},
@@ -757,6 +758,49 @@ function inicioConsultaEmpleadosRevision(idRevision){
  			inicioConsultaEmpleados();
   		}
  	});
+}
+
+function mostrarEliminarE(ind,idRevision){
+	$('#myModalLabel').empty();
+	$('#myModalLabel').append('Eliminar Empleado');
+	$('#txtIdEmp').val($('#filaIdE_'+ind).text());	
+	$('#txtIdRev1').val(idRevision);
+	idRev = idRevision;
+}
+
+function eliminarEmpleadoRevision(){
+	
+	var formElement = document.getElementById("frmEliminarEmpleado");
+	var formData = new FormData(formElement);	
+	$.ajax({
+   		url: 'eliminarEmpleadoRevision',
+   		type: 'post',
+   		data:  formData,
+		mimeType:"multipart/form-data",
+		contentType: false,
+	    cache: false,
+		processData:false,
+		beforeSend: function(){
+			//$.blockUI({ message: $('#domMessage') });
+	    },
+   		success: function(result){
+   			$('#resultOk1').hide();
+			$('#resultFalse').hide();	
+			//alert(result);
+			var res  = ''+result;
+   			if(res == 'true'){   				
+   				//$('#resultOk').append('Se ha registrado correctamente');
+   				$('#resultOk1').show();
+   				$('#txtIdF').val('');
+   				inicioConsultaEmpleadosRevision(idRev);
+   				inicioConsultaEmpleados();
+   			}else{
+   				$('#resultFalse').show();
+   				//$('#resultFalse').append('Se ha producido un error al registrarse');
+   			}
+   		}
+   	});
+
 }
 
 function inicioConsultaEmpleados(){
@@ -1284,6 +1328,51 @@ $(document).on('click','#btnAsignarEmpleados', function(e){
                                         <div class="modal-footer">
                                         	<button type="button" class="btn btn-primary" data-dismiss="modal" onclick="eliminarRepuestoRevision();">Eliminar</button>
                                             <button type="button" class="btn btn-default" data-dismiss="modal" onclick="$('#txtIdRep').val('');$('#txtIdRev').val('');">Cancelar</button>
+                                        </div>
+                                    </div>
+                                    <!-- /.modal-content -->
+                                </div>
+                                <!-- /.modal-dialog -->
+                            </div>
+                            <!-- /.modal -->
+                    
+							
+                        </div>
+                        
+                        <div class="panel-body">                            
+                            <!-- Modal -->
+                            <div class="modal fade" id="myModalE" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                            <h4 class="modal-title" id="myModalLabelE">Eliminar Empleado</h4>
+                                        </div>
+                                        <div class="modal-body">
+                                        	<form role="form" id="frmEliminarEmpleado"
+													method="post" commandName="empleadorevision"
+													style="width: 60%; margin-left: 20%;">				
+													<fieldset>
+													    <div>¿Eliminar a este empleado?</div>		
+														<div class="form-group" style="display:none">
+															<label> Id Empleado</label> <input 
+															class="form-control" name="idEmpleado" id="txtIdEmp"/>
+														</div>
+														<div class="form-group" style="display:none">
+															<label> Id Revision</label> <input 
+															class="form-control" name="idRevision" id="txtIdRev1"/>
+														</div>
+																									
+														
+														</p>
+													</fieldset>
+												</form>	
+                                        
+                                        
+                                        </div>
+                                        <div class="modal-footer">
+                                        	<button type="button" class="btn btn-primary" data-dismiss="modal" onclick="eliminarEmpleadoRevision();">Eliminar</button>
+                                            <button type="button" class="btn btn-default" data-dismiss="modal" onclick="$('#txtIdEmp').val('');$('#txtIdRev1').val('');">Cancelar</button>
                                         </div>
                                     </div>
                                     <!-- /.modal-content -->
