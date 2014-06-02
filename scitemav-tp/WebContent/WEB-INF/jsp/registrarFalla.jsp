@@ -168,12 +168,12 @@ function listarTipofallas(){
                                         </div>
                                         <div class="modal-body">
                                         	<form role="form" id="frmRegistroFalla"
-													method="post" commandName="fallas"
+													method="post" commandName="fallaBean"
 													style="width: 60%; margin-left: 20%;">				
 													<fieldset>		
 														<div class="form-group" style="display:none">
 															<label> Id falla</label> <input 
-															class="form-control" name="idfalla" id="txtIdF"/>
+															class="form-control" name="idFalla" id="txtIdF"/>
 														</div>
 																									
 														<div class="form-group">
@@ -182,7 +182,7 @@ function listarTipofallas(){
 														</div>
 														<div class="form-group">
 														<label> Nombre Tipo de Falla:</label> 										
-														<select class="form-control" id="comboTipofallas" name="idTipoFallas">
+														<select class="form-control" id="comboTipofallas" name="idTipoFalla">
 														</select>
 														</div>
 				                                        <!-- <div class="form-group">
