@@ -22,6 +22,7 @@ public class TipoVehiculoController {
 	@Autowired
 	TipoVehiculoService tipoVehiculoService;
 	
+	
 	@RequestMapping("toRegistroTipoVehiculo")
 	public String toRegistroCarroceria(){
 		return "registrarTipoVehiculo";
@@ -37,6 +38,22 @@ public class TipoVehiculoController {
 		//String path="registrarCarroceria";
 		boolean result = false;
 		if(tipoVehiculoService.registro(tipv,req)){
+			//model.addAttribute("msgOk", "Se ha registrado correctamente");
+			result = true;
+		}
+		else{
+			//model.addAttribute("msg", "Se ha producido un error al registrarse");
+			result = false;
+		}
+		return result;
+	}
+	
+	@RequestMapping(value="eliminarTipoVehiculo", method = RequestMethod.POST)
+	@ResponseBody
+	public boolean eliminarTipoVehiculo(@ModelAttribute("tipovehiculo") TipoVehiculoBean tipv, Model model, HttpServletRequest req){
+		//String path="registrarCarroceria";
+		boolean result = false;
+		if(tipoVehiculoService.eliminar(tipv,req)){
 			//model.addAttribute("msgOk", "Se ha registrado correctamente");
 			result = true;
 		}

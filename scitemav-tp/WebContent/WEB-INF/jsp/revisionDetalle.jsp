@@ -434,51 +434,99 @@ var arregloAsignadosRep = [];
 
 <script>
 //tab Fallas por Revisión
-	function inicioConsultaFallasRevision(idRevision){
-		var filas = '';
-		var columnas = '';	
-	    $.ajax({
-	 		url: 'getFallaRevision-'+idRevision,
-	 		type: 'post',
-	 		dataType: 'json',
-	 		data: '',
-	 		success: function(fallas){
-	 			$.each(fallas, function(i, falla){
-	 				arregloAsignadosFalla.push(falla.idFalla);
-	 				filas = filas +'<tr class="">'+
-	 				'<td class="center">FAL-'+falla.idFalla+'</td>'+
-	 				'<td class="center">'+falla.descripcion+'</td>'+
-					'<td class="center">'+falla.nombreTipoFalla+'</td>'+					
-					'</tr>';
-				});		        
-	 		},
-	 		complete: function() {
-	 			columnas = columnas + 
-	 				'<th class="center">Id</th>'+
-	 				'<th class="center">Nombre</th>'+
-	 				'<th class="center">Tipo de falla</th>';
-				var id = 'FalRev';
-				var contenido = '';
-				$("#spnResultList_"+id).empty();
+function inicioConsultaFallasRevision(idRevision){
+	var filas = '';
+	var columnas = '';	
+    $.ajax({
+ 		url: 'getFallaRevision-'+idRevision,
+ 		type: 'post',
+ 		dataType: 'json',
+ 		data: '',
+ 		success: function(fallas){
+ 			$.each(fallas, function(i, falla){
+ 				arregloAsignadosFalla.push(falla.idFalla);
+ 				filas = filas +'<tr class="">'+
+ 				'<td class="center">FAL-'+falla.idFalla+'</td>'+
+ 				'<td class="center" id="filaId_'+i+'" style="display:none;">'+falla.idFalla+'</td>'+
+ 				'<td class="center">'+falla.descripcion+'</td>'+
+				'<td class="center">'+falla.nombreTipoFalla+'</td>'+
+				'<td class="center"><button class="btn btn-danger btn-circle" type="button" id="btnDelete_'+falla.idFalla+'" data-toggle="modal" data-target="#myModalF" onclick="mostrarEliminar('+i+','+idRevision+')"><i class="fa fa-times"></i></button></td>'+
+				'</tr>';
+			});		        
+ 		},
+ 		complete: function() {
+ 			columnas = columnas + 
+ 				'<th class="center">Id</th>'+
+ 				'<th class="center" style="display:none;">IdFalla</th>'+
+ 				'<th class="center">Nombre</th>'+
+ 				'<th class="center">Tipo de falla</th>'+
+ 				'<th class="center">Eliminar</th>';
+			var id = 'FalRev';
+			var contenido = '';
+			$("#spnResultList_"+id).empty();
+
+			contenido = contenido + '<table cellpadding="0" cellspacing="0" border="0" class="display dataTable" id="example_'+id+'"> '+
+					' <thead class="tableGri"> '+
+			            '<tr role="row">'+
+			            	columnas+							                            
+			            '</tr>'+
+			        '</thead> '+
+			        '<tbody id="'+id+'">';
+			contenido = contenido + filas;   
+			contenido = contenido + '</tbody>'+
+					'</table> ';
+			
+			$("#spnResultList_"+id).append(contenido);
+			//realizarTabla(columnas,filas);
+			inicioConsultaFalla();
+ 			removeNulls();
+  		}
+ 	});
+} 
+
+var idRev;
+
+function mostrarEliminar(ind,idRevision){
+	$('#myModalLabel').empty();
+	$('#myModalLabel').append('Eliminar Falla');
+	$('#txtIdF').val($('#filaId_'+ind).text());	
+	$('#txtIdR').val(idRevision);
+	idRev = idRevision;
+}
+
+function eliminarFallaRevision(){
 	
-				contenido = contenido + '<table cellpadding="0" cellspacing="0" border="0" class="display dataTable" id="example_'+id+'"> '+
-						' <thead class="tableGri"> '+
-				            '<tr role="row">'+
-				            	columnas+							                            
-				            '</tr>'+
-				        '</thead> '+
-				        '<tbody id="'+id+'">';
-				contenido = contenido + filas;   
-				contenido = contenido + '</tbody>'+
-						'</table> ';
-				
-				$("#spnResultList_"+id).append(contenido);
-				//realizarTabla(columnas,filas);
-				inicioConsultaFalla();
-	 			removeNulls();
-	  		}
-	 	});
-	} 
+	var formElement = document.getElementById("frmEliminarFalla");
+	var formData = new FormData(formElement);	
+	$.ajax({
+   		url: 'eliminarFallaRevision',
+   		type: 'post',
+   		data:  formData,
+		mimeType:"multipart/form-data",
+		contentType: false,
+	    cache: false,
+		processData:false,
+		beforeSend: function(){
+			//$.blockUI({ message: $('#domMessage') });
+	    },
+   		success: function(result){
+   			$('#resultOk1').hide();
+			$('#resultFalse').hide();	
+			//alert(result);
+			var res  = ''+result;
+   			if(res == 'true'){   				
+   				//$('#resultOk').append('Se ha registrado correctamente');
+   				$('#resultOk1').show();
+   				$('#txtIdF').val('');
+   				inicioConsultaFallasRevision(idRev);
+   			}else{
+   				$('#resultFalse').show();
+   				//$('#resultFalse').append('Se ha producido un error al registrarse');
+   			}
+   		}
+   	});
+
+}
 	
 	function updateStateFallas(source,i){
 		$('#changeF_'+i).val(true);
@@ -1107,6 +1155,54 @@ $(document).on('click','#btnAsignarEmpleados', function(e){
 				</div>
 </div>
 </div>
+<div class="panel-body">                            
+                            <!-- Modal -->
+                            <div class="modal fade" id="myModalF" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                            <h4 class="modal-title" id="myModalLabelF">Eliminar Falla</h4>
+                                        </div>
+                                        <div class="modal-body">
+                                        	<form role="form" id="frmEliminarFalla"
+													method="post" commandName="fallarevision"
+													style="width: 60%; margin-left: 20%;">				
+													<fieldset>
+													    <div>¿Eliminar a esta falla?</div>		
+														<div class="form-group" style="display:none">
+															<label> Id Falla</label> <input 
+															class="form-control" name="idFalla" id="txtIdF"/>
+														</div>
+														<div class="form-group" style="display:none">
+															<label> Id Revision</label> <input 
+															class="form-control" name="idRevision" id="txtIdR"/>
+														</div>
+																									
+														
+														</p>
+													</fieldset>
+												</form>	
+                                        
+                                        
+                                        </div>
+                                        <div class="modal-footer">
+                                        	<button type="button" class="btn btn-primary" data-dismiss="modal" onclick="eliminarFallaRevision();">Eliminar</button>
+                                            <button type="button" class="btn btn-default" data-dismiss="modal" onclick="$('#txtIdF').val('');$('#txtIdR').val('');">Cancelar</button>
+                                        </div>
+                                    </div>
+                                    <!-- /.modal-content -->
+                                </div>
+                                <!-- /.modal-dialog -->
+                            </div>
+                            <!-- /.modal -->
+                            
+                            <div class="alert alert-success alert-dismissable" id="resultOk1" style="display:none">
+    							<button class="close" aria-hidden="true" data-dismiss="alert" type="button">×</button>
+								Se ha eliminado correctamente
+							</div>
+                        </div>
+
 
 			</div>
 

@@ -18,6 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.scitemav.bean.CargoBean;
 import com.scitemav.bean.TipoVehiculoBean;
 import com.scitemav.model.Cargo;
+import com.scitemav.model.Persona;
 import com.scitemav.model.TipoVehiculo;
 
 @Service
@@ -124,5 +125,33 @@ public class TipoVehiculoServiceImpl implements TipoVehiculoService {
 		}
 
 		return tipvehb;
+	}
+
+	@Transactional
+	public boolean eliminar(TipoVehiculoBean tipv, HttpServletRequest req) {
+		
+		boolean resultado = false;
+
+		TipoVehiculo tipovehiculo = new TipoVehiculo();
+
+		try {
+			
+			Query q1 = em.createQuery("SELECT t FROM TipoVehiculo t WHERE t.idTipoVehiculo = :idtipovehiculo");
+			q1.setParameter("idtipovehiculo", tipv.getIdTipoVehiculo());
+			
+			tipovehiculo = (TipoVehiculo) q1.getSingleResult();	
+			
+			
+	        em.remove(tipovehiculo);				
+				
+		    resultado = true;
+			
+				
+			
+		} catch (IllegalArgumentException e) {
+			System.out.println(e);
+			resultado = false;
+		}
+		return resultado;
 	}
 }

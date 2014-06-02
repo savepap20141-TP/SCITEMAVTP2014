@@ -61,7 +61,7 @@ function inicioConsulta(){
 				'<td class="center" id="filaNombre_'+i+'">'+tipveh.nombre+'</td>'+
 				'<td class="center">'+imagen+'</td>'+
 				'<td class="center"><button class="btn btn-success btn-circle" type="button" id="btnEdit_'+i+'" data-toggle="modal" data-target="#myModal" onclick="mostrarEditar('+i+')"><i class="fa fa-list"></i></button></td>'+
-				'<td class="center"><button class="btn btn-danger btn-circle" type="button" id="btnDelete_'+i+'"><i class="fa fa-times"></i></button></td>'+
+				'<td class="center"><button class="btn btn-danger btn-circle" type="button" id="btnDelete_'+i+'" data-toggle="modal" data-target="#myModal1" onclick="mostrarEliminar('+i+')"><i class="fa fa-times"></i></button></td>'+
 				'</tr>';
 			});		        
  		},
@@ -81,6 +81,12 @@ function mostrarEditar(ind){
 	$('#myModalLabel').append('Editar Tipo de Vehiculo');
 	$('#txtIdTV').val($('#filaId_'+ind).text());
 	$('#txtNombreTV').val($('#filaNombre_'+ind).text());
+}
+
+function mostrarEliminar(ind){
+	$('#myModalLabel').empty();
+	$('#myModalLabel').append('Eliminar Tipo de Vehiculo');
+	$('#txtIdTV1').val($('#filaId_'+ind).text());	
 }
 function registrarTipoVehiculo(){
 	if($('#txtNombreTV').val()==''){
@@ -117,6 +123,39 @@ function registrarTipoVehiculo(){
 	   		}
 	   	});
 	}	
+}
+function eliminarTipoVehiculo(){
+	
+		var formElement = document.getElementById("frmEliminarTipoVehiculo");
+		var formData = new FormData(formElement);	
+		$.ajax({
+	   		url: 'eliminarTipoVehiculo',
+	   		type: 'post',
+	   		data:  formData,
+			mimeType:"multipart/form-data",
+			contentType: false,
+		    cache: false,
+			processData:false,
+			beforeSend: function(){
+				//$.blockUI({ message: $('#domMessage') });
+		    },
+	   		success: function(result){
+	   			$('#resultOk1').hide();
+				$('#resultFalse').hide();	
+				//alert(result);
+				var res  = ''+result;
+	   			if(res == 'true'){   				
+	   				//$('#resultOk').append('Se ha registrado correctamente');
+	   				$('#resultOk1').show();
+	   				$('#txtIdTV1').val('');
+	   				inicioConsulta();
+	   			}else{
+	   				$('#resultFalse').show();
+	   				//$('#resultFalse').append('Se ha producido un error al registrarse');
+	   			}
+	   		}
+	   	});
+	
 }
 </script>
 <body>
@@ -195,15 +234,58 @@ function registrarTipoVehiculo(){
                             </div>
                             <!-- /.modal -->
                         </div>
+                        <div class="panel-body">                            
+                            <!-- Modal -->
+                            <div class="modal fade" id="myModal1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                            <h4 class="modal-title" id="myModalLabel1">Eliminar Tipo de Vehiculo</h4>
+                                        </div>
+                                        <div class="modal-body">
+                                        	<form role="form" id="frmEliminarTipoVehiculo"
+													method="post" commandName="tipovehiculo"
+													style="width: 60%; margin-left: 20%;">				
+													<fieldset>
+													    <div>¿Eliminar a este tipo de vehículo?</div>		
+														<div class="form-group" style="display:none">
+															<label> Id Tipo vehiculo</label> <input 
+															class="form-control" name="idTipoVehiculo" id="txtIdTV1"/>
+														</div>
+																									
+														
+														</p>
+													</fieldset>
+												</form>	
+                                        
+                                        
+                                        </div>
+                                        <div class="modal-footer">
+                                        	<button type="button" class="btn btn-primary" data-dismiss="modal" onclick="eliminarTipoVehiculo();">Eliminar</button>
+                                            <button type="button" class="btn btn-default" data-dismiss="modal" onclick="$('#txtIdTV1').val('');">Cancelar</button>
+                                        </div>
+                                    </div>
+                                    <!-- /.modal-content -->
+                                </div>
+                                <!-- /.modal-dialog -->
+                            </div>
+                            <!-- /.modal -->
+                        </div>
                         <!-- .panel-body -->
 						<div class="panel-body">
 							<div class="alert alert-success alert-dismissable" id="resultOk" style="display:none">
     							<button class="close" aria-hidden="true" data-dismiss="alert" type="button">×</button>
 								Se ha guardo correctamente
 							</div>
+							
 							<div class="alert alert-danger alert-dismissable" id="resultFalse" style="display:none">
     							<button class="close" aria-hidden="true" data-dismiss="alert" type="button">×</button>
 								Se ha producido un error al guardar
+							</div>
+							<div class="alert alert-success alert-dismissable" id="resultOk1" style="display:none">
+    							<button class="close" aria-hidden="true" data-dismiss="alert" type="button">×</button>
+								Se ha eliminado correctamente
 							</div>
 							<div class="row">
 									<div class="col-lg-12">

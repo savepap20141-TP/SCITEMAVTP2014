@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.scitemav.bean.FallaBean;
+import com.scitemav.bean.FallaRevisionBean;
 import com.scitemav.model.Falla;
 import com.scitemav.model.FallaRevision;
 import com.scitemav.model.Revision;
@@ -117,5 +118,31 @@ public class FallaServicelmpl implements FallaService{
 			System.out.println(e.getMessage());
 		}
 		return enviados;
+	}
+
+	@Transactional
+	public boolean eliminarFallaRev(FallaRevisionBean fallaRevisionB) {
+		boolean resultado = false;
+
+		FallaRevision fallarevision = new FallaRevision();
+
+		try {					
+			Query q1 = em.createQuery("SELECT fr FROM FallaRevision fr JOIN fr.farRevision r JOIN fr.farFalla f WHERE r.idRevision=:idrevision AND f.idFalla=:idfalla");
+			q1.setParameter("idrevision", fallaRevisionB.getIdRevision());
+			q1.setParameter("idfalla", fallaRevisionB.getIdFalla());			
+			fallarevision = (FallaRevision) q1.getSingleResult();	
+			
+			
+	        em.remove(fallarevision);				
+				
+		    resultado = true;
+			
+				
+			
+		} catch (IllegalArgumentException e) {
+			System.out.println(e);
+			resultado = false;
+		}
+		return resultado;
 	}
 }

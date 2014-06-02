@@ -11,4 +11,5 @@ public interface TipoVehiculoService {
 
 	boolean registro(TipoVehiculoBean tipv, HttpServletRequest req);
 	public List<TipoVehiculoBean> listarTipoVehiculos();	
+	boolean eliminar(TipoVehiculoBean tipv, HttpServletRequest req);
 }
