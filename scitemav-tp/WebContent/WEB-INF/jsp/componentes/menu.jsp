@@ -104,7 +104,7 @@
                                 <a href="toRegistroRepuesto">Registrar Repuesto</a>
                             </li>
                             <li>
-                                <a href="toConsultarRepuesto">Consultar Respuestos</a>
+                                <a href="toConsultarRepuesto">Consultar Repuestos</a>
                             </li>
                             <li>
                                 <a href="toRegistroTipoRepuesto">Registrar Tipo de Repuesto</a>

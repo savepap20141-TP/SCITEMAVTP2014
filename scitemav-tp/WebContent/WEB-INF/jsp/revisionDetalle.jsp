@@ -288,17 +288,19 @@ var arregloAsignadosRep = [];
 	 				arregloAsignadosRep.push(repuesto.idRepuesto);
 	 				filas = filas +'<tr class="">'+
 	 				'<td class="center">REP-'+repuesto.idRepuesto+'</td>'+
+	 				'<td class="center" id="filaIdR_'+i+'" style="display:none;">'+repuesto.idRepuesto+'</td>'+
 	 				'<td class="center">'+repuesto.comentario+'</td>'+
 					'<td class="center">'+repuesto.nombre+'</td>'+
 					'<td class="center">'+repuesto.nombreTipoRepuesto+'</td>'+
 					'<td class="center">'+repuesto.costoUnitario+'</td>'+					
-					'<td class="center"><button class="btn btn-danger btn-circle" type="button" id="btnDelete_'+i+'"><i class="fa fa-times"></i></button></td>'+
+					'<td class="center"><button class="btn btn-danger btn-circle" type="button" id="btnDelete_'+i+'" data-toggle="modal" data-target="#myModalR" onclick="mostrarEliminarR('+i+','+idRevision+')"><i class="fa fa-times"></i></button></td>'+
 					'</tr>';
 				});		        
 	 		},
 	 		complete: function() {
 	 			columnas = columnas + 
 	 				'<th class="center">Id</th>'+
+	 				'<th class="center" style="display:none;">IdRepuesto</th>'+
 	 				'<th class="center">Comentario</th>'+
 	 				'<th class="center">Nombre Respuesto</th>'+
 	 				'<th class="center">Tipo Respuesto</th>'+
@@ -388,6 +390,50 @@ var arregloAsignadosRep = [];
 	  		}
 	 	});
 	}
+		
+
+	function mostrarEliminarR(ind,idRevision){
+		$('#myModalLabel').empty();
+		$('#myModalLabel').append('Eliminar Repuesto');
+		$('#txtIdRep').val($('#filaIdR_'+ind).text());	
+		$('#txtIdRev').val(idRevision);
+		idRev = idRevision;
+	}
+
+	function eliminarRepuestoRevision(){
+		
+		var formElement = document.getElementById("frmEliminarRepuesto");
+		var formData = new FormData(formElement);	
+		$.ajax({
+	   		url: 'eliminarRepuestoRevision',
+	   		type: 'post',
+	   		data:  formData,
+			mimeType:"multipart/form-data",
+			contentType: false,
+		    cache: false,
+			processData:false,
+			beforeSend: function(){
+				//$.blockUI({ message: $('#domMessage') });
+		    },
+	   		success: function(result){
+	   			$('#resultOk1').hide();
+				$('#resultFalse').hide();	
+				//alert(result);
+				var res  = ''+result;
+	   			if(res == 'true'){   				
+	   				//$('#resultOk').append('Se ha registrado correctamente');
+	   				$('#resultOk1').show();
+	   				$('#txtIdF').val('');
+	   				inicioConsultaRepuestoRevision(idRev);
+	   				inicioConsultaRepuestos();
+	   			}else{
+	   				$('#resultFalse').show();
+	   				//$('#resultFalse').append('Se ha producido un error al registrarse');
+	   			}
+	   		}
+	   	});
+
+	}
 
 	
 	$(document).on('click','#btnAsignarRepuestos', function(e){
@@ -434,51 +480,100 @@ var arregloAsignadosRep = [];
 
 <script>
 //tab Fallas por Revisión
-	function inicioConsultaFallasRevision(idRevision){
-		var filas = '';
-		var columnas = '';	
-	    $.ajax({
-	 		url: 'getFallaRevision-'+idRevision,
-	 		type: 'post',
-	 		dataType: 'json',
-	 		data: '',
-	 		success: function(fallas){
-	 			$.each(fallas, function(i, falla){
-	 				arregloAsignadosFalla.push(falla.idFalla);
-	 				filas = filas +'<tr class="">'+
-	 				'<td class="center">FAL-'+falla.idFalla+'</td>'+
-	 				'<td class="center">'+falla.descripcion+'</td>'+
-					'<td class="center">'+falla.nombreTipoFalla+'</td>'+					
-					'</tr>';
-				});		        
-	 		},
-	 		complete: function() {
-	 			columnas = columnas + 
-	 				'<th class="center">Id</th>'+
-	 				'<th class="center">Nombre</th>'+
-	 				'<th class="center">Tipo de falla</th>';
-				var id = 'FalRev';
-				var contenido = '';
-				$("#spnResultList_"+id).empty();
+function inicioConsultaFallasRevision(idRevision){
+	var filas = '';
+	var columnas = '';	
+    $.ajax({
+ 		url: 'getFallaRevision-'+idRevision,
+ 		type: 'post',
+ 		dataType: 'json',
+ 		data: '',
+ 		success: function(fallas){
+ 			$.each(fallas, function(i, falla){
+ 				arregloAsignadosFalla.push(falla.idFalla);
+ 				filas = filas +'<tr class="">'+
+ 				'<td class="center">FAL-'+falla.idFalla+'</td>'+
+ 				'<td class="center" id="filaId_'+i+'" style="display:none;">'+falla.idFalla+'</td>'+
+ 				'<td class="center">'+falla.descripcion+'</td>'+
+				'<td class="center">'+falla.nombreTipoFalla+'</td>'+
+				'<td class="center"><button class="btn btn-danger btn-circle" type="button" id="btnDelete_'+falla.idFalla+'" data-toggle="modal" data-target="#myModalF" onclick="mostrarEliminar('+i+','+idRevision+')"><i class="fa fa-times"></i></button></td>'+
+				'</tr>';
+			});		        
+ 		},
+ 		complete: function() {
+ 			columnas = columnas + 
+ 				'<th class="center">Id</th>'+
+ 				'<th class="center" style="display:none;">IdFalla</th>'+
+ 				'<th class="center">Nombre</th>'+
+ 				'<th class="center">Tipo de falla</th>'+
+ 				'<th class="center">Eliminar</th>';
+			var id = 'FalRev';
+			var contenido = '';
+			$("#spnResultList_"+id).empty();
+
+			contenido = contenido + '<table cellpadding="0" cellspacing="0" border="0" class="display dataTable" id="example_'+id+'"> '+
+					' <thead class="tableGri"> '+
+			            '<tr role="row">'+
+			            	columnas+							                            
+			            '</tr>'+
+			        '</thead> '+
+			        '<tbody id="'+id+'">';
+			contenido = contenido + filas;   
+			contenido = contenido + '</tbody>'+
+					'</table> ';
+			
+			$("#spnResultList_"+id).append(contenido);
+			//realizarTabla(columnas,filas);
+			inicioConsultaFalla();
+ 			removeNulls();
+  		}
+ 	});
+} 
+
+var idRev;
+
+function mostrarEliminar(ind,idRevision){
+	$('#myModalLabel').empty();
+	$('#myModalLabel').append('Eliminar Falla');
+	$('#txtIdF').val($('#filaId_'+ind).text());	
+	$('#txtIdR').val(idRevision);
+	idRev = idRevision;
+}
+
+function eliminarFallaRevision(){
 	
-				contenido = contenido + '<table cellpadding="0" cellspacing="0" border="0" class="display dataTable" id="example_'+id+'"> '+
-						' <thead class="tableGri"> '+
-				            '<tr role="row">'+
-				            	columnas+							                            
-				            '</tr>'+
-				        '</thead> '+
-				        '<tbody id="'+id+'">';
-				contenido = contenido + filas;   
-				contenido = contenido + '</tbody>'+
-						'</table> ';
-				
-				$("#spnResultList_"+id).append(contenido);
-				//realizarTabla(columnas,filas);
-				inicioConsultaFalla();
-	 			removeNulls();
-	  		}
-	 	});
-	} 
+	var formElement = document.getElementById("frmEliminarFalla");
+	var formData = new FormData(formElement);	
+	$.ajax({
+   		url: 'eliminarFallaRevision',
+   		type: 'post',
+   		data:  formData,
+		mimeType:"multipart/form-data",
+		contentType: false,
+	    cache: false,
+		processData:false,
+		beforeSend: function(){
+			//$.blockUI({ message: $('#domMessage') });
+	    },
+   		success: function(result){
+   			$('#resultOk1').hide();
+			$('#resultFalse').hide();	
+			//alert(result);
+			var res  = ''+result;
+   			if(res == 'true'){   				
+   				//$('#resultOk').append('Se ha registrado correctamente');
+   				$('#resultOk1').show();
+   				$('#txtIdF').val('');
+   				inicioConsultaFallasRevision(idRev);
+   				inicioConsultaFalla();
+   			}else{
+   				$('#resultFalse').show();
+   				//$('#resultFalse').append('Se ha producido un error al registrarse');
+   			}
+   		}
+   	});
+
+}
 	
 	function updateStateFallas(source,i){
 		$('#changeF_'+i).val(true);
@@ -615,6 +710,7 @@ function inicioConsultaEmpleadosRevision(idRevision){
  				arregloAsignadosEmp.push(empleado.idEmpleado);
  				filas = filas +'<tr class="">'+
  				'<td class="center"><a id="empleado_"'+i+'" href="toEmpleadoDetalle-'+empleado.idEmpleado+'">EMP-'+empleado.idEmpleado+'</a></td>'+
+ 				'<td class="center" id="filaIdE_'+i+'" style="display:none;">'+empleado.idEmpleado+'</td>'+
  				'<td class="center">'+empleado.nombre+'</td>'+
 				'<td class="center">'+empleado.apellidoPaterno+'</td>'+
 				'<td class="center">'+empleado.apellidoMaterno+'</td>'+
@@ -623,7 +719,7 @@ function inicioConsultaEmpleadosRevision(idRevision){
 				'<td class="center">'+empleado.telefono+'</td>'+
 				'<td class="center">'+empleado.nombreCargo+'</td>'+
 				'<td class="center">'+empleado.nombreEspecialidad+'</td>'+
-				'<td class="center"><button class="btn btn-danger btn-circle" type="button" id="btnDelete_'+i+'"><i class="fa fa-times"></i></button></td>'+
+				'<td class="center"><button class="btn btn-danger btn-circle" type="button" id="btnDelete_'+i+'" data-toggle="modal" data-target="#myModalE" onclick="mostrarEliminarE('+i+','+idRevision+')"><i class="fa fa-times"></i></button></td>'+
 				'</tr>';
 			});		        
  		},
@@ -662,6 +758,49 @@ function inicioConsultaEmpleadosRevision(idRevision){
  			inicioConsultaEmpleados();
   		}
  	});
+}
+
+function mostrarEliminarE(ind,idRevision){
+	$('#myModalLabel').empty();
+	$('#myModalLabel').append('Eliminar Empleado');
+	$('#txtIdEmp').val($('#filaIdE_'+ind).text());	
+	$('#txtIdRev1').val(idRevision);
+	idRev = idRevision;
+}
+
+function eliminarEmpleadoRevision(){
+	
+	var formElement = document.getElementById("frmEliminarEmpleado");
+	var formData = new FormData(formElement);	
+	$.ajax({
+   		url: 'eliminarEmpleadoRevision',
+   		type: 'post',
+   		data:  formData,
+		mimeType:"multipart/form-data",
+		contentType: false,
+	    cache: false,
+		processData:false,
+		beforeSend: function(){
+			//$.blockUI({ message: $('#domMessage') });
+	    },
+   		success: function(result){
+   			$('#resultOk1').hide();
+			$('#resultFalse').hide();	
+			//alert(result);
+			var res  = ''+result;
+   			if(res == 'true'){   				
+   				//$('#resultOk').append('Se ha registrado correctamente');
+   				$('#resultOk1').show();
+   				$('#txtIdF').val('');
+   				inicioConsultaEmpleadosRevision(idRev);
+   				inicioConsultaEmpleados();
+   			}else{
+   				$('#resultFalse').show();
+   				//$('#resultFalse').append('Se ha producido un error al registrarse');
+   			}
+   		}
+   	});
+
 }
 
 function inicioConsultaEmpleados(){
@@ -984,7 +1123,7 @@ $(document).on('click','#btnAsignarEmpleados', function(e){
 														onclick="ExtractInformacion4();">Editar</span> 
 													<span id="btnVerInformacion4"
 														class="btn btn-default btn-xs dropdown-toggle"
-														onclick="$('.edicionInformacion4').hide();$('.vistaInformacion4').show();$('#btnVerInformacion4').hide();$('#btnVerEdicion4').show();"
+														onclick="$('.edicionInformacion4').hide();$('.vistaInformacion4').show();$('#btnVerInformacion4').hide();$('#btnVerEdicion4').show();$('#resultOk1').hide();"
 														style="display: none">Regresar</span>
 												</div>
 											</div>												
@@ -1025,7 +1164,7 @@ $(document).on('click','#btnAsignarEmpleados', function(e){
 														onclick="ExtractInformacion3();">Editar</span> 
 													<span id="btnVerInformacion3"
 														class="btn btn-default btn-xs dropdown-toggle"
-														onclick="$('.edicionInformacion3').hide();$('.vistaInformacion3').show();$('#btnVerInformacion3').hide();$('#btnVerEdicion3').show();"
+														onclick="$('.edicionInformacion3').hide();$('.vistaInformacion3').show();$('#btnVerInformacion3').hide();$('#btnVerEdicion3').show();$('#resultOk1').hide();"
 														style="display: none">Regresar</span>
 												</div>
 											</div>												
@@ -1107,6 +1246,144 @@ $(document).on('click','#btnAsignarEmpleados', function(e){
 				</div>
 </div>
 </div>
+<div class="panel-body">                            
+                            <!-- Modal -->
+                            <div class="modal fade" id="myModalF" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                            <h4 class="modal-title" id="myModalLabelF">Eliminar Falla</h4>
+                                        </div>
+                                        <div class="modal-body">
+                                        	<form role="form" id="frmEliminarFalla"
+													method="post" commandName="fallarevision"
+													style="width: 60%; margin-left: 20%;">				
+													<fieldset>
+													    <div>¿Eliminar a esta falla?</div>		
+														<div class="form-group" style="display:none">
+															<label> Id Falla</label> <input 
+															class="form-control" name="idFalla" id="txtIdF"/>
+														</div>
+														<div class="form-group" style="display:none">
+															<label> Id Revision</label> <input 
+															class="form-control" name="idRevision" id="txtIdR"/>
+														</div>
+																									
+														
+														</p>
+													</fieldset>
+												</form>	
+                                        
+                                        
+                                        </div>
+                                        <div class="modal-footer">
+                                        	<button type="button" class="btn btn-primary" data-dismiss="modal" onclick="eliminarFallaRevision();">Eliminar</button>
+                                            <button type="button" class="btn btn-default" data-dismiss="modal" onclick="$('#txtIdF').val('');$('#txtIdR').val('');">Cancelar</button>
+                                        </div>
+                                    </div>
+                                    <!-- /.modal-content -->
+                                </div>
+                                <!-- /.modal-dialog -->
+                            </div>
+                            <!-- /.modal -->
+                            
+                            <div class="alert alert-success alert-dismissable" id="resultOk1" style="display:none">
+    							<button class="close" aria-hidden="true" data-dismiss="alert" type="button">×</button>
+								Se ha eliminado correctamente
+							</div>
+							
+                        </div>
+                        <div class="panel-body">                            
+                            <!-- Modal -->
+                            <div class="modal fade" id="myModalR" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                            <h4 class="modal-title" id="myModalLabelR">Eliminar Repuesto</h4>
+                                        </div>
+                                        <div class="modal-body">
+                                        	<form role="form" id="frmEliminarRepuesto"
+													method="post" commandName="repuestorevision"
+													style="width: 60%; margin-left: 20%;">				
+													<fieldset>
+													    <div>¿Eliminar a este repuesto?</div>		
+														<div class="form-group" style="display:none">
+															<label> Id Repuesto</label> <input 
+															class="form-control" name="idRepuesto" id="txtIdRep"/>
+														</div>
+														<div class="form-group" style="display:none">
+															<label> Id Revision</label> <input 
+															class="form-control" name="idRevision" id="txtIdRev"/>
+														</div>
+																									
+														
+														</p>
+													</fieldset>
+												</form>	
+                                        
+                                        
+                                        </div>
+                                        <div class="modal-footer">
+                                        	<button type="button" class="btn btn-primary" data-dismiss="modal" onclick="eliminarRepuestoRevision();">Eliminar</button>
+                                            <button type="button" class="btn btn-default" data-dismiss="modal" onclick="$('#txtIdRep').val('');$('#txtIdRev').val('');">Cancelar</button>
+                                        </div>
+                                    </div>
+                                    <!-- /.modal-content -->
+                                </div>
+                                <!-- /.modal-dialog -->
+                            </div>
+                            <!-- /.modal -->
+                    
+							
+                        </div>
+                        
+                        <div class="panel-body">                            
+                            <!-- Modal -->
+                            <div class="modal fade" id="myModalE" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                            <h4 class="modal-title" id="myModalLabelE">Eliminar Empleado</h4>
+                                        </div>
+                                        <div class="modal-body">
+                                        	<form role="form" id="frmEliminarEmpleado"
+													method="post" commandName="empleadorevision"
+													style="width: 60%; margin-left: 20%;">				
+													<fieldset>
+													    <div>¿Eliminar a este empleado?</div>		
+														<div class="form-group" style="display:none">
+															<label> Id Empleado</label> <input 
+															class="form-control" name="idEmpleado" id="txtIdEmp"/>
+														</div>
+														<div class="form-group" style="display:none">
+															<label> Id Revision</label> <input 
+															class="form-control" name="idRevision" id="txtIdRev1"/>
+														</div>
+																									
+														
+														</p>
+													</fieldset>
+												</form>	
+                                        
+                                        
+                                        </div>
+                                        <div class="modal-footer">
+                                        	<button type="button" class="btn btn-primary" data-dismiss="modal" onclick="eliminarEmpleadoRevision();">Eliminar</button>
+                                            <button type="button" class="btn btn-default" data-dismiss="modal" onclick="$('#txtIdEmp').val('');$('#txtIdRev1').val('');">Cancelar</button>
+                                        </div>
+                                    </div>
+                                    <!-- /.modal-content -->
+                                </div>
+                                <!-- /.modal-dialog -->
+                            </div>
+                            <!-- /.modal -->
+                    
+							
+                        </div>
+
 
 			</div>
 

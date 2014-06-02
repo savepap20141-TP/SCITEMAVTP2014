@@ -17,7 +17,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 
 import com.scitemav.bean.EmpleadoBean;
+import com.scitemav.bean.FallaRevisionBean;
 import com.scitemav.bean.RepuestoBean;
+import com.scitemav.bean.RepuestoRevisionBean;
 
 import com.scitemav.service.RepuestoService;
 
@@ -75,5 +77,19 @@ public class RepuestoController {
 			enviados = repuestoService.administrarRepuestosRevision(idRepList, idRevision);
 		}
 		return enviados;
+	}
+	
+	@RequestMapping(value="eliminarRepuestoRevision", method = RequestMethod.POST)
+	@ResponseBody
+	public boolean eliminarRepuestoRevision(@ModelAttribute("repuestorevisionbean") RepuestoRevisionBean rrbean, Model model, HttpServletRequest req){
+		boolean result = false;
+		if(repuestoService.eliminarRepuestoRev(rrbean)){
+			result = true;
+		}
+		else{
+			//model.addAttribute("msg", "Se ha producido un error al registrarse");
+			result = false;
+		}
+		return result;
 	}
 }

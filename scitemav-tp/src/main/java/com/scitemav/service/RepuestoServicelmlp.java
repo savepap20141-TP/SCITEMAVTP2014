@@ -13,10 +13,12 @@ import org.springframework.transaction.annotation.Transactional;
 import com.scitemav.bean.ClienteBean;
 import com.scitemav.bean.EmpleadoBean;
 import com.scitemav.bean.RepuestoBean;
+import com.scitemav.bean.RepuestoRevisionBean;
 import com.scitemav.model.Cliente;
 import com.scitemav.model.Distrito;
 import com.scitemav.model.Empleado;
 import com.scitemav.model.EmpleadoRevision;
+import com.scitemav.model.FallaRevision;
 import com.scitemav.model.Persona;
 import com.scitemav.model.Repuesto;
 import com.scitemav.model.RepuestoRevision;
@@ -127,5 +129,31 @@ public class RepuestoServicelmlp implements RepuestoService {
 			System.out.println(e.getMessage());
 		}
 		return enviados;
+	}
+
+	@Transactional
+	public boolean eliminarRepuestoRev(RepuestoRevisionBean RepuestoRevisionB) {
+		boolean resultado = false;
+
+		RepuestoRevision repuestorevision = new RepuestoRevision();
+
+		try {					
+			Query q1 = em.createQuery("SELECT rr FROM RepuestoRevision rr JOIN rr.rerRevision r JOIN rr.rerRepuesto p WHERE r.idRevision=:idrevision AND p.idRepuesto=:idrepuesto");
+			q1.setParameter("idrevision", RepuestoRevisionB.getIdRevision());
+			q1.setParameter("idrepuesto", RepuestoRevisionB.getIdRepuesto());			
+			repuestorevision = (RepuestoRevision) q1.getSingleResult();	
+			
+			
+	        em.remove(repuestorevision);				
+				
+		    resultado = true;
+			
+				
+			
+		} catch (IllegalArgumentException e) {
+			System.out.println(e);
+			resultado = false;
+		}
+		return resultado;
 	}
 }

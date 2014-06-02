@@ -43,6 +43,7 @@
 					<div class="panel-heading">
 						Detalles generales del vehiculo <span id="spnIdVehiculo"><c:out
 								value="${idvehiculo}" /></span>
+					<div id="divReporte"></div>								
 					</div>
 					<div class="panel-body">
 						<div class="col-lg-6">

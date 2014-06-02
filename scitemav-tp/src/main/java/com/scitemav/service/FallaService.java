@@ -2,6 +2,7 @@ package com.scitemav.service;
 
 import java.util.List;
 import com.scitemav.bean.FallaBean;
+import com.scitemav.bean.FallaRevisionBean;
 import com.scitemav.bean.TipoFallaBean;
 import com.scitemav.model.Falla;
 import com.scitemav.model.TipoFalla;
@@ -11,4 +12,7 @@ public interface FallaService {
 	public List<FallaBean> listarFallas();
 	public List<FallaBean> listarFallasRevision(Integer idRevision);
 	public List<String> administrarFallasRevision(String[] ids, Integer IdRevision);
+	boolean eliminarFallaRev(FallaRevisionBean fallaRevisionB);
+	
+	
 }

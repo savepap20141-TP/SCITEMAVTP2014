@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.scitemav.bean.EmpleadoBean;
 import com.scitemav.bean.FallaBean;
+import com.scitemav.bean.FallaRevisionBean;
 import com.scitemav.bean.TipoFallaBean;
 import com.scitemav.model.Falla;
 import com.scitemav.service.FallaService;
@@ -75,6 +76,20 @@ public class FallaController {
 			enviados = fallaService.administrarFallasRevision(idFallaList, idRevision);
 		}
 		return enviados;
+	}
+	
+	@RequestMapping(value="eliminarFallaRevision", method = RequestMethod.POST)
+	@ResponseBody
+	public boolean eliminarFallaRevision(@ModelAttribute("fallarevisionbean") FallaRevisionBean frbean, Model model, HttpServletRequest req){
+		boolean result = false;
+		if(fallaService.eliminarFallaRev(frbean)){
+			result = true;
+		}
+		else{
+			//model.addAttribute("msg", "Se ha producido un error al registrarse");
+			result = false;
+		}
+		return result;
 	}
 	
 }

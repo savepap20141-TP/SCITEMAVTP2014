@@ -14,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.scitemav.bean.EmpleadoBean;
 import com.scitemav.bean.EmpleadoBean;
 import com.scitemav.bean.EmpleadoBean;
+import com.scitemav.bean.EmpleadoRevisionBean;
 import com.scitemav.bean.VehiculoBean;
 import com.scitemav.model.Cargo;
 import com.scitemav.model.Empleado;
@@ -22,6 +23,7 @@ import com.scitemav.model.Distrito;
 import com.scitemav.model.Empleado;
 import com.scitemav.model.EmpleadoRevision;
 import com.scitemav.model.Especialidad;
+import com.scitemav.model.FallaRevision;
 import com.scitemav.model.Persona;
 import com.scitemav.model.Revision;
 import com.scitemav.model.Usuario;
@@ -283,5 +285,31 @@ public class EmpleadoServiceImpl implements EmpleadoService{
 			System.out.println(e.getMessage());
 		}
 		return enviados;
+	}
+
+	@Transactional
+	public boolean eliminarEmpRev(EmpleadoRevisionBean EmpleadoRevisionB) {
+		boolean resultado = false;
+
+		EmpleadoRevision empleadorevision = new EmpleadoRevision();
+
+		try {					
+			Query q1 = em.createQuery("SELECT er FROM EmpleadoRevision er JOIN er.reeRevision r JOIN er.reeEmpleado e WHERE r.idRevision=:idrevision AND e.idEmpleado=:idempleado");
+			q1.setParameter("idrevision", EmpleadoRevisionB.getIdRevision());
+			q1.setParameter("idempleado", EmpleadoRevisionB.getIdEmpleado());			
+			empleadorevision = (EmpleadoRevision) q1.getSingleResult();	
+			
+			
+	        em.remove(empleadorevision);				
+				
+		    resultado = true;
+			
+				
+			
+		} catch (IllegalArgumentException e) {
+			System.out.println(e);
+			resultado = false;
+		}
+		return resultado;
 	}
 }

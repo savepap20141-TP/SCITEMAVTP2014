@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.scitemav.bean.EmpleadoBean;
+import com.scitemav.bean.EmpleadoRevisionBean;
+import com.scitemav.bean.FallaRevisionBean;
 import com.scitemav.bean.RevisionBean;
 import com.scitemav.service.EmpleadoService;
 
@@ -103,5 +105,19 @@ public class EmpleadoController {
 			enviados = empleadoService.administrarEmpleadosRevision(idUsuList, idRevision);
 		}
 		return enviados;
+	}
+	
+	@RequestMapping(value="eliminarEmpleadoRevision", method = RequestMethod.POST)
+	@ResponseBody
+	public boolean eliminarEmpleadoRevision(@ModelAttribute("empleadorevisionbean") EmpleadoRevisionBean erbean, Model model, HttpServletRequest req){
+		boolean result = false;
+		if(empleadoService.eliminarEmpRev(erbean)){
+			result = true;
+		}
+		else{
+			//model.addAttribute("msg", "Se ha producido un error al registrarse");
+			result = false;
+		}
+		return result;
 	}
 }
