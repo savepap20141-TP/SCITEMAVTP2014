@@ -288,17 +288,19 @@ var arregloAsignadosRep = [];
 	 				arregloAsignadosRep.push(repuesto.idRepuesto);
 	 				filas = filas +'<tr class="">'+
 	 				'<td class="center">REP-'+repuesto.idRepuesto+'</td>'+
+	 				'<td class="center" id="filaIdR_'+i+'" style="display:none;">'+repuesto.idRepuesto+'</td>'+
 	 				'<td class="center">'+repuesto.comentario+'</td>'+
 					'<td class="center">'+repuesto.nombre+'</td>'+
 					'<td class="center">'+repuesto.nombreTipoRepuesto+'</td>'+
 					'<td class="center">'+repuesto.costoUnitario+'</td>'+					
-					'<td class="center"><button class="btn btn-danger btn-circle" type="button" id="btnDelete_'+i+'"><i class="fa fa-times"></i></button></td>'+
+					'<td class="center"><button class="btn btn-danger btn-circle" type="button" id="btnDelete_'+i+'" data-toggle="modal" data-target="#myModalR" onclick="mostrarEliminarR('+i+','+idRevision+')"><i class="fa fa-times"></i></button></td>'+
 					'</tr>';
 				});		        
 	 		},
 	 		complete: function() {
 	 			columnas = columnas + 
 	 				'<th class="center">Id</th>'+
+	 				'<th class="center" style="display:none;">IdRepuesto</th>'+
 	 				'<th class="center">Comentario</th>'+
 	 				'<th class="center">Nombre Respuesto</th>'+
 	 				'<th class="center">Tipo Respuesto</th>'+
@@ -387,6 +389,50 @@ var arregloAsignadosRep = [];
 	 			removeNulls();
 	  		}
 	 	});
+	}
+		
+
+	function mostrarEliminarR(ind,idRevision){
+		$('#myModalLabel').empty();
+		$('#myModalLabel').append('Eliminar Repuesto');
+		$('#txtIdRep').val($('#filaIdR_'+ind).text());	
+		$('#txtIdRev').val(idRevision);
+		idRev = idRevision;
+	}
+
+	function eliminarRepuestoRevision(){
+		
+		var formElement = document.getElementById("frmEliminarRepuesto");
+		var formData = new FormData(formElement);	
+		$.ajax({
+	   		url: 'eliminarRepuestoRevision',
+	   		type: 'post',
+	   		data:  formData,
+			mimeType:"multipart/form-data",
+			contentType: false,
+		    cache: false,
+			processData:false,
+			beforeSend: function(){
+				//$.blockUI({ message: $('#domMessage') });
+		    },
+	   		success: function(result){
+	   			$('#resultOk1').hide();
+				$('#resultFalse').hide();	
+				//alert(result);
+				var res  = ''+result;
+	   			if(res == 'true'){   				
+	   				//$('#resultOk').append('Se ha registrado correctamente');
+	   				$('#resultOk1').show();
+	   				$('#txtIdF').val('');
+	   				inicioConsultaRepuestoRevision(idRev);
+	   				inicioConsultaRepuestos();
+	   			}else{
+	   				$('#resultFalse').show();
+	   				//$('#resultFalse').append('Se ha producido un error al registrarse');
+	   			}
+	   		}
+	   	});
+
 	}
 
 	
@@ -519,6 +565,7 @@ function eliminarFallaRevision(){
    				$('#resultOk1').show();
    				$('#txtIdF').val('');
    				inicioConsultaFallasRevision(idRev);
+   				inicioConsultaFalla();
    			}else{
    				$('#resultFalse').show();
    				//$('#resultFalse').append('Se ha producido un error al registrarse');
@@ -1032,7 +1079,7 @@ $(document).on('click','#btnAsignarEmpleados', function(e){
 														onclick="ExtractInformacion4();">Editar</span> 
 													<span id="btnVerInformacion4"
 														class="btn btn-default btn-xs dropdown-toggle"
-														onclick="$('.edicionInformacion4').hide();$('.vistaInformacion4').show();$('#btnVerInformacion4').hide();$('#btnVerEdicion4').show();"
+														onclick="$('.edicionInformacion4').hide();$('.vistaInformacion4').show();$('#btnVerInformacion4').hide();$('#btnVerEdicion4').show();$('#resultOk1').hide();"
 														style="display: none">Regresar</span>
 												</div>
 											</div>												
@@ -1073,7 +1120,7 @@ $(document).on('click','#btnAsignarEmpleados', function(e){
 														onclick="ExtractInformacion3();">Editar</span> 
 													<span id="btnVerInformacion3"
 														class="btn btn-default btn-xs dropdown-toggle"
-														onclick="$('.edicionInformacion3').hide();$('.vistaInformacion3').show();$('#btnVerInformacion3').hide();$('#btnVerEdicion3').show();"
+														onclick="$('.edicionInformacion3').hide();$('.vistaInformacion3').show();$('#btnVerInformacion3').hide();$('#btnVerEdicion3').show();$('#resultOk1').hide();"
 														style="display: none">Regresar</span>
 												</div>
 											</div>												
@@ -1201,6 +1248,51 @@ $(document).on('click','#btnAsignarEmpleados', function(e){
     							<button class="close" aria-hidden="true" data-dismiss="alert" type="button">×</button>
 								Se ha eliminado correctamente
 							</div>
+							
+                        </div>
+                        <div class="panel-body">                            
+                            <!-- Modal -->
+                            <div class="modal fade" id="myModalR" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                            <h4 class="modal-title" id="myModalLabelR">Eliminar Repuesto</h4>
+                                        </div>
+                                        <div class="modal-body">
+                                        	<form role="form" id="frmEliminarRepuesto"
+													method="post" commandName="repuestorevision"
+													style="width: 60%; margin-left: 20%;">				
+													<fieldset>
+													    <div>¿Eliminar a este repuesto?</div>		
+														<div class="form-group" style="display:none">
+															<label> Id Repuesto</label> <input 
+															class="form-control" name="idRepuesto" id="txtIdRep"/>
+														</div>
+														<div class="form-group" style="display:none">
+															<label> Id Revision</label> <input 
+															class="form-control" name="idRevision" id="txtIdRev"/>
+														</div>
+																									
+														
+														</p>
+													</fieldset>
+												</form>	
+                                        
+                                        
+                                        </div>
+                                        <div class="modal-footer">
+                                        	<button type="button" class="btn btn-primary" data-dismiss="modal" onclick="eliminarRepuestoRevision();">Eliminar</button>
+                                            <button type="button" class="btn btn-default" data-dismiss="modal" onclick="$('#txtIdRep').val('');$('#txtIdRev').val('');">Cancelar</button>
+                                        </div>
+                                    </div>
+                                    <!-- /.modal-content -->
+                                </div>
+                                <!-- /.modal-dialog -->
+                            </div>
+                            <!-- /.modal -->
+                    
+							
                         </div>
 
 
