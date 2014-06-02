@@ -33,14 +33,14 @@ public class ModeloController {
 	}
 	
 	@RequestMapping(value="registroModelo", method = RequestMethod.POST)
-	public String registroModelo(@ModelAttribute("modelobean") ModeloBean mb, Model model, HttpServletRequest req){
-		String path = "";
+	public Boolean registroModelo(@ModelAttribute("modelobean") ModeloBean mb, Model model, HttpServletRequest req){
+		Boolean path = false;
 		if(modeloService.registro(mb)){
 			model.addAttribute("msg", "Se registro correctamente");
-			path = "registrarModelo";
+			path = true;
 		}else{
 			model.addAttribute("msg", "Fallo al registrarse");
-			path = "registrarModelo";
+			path = false;
 		}
 		return path;
 	}

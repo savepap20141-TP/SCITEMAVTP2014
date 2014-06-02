@@ -35,12 +35,16 @@ public class ModeloServiceImpl implements ModeloService  {
 
 		try{
 			
-			marca.setIdMarca(modeloBean.getIdMarca());
-			
+			marca.setIdMarca(modeloBean.getIdMarca());			
 			modelo.setModMarca(marca);
 			modelo.setNombre(modeloBean.getNombre());
 			
-			em.persist(modelo);
+			if(modeloBean.getIdModelo()==null){
+				em.persist(modelo);
+			}else{
+				modelo.setIdModelo(modeloBean.getIdModelo());
+				em.merge(modelo);
+			}
 			
 			resultado = true;
 		}catch(IllegalArgumentException e){
