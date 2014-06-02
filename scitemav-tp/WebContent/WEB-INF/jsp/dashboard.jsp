@@ -16,6 +16,9 @@
 function VerHTML(){
 	window.open("verPDF");
 }
+function revision1(){
+	window.open("verPDFRevision-1");
+}
 </script>
 <body>
 
@@ -47,7 +50,7 @@ function VerHTML(){
                                     <ul class="dropdown-menu pull-right" role="menu">
                                         <li><a onclick="VerHTML();">Prueba PDF</a>
                                         </li>
-                                        <li><a href="#">Another action</a>
+                                        <li><a onclick="revision1();">Revision 1</a>
                                         </li>
                                         <li><a href="#">Something else here</a>
                                         </li>

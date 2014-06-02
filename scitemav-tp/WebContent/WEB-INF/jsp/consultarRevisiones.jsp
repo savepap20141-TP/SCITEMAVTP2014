@@ -42,6 +42,7 @@ function inicioConsulta(){
  				'<td class="center">'+revision.kilometrajeActual+'</td>'+
  				'<td class="center">'+revision.kilometrajeProximo+'</td>'+ 				
  				'<td class="center">'+revision.costoTotal+'</td>'+
+ 				'<td class="center"><a href="verPDFRevision-'+revision.idRevision+'">Ver Reporte</a></td>'+
 				'</tr>';
 			});		        
  		},
@@ -54,7 +55,8 @@ function inicioConsulta(){
 				'<th class="center">Fecha próxima</th>'+
 				'<th class="center">Kilometraje Actual</th>'+
 				'<th class="center">Kilometraje Próximo</th>'+
-				'<th class="center">Costo total</th>';				
+				'<th class="center">Costo total</th>'+
+				'<th class="center">Reporte</th>';	
  			realizarTabla(columnas,filas);
  			removeNulls();
   		}
