@@ -1,8 +1,10 @@
 package com.scitemav.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -83,5 +85,18 @@ public class RevisionController {
 	@ResponseBody
 	public List<RevisionBean> getRevisiones(@PathVariable("idVehiculo") Integer idVehiculo){
 		return revisionService.listarRevisionesVehiculo(idVehiculo);
+	}
+	
+	@RequestMapping(value = "notificarClientes", method = RequestMethod.POST)
+	@ResponseBody
+	public List<String> notificarClientes(HttpServletRequest request, HttpSession session) {
+		session = request.getSession();
+		List<String> enviados = new ArrayList<String>();
+		String[] idRevList = request.getParameter("idRevisionList").toString().split("_");
+		
+		if(idRevList[0].length() > 0){
+			enviados = revisionService.notificarRevisionesClientes(idRevList);
+		}
+		return enviados;
 	}
 }

@@ -13,6 +13,169 @@
    	<jsp:include page="componentes/head.jsp" />
 </head>
 <script>
+var arregloReviEnv = [];
+$(document).ready(function(){
+	IniciarNotificacion();
+});
+
+function IniciarNotificacion(){
+	var fechaHoy = new Date();
+	//alert(fechaHoy);
+	//alert(fechaHoy.getMonth()+"-"+fechaHoy.getFullYear()+"-"+fechaHoy.getDate());
+	i=0;
+	while (i < 10) {
+		fechaHoy.setTime(fechaHoy.getTime()+24*60*60*1000); // añadimos 1 día	  		
+	    i++;  
+		/* if(i==10){
+			alert(i+".- "+fechaHoy.getMonth()+"-"+fechaHoy.getFullYear()+"-"+fechaHoy.getDate());
+			alert(fechaHoy);
+		}	 */    
+	}
+	var textoFechaHoy = ""+fechaHoy.getFullYear()+"-"+(fechaHoy.getMonth()+1)+"-"+fechaHoy.getDate();
+	//alert("FECHA TEMP 2 "+textoFechaHoy);
+	var FecArray = textoFechaHoy.split('-');
+		
+	var fechaTempHoy = new Date();
+	fechaTempHoy.setMonth(parseInt(FecArray[1]-1));	
+	fechaTempHoy.setYear(parseInt(FecArray[0]));	
+	fechaTempHoy.setDate(parseInt(FecArray[2]));
+	
+	inicioConsultaRevision(fechaTempHoy);
+}
+
+
+function updateStateRev(source,i){
+	$('#changeR_'+i).val(true);
+}
+function inicioConsultaRevision(fechaHoyT){
+	var filas = '';
+	var columnas = '';	
+    $.ajax({
+ 		url: 'getRevisiones',
+ 		type: 'post',
+ 		dataType: 'json',
+ 		data: '',
+ 		success: function(revisiones){
+ 			$.each(revisiones, function(i, revision){
+ 				
+ 				var textoFechaRevProxima = ""+revision.fechaProxima;
+ 				var revProxArray = textoFechaRevProxima.split('-');
+ 				
+ 				var fechaTempProxima = new Date();
+ 				fechaTempProxima.setMonth(parseInt(revProxArray[1]-1));	
+ 				fechaTempProxima.setYear(parseInt(revProxArray[0]));	
+ 				fechaTempProxima.setDate(parseInt(revProxArray[2]));
+ 				
+ 				//alert("FECHA TEMP Proxima "+fechaTempProxima.getFullYear()+"-"+fechaTempProxima.getMonth()+"-"+fechaTempProxima.getDate());
+ 				if(fechaHoyT>=fechaTempProxima){
+ 					var chckeado = '';
+ 					if(revision.notificacion==true){
+ 						chckeado = 'checked';
+ 						arregloReviEnv.push(revision.idRevision);
+ 					}
+ 					
+ 	 				filas = filas +'<tr class="">'+
+ 	 				'<td class="center"><input id="chkRev_'+revision.idRevision+'" '+chckeado+' type="checkbox" onclick="updateStateRev(this,'+ i +')"></td>'+
+ 	 				'<td class="center"><a id="revision_'+i+'" href="toRevisionDetalle-'+revision.idRevision+'">REV-'+revision.idRevision+'</a></td>'+
+ 	 			//	'<td class="center">'+revision.idRevision+'</td>'+
+ 	 				'<td class="center"><a id="vehiculo_"'+i+'" href="toVehiculoDetalle-'+revision.idVehiculo+'">'+revision.numeroPlaca+'</a><input id="changeR_'+i+'" type="hidden" name="changeR"></td>'+
+ 	 				'<td class="center"><a id="cliente_"'+i+'" href="toClienteDetalle-'+revision.idCliente+'">'+revision.nombreCliente+'</a></td>'+
+ 	 				'<td class="center">'+revision.fechaInicio+'<input type="hidden" value="'+revision.idRevision+'" id="idRev_'+i+'" /></td>'+
+ 	 				'<td class="center">'+revision.fechaFin+'</td>'+
+ 	 				'<td class="center">'+revision.fechaProxima+'</td>'+
+ 	 				'<td class="center">'+revision.kilometrajeActual+'</td>'+
+ 	 				'<td class="center">'+revision.kilometrajeProximo+'</td>'+ 				
+ 	 				'<td class="center">'+revision.costoTotal+'</td>'+
+ 	 				'<td class="center"><a target="_blank" href="verPDFRevision-'+revision.idRevision+'"><img width="50" height="50" src="images/pdfReport.jpg"></a></td>'+
+ 					'</tr>';	
+ 				}else if(fechaHoyT.getFullYear()==fechaTempProxima.getFullYear() && fechaHoyT.getMonth()==fechaTempProxima.getMonth()
+ 						&& fechaHoyT.getDate()==fechaTempProxima.getDate()){
+ 					var chckeado = '';
+ 					if(revision.notificacion==true){
+ 						chckeado = 'checked';
+ 						arregloReviEnv.push(revision.idRevision);
+ 					}
+ 					
+ 					filas = filas +'<tr class="">'+
+ 	 				'<td class="center"><input id="chkRev_'+revision.idRevision+'" '+chckeado+' type="checkbox" onclick="updateStateRev(this,'+ i +')"></td>'+
+ 	 				'<td class="center"><a id="revision_'+i+'" href="toRevisionDetalle-'+revision.idRevision+'">REV-'+revision.idRevision+'</a></td>'+
+ 	 			//	'<td class="center">'+revision.idRevision+'</td>'+
+ 	 				'<td class="center"><a id="vehiculo_"'+i+'" href="toVehiculoDetalle-'+revision.idVehiculo+'">'+revision.numeroPlaca+'</a><input id="changeR_'+i+'" type="hidden" name="changeR"></td>'+
+ 	 				'<td class="center"><a id="cliente_"'+i+'" href="toClienteDetalle-'+revision.idCliente+'">'+revision.nombreCliente+'</a></td>'+
+ 	 				'<td class="center">'+revision.fechaInicio+'<input type="hidden" value="'+revision.idRevision+'" id="idRev_'+i+'" /></td>'+
+ 	 				'<td class="center">'+revision.fechaFin+'</td>'+
+ 	 				'<td class="center">'+revision.fechaProxima+'</td>'+
+ 	 				'<td class="center">'+revision.kilometrajeActual+'</td>'+
+ 	 				'<td class="center">'+revision.kilometrajeProximo+'</td>'+ 				
+ 	 				'<td class="center">'+revision.costoTotal+'</td>'+
+ 	 				'<td class="center"><a target="_blank" href="verPDFRevision-'+revision.idRevision+'"><img width="50" height="50" src="images/pdfReport.jpg"></a></td>'+
+ 					'</tr>';			
+ 				}
+			});		        
+ 		},
+ 		complete: function() {
+ 			columnas = columnas + 
+ 				'<th class="center">Enviado</th>'+
+ 				'<th class="center">Id</th>'+
+				'<th class="center">Vehiculo</th>'+
+				'<th class="center">Nombre Cliente</th>'+
+				'<th class="center">Fecha de inicio</th>'+
+				'<th class="center">Fecha de fin</th>'+
+				'<th class="center">Fecha próxima</th>'+
+				'<th class="center">Kilometraje Actual</th>'+
+				'<th class="center">Kilometraje Próximo</th>'+
+				'<th class="center">Costo total</th>'+
+				'<th class="center">Reporte</th>';	
+ 			realizarTabla(columnas,filas);
+ 			
+ 			for(var x = 0; x < arregloReviEnv.length;x++){
+				document.getElementById("chkRev_"+arregloReviEnv[x]).checked=true;
+				$("#chkRev_"+arregloReviEnv[x]).attr('disabled','disabled');
+			}
+ 			removeNulls();
+  		}
+ 	});
+}
+
+$(document).on('click','#btnEnviarNotificacion', function(e){
+	var list_IdRev = '';
+	list_isChangedR = document.getElementsByName('changeR');
+	  for (var x=0; x < list_isChangedR.length; x++) {
+		  if($('#changeR_'+x).val()==true || $('#changeR_'+x).val()=='true'){
+			list_IdRev += $('#idRev_'+x).val()+'_';
+			$('#changeR_'+x).val('');
+		  }
+	 }
+	$('#idRevision_list').val(list_IdRev);	
+
+	  $.ajax({
+		   url: 'notificarClientes',
+		   type: 'post',
+		   dataType: 'json',
+		   data: $('#frmAdministrarNotificaciones').serialize(),
+		   complete: function() {
+			   IniciarNotificacion();
+	   	   },
+		   success: function(enviados){
+			   if(enviados != ""){
+				    var msgASR = [];
+				    $('#resulNotRev').hide();
+				    var contactos = "";
+					  $.each(enviados, function(z, env){
+						  msgASR.push('Notificacion Revision enviada a: ' + env);
+						  contactos += 'Notificacion Revision enviada a: ' +env+'<br>';
+						  //alert(env);
+					  });		
+					if(msgASR.length>0){
+						$('#resulNotRev').show();
+						$('#mensajeNotificacionRev').empty();
+						$('#mensajeNotificacionRev').append(contactos);
+					}  
+				   }				   
+			}
+	  });
+});
+
 function VerHTML(){
 	window.open("verPDF");
 }
@@ -32,9 +195,26 @@ function revision1(){
             <div class="row">
                 <div class="col-lg-12">
                     <h1 class="page-header">Dashboard</h1>
-                </div>
+                </div>                
                 <!-- /.col-lg-12 -->
             </div>
+            <div class="alert alert-danger alert-dismissable" id="resultFalse">
+    			<button class="close" aria-hidden="true" data-dismiss="alert" type="button">×</button>
+				<div class="panel-heading" style="background-color: #F5F5F5;">
+				    <i class="fa fa-bell fa-fw"></i>
+					Lista de Revisiones Proximas                    
+				</div>
+				<br>
+				<input class="btn btn-lg btn-success btn-block" type="button" style="width: 20%;" value="Notificar Cliente" id="btnEnviarNotificacion"></input><br>
+                   	<div class="alert alert-success alert-dismissable" id="resulNotRev" style="display:none">
+		    			<button class="close" aria-hidden="true" data-dismiss="alert" type="button">×</button>
+		    			<span id="mensajeNotificacionRev"></span>
+					</div>
+				<div id="spnResultList" class="resultBox section summaryPane"></div>
+				<form id="frmAdministrarNotificaciones">		
+					<input id="idRevision_list" type="hidden" name="idRevisionList"/>
+				</form>
+			</div>
             <!-- /.row -->
             <div class="row">
                 <div class="col-lg-8">

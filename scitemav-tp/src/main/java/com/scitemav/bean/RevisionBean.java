@@ -12,12 +12,13 @@ public class RevisionBean {
 	private Date fechaProxima;
 	private Integer kilometrajeActual;
 	private Integer kilometrajeProximo;
-	
+	private Boolean notificacion;
 	
 
 	//Vehiculo
 	private Integer idVehiculo;
 	private Integer idCliente;
+	private String nombreCliente;
 	private Integer idMarca;
 	private Integer idTipoVehiculo;
 	private Integer idModelo;
@@ -220,6 +221,18 @@ public class RevisionBean {
 	}
 	public void setNombreMarca(String nombreMarca) {
 		this.nombreMarca = nombreMarca;
+	}
+	public Boolean getNotificacion() {
+		return notificacion;
+	}
+	public void setNotificacion(Boolean notificacion) {
+		this.notificacion = notificacion;
+	}
+	public String getNombreCliente() {
+		return nombreCliente;
+	}
+	public void setNombreCliente(String nombreCliente) {
+		this.nombreCliente = nombreCliente;
 	}
 	
 	
