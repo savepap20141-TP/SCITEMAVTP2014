@@ -208,6 +208,7 @@ var arregloAsignadosRep = [];
 	function IniciarInfoRevision(revision){
 		//Vista de Informacion
 		
+		$('#divReporte').html("<a href='verPDFRevision-"+revision.idRevision+"' >Ver Reporte</a>");
 		
 		$('#spnCostoTotal').text(revision.costoTotal);
 		$('#spnFechaInicio').text(revision.fechaInicio);
@@ -786,7 +787,9 @@ $(document).on('click','#btnAsignarEmpleados', function(e){
 					<div class="panel-heading">
 						Detalles generales de la revisión <span id="spnIdRevision"><c:out
 								value="${idrevision}" /></span>
+					<div id="divReporte"></div>
 					</div>
+					
 					<div class="panel-body">
 						<div class="col-lg-6">
 							<h4>Datos de la revisión</h4>
