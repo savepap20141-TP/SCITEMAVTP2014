@@ -69,6 +69,9 @@ function mostrarEditar(ind){
 	$('#txtNombre').val($('#filaNombre_'+ind).text());
 }
 function registrarMarca(){
+	if($('#txtNombre').val()==''){
+		alert('Completar los campos obligatorios');
+	}else{
 	var formElement = document.getElementById("frmRegistroMarca");
 	var formData = new FormData(formElement);		
 	$.ajax({
@@ -96,15 +99,10 @@ function registrarMarca(){
    				$('#resultFalse').show();
    				//$('#resultFalse').append('Se ha producido un error al registrarse');
    			}
- 			inicioConsulta();
-		},
-	    complete: function() {
-		}		
- 	});
+   		}
+   	});
+  }	
 }
-
-
-
 </script>
 <body>
  <div id="wrapper">
