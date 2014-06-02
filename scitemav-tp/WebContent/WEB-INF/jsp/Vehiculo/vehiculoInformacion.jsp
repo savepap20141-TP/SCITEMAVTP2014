@@ -280,6 +280,7 @@
 	
 	function IniciarInfoVehiculo(vehiculo){
 		//Vista de Informacion
+		$('#divReporte').html("<a href='verPDFVehiculo-"+vehiculo.idVehiculo+"' >Ver Reporte</a>");
 		$('#spnNumeroPlaca').text(vehiculo.numeroPlaca);
 		$('#spnMarca').text(vehiculo.nombreMarca);
 		$('#spnModelo').text(vehiculo.nombreModelo);

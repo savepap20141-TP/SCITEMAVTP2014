@@ -14,6 +14,7 @@ import com.scitemav.model.EmpleadoRevision;
 import com.scitemav.model.FallaRevision;
 import com.scitemav.model.RepuestoRevision;
 import com.scitemav.model.Revision;
+import com.scitemav.model.Vehiculo;
 
 @Service
 public class ReporteServiceImpl implements ReporteService {
@@ -38,7 +39,6 @@ public class ReporteServiceImpl implements ReporteService {
 			html+="Marca: "+rev.getRevVehiculo().getVehMarca().getNombre()+"<br />";
 			html+="Modelo: "+rev.getRevVehiculo().getVehModelo().getNombre()+"<br />";
 			html+="Tipo de vehiculo: "+rev.getRevVehiculo().getVehTipoVehiculo().getNombre()+"<br />";
-			html+="Modelo: "+rev.getRevVehiculo().getVehModelo().getNombre()+"<br />";
 			html+="Numero de placa: "+rev.getRevVehiculo().getNumeroPlaca()+"<br />";
 			html+="Numero de motor: "+rev.getRevVehiculo().getNumeroMotor()+"<br />";
 			html+="Color: "+rev.getRevVehiculo().getColor()+"<br />";
@@ -97,5 +97,101 @@ public class ReporteServiceImpl implements ReporteService {
 		}	
 		return html;
 	}
+
+
+	@SuppressWarnings("unchecked")
+	@Transactional
+	public String reporteVehiculo(Integer idVehiculo) {
+		String html = "";		
+		try{
+			html+="<h1>Vehiculo #"+idVehiculo+"</h1><br />";
+			Query q = em.createQuery("SELECT v FROM Vehiculo v WHERE idVehiculo ="+idVehiculo);
+			Vehiculo veh = (Vehiculo) q.getSingleResult();
+
+			html+="Datos del vehículo: "+"<br />";
+			html+="Marca: "+veh.getVehMarca().getNombre()+"<br />";
+			html+="Modelo: "+veh.getVehModelo().getNombre()+"<br />";
+			html+="Tipo de vehiculo: "+veh.getVehTipoVehiculo().getNombre()+"<br />";			
+			html+="Numero de placa: "+veh.getNumeroPlaca()+"<br />";
+			html+="Numero de motor: "+veh.getNumeroMotor()+"<br />";
+			html+="Color: "+veh.getColor()+"<br />";
+			html+="<br/>";
+			html+="Datos del cliente: "+"<br />";
+			html+="Nombre: "+veh.getVehCliente().getCliPersona().getNombre()+"<br />";
+			html+="Apellido paterno: "+veh.getVehCliente().getCliPersona().getApellidoPaterno()+"<br />";
+			html+="Apellido materno: "+veh.getVehCliente().getCliPersona().getApellidoMaterno()+"<br />";
+			html+="Celular: "+veh.getVehCliente().getCliPersona().getCelular()+"<br />";
+			html+="Direccion: "+veh.getVehCliente().getCliPersona().getDireccion()+"<br />";
+			html+="Dni: "+veh.getVehCliente().getCliPersona().getDni()+"<br />";			
+			html+="Telefono: "+veh.getVehCliente().getCliPersona().getTelefono()+"<br />";
+			html+="<br/>";			
+
+			Query queryRevision = em.createQuery("SELECT r FROM Revision r WHERE revVehiculo.idVehiculo ="+idVehiculo);
+			List<Revision> revisiones = new ArrayList<>();
+			revisiones = (List<Revision>) queryRevision.getResultList();
+			
+			for(int i=0; i<revisiones.size(); i++){
+				html+="Revision #"+(i+1)+"<br />";
+				html=auxiliarVehiculo(revisiones.get(i).getIdRevision(), html);
+				html+="<br />";
+			}			
+			
+		}
+		catch(Exception e){
+			
+		}			
+		return html	;
+	}
+		
+	@SuppressWarnings("unchecked")
+	@Transactional
+	public String auxiliarVehiculo(Integer idRevision, String html){
+		Revision rev = em.find(Revision.class, idRevision);
+		
+		html+="Fecha de inicio: "+rev.getFechaInicio().toString()+"<br />";
+		
+		html+="Datos de las fallas: "+"<br />";
+		Query fallaQuery = em.createQuery("SELECT fxr FROM FallaRevision fxr WHERE farRevision.idRevision=:idR");
+		fallaQuery.setParameter("idR", idRevision);
+		List<FallaRevision> fallas = new ArrayList<>();
+		fallas = fallaQuery.getResultList();
+		
+		for(int i=0; i<fallas.size(); i++){
+			html+="Falla #"+(i+1)+" :<br />";
+			html+="Descripcion: "+fallas.get(i).getFarFalla().getDescripcion()+"<br />";
+			html+="Tipo de falla: "+fallas.get(i).getFarFalla().getFalTipoFalla().getNombreSistema()+"<br />";			
+		}
+		html+="<br/>";		
+		html+="Datos de los repuestos: "+"<br />";
+		Query repuestoQuery = em.createQuery("SELECT rxr FROM RepuestoRevision rxr WHERE rerRevision.idRevision=:idR");
+		repuestoQuery.setParameter("idR", idRevision);
+		List<RepuestoRevision> repuestos = new ArrayList<>();
+		repuestos = repuestoQuery.getResultList();
+		
+		for(int i=0; i<repuestos.size(); i++){
+			html+="Repuesto #"+(i+1)+" :<br />";
+			html+="Nombre: "+repuestos.get(i).getRerRepuesto().getNombre()+"<br />";
+			html+="Tipo de repuesto: "+repuestos.get(i).getRerRepuesto().getRepTipoRepuesto().getNombre()+"<br />";			
+		}
+		html+="<br/>";						
+		html+="Datos de los empleados: "+"<br />";
+		Query empleadoQuery = em.createQuery("SELECT exr FROM EmpleadoRevision exr WHERE reeRevision.idRevision=:idR");
+		empleadoQuery.setParameter("idR", idRevision);
+		List<EmpleadoRevision> empleados = new ArrayList<>();
+		empleados = empleadoQuery.getResultList();
+		
+		for(int i=0; i<empleados.size(); i++){
+			html+="Empleado #"+(i+1)+" :<br />";
+			html+="Nombre: "+empleados.get(i).getReeEmpleado().getEmpPersona().getNombre()+"<br />";
+			html+="Apellido Paterno: "+empleados.get(i).getReeEmpleado().getEmpPersona().getApellidoPaterno()+"<br />";
+			html+="Apellido Materno: "+empleados.get(i).getReeEmpleado().getEmpPersona().getApellidoMaterno()+"<br />";
+			html+="Celular: "+empleados.get(i).getReeEmpleado().getEmpPersona().getCelular()+"<br />";
+			html+="Cargo: "+empleados.get(i).getReeEmpleado().getEmpCargo().getDescripcion()+"<br />";
+		}								
+
+	return html;	
+	}
+	
+	
 
 }

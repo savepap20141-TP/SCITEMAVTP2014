@@ -26,6 +26,24 @@ public class ReportesController {
 	@Autowired
 	PdfService svcPdf;
 
+	@RequestMapping(value = "verPDFVehiculo-{idVehiculo}", method = RequestMethod.GET)
+	@ResponseBody
+	public void verPDFVehiculo(@PathVariable Integer idVehiculo,
+			HttpServletRequest request, HttpServletResponse response) {
+		
+		HttpSession session = request.getSession();
+		String output = reporteservice.reporteVehiculo(idVehiculo);
+		OutputStream os;
+		try {
+			response.setContentType("application/pdf");
+			os = response.getOutputStream();
+			svcPdf.htmlToPdf(output, os);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+	}
+	
 	@RequestMapping(value = "verPDFRevision-{idRevision}", method = RequestMethod.GET)
 	@ResponseBody
 	public void verPDFRevision(@PathVariable Integer idRevision,
