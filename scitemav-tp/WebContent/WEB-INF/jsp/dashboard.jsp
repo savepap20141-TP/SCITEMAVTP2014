@@ -12,11 +12,15 @@
 
    	<jsp:include page="componentes/head.jsp" />
 </head>
-
+<script>
+function VerHTML(){
+	window.open("verPDF");
+}
+</script>
 <body>
 
     <div id="wrapper">
-
+		
 		<jsp:include page="componentes/cabecera.jsp" />
 		
 		<jsp:include page="componentes/menu.jsp" />
@@ -41,7 +45,7 @@
                                         <span class="caret"></span>
                                     </button>
                                     <ul class="dropdown-menu pull-right" role="menu">
-                                        <li><a href="#">Action</a>
+                                        <li><a onclick="VerHTML();">Prueba PDF</a>
                                         </li>
                                         <li><a href="#">Another action</a>
                                         </li>
@@ -89,7 +93,7 @@
                             <div class="row">
                                 <div class="col-lg-4">
                                     <div class="table-responsive">
-                                        <table class="table table-bordered table-hover table-striped">
+                                        <table class="table table-bordered table-hover table-striped" id="tabla_Test">
                                             <thead>
                                                 <tr>
                                                     <th>#</th>
