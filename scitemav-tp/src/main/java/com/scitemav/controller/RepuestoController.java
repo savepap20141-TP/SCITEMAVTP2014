@@ -39,14 +39,14 @@ public class RepuestoController {
 	
 	@RequestMapping(value="registroRepuesto", method = RequestMethod.POST)
 	@ResponseBody
-	public String registroRepuesto(@ModelAttribute("repuestobean") RepuestoBean rb, Model model, HttpServletRequest req){
-		String path = "";
+	public Boolean registroRepuesto(@ModelAttribute("repuestobean") RepuestoBean rb, Model model, HttpServletRequest req){
+		Boolean path = false;
 		if(repuestoService.registro(rb)){
 			model.addAttribute("msg", "Se registro correctamente");
-			path = "registrarRepuesto";
+			path = true;
 		}else{
 			model.addAttribute("msg", "Fallo al registrarse");
-			path = "registrarRepuesto";
+			path = false;
 		}
 		return path;
 	}

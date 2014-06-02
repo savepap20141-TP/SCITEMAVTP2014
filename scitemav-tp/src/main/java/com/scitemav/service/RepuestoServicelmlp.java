@@ -39,8 +39,13 @@ public class RepuestoServicelmlp implements RepuestoService {
 			tr.setIdTipoRepuesto(tipv.getIdTipoRepuesto());
 			rp.setRepTipoRepuesto(tr);
 			rp.setNombre(tipv.getNombre());
-		
-			em.persist(rp);
+			if(tipv.getIdRepuesto()==null){
+				em.persist(rp);
+			}else{
+				rp.setIdRepuesto(tipv.getIdRepuesto());
+				em.merge(rp);
+			}
+			
 		
 			
 			resultado = true;

@@ -56,6 +56,7 @@ function inicioConsulta(){
  				filas = filas +'<tr class="">'+
 				'<td class="center" id="filaId_'+i+'">'+rep.idRepuesto+'</td>'+
 				'<td class="center" id="filaNombre_'+i+'">'+rep.nombre+'</td>'+
+				'<td class="center" id="filaTipId_'+i+'" style="display:none">'+rep.idTipoRepuesto+'</td>'+
 				'<td class="center" id="filaNombreTipoRepuesto_'+i+'">'+rep.nombreTipoRepuesto+'</td>'+
 				'<td class="center"><button class="btn btn-success btn-circle" type="button" id="btnEdit_'+i+'" data-toggle="modal" data-target="#myModal" onclick="mostrarEditar('+i+')"><i class="fa fa-list"></i></button></td>'+
 				'<td class="center"><button class="btn btn-danger btn-circle" type="button" id="btnDelete_'+i+'"><i class="fa fa-times"></i></button></td>'+
@@ -63,7 +64,7 @@ function inicioConsulta(){
 			});		        
  		},
  		complete: function() {
- 			columnas = columnas + '<th class="center">Id Repuesto</th><th class="center">Nombre</th><th class="center">Nombre Tipo Repuesto</th><th class="center">Editar</th><th class="center">Eliminar</th>';
+ 			columnas = columnas + '<th class="center">Id Repuesto</th><th class="center">Nombre</th><th class="center" style="display:none">Id Tipo Repuesto</th><th class="center">Nombre Tipo Repuesto</th><th class="center">Editar</th><th class="center">Eliminar</th>';
  			realizarTabla(columnas,filas); 			
   		}
  	});	  
@@ -76,7 +77,7 @@ function mostrarEditar(ind){
 	$('#myModalLabel').append('Editar Repuesto');
 	$('#txtIdR').val($('#filaId_'+ind).text());
 	$('#txtNombreR').val($('#filaNombre_'+ind).text());
-	$('#idTipoRepuesto').val($('#filaNombreTipoRepuesto_'+ind).text());
+	$('#comboTiporepuestos').val($('#filaTipId_'+ind).text());
 }
 function registrarRepuesto(){
 	if($('#txtNombreR').val()==''){
@@ -93,7 +94,7 @@ function registrarRepuesto(){
 	   			if(result == true){   				
 	   				//$('#resultOk').append('Se ha registrado correctamente');
 	   				$('#resultOk').show();
-	   				$('#idTipoRepuesto').val('');
+	   				$('#comboTiporepuestos').val('');
 	   				$('#txtNombreR').val('');
 	   				$('#txtIdR').val('');
 	   				inicioConsulta();
@@ -198,7 +199,7 @@ function listarTiporepuestos(){
                                         </div>
                                         <div class="modal-footer">
                                         	<button type="button" class="btn btn-primary" data-dismiss="modal" onclick="registrarRepuesto();">Guardar</button>
-                                            <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                                            <button type="button" class="btn btn-default" data-dismiss="modal" onclick="$('#comboTiporepuestos').val('');$('#txtNombreR').val('');$('#txtIdR').val('');">Cancelar</button>
                                         </div>
                                     </div>
                                     <!-- /.modal-content -->
