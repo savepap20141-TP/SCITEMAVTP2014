@@ -10,7 +10,99 @@
 <jsp:include page="componentes/head.jsp" />
 </head>
 <script>
+var arregloAsignadosEmp = [];
+var arregloAsignadosFalla = [];
+var arregloAsignadosRep = [];
 $(function() {
+	$('#frmEdicionRevision').validate({
+		rules:{
+			/* costoTotal:{
+				required:true,
+				DecRegex:true,
+				maxlength:12,
+				minlength:4
+				
+			}, */
+			fechaInicio:{
+				required: true,
+			      dpDate: true,
+				
+			},
+			fechaFin:{
+				required: true,
+			      dpDate: true,			
+			},
+			fechaProxima:{
+				required: true,
+			      dpDate: true,
+			},
+			kilometrajeActual:{
+				required:true,
+				number: true,
+				maxlength:9,
+				minlength:3					
+			},
+			kilometrajeProximo:{
+				required:true,
+				number: true,
+				maxlength:9,
+				minlength:3				
+			}
+			
+		},
+		messages:{
+			costoTotal:{
+				required:"Debe ingresar costo total",
+				NumRegex:"Sólo números en el costo total",
+				minlength:"Tiene que tener 12 dígitos en el costototal",
+				maxlength:"Tiene que tener 4 dígitos en el costototal"
+			},
+			fechaInicio:{
+				required:"Se debe ingresar una Fecha de Inicio",
+				dpDate:"Solo Fechas",	
+				dpComparedate:"Debe ser menor a la fecha de Fin",		
+			},
+			fechaFin:{
+				required:"Se debe ingresar una Fecha de Fin",
+				dpDate:"Solo Fechas",	
+				dpComparedate:"Debe ser mayor a la fecha de Inicio",
+			},			
+			fechaProxima:{
+				required:"Se debe ingresar una Fecha de Proxima",
+				dpDate:"Solo Fechas",	
+				dpComparedate:"Debe ser menor a la fecha Fin",				
+			},
+			kilometrajeActual:{
+				required:"Debe ingresar un kilometraje actual",
+				DecKilRegex:"Sólo decimales ",
+				minlength:"Tiene que tener 9 dígitos como minimo",
+				maxlength:"Tiene que tener 3 dígitos como maximo",	
+			},
+			kilometrajeProximo:{
+				required:"Debe ingresar un kilometraje proximo",
+				DecKilRegex:" Solo decimales",
+				maxlength:"Tiene que tener 9 digitos como maximo",
+				minlength:"Tiene como minimo 3 digito como minimo",				
+			}
+			
+		},			
+		submitHandler: function(form){
+			$.ajax({
+		   		url: 'ajaxEditInformacionVehiculo',
+		   		type: 'post',
+		   		dataType: 'json',
+		   		data: $('#frmEdicionVehiculo').serialize(),
+		   		success: function(vehiculo){
+		   			IniciarInfoVehiculo(vehiculo);
+		 			$('.vistaInformacion').show();
+		 			$('.edicionInformacion').hide();
+		 			$('#btnVerInformacion').hide();
+		 			$('#btnVerEdicion').show();
+		   		}
+		   	});
+		}		
+
+});
     jQuery('#txtFechaInicio').datepicker({
     	dateFormat: "yy-mm-dd",  
 		    beforeShow : function(){	 
@@ -41,15 +133,12 @@ $(function() {
 
 </script>
 <script>
-var arregloAsignadosEmp = [];
-var arregloAsignadosFalla = [];
-var arregloAsignadosRep = [];
 	$(document).ready(function(e) {
 		
 		var nfechaIni = 'txtFechaInicio';
 		cargarFechaRevis(nfechaIni);
 		
-		 $.validator.addMethod("LetyNumRegex", function(value, element) {
+		 /* $.validator.addMethod("LetyNumRegex", function(value, element) {
 	        return this.optional(element) || /^[A-Z0-9\-\s]+$/i.test(value);
 	    }, " ");
 		$.validator.addMethod("NumRegex", function(value, element) {
@@ -66,97 +155,9 @@ var arregloAsignadosRep = [];
 	    }, " ");
 		$.validator.addMethod("NumPlacaRegex", function(value, element) {
 	        return this.optional(element) || /^[[A-Z0-9]{3}[-]{1}[A-Z0-9]{3}$/.test(value);
-	    }, " "); 
+	    }, " ");  */
 		
-		$('#frmEdicionRevision').validate({
-			rules:{
-				costoTotal:{
-					required:true,
-					DecRegex:true,
-					maxlength:12,
-					minlength:4
-					
-				},
-				fechaInicio:{
-					required: true,
-				      dpDate: true,
-					
-				},
-				fechaFin:{
-					required: true,
-				      dpDate: true,			
-				},
-				fechaProxima:{
-					required: true,
-				      dpDate: true,
-				},
-				kilometrajeActual:{
-					required:true,
-					DecKilRegex: true,
-					maxlength:9,
-					minlength:3					
-				},
-				kilometrajeProximo:{
-					required:true,
-					DecKilRegex: true,
-					maxlength:9,
-					minlength:3				
-				}
-				
-			},
-			messages:{
-				costoTotal:{
-					required:"Debe ingresar costo total",
-					NumRegex:"Sólo números en el costo total",
-					minlength:"Tiene que tener 12 dígitos en el costototal",
-					maxlength:"Tiene que tener 4 dígitos en el costototal"
-				},
-				fechaInicio:{
-					required:"Se debe ingresar una Fecha de Inicio",
-					dpDate:"Solo Fechas",	
-					dpComparedate:"Debe ser menor a la fecha de Fin",		
-				},
-				fechaFin:{
-					required:"Se debe ingresar una Fecha de Fin",
-					dpDate:"Solo Fechas",	
-					dpComparedate:"Debe ser mayor a la fecha de Inicio",
-				},			
-				fechaProxima:{
-					required:"Se debe ingresar una Fecha de Proxima",
-					dpDate:"Solo Fechas",	
-					dpComparedate:"Debe ser menor a la fecha Fin",				
-				},
-				kilometrajeActual:{
-					required:"Debe ingresar un kilometraje actual",
-					DecKilRegex:"Sólo decimales ",
-					minlength:"Tiene que tener 9 dígitos como minimo",
-					maxlength:"Tiene que tener 3 dígitos como maximo",	
-				},
-				kilometrajeProximo:{
-					required:"Debe ingresar un kilometraje proximo",
-					DecKilRegex:" Solo decimales",
-					maxlength:"Tiene que tener 9 digitos como maximo",
-					minlength:"Tiene como minimo 3 digito como minimo",				
-				}
-				
-			},			
-			submitHandler: function(form){
-				$.ajax({
-			   		url: 'ajaxEditInformacionVehiculo',
-			   		type: 'post',
-			   		dataType: 'json',
-			   		data: $('#frmEdicionVehiculo').serialize(),
-			   		success: function(vehiculo){
-			   			IniciarInfoVehiculo(vehiculo);
-			 			$('.vistaInformacion').show();
-			 			$('.edicionInformacion').hide();
-			 			$('#btnVerInformacion').hide();
-			 			$('#btnVerEdicion').show();
-			   		}
-			   	});
-			}		
-
-	});
+});	
 </script>
 <script type="text/javascript"></script>
 <script>
@@ -175,6 +176,7 @@ var arregloAsignadosRep = [];
 		inicioConsultaFallasRevision(idrevision);
 		//Repuestos por Revision
 		inicioConsultaRepuestoRevision(idrevision);
+		removeNulls();
 	});
 
 	function EditInformacionRevision(){
