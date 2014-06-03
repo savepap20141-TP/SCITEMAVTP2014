@@ -36,13 +36,13 @@ $(function() {
 				required: true,
 			      dpDate: true,
 			},
-			kilometrajeActual:{
+			kilometrajeActualhdn:{
 				required:true,
 				number: true,
 				maxlength:9,
 				minlength:3					
 			},
-			kilometrajeProximo:{
+			kilometrajeProximohdn:{
 				required:true,
 				number: true,
 				maxlength:9,
@@ -72,13 +72,13 @@ $(function() {
 				dpDate:"Solo Fechas",	
 				dpComparedate:"Debe ser menor a la fecha Fin",				
 			},
-			kilometrajeActual:{
+			kilometrajeActualhdn:{
 				required:"Debe ingresar un kilometraje actual",
 				DecKilRegex:"Sólo decimales ",
 				minlength:"Tiene que tener 9 dígitos como minimo",
 				maxlength:"Tiene que tener 3 dígitos como maximo",	
 			},
-			kilometrajeProximo:{
+			kilometrajeProximohdn:{
 				required:"Debe ingresar un kilometraje proximo",
 				DecKilRegex:" Solo decimales",
 				maxlength:"Tiene que tener 9 digitos como maximo",
@@ -87,13 +87,17 @@ $(function() {
 			
 		},			
 		submitHandler: function(form){
+			$('#txtKilometrajeActualhdn').val($('#txtKilometrajeActual').val().replace(/,/g, ''));
+			$('#txtKilometrajeProximohdn').val($('#txtKilometrajeProximo').val().replace(/,/g, ''));
+			//alert($('#txtKilometrajeActualhdn').val($('#txtKilometrajeActual').val().replace(/,/gi, '')));
+			//alert($('#txtKilometrajeActualhdn').val());
 			$.ajax({
-		   		url: 'ajaxEditInformacionVehiculo',
+		   		url: 'ajaxEditInformacionRevision',
 		   		type: 'post',
 		   		dataType: 'json',
-		   		data: $('#frmEdicionVehiculo').serialize(),
-		   		success: function(vehiculo){
-		   			IniciarInfoVehiculo(vehiculo);
+		   		data: $('#frmEdicionRevision').serialize(),
+		   		success: function(revision){
+		   			IniciarInfoRevision(revision);
 		 			$('.vistaInformacion').show();
 		 			$('.edicionInformacion').hide();
 		 			$('#btnVerInformacion').hide();
@@ -180,7 +184,8 @@ $(function() {
 	});
 
 	function EditInformacionRevision(){
-		$.ajax({
+		$('#frmEdicionRevision').submit();
+		/* $.ajax({
 	   		url: 'ajaxEditInformacionRevision',
 	   		type: 'post',
 	   		dataType: 'json',
@@ -192,7 +197,7 @@ $(function() {
 	 			$('#btnVerInformacion').hide();
 	 			$('#btnVerEdicion').show();
 	   		}
-	   	});
+	   	}); */
 	}
 	function inicioConsulta(idrevision) {
 		$.ajax({
@@ -427,8 +432,9 @@ $(function() {
 	   				//$('#resultOk').append('Se ha registrado correctamente');
 	   				$('#resultOk1').show();
 	   				$('#txtIdF').val('');
+	   				arregloAsignadosRep = [];
 	   				inicioConsultaRepuestoRevision(idRev);
-	   				inicioConsultaRepuestos();
+	   				//inicioConsultaRepuestos();
 	   			}else{
 	   				$('#resultFalse').show();
 	   				//$('#resultFalse').append('Se ha producido un error al registrarse');
@@ -567,8 +573,9 @@ function eliminarFallaRevision(){
    				//$('#resultOk').append('Se ha registrado correctamente');
    				$('#resultOk1').show();
    				$('#txtIdF').val('');
+   				arregloAsignadosFalla = [];
    				inicioConsultaFallasRevision(idRev);
-   				inicioConsultaFalla();
+   				//inicioConsultaFalla();
    			}else{
    				$('#resultFalse').show();
    				//$('#resultFalse').append('Se ha producido un error al registrarse');
@@ -795,8 +802,9 @@ function eliminarEmpleadoRevision(){
    				//$('#resultOk').append('Se ha registrado correctamente');
    				$('#resultOk1').show();
    				$('#txtIdF').val('');
+   				arregloAsignadosEmp = [];
    				inicioConsultaEmpleadosRevision(idRev);
-   				inicioConsultaEmpleados();
+   				//inicioConsultaEmpleados();
    			}else{
    				$('#resultFalse').show();
    				//$('#resultFalse').append('Se ha producido un error al registrarse');
@@ -1080,10 +1088,14 @@ $(document).on('click','#btnAsignarEmpleados', function(e){
 										</div>
 										<div class="form-group">
 											<label> Kilometraje Actual </label> <input id="txtKilometrajeActual"
-											class="form-control" name="kilometrajeActual" placeholder="Kilometraje actual"></input>
+											class="form-control" name="kilometrajeActualhdn" placeholder="Kilometraje actual"></input>
+											<input id="txtKilometrajeActualhdn" style="display:none"
+											class="form-control" name="kilometrajeActual" placeholder="Kilometraje actual Hidden"></input>
 										</div>
 										<div class="form-group">
 											<label> Kilometraje Próximo </label> <input id="txtKilometrajeProximo"
+											class="form-control" name="kilometrajeProximohdn" placeholder="Kilometraje próximo"></input>
+											<input id="txtKilometrajeProximohdn" style="display:none"
 											class="form-control" name="kilometrajeProximo" placeholder="Kilometraje próximo"></input>
 										</div>																				
 																																																																				
