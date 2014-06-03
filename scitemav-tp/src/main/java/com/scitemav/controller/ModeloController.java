@@ -33,6 +33,7 @@ public class ModeloController {
 	}
 	
 	@RequestMapping(value="registroModelo", method = RequestMethod.POST)
+	@ResponseBody
 	public Boolean registroModelo(@ModelAttribute("modelobean") ModeloBean mb, Model model, HttpServletRequest req){
 		Boolean path = false;
 		if(modeloService.registro(mb)){

@@ -49,7 +49,7 @@ var arregloAsignadosRep = [];
 		var nfechaIni = 'txtFechaInicio';
 		cargarFechaRevis(nfechaIni);
 		
-		/* $.validator.addMethod("LetyNumRegex", function(value, element) {
+		 $.validator.addMethod("LetyNumRegex", function(value, element) {
 	        return this.optional(element) || /^[A-Z0-9\-\s]+$/i.test(value);
 	    }, " ");
 		$.validator.addMethod("NumRegex", function(value, element) {
@@ -66,7 +66,7 @@ var arregloAsignadosRep = [];
 	    }, " ");
 		$.validator.addMethod("NumPlacaRegex", function(value, element) {
 	        return this.optional(element) || /^[[A-Z0-9]{3}[-]{1}[A-Z0-9]{3}$/.test(value);
-	    }, " "); */
+	    }, " "); 
 		
 		$('#frmEdicionRevision').validate({
 			rules:{
@@ -114,17 +114,17 @@ var arregloAsignadosRep = [];
 				fechaInicio:{
 					required:"Se debe ingresar una Fecha de Inicio",
 					dpDate:"Solo Fechas",	
-					dpComparedate:"Debe ser menor a la fecha de Fin"		
+					dpComparedate:"Debe ser menor a la fecha de Fin",		
 				},
 				fechaFin:{
 					required:"Se debe ingresar una Fecha de Fin",
 					dpDate:"Solo Fechas",	
-					dpComparedate:"Debe ser mayor a la fecha de Inicio"
+					dpComparedate:"Debe ser mayor a la fecha de Inicio",
 				},			
 				fechaProxima:{
 					required:"Se debe ingresar una Fecha de Proxima",
 					dpDate:"Solo Fechas",	
-					dpComparedate:"Debe ser menor a la fecha Fin"				
+					dpComparedate:"Debe ser menor a la fecha Fin",				
 				},
 				kilometrajeActual:{
 					required:"Debe ingresar un kilometraje actual",
@@ -136,7 +136,7 @@ var arregloAsignadosRep = [];
 					required:"Debe ingresar un kilometraje proximo",
 					DecKilRegex:" Solo decimales",
 					maxlength:"Tiene que tener 9 digitos como maximo",
-					minlength:"Tiene como minimo 3 digito como minimo"				
+					minlength:"Tiene como minimo 3 digito como minimo",				
 				}
 				
 			},			
@@ -155,9 +155,9 @@ var arregloAsignadosRep = [];
 			   		}
 			   	});
 			}		
-		});
+
 	});
-		</script>
+</script>
 <script type="text/javascript"></script>
 <script>
 	$(document).ready(function(e) {		
@@ -210,6 +210,7 @@ var arregloAsignadosRep = [];
 		
 		$('#divReporte').html("<a target='_blank' href='verPDFRevision-"+revision.idRevision+"' ><img width='50' height='50' src='images/pdfReport.jpg'></a>");
 		
+		$('#spnidrevision').text(revision.idRevision);
 		$('#spnCostoTotal').text(revision.costoTotal);
 		$('#spnFechaInicio').text(revision.fechaInicio);
 		$('#spnFechaFin').text(revision.fechaFin);
@@ -425,6 +426,7 @@ var arregloAsignadosRep = [];
 	   				$('#resultOk1').show();
 	   				$('#txtIdF').val('');
 	   				inicioConsultaRepuestoRevision(idRev);
+	   				inicioConsultaRepuestos();
 	   			}else{
 	   				$('#resultFalse').show();
 	   				//$('#resultFalse').append('Se ha producido un error al registrarse');
@@ -564,7 +566,7 @@ function eliminarFallaRevision(){
    				$('#resultOk1').show();
    				$('#txtIdF').val('');
    				inicioConsultaFallasRevision(idRev);
-   				//inicioConsultaFalla();
+   				inicioConsultaFalla();
    			}else{
    				$('#resultFalse').show();
    				//$('#resultFalse').append('Se ha producido un error al registrarse');
@@ -792,7 +794,7 @@ function eliminarEmpleadoRevision(){
    				$('#resultOk1').show();
    				$('#txtIdF').val('');
    				inicioConsultaEmpleadosRevision(idRev);
-   				//inicioConsultaEmpleados();
+   				inicioConsultaEmpleados();
    			}else{
    				$('#resultFalse').show();
    				//$('#resultFalse').append('Se ha producido un error al registrarse');
@@ -872,7 +874,7 @@ $(document).on('click','#btnAsignarEmpleados', function(e){
 			   complete: function() {
 		   			//$.unblockUI();
 		   		   idrevision = $('#spnIdRevision').text();
-				   inicioConsultaEmpleadosRevision(idrevision);
+				   inicioConsultaEmpleadosRevision(idrevisionAE);
 		   	   },
 			   success: function(enviados){
 				   if(enviados != ""){
@@ -932,8 +934,8 @@ $(document).on('click','#btnAsignarEmpleados', function(e){
 						<div class="col-lg-6">
 							<h4>Datos de la revisión</h4>
 							<br>
-							<p class="text-primary">Costo Total:</p>
-							<span id="spnCostoTotal"></span>
+						<!-- <p class="text-primary">Costo Total:</p>
+							<span id="spnCostoTotal"></span>  -->
 							<p class="text-primary">Fecha Inicio:</p>
 							<span id="spnFechaInicio"></span>
 							<p class="text-primary">Fecha Fin:</p>
@@ -1012,10 +1014,10 @@ $(document).on('click','#btnAsignarEmpleados', function(e){
 										<div class="col-lg-12 vistaInformacion">
 											<br>
 											<div class="col-lg-4">
-											<p class="text-primary">Id:</p>
-							<span id="spnIdRevision"></span>
-											<p class="text-primary">Costo Total:</p>
-							<span id="spnCostoTotal2"></span>
+							<p class="text-primary">Id:</p>
+							<span id="spnidrevision"></span>
+						<!--<p class="text-primary">Costo Total:</p> 
+							<span id="spnCostoTotal2"></span>-->
 							<p class="text-primary">Fecha Inicio:</p>
 							<span id="spnFechaInicio2"></span>
 							<p class="text-primary">Fecha Fin:</p>
@@ -1042,11 +1044,11 @@ $(document).on('click','#btnAsignarEmpleados', function(e){
 											 <input id="txtVehiculo" class="form-control"
 											 name="idVehiculo" placeholder="Vehiculo"></input>
 										</div> 					
-									<div class="form-group" >
+								<!-- 	<div class="form-group" >
 											<label> Costo Total </label> <input id="txtCostoTotal"
 											class="form-control" name="costoTotal" placeholder="Costo total"></input>
-										</div>
-										
+										</div>  
+										-->
 										<div class="form-group input-group">
 											<label> Fecha de Inicio</label> <input id="txtFechaInicio"
 												class="form-control" name="fechaInicio"
