@@ -16,4 +16,5 @@ public interface EmpleadoService {
 	public List<EmpleadoBean> listarEmpleadosRevision(Integer idRevision);
 	public List<String> administrarEmpleadosRevision(String[] ids, Integer IdRevision);
 	boolean eliminarEmpRev(EmpleadoRevisionBean EmpleadoRevisionB);
+	public Boolean getDuplicateEmail(String email);
 }

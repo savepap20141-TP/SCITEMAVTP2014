@@ -6,6 +6,7 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -255,5 +256,25 @@ public class VehiculoServiceImpl implements VehiculoService {
 		}
 
 		return listaVehiculoBean;
+	}
+	
+	@Transactional
+	public Boolean getDuplicatePlaca(String numPlaca) {
+		Integer encontro = 0;
+		Boolean resultado = false;
+		try {
+			Query q = em.createQuery("SELECT COUNT(v.idVehiculo) FROM Vehiculo v WHERE v.numeroPlaca=:numeroPlaca");
+			q.setParameter("numeroPlaca", numPlaca);
+			encontro = Integer.parseInt(q.getSingleResult().toString());
+			if(encontro > 0){
+				resultado=true;
+			}else{
+				resultado=false;
+			}		
+		} catch (IllegalArgumentException e) {
+			resultado = false;			
+		}
+
+		return resultado;
 	}
 }

@@ -90,4 +90,10 @@ public class VehiculoController {
 		return vehiculoService.listarVehiculosCliente(idCliente);
 	}
 	
+	@RequestMapping(value = "getDuplicatePlaca", method = RequestMethod.POST)
+	@ResponseBody
+	public Boolean getDuplicatePlaca(HttpServletRequest request){	
+		String NumPlaca = request.getParameter("NumPlaca");
+		return vehiculoService.getDuplicatePlaca(NumPlaca);
+	}
 }

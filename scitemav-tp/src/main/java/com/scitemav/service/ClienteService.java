@@ -10,4 +10,5 @@ public interface ClienteService {
 	public List<ClienteBean> listarClientes();
 	public ClienteBean obtenerInfo(int idCliente);
 	boolean editInformacionCliente(ClienteBean rb);
+	public Boolean getDuplicateEmail(String email);
 }

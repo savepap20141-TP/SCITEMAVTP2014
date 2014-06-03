@@ -78,4 +78,10 @@ public class ClientController {
 		return clienteB;
 	}
 	
+	@RequestMapping(value = "getDuplicateEmail", method = RequestMethod.POST)
+	@ResponseBody
+	public Boolean getDuplicatePlaca(HttpServletRequest request){	
+		String Email = request.getParameter("Email");
+		return clienteService.getDuplicateEmail(Email);
+	}
 }

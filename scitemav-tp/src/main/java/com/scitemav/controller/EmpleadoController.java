@@ -120,4 +120,11 @@ public class EmpleadoController {
 		}
 		return result;
 	}
+	
+	@RequestMapping(value = "getDuplicateEmail2", method = RequestMethod.POST)
+	@ResponseBody
+	public Boolean getDuplicatePlaca(HttpServletRequest request){	
+		String Email = request.getParameter("Email");
+		return empleadoService.getDuplicateEmail(Email);
+	}
 }

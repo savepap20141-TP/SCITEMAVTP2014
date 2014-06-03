@@ -312,4 +312,23 @@ public class EmpleadoServiceImpl implements EmpleadoService{
 		}
 		return resultado;
 	}
+	@Transactional
+	public Boolean getDuplicateEmail(String email) {
+		Integer encontro = 0;
+		Boolean resultado = false;
+		try {
+			Query q = em.createQuery("SELECT COUNT(e.idEmpleado) FROM Empleado e JOIN e.empPersona p JOIN p.perUsuario u WHERE u.email=:email");
+			q.setParameter("email", email);
+			encontro = Integer.parseInt(q.getSingleResult().toString());
+			if(encontro > 0){
+				resultado=true;
+			}else{
+				resultado=false;
+			}		
+		} catch (IllegalArgumentException e) {
+			resultado = false;			
+		}
+
+		return resultado;
+	}
 }

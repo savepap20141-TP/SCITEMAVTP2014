@@ -203,5 +203,23 @@ public class ClienteServiceImpl implements ClienteService{
 		
 		return resultado;
 	}
+	@Transactional
+	public Boolean getDuplicateEmail(String email) {
+		Integer encontro = 0;
+		Boolean resultado = false;
+		try {
+			Query q = em.createQuery("SELECT COUNT(c.idCliente) FROM Cliente c JOIN c.cliPersona p JOIN p.perUsuario u WHERE u.email=:email");
+			q.setParameter("email", email);
+			encontro = Integer.parseInt(q.getSingleResult().toString());
+			if(encontro > 0){
+				resultado=true;
+			}else{
+				resultado=false;
+			}		
+		} catch (IllegalArgumentException e) {
+			resultado = false;			
+		}
 
+		return resultado;
+	}
 }

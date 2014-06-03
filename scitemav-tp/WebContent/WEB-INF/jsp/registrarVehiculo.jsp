@@ -256,7 +256,21 @@ $(document).ready(function(e){
 			
 		},			
 		submitHandler: function(form){
-			form.submit();
+			var placa = $('#txtNumPlaca').val();
+			$.ajax({
+		 		url: 'getDuplicatePlaca',
+		 		type: 'post',
+		 		dataType: 'json',
+		 		data: 'NumPlaca='+placa,
+		 		success: function(result){
+		 			if(result==true){
+		 				alert('Numero de Placa Duplicado');
+		 			}else{
+		 				form.submit();
+		 			}
+		 		}
+		 	});	
+			
 		}		
 	});
 });

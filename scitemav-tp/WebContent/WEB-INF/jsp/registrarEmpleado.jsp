@@ -135,7 +135,20 @@ $(document).ready(function(e){
 			
 		},			
 		submitHandler: function(form){
-			form.submit();
+			var Email = $('#txtEmail').val();
+			$.ajax({
+		 		url: 'getDuplicateEmail',
+		 		type: 'post',
+		 		dataType: 'json',
+		 		data: 'Email='+Email,
+		 		success: function(result){
+		 			if(result==true){
+		 				alert('Numero de Email Duplicado');
+		 			}else{
+		 				form.submit();
+		 			}
+		 		}
+		 	});	
 		}		
 	});
 });
