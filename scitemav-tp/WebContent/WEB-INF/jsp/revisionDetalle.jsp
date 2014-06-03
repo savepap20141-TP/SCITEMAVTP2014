@@ -268,6 +268,7 @@ $(function() {
 		$('.edicionInformacion3').show();
 		$('#btnVerInformacion3').show();
 		$('#btnVerEdicion3').hide();
+		$('#resultOkF').hide();
 	} 
 	
 
@@ -280,6 +281,7 @@ $(function() {
 		$('.edicionInformacion4').show();
 		$('#btnVerInformacion4').show();
 		$('#btnVerEdicion4').hide();
+		$('#resultOkR').hide();
 	} 
 	
 	function inicioConsultaRepuestoRevision(idRevision){
@@ -424,13 +426,13 @@ $(function() {
 				//$.blockUI({ message: $('#domMessage') });
 		    },
 	   		success: function(result){
-	   			$('#resultOk1').hide();
+	   			$('#resultOkR').hide();
 				$('#resultFalse').hide();	
 				//alert(result);
 				var res  = ''+result;
 	   			if(res == 'true'){   				
 	   				//$('#resultOk').append('Se ha registrado correctamente');
-	   				$('#resultOk1').show();
+	   				$('#resultOkR').show();
 	   				$('#txtIdF').val('');
 	   				arregloAsignadosRep = [];
 	   				inicioConsultaRepuestoRevision(idRev);
@@ -565,13 +567,13 @@ function eliminarFallaRevision(){
 			//$.blockUI({ message: $('#domMessage') });
 	    },
    		success: function(result){
-   			$('#resultOk1').hide();
+   			$('#resultOkF').hide();
 			$('#resultFalse').hide();	
 			//alert(result);
 			var res  = ''+result;
    			if(res == 'true'){   				
    				//$('#resultOk').append('Se ha registrado correctamente');
-   				$('#resultOk1').show();
+   				$('#resultOkF').show();
    				$('#txtIdF').val('');
    				arregloAsignadosFalla = [];
    				inicioConsultaFallasRevision(idRev);
@@ -1127,7 +1129,12 @@ $(document).on('click','#btnAsignarEmpleados', function(e){
 									<p>...:</p>
 								</div>
 								<div class="tab-pane fade" id="repuestos">
-									
+								
+								<br>
+								<div class="alert alert-success alert-dismissable" id="resultOkR" style="display:none">
+    							<button class="close" aria-hidden="true" data-dismiss="alert" type="button">×</button>
+								Se ha eliminado correctamente
+							</div>
 									<div class="panel panel-default">
 										<div class="panel-heading">
 											Repuestos por Revisión
@@ -1138,7 +1145,7 @@ $(document).on('click','#btnAsignarEmpleados', function(e){
 														onclick="ExtractInformacion4();">Editar</span> 
 													<span id="btnVerInformacion4"
 														class="btn btn-default btn-xs dropdown-toggle"
-														onclick="$('.edicionInformacion4').hide();$('.vistaInformacion4').show();$('#btnVerInformacion4').hide();$('#btnVerEdicion4').show();$('#resultOk1').hide();"
+														onclick="$('.edicionInformacion4').hide();$('.vistaInformacion4').show();$('#btnVerInformacion4').hide();$('#btnVerEdicion4').show();$('#resultOkR').hide();$('#resultAsigRep').hide();"
 														style="display: none">Regresar</span>
 												</div>
 											</div>												
@@ -1168,6 +1175,11 @@ $(document).on('click','#btnAsignarEmpleados', function(e){
 									
 								</div>
 								<div class="tab-pane fade" id="archivos">
+								<br>
+								<div class="alert alert-success alert-dismissable" id="resultOkF" style="display:none">
+    							<button class="close" aria-hidden="true" data-dismiss="alert" type="button">×</button>
+								Se ha eliminado correctamente
+							</div>
 								
 									<div class="panel panel-default">
 										<div class="panel-heading">
@@ -1179,7 +1191,7 @@ $(document).on('click','#btnAsignarEmpleados', function(e){
 														onclick="ExtractInformacion3();">Editar</span> 
 													<span id="btnVerInformacion3"
 														class="btn btn-default btn-xs dropdown-toggle"
-														onclick="$('.edicionInformacion3').hide();$('.vistaInformacion3').show();$('#btnVerInformacion3').hide();$('#btnVerEdicion3').show();$('#resultOk1').hide();"
+														onclick="$('.edicionInformacion3').hide();$('.vistaInformacion3').show();$('#btnVerInformacion3').hide();$('#btnVerEdicion3').show();$('#resultOk1').hide();$('#resultAsigFalla').hide();"
 														style="display: none">Regresar</span>
 												</div>
 											</div>												
@@ -1221,7 +1233,9 @@ $(document).on('click','#btnAsignarEmpleados', function(e){
 								</div>
 								<div class="tab-pane fade" id="empleado">
 								<div class="pull-right">
-								
+								<div class="panel-heading">
+											Fallas por Revisión
+								<div class="pull-right">
 											<div class="btn-group">
 												<span id="btnVerEdicion2"
 													class="btn btn-default btn-xs dropdown-toggle"
@@ -1230,6 +1244,7 @@ $(document).on('click','#btnAsignarEmpleados', function(e){
 													class="btn btn-default btn-xs dropdown-toggle"
 													onclick="$('.edicionInformacion2').hide();$('.vistaInformacion2').show();$('#btnVerInformacion2').hide();$('#btnVerEdicion2').show();"
 													style="display: none">Regresar</span>
+											</div>
 											</div>
 							   </div>
 								
@@ -1253,6 +1268,7 @@ $(document).on('click','#btnAsignarEmpleados', function(e){
 									<div class="vistaInformacion2">
 									<div id="spnResultList_EmpRev" class="resultBox section summaryPane"></div>
 								
+								</div>
 								</div>
 						</div>
 						<!-- /.panel-body -->
@@ -1303,10 +1319,7 @@ $(document).on('click','#btnAsignarEmpleados', function(e){
                             </div>
                             <!-- /.modal -->
                             
-                            <div class="alert alert-success alert-dismissable" id="resultOk1" style="display:none">
-    							<button class="close" aria-hidden="true" data-dismiss="alert" type="button">×</button>
-								Se ha eliminado correctamente
-							</div>
+                            
 							
                         </div>
                         <div class="panel-body">                            
