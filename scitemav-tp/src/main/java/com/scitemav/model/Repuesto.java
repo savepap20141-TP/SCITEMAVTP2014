@@ -22,7 +22,7 @@ public class Repuesto {
 	@JoinColumn(name = "idtiporepuesto",nullable = false)
 	private TipoRepuesto repTipoRepuesto;
 
-	@OneToMany(mappedBy ="rerRevision")
+	@OneToMany(mappedBy ="rerRepuesto")
 	private Collection<RepuestoRevision> repRepuestoRevisiones;
 	
 	public Integer getIdRepuesto() {

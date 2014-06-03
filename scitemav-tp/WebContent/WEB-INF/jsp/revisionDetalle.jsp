@@ -425,7 +425,6 @@ var arregloAsignadosRep = [];
 	   				$('#resultOk1').show();
 	   				$('#txtIdF').val('');
 	   				inicioConsultaRepuestoRevision(idRev);
-	   				inicioConsultaRepuestos();
 	   			}else{
 	   				$('#resultFalse').show();
 	   				//$('#resultFalse').append('Se ha producido un error al registrarse');
@@ -565,7 +564,7 @@ function eliminarFallaRevision(){
    				$('#resultOk1').show();
    				$('#txtIdF').val('');
    				inicioConsultaFallasRevision(idRev);
-   				inicioConsultaFalla();
+   				//inicioConsultaFalla();
    			}else{
    				$('#resultFalse').show();
    				//$('#resultFalse').append('Se ha producido un error al registrarse');
@@ -793,7 +792,7 @@ function eliminarEmpleadoRevision(){
    				$('#resultOk1').show();
    				$('#txtIdF').val('');
    				inicioConsultaEmpleadosRevision(idRev);
-   				inicioConsultaEmpleados();
+   				//inicioConsultaEmpleados();
    			}else{
    				$('#resultFalse').show();
    				//$('#resultFalse').append('Se ha producido un error al registrarse');
