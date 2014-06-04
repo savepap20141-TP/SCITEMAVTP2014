@@ -137,7 +137,7 @@ $(document).ready(function(e){
 		submitHandler: function(form){
 			var Email = $('#txtEmail').val();
 			$.ajax({
-		 		url: 'getDuplicateEmail',
+		 		url: 'getDuplicateEmail2',
 		 		type: 'post',
 		 		dataType: 'json',
 		 		data: 'Email='+Email,
@@ -146,6 +146,22 @@ $(document).ready(function(e){
 		 				alert('Numero de Email Duplicado');
 		 			}else{
 		 				form.submit();
+		 				
+		 				var Dni = $('#txtDni').val();
+		 				$.ajax({
+		 			 		url: 'getDuplicateDNI2',
+		 			 		type: 'post',
+		 			 		dataType: 'json',
+		 			 		data: 'DNI='+Dni,
+		 			 		success: function(result){
+		 			 			if(result==true){
+		 			 				alert('Numero de DNI Duplicado');
+		 			 			}else{
+		 			 				form.submit();
+		 			 			}
+		 			 		}
+		 			 	});	
+		 				
 		 			}
 		 		}
 		 	});	

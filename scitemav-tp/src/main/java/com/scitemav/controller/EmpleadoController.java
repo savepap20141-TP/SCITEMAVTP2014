@@ -123,8 +123,15 @@ public class EmpleadoController {
 	
 	@RequestMapping(value = "getDuplicateEmail2", method = RequestMethod.POST)
 	@ResponseBody
-	public Boolean getDuplicatePlaca(HttpServletRequest request){	
+	public Boolean getDuplicateEmail2(HttpServletRequest request){	
 		String Email = request.getParameter("Email");
-		return empleadoService.getDuplicateEmail(Email);
+		return empleadoService.getDuplicateEmail2(Email);
+	}
+	
+	@RequestMapping(value = "getDuplicateDNI2", method = RequestMethod.POST)
+	@ResponseBody
+	public Boolean getDuplicateDNI2(HttpServletRequest request){	
+		String DNI = request.getParameter("DNI");
+		return empleadoService.getDuplicateDNI2(DNI);
 	}
 }
