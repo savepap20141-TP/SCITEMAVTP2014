@@ -265,8 +265,10 @@ $(document).ready(function(e){
 		 		success: function(result){
 		 			if(result==true){
 		 				alert('Numero de Placa Duplicado');
+		 				$('#txtNumPlaca').addClass("error");
 		 			}else{
 		 				form.submit();
+		 				$('#txtNumPlaca').removeClass("error");
 		 			}
 		 		}
 		 	});	
