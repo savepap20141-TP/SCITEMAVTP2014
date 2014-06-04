@@ -207,6 +207,7 @@ public class ClienteServiceImpl implements ClienteService{
 	public Boolean getDuplicateEmail(String email) {
 		Integer encontro = 0;
 		Boolean resultado = false;
+		//email = email.replace("+", "%2B");
 		try {
 			Query q = em.createQuery("SELECT COUNT(c.idCliente) FROM Cliente c JOIN c.cliPersona p JOIN p.perUsuario u WHERE u.email=:email");
 			q.setParameter("email", email);

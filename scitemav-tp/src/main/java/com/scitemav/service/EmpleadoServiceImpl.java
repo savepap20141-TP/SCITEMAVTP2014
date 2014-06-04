@@ -316,6 +316,7 @@ public class EmpleadoServiceImpl implements EmpleadoService{
 	public Boolean getDuplicateEmail2(String email) {
 		Integer encontro = 0;
 		Boolean resultado = false;
+		//email = email.replace("+", "%2B");
 		try {
 			Query q = em.createQuery("SELECT COUNT(e.idEmpleado) FROM Empleado e JOIN e.empPersona p JOIN p.perUsuario u WHERE u.email=:email");
 			q.setParameter("email", email);
@@ -338,7 +339,7 @@ public class EmpleadoServiceImpl implements EmpleadoService{
 		Boolean resultado = false;
 		try {
 			Query q = em.createQuery("SELECT COUNT(e.idEmpleado) FROM Empleado e JOIN e.empPersona p WHERE p.dni=:dni");
-			q.setParameter("dni", dni);
+			q.setParameter("dni", Integer.parseInt(dni));
 			encontro = Integer.parseInt(q.getSingleResult().toString());
 			if(encontro > 0){
 				resultado=true;
