@@ -21,7 +21,7 @@ $(document).ready(function(e){
 </script>
 <script>
 $(document).ready(function(e){
-	
+
 	
 	$('#frmRegistroEmpleado').validate({
 		rules:{
@@ -144,7 +144,9 @@ $(document).ready(function(e){
 			 		success: function(result){
 			 			if(result==true){
 			 				alert('Numero de DNI Duplicado');
+			 				$('#txtDNI').addClass("error");
 			 			}else{
+			 				$('#txtDNI').removeClass("error");
 			 				var Email = $('#txtEmail').val();
 			 				$.ajax({
 			 			 		url: 'getDuplicateEmail2',
@@ -154,7 +156,9 @@ $(document).ready(function(e){
 			 			 		success: function(result){
 			 			 			if(result==true){
 			 			 				alert('Email Duplicado');
-			 			 			}else{		 				
+			 			 				$('#txtEmail').addClass("error");
+			 			 			}else{
+			 			 				$('#txtEmail').removeClass("error");
 						 				form.submit();
 			 			 			}
 			 			 		}

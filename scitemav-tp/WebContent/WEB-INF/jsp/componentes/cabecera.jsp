@@ -13,6 +13,9 @@ label.error {
 	color: rgb(255,0,0);
 	font-weight:bold;
 }
+input.error {
+	border: 1px solid #F00;
+}
 .tableGri {
 /*     line-height: 30px; */
     background-color: rgb(235, 240, 242);
