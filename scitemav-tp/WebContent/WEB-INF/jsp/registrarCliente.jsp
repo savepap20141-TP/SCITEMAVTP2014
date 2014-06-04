@@ -122,21 +122,36 @@ $(document).ready(function(e){
 			}
 		},			
 		submitHandler: function(form){
-			var Email = $('#txtEmail').val();
-			$.ajax({
-		 		url: 'getDuplicateEmail',
-		 		type: 'post',
-		 		dataType: 'json',
-		 		data: 'Email='+Email,
-		 		success: function(result){
-		 			if(result==true){
-		 				alert('Numero de Email Duplicado');
-		 			}else{
-		 				form.submit();
-		 			}
-		 		}
-		 	});	
-		}		
+			var Dni = $('#txtDNI').val();
+				$.ajax({
+			 		url: 'getDuplicateDNI',
+			 		type: 'post',
+			 		dataType: 'json',
+			 		data: 'DNI='+Dni,
+			 		success: function(result){
+			 			if(result==true){
+			 				alert('Numero de DNI Duplicado');
+			 			}else{
+			 				var Email = $('#txtEmail').val();
+			 				$.ajax({
+			 			 		url: 'getDuplicateEmail',
+			 			 		type: 'post',
+			 			 		dataType: 'json',
+			 			 		data: 'Email='+Email,
+			 			 		success: function(result){
+			 			 			if(result==true){
+			 			 				alert('Email Duplicado');
+			 			 			}else{		 				
+						 				form.submit();
+			 			 			}
+			 			 		}
+			 			 	});	
+			 			}
+			 		}
+			 	});	
+			
+			
+		}				
 	});
 });
 

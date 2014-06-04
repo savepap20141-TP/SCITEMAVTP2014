@@ -84,4 +84,11 @@ public class ClientController {
 		String Email = request.getParameter("Email");
 		return clienteService.getDuplicateEmail(Email);
 	}
+	
+	@RequestMapping(value = "getDuplicateDNI", method = RequestMethod.POST)
+	@ResponseBody
+	public Boolean getDuplicateDNI2(HttpServletRequest request){	
+		String DNI = request.getParameter("DNI");
+		return clienteService.getDuplicateDNI(DNI);
+	}
 }

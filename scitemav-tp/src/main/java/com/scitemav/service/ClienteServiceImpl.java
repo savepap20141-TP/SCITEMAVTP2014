@@ -223,4 +223,23 @@ public class ClienteServiceImpl implements ClienteService{
 
 		return resultado;
 	}
+	@Transactional
+	public Boolean getDuplicateDNI(String dni) {
+		Integer encontro = 0;
+		Boolean resultado = false;
+		try {
+			Query q = em.createQuery("SELECT COUNT(c.idCliente) FROM Cliente c JOIN c.cliPersona p WHERE p.dni=:dni");
+			q.setParameter("dni", Integer.parseInt(dni));
+			encontro = Integer.parseInt(q.getSingleResult().toString());
+			if(encontro > 0){
+				resultado=true;
+			}else{
+				resultado=false;
+			}		
+		} catch (IllegalArgumentException e) {
+			resultado = false;			
+		}
+
+		return resultado;
+	}
 }
