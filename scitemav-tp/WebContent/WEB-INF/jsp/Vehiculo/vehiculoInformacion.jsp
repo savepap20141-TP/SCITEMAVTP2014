@@ -251,8 +251,10 @@
 						//$.blockUI({ message: $('#domMessage') });
 				    },
 			   		success: function(vehiculo){
-			   			IniciarInfoVehiculo(vehiculo);
-			 			$('.vistaInformacion').show();
+			   			//IniciarInfoVehiculo(vehiculo);
+			 			var idvehiculo = $('#spnIdVehiculo').text();
+						inicioConsulta(idvehiculo);
+			   			$('.vistaInformacion').show();
 			 			$('.edicionInformacion').hide();
 			 			$('#btnVerInformacion').hide();
 			 			$('#btnVerEdicion').show();
