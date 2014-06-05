@@ -274,6 +274,8 @@ $(function() {
 		$('#btnVerInformacion3').show();
 		$('#btnVerEdicion3').hide();
 		$('#resultOkF').hide();
+		$('#resultOkFa3').hide();
+		
 	} 
 	
 
@@ -507,7 +509,7 @@ function inicioConsultaFallasRevision(idRevision){
  		success: function(fallas){
  			$.each(fallas, function(i, falla){
  				var imagen = '';
- 				if(mar.urlImagen!=null){
+ 				if(falla.urlImagen!=null){
  					imagen = '<img width="150" height="150" src="'+falla.urlImagen+'"></img>';
  				}
  				arregloAsignadosFalla.push(falla.idFalla);
@@ -517,8 +519,8 @@ function inicioConsultaFallasRevision(idRevision){
  				'<td class="center">'+falla.descripcion+'</td>'+
 				'<td class="center">'+falla.nombreTipoFalla+'</td>'+
 				'<td class="center">'+imagen+'</td>'+
-				//'<td class="center">'+falla.comentario+'</td>'+
-				'<td class="center"><button class="btn btn-success btn-circle" type="button" id="btnEdit_'+i+'" data-toggle="modal" data-target="#myModalEF" onclick="mostrarEditar('+i+')"><i class="fa fa-list"></i></button></td>'+
+				'<td class="center" id="filaComentario_'+i+'">'+falla.comentario+'</td>'+
+				'<td class="center"><button class="btn btn-success btn-circle" type="button" id="btnEdit_'+i+'" data-toggle="modal" data-target="#myModalEF" onclick="mostrarEditar('+i+','+idRevision+','+falla.idFalla+')"><i class="fa fa-list"></i></button></td>'+
 				'<td class="center"><button class="btn btn-danger btn-circle" type="button" id="btnDelete_'+falla.idFalla+'" data-toggle="modal" data-target="#myModalF" onclick="mostrarEliminar('+i+','+idRevision+')"><i class="fa fa-times"></i></button></td>'+
 				'</tr>';
 			});		        
@@ -528,8 +530,9 @@ function inicioConsultaFallasRevision(idRevision){
  				'<th class="center">Id</th>'+
  				'<th class="center" style="display:none;">IdFalla</th>'+
  				'<th class="center">Nombre</th>'+
- 				'<th class="center">Tipo de falla</th>'+
- 				//'<th class="center">Comentario</th>'+
+ 				'<th class="center">Tipo de falla</th>'+ 				
+ 				'<th class="center">Imagen</th>'+
+ 				'<th class="center">Comentario</th>'+
  				'<th class="center">Editar</th>'+
  				'<th class="center">Eliminar</th>';
 			var id = 'FalRev';
@@ -555,11 +558,14 @@ function inicioConsultaFallasRevision(idRevision){
  	});
 } 
 
-function mostrarEditar(ind){
+function mostrarEditar(ind,idRevision,idFalla){
 	$('#myModalLabelEF').empty();
 	$('#myModalLabelEF').append('Editar Falla');
 	$('#txtIdFaRe').val($('#filaId_'+ind).text());
-	//$('#txtComentario').val($('#filaComentario_'+ind).text());
+	$('#txtComentario').val($('#filaComentario_'+ind).text());
+	$('#txtIdRe3').val(idRevision);	
+	$('#txtIdFa3').val(idFalla);	
+	idRev = idRevision;
 }
 
 var idRev;
@@ -570,6 +576,42 @@ function mostrarEliminar(ind,idRevision){
 	$('#txtIdF').val($('#filaId_'+ind).text());	
 	$('#txtIdR').val(idRevision);
 	idRev = idRevision;
+}
+
+function editarFallaRevision(){
+	
+	var formElement = document.getElementById("frmEditarFallaRevision");
+	var formData = new FormData(formElement);	
+	$.ajax({
+   		url: 'editarFallaRevision',
+   		type: 'post',
+   		data:  formData,
+		mimeType:"multipart/form-data",
+		contentType: false,
+	    cache: false,
+		processData:false,
+		beforeSend: function(){
+			//$.blockUI({ message: $('#domMessage') });
+	    },
+   		success: function(result){
+   			$('#resultOkFa3').hide();
+			$('#resultFalse').hide();	
+			//alert(result);
+			var res  = ''+result;
+   			if(res == 'true'){   				
+   				//$('#resultOk').append('Se ha registrado correctamente');
+   				$('#resultOkFa3').show();
+   				$('#txtIdFaRe').val('');
+   				arregloAsignadosFalla = [];
+   				inicioConsultaFallasRevision(idRev);
+   				//inicioConsultaFalla();
+   			}else{
+   				$('#resultFalse').show();
+   				//$('#resultFalse').append('Se ha producido un error al registrarse');
+   			}
+   		}
+   	});
+
 }
 
 function eliminarFallaRevision(){
@@ -1207,18 +1249,28 @@ $(document).on('click','#btnAsignarEmpleados', function(e){
                                         </div>
                                         <div class="modal-body">
                                         	<form role="form" id="frmEditarFallaRevision" 
-											 method="post" commandName="fallarevisionBean" enctype="multipart/form-data"  style="width: 30%; margin-left: 10%;">
+											 method="post" commandName="fallarevisionbean" enctype="multipart/form-data"  style="width: 30%; margin-left: 10%;">
 			
 												<fieldset>					
 													<div class="form-group" style="display:none">
 															<label> Id FallaRevision</label> <input 
 															class="form-control" name="idFallaRevision" id="txtIdFaRe"/>
-													</div>			
+													</div>
+													
+													<div class="form-group" style="display:none">
+															<label> Id Falla</label> <input 
+															class="form-control" name="idFalla" id="txtIdFa3"/>
+														</div>
+													
+													<div class="form-group" style="display:none">
+															<label> Id Revision</label> <input 
+															class="form-control" name="idRevision" id="txtIdRe3"/>
+														</div>			
 																	
-													<!-- <div class="form-group">
-														<label>Comentario</label> <input id="txtComentario"
+													 <div class="form-group">
+														<label>Comentario</label> <input id="txtComentario" 
 														class="form-control" name="comentario" placeholder="Comentario"></input>
-													</div> -->
+													</div> 
 													
 													<div class="form-group">
 							                            <label>Imagen de ejemplo: </label>
@@ -1229,8 +1281,8 @@ $(document).on('click','#btnAsignarEmpleados', function(e){
 											</form>
                                         </div>
                                         <div class="modal-footer">
-                                        	<button type="button" class="btn btn-primary" data-dismiss="modal" onclick="registrarMarca();">Guardar</button>
-                                            <button type="button" class="btn btn-default" data-dismiss="modal" onclick="$('#txtIdMC').val('');$('#txtNombre').val('');$('#fileimagen').val('');">Cancelar</button>
+                                        	<button type="button" class="btn btn-primary" data-dismiss="modal" onclick="editarFallaRevision();">Guardar</button>
+                                            <button type="button" class="btn btn-default" data-dismiss="modal" onclick="$('#txtIdFaRe').val('');$('#txtComentario').val('');$('#fileimagen').val('');">Cancelar</button>
                                         </div>
                                     </div>
                                     <!-- /.modal-content -->
@@ -1238,6 +1290,10 @@ $(document).on('click','#btnAsignarEmpleados', function(e){
                                 <!-- /.modal-dialog -->
                             </div>
 								<br>
+								<div class="alert alert-success alert-dismissable" id="resultOkFa3" style="display:none">
+    							<button class="close" aria-hidden="true" data-dismiss="alert" type="button">×</button>
+								Se ha editado correctamente
+							</div>
 								<div class="alert alert-success alert-dismissable" id="resultOkF" style="display:none">
     							<button class="close" aria-hidden="true" data-dismiss="alert" type="button">×</button>
 								Se ha eliminado correctamente
@@ -1293,10 +1349,10 @@ $(document).on('click','#btnAsignarEmpleados', function(e){
 										sint occaecat cupidatat non proident, sunt in culpa qui
 										officia deserunt mollit anim id est laborum.</p>
 								</div>
-								<div class="tab-pane fade" id="empleado">
-								<div class="pull-right">
+								<div class="tab-pane fade" id="empleado">								
+								<div class="panel panel-default">
 								<div class="panel-heading">
-											Fallas por Revisión
+											Empleados por Revisión
 								<div class="pull-right">
 											<div class="btn-group">
 												<span id="btnVerEdicion2"

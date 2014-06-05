@@ -166,11 +166,15 @@ public class FallaServicelmpl implements FallaService{
 
 		//TipoVehiculo tipovehiculo = new TipoVehiculo();
 		FallaRevision fallaRevision = new FallaRevision();
+		Falla f = new Falla();
+		Revision r = new Revision();
 
 		try {	
-			
-		    
-			fallaRevision.setIdFallaRevision(fallaRevisionB.getIdFallaRevision());
+			Query q1 = em.createQuery("SELECT fr FROM FallaRevision fr JOIN fr.farRevision r JOIN fr.farFalla f WHERE r.idRevision=:idrevision AND f.idFalla=:idfalla");
+			q1.setParameter("idrevision", fallaRevisionB.getIdRevision());
+			q1.setParameter("idfalla", fallaRevisionB.getIdFalla());			
+			fallaRevision = (FallaRevision) q1.getSingleResult();
+		    			
 			fallaRevision.setComentario(fallaRevisionB.getComentario());
 			if(fallaRevisionB.getFile()!=null){
 				 String fileContentType = fallaRevisionB.getFile().getContentType();
@@ -196,7 +200,7 @@ public class FallaServicelmpl implements FallaService{
 			      }					     
 				//marca.setUrlImagen(marcab.getUrlImagen());
 			
-			em.merge(fallaRevisionB);
+			em.merge(fallaRevision);
 		
 		resultado = true;
 						

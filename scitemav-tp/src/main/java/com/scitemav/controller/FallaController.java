@@ -95,9 +95,9 @@ public class FallaController {
 	
 	@RequestMapping(value="editarFallaRevision", method = RequestMethod.POST)
 	@ResponseBody
-	public boolean editarFallaRevision(@ModelAttribute("fallaRevisionBean") FallaRevisionBean fallaRevisionB, Model model, HttpServletRequest req){
+	public boolean editarFallaRevision(@ModelAttribute("fallarevisionbean") FallaRevisionBean frbean, Model model, HttpServletRequest req){
 		boolean result = false;
-		if(fallaService.editarFallaRev(fallaRevisionB, req)){
+		if(fallaService.editarFallaRev(frbean, req)){
 			//model.addAttribute("msg", "Se registro correctamente");
 			//path = "registrarMarca";
 			result = true;
