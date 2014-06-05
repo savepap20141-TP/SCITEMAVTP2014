@@ -203,7 +203,7 @@ public class ReporteServiceImpl implements ReporteService {
 
 	@SuppressWarnings("unchecked")
 	@Transactional
-	public String reporteVehiculo(Integer idVehiculo) {		
+	public String reporteVehiculo(Integer idVehiculo, String rutaAbsoluta) {		
 		String html = "<html><head>" +
 				  "</head><body style='font-family: arial;'>";
 		try{
@@ -211,11 +211,11 @@ public class ReporteServiceImpl implements ReporteService {
 			Query q = em.createQuery("SELECT v FROM Vehiculo v WHERE idVehiculo ="+idVehiculo);
 			Vehiculo veh = (Vehiculo) q.getSingleResult();
 			if(veh.getUrlImagen() == null){
-				html+="<img align='middle' src='images/vehiculo_defecto.jpg' height='300px;' width='300px;' ></img>";
+				html+="<img align='middle' src='"+rutaAbsoluta+"vehiculo_defecto.jpg' height='300px;' width='300px;' ></img>";
 				
 			}
 			else{
-				html+="<img align='middle' src='"+veh.getUrlImagen()+"' height='300px;' width='300px;' ></img>";	
+				html+="<img align='middle' src='"+rutaAbsoluta+veh.getUrlImagen()+"' height='300px;' width='300px;' ></img>";	
 			}			
 			
 			html+="<h3>Datos del vehículo:</h3> "+"<br />";
