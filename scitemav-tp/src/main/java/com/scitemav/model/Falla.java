@@ -23,6 +23,9 @@ public class Falla {
 	@JoinColumn(name = "idtipofalla",nullable = false)
 	private TipoFalla falTipoFalla;
 
+	@Column(name = "nrohoras", nullable = true)
+	private Double nroHoras;
+	
 	@OneToMany(mappedBy ="farFalla")
 	private Collection<FallaRevision> falFallaRevisiones;
 	
@@ -56,5 +59,13 @@ public class Falla {
 
 	public void setFalFallaRevisiones(Collection<FallaRevision> falFallaRevisiones) {
 		this.falFallaRevisiones = falFallaRevisiones;
+	}
+
+	public Double getNroHoras() {
+		return nroHoras;
+	}
+
+	public void setNroHoras(Double nroHoras) {
+		this.nroHoras = nroHoras;
 	}
 }

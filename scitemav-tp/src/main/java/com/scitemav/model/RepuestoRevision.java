@@ -27,6 +27,9 @@ public class RepuestoRevision {
 	
 	@Column(length = 1000, nullable = true)
 	private String comentario;
+	
+	@Column(name = "cantidad", nullable = true)
+	private Integer cantidad;
 
 	public Integer getIdRepuestoRevision() {
 		return idRepuestoRevision;
@@ -66,5 +69,13 @@ public class RepuestoRevision {
 
 	public void setComentario(String comentario) {
 		this.comentario = comentario;
+	}
+
+	public Integer getCantidad() {
+		return cantidad;
+	}
+
+	public void setCantidad(Integer cantidad) {
+		this.cantidad = cantidad;
 	}
 }

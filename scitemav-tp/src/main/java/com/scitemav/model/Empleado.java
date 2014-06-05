@@ -33,6 +33,9 @@ public class Empleado {
 	@Column(name = "administrador", nullable = true)
 	private Boolean administrador;
 	
+	@Column(name = "sueldo", nullable = true)
+	private Double sueldo;
+	
 	@OneToMany(mappedBy ="reeEmpleado")
 	private Collection<EmpleadoRevision> empEmpleadoRevisiones;
 	
@@ -82,5 +85,13 @@ public class Empleado {
 
 	public void setEmpEmpleadoRevisiones(Collection<EmpleadoRevision> empEmpleadoRevisiones) {
 		this.empEmpleadoRevisiones = empEmpleadoRevisiones;
+	}
+
+	public Double getSueldo() {
+		return sueldo;
+	}
+
+	public void setSueldo(Double sueldo) {
+		this.sueldo = sueldo;
 	}
 }
