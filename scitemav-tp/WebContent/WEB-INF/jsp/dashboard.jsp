@@ -350,7 +350,7 @@ function revision1(){
                         <!-- /.panel-body -->
                     </div>
                     <!-- /.panel -->
-                    <div class="panel panel-default">
+                    <div class="panel panel-default" style="display:none">
                         <div class="panel-heading">
                             <i class="fa fa-clock-o fa-fw"></i> Timeline
                         </div>

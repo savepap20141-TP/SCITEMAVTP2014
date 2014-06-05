@@ -79,6 +79,9 @@ public class Vehiculo {
 	@Column(name = "cargautil", nullable = true)
 	private Double cargaUtil;
 
+	@Column(name = "urlimagen",length = 300, nullable = true)
+	private String urlImagen;
+	
 	@OneToMany(mappedBy ="revVehiculo")
 	private Collection<Revision> vehRevisiones;
 	
@@ -256,5 +259,13 @@ public class Vehiculo {
 
 	public void setVehRevisiones(Collection<Revision> vehRevisiones) {
 		this.vehRevisiones = vehRevisiones;
+	}
+
+	public String getUrlImagen() {
+		return urlImagen;
+	}
+
+	public void setUrlImagen(String urlImagen) {
+		this.urlImagen = urlImagen;
 	}
 }

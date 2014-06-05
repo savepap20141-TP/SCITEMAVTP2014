@@ -91,19 +91,24 @@ $(function() {
 			$('#txtKilometrajeProximohdn').val($('#txtKilometrajeProximo').val().replace(/,/g, ''));
 			//alert($('#txtKilometrajeActualhdn').val($('#txtKilometrajeActual').val().replace(/,/gi, '')));
 			//alert($('#txtKilometrajeActualhdn').val());
-			$.ajax({
-		   		url: 'ajaxEditInformacionRevision',
-		   		type: 'post',
-		   		dataType: 'json',
-		   		data: $('#frmEdicionRevision').serialize(),
-		   		success: function(revision){
-		   			IniciarInfoRevision(revision);
-		 			$('.vistaInformacion').show();
-		 			$('.edicionInformacion').hide();
-		 			$('#btnVerInformacion').hide();
-		 			$('#btnVerEdicion').show();
-		   		}
-		   	});
+			if($('#txtKilometrajeProximohdn').val() > $('#txtKilometrajeActualhdn').val()){
+				$.ajax({
+			   		url: 'ajaxEditInformacionRevision',
+			   		type: 'post',
+			   		dataType: 'json',
+			   		data: $('#frmEdicionRevision').serialize(),
+			   		success: function(revision){
+			   			IniciarInfoRevision(revision);
+			 			$('.vistaInformacion').show();
+			 			$('.edicionInformacion').hide();
+			 			$('#btnVerInformacion').hide();
+			 			$('#btnVerEdicion').show();
+			   		}
+			   	});
+			}else{
+				alert("Introducir un Kilometraje Proximo valido");
+			}
+			
 		}		
 
 });
@@ -1077,8 +1082,8 @@ $(document).on('click','#btnAsignarEmpleados', function(e){
 										<div class="col-lg-12 vistaInformacion">
 											<br>
 											<div class="col-lg-4">
-							<p class="text-primary">Id:</p>
-							<span id="spnidrevision"></span>
+							<p class="text-primary" style="display:none">Id:</p>
+							<span id="spnidrevision" style="display:none"></span>
 						<!--<p class="text-primary">Costo Total:</p> 
 							<span id="spnCostoTotal2"></span>-->
 							<p class="text-primary">Fecha Inicio:</p>
