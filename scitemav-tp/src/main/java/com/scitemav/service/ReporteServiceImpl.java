@@ -210,7 +210,13 @@ public class ReporteServiceImpl implements ReporteService {
 			html+="<h2 style='text-align: center; text-transform:uppercase;'>Vehiculo #"+idVehiculo+"</h2><br />";			
 			Query q = em.createQuery("SELECT v FROM Vehiculo v WHERE idVehiculo ="+idVehiculo);
 			Vehiculo veh = (Vehiculo) q.getSingleResult();
-
+			if(veh.getUrlImagen() == null){
+				html+="<img align='middle' src='images/vehiculo_defecto.jpg' height='300px;' width='300px;' ></img>";
+				
+			}
+			else{
+				html+="<img align='middle' src='"+veh.getUrlImagen()+"' height='300px;' width='300px;' ></img>";	
+			}			
 			
 			html+="<h3>Datos del vehículo:</h3> "+"<br />";
 			html+="<table align='center' border='1'><thead><tr>";
