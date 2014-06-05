@@ -225,6 +225,53 @@ function listarDistritos(){
  	});	
 	
 }
+
+function validaDNI(){
+	var Dni = $('#txtDNI').val();
+	$('#ValidtxtDNI').hide();
+	if(Dni!=''){
+		$.ajax({
+	 		url: 'getDuplicateDNI2',
+	 		type: 'post',
+	 		dataType: 'json',
+	 		data: 'DNI='+Dni,
+	 		success: function(result){
+	 			if(result==true){
+	 				//alert('Numero de DNI Duplicado');
+	 				$('#txtDNI').addClass("error");
+	 				$('#ValidtxtDNI').show();
+	 				$('#ValidtxtDNI').text('Numero de DNI ya registrado');
+	 			}else{
+	 				$('#txtDNI').removeClass("error"); 		
+	 				$('#ValidtxtDNI').hide();
+	 			}
+	 		}
+	 	});	
+	}
+}
+function validaEmail(){
+	var Email = $('#txtEmail').val();
+	$('#ValidtxtEmail').hide();
+	if(Email!=''){
+		$.ajax({
+	 		url: 'getDuplicateEmail2',
+	 		type: 'post',
+	 		dataType: 'json',
+	 		data: 'Email='+Email,
+	 		success: function(result){
+	 			if(result==true){
+	 				//alert('Email Duplicado');
+	 				$('#txtEmail').addClass("error");
+	 				$('#ValidtxtEmail').show();
+	 				$('#ValidtxtEmail').text('Email ya registrado');
+	 			}else{
+	 				$('#txtEmail').removeClass("error");
+	 				$('#ValidtxtEmail').hide();
+	 			}
+	 		}
+	 	});	
+	}
+}
 </script>
 <body>
 	<div id="wrapper">
@@ -262,7 +309,8 @@ function listarDistritos(){
 									<!-- PRIMERA COLUMNA -->
 										<div class="form-group">
 											<label> DNI</label> <input id="txtDNI"
-												class="form-control" name="dni" placeholder="DNI"></input>
+												class="form-control" name="dni" placeholder="DNI" onchange="validaDNI();"></input>
+												<label class="error" id="ValidtxtDNI" style="display:none"></label>
 										</div>
 										<div class="form-group">
 											<label> Nombre</label> <input id="txtNombre"
@@ -336,8 +384,9 @@ function listarDistritos(){
 											<div class="form-group input-group">
 												<span class="input-group-addon">@</span> <input
 													id="txtEmail" class="form-control" name="email"
-													placeholder="Email"></input>
+													placeholder="Email" onchange="validaEmail();"></input>
 											</div>
+											<label class="error" id="ValidtxtEmail" style="display:none"></label>
 										</div> 
 																																					
 									<!-- FINAL SEGUNDA COLUMNA -->

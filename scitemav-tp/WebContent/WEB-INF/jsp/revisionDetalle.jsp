@@ -510,7 +510,7 @@ function inicioConsultaFallasRevision(idRevision){
  			$.each(fallas, function(i, falla){
  				var imagen = '';
  				if(falla.urlImagen!=null){
- 					imagen = '<img width="150" height="150" src="'+falla.urlImagen+'"></img>';
+ 					imagen = '<a target="_blank"  href="'+falla.urlImagen+'"><img width="150" height="150" src="'+falla.urlImagen+'"></img></a>';
  				}
  				arregloAsignadosFalla.push(falla.idFalla);
  				filas = filas +'<tr class="">'+
@@ -565,6 +565,8 @@ function mostrarEditar(ind,idRevision,idFalla){
 	$('#txtComentario').val($('#filaComentario_'+ind).text());
 	$('#txtIdRe3').val(idRevision);	
 	$('#txtIdFa3').val(idFalla);	
+	
+	$('#fileimagen').val('');
 	idRev = idRevision;
 }
 
@@ -1268,12 +1270,12 @@ $(document).on('click','#btnAsignarEmpleados', function(e){
 														</div>			
 																	
 													 <div class="form-group">
-														<label>Comentario</label> <input id="txtComentario" 
-														class="form-control" name="comentario" placeholder="Comentario"></input>
+														<label>Comentario</label> <textarea id="txtComentario" 
+														class="form-control" name="comentario" placeholder="Comentario"></textarea>														
 													</div> 
 													
 													<div class="form-group">
-							                            <label>Imagen de ejemplo: </label>
+							                            <label>Imagen de Falla: </label>
 							                            <input type="file" name="file" id="fileimagen">
 							                        </div>
 															
