@@ -87,6 +87,7 @@ public class FallaServicelmpl implements FallaService{
 				fb.setIdTipoFalla(f.getIdFalla());
 				fb.setDescripcion(f.getDescripcion());
 				fb.setNombreTipoFalla(f.getFalTipoFalla().getNombreSistema());
+				
 				fb.setIdFalla(f.getIdFalla());
 				listaFallaBean.add(fb);
 			}

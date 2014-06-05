@@ -5,6 +5,7 @@ public class FallaBean {
 	private String descripcion;
 	private Integer idTipoFalla;
 	private String nombreTipoFalla;
+	private String comentario;
 	
 	public Integer getIdFalla() {
 		return idFalla;
@@ -29,6 +30,12 @@ public class FallaBean {
 	}
 	public void setNombreTipoFalla(String nombreTipoFalla) {
 		this.nombreTipoFalla = nombreTipoFalla;
+	}
+	public String getComentario() {
+		return comentario;
+	}
+	public void setComentario(String comentario) {
+		this.comentario = comentario;
 	}
 	
 	

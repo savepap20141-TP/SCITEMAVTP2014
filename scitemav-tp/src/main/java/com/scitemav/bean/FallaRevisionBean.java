@@ -1,5 +1,7 @@
 package com.scitemav.bean;
 
+import org.springframework.web.multipart.commons.CommonsMultipartFile;
+
 public class FallaRevisionBean {
 
 	private Integer idFallaRevision;
@@ -8,6 +10,7 @@ public class FallaRevisionBean {
 	private Double costoUnitario;
 	private String comentario;
 	private String urlImagen;
+	private CommonsMultipartFile file;
 	
 	public Integer getIdFallaRevision() {
 		return idFallaRevision;
@@ -44,6 +47,12 @@ public class FallaRevisionBean {
 	}
 	public void setUrlImagen(String urlImagen) {
 		this.urlImagen = urlImagen;
+	}
+	public CommonsMultipartFile getFile() {
+		return file;
+	}
+	public void setFile(CommonsMultipartFile file) {
+		this.file = file;
 	}
 	
 }
