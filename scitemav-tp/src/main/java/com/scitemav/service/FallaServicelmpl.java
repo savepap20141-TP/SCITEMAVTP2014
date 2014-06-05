@@ -1,11 +1,16 @@
 package com.scitemav.service;
 
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.imageio.ImageIO;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -14,6 +19,7 @@ import com.scitemav.bean.FallaBean;
 import com.scitemav.bean.FallaRevisionBean;
 import com.scitemav.model.Falla;
 import com.scitemav.model.FallaRevision;
+import com.scitemav.model.Marca;
 import com.scitemav.model.Revision;
 import com.scitemav.model.TipoFalla;
 @Service
@@ -142,6 +148,54 @@ public class FallaServicelmpl implements FallaService{
 			
 				
 			
+		} catch (IllegalArgumentException e) {
+			System.out.println(e);
+			resultado = false;
+		}
+		return resultado;
+	}
+
+	@Transactional
+	public boolean editarFallaRev(FallaRevisionBean fallaRevisionB, HttpServletRequest req) {
+		boolean resultado = false;
+
+		//TipoVehiculo tipovehiculo = new TipoVehiculo();
+		FallaRevision fallaRevision = new FallaRevision();
+
+		try {	
+			
+		    
+			fallaRevision.setIdFallaRevision(fallaRevisionB.getIdFallaRevision());
+			fallaRevision.setComentario(fallaRevisionB.getComentario());
+			if(fallaRevisionB.getFile()!=null){
+				 String fileContentType = fallaRevisionB.getFile().getContentType();
+			     System.out.println("******* FILE CONTENT TYPE: " + fileContentType);
+			     System.out.println("******* PATH: " + req.getSession().getServletContext().getRealPath("/images/"));
+			     System.out.println("******* PATH: " + req.getSession().getServletContext().getRealPath("/"));
+			     System.out.println("******* PATH: " + req.getRequestURL().toString()+"/images/"+fallaRevisionB.getFile().getOriginalFilename());
+			     
+			     //String ruta = req.getRequestURL().toString()+"/images/"+marcab.getFile().getOriginalFilename();
+			     //ruta = ruta.replace(marcab.getUrlImagen(), "");
+			     if(fileContentType.contains("image")){
+			        try {
+						BufferedImage bufferedImage = ImageIO.read(fallaRevisionB.getFile().getInputStream());
+				        File localFile= new File(req.getSession().getServletContext().getRealPath("/images/")+"/"+fallaRevisionB.getFile().getOriginalFilename());
+				        boolean dir = localFile.mkdirs();
+				        fallaRevisionB.getFile().transferTo(localFile);		
+				        //marca.setUrlImagen(ruta);
+				        fallaRevision.setUrlImagen("images/"+fallaRevisionB.getFile().getOriginalFilename());
+			        } catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+			      }					     
+				//marca.setUrlImagen(marcab.getUrlImagen());
+			
+			em.merge(fallaRevisionB);
+		
+		resultado = true;
+						
+					}
 		} catch (IllegalArgumentException e) {
 			System.out.println(e);
 			resultado = false;

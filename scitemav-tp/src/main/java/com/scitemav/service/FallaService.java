@@ -1,6 +1,9 @@
 package com.scitemav.service;
 
 import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
+
 import com.scitemav.bean.FallaBean;
 import com.scitemav.bean.FallaRevisionBean;
 import com.scitemav.bean.TipoFallaBean;
@@ -13,6 +16,7 @@ public interface FallaService {
 	public List<FallaBean> listarFallasRevision(Integer idRevision);
 	public List<String> administrarFallasRevision(String[] ids, Integer IdRevision);
 	boolean eliminarFallaRev(FallaRevisionBean fallaRevisionB);
+	boolean editarFallaRev(FallaRevisionBean fallaRevisionB, HttpServletRequest req);
 	
 	
 }

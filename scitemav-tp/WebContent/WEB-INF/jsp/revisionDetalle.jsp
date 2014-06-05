@@ -506,12 +506,17 @@ function inicioConsultaFallasRevision(idRevision){
  		data: '',
  		success: function(fallas){
  			$.each(fallas, function(i, falla){
+ 				var imagen = '';
+ 				if(mar.urlImagen!=null){
+ 					imagen = '<img width="150" height="150" src="'+falla.urlImagen+'"></img>';
+ 				}
  				arregloAsignadosFalla.push(falla.idFalla);
  				filas = filas +'<tr class="">'+
  				'<td class="center">FAL-'+falla.idFalla+'</td>'+
  				'<td class="center" id="filaId_'+i+'" style="display:none;">'+falla.idFalla+'</td>'+
  				'<td class="center">'+falla.descripcion+'</td>'+
 				'<td class="center">'+falla.nombreTipoFalla+'</td>'+
+				'<td class="center">'+imagen+'</td>'+
 				//'<td class="center">'+falla.comentario+'</td>'+
 				'<td class="center"><button class="btn btn-success btn-circle" type="button" id="btnEdit_'+i+'" data-toggle="modal" data-target="#myModalEF" onclick="mostrarEditar('+i+')"><i class="fa fa-list"></i></button></td>'+
 				'<td class="center"><button class="btn btn-danger btn-circle" type="button" id="btnDelete_'+falla.idFalla+'" data-toggle="modal" data-target="#myModalF" onclick="mostrarEliminar('+i+','+idRevision+')"><i class="fa fa-times"></i></button></td>'+
@@ -1002,45 +1007,7 @@ $(document).on('click','#btnAsignarEmpleados', function(e){
 					<!-- /.panel-heading -->
 					<div class="panel-body">
 					
-					<div class="modal fade" id="myModalEF" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                                <div class="modal-dialog">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                                            <h4 class="modal-title" id="myModalLabelEF">Editar Falla</h4>
-                                        </div>
-                                        <div class="modal-body">
-                                        	<form role="form" id="frmEditarFallaRevision" 
-											 method="post" commandName="fallarevisionBean" enctype="multipart/form-data"  style="width: 30%; margin-left: 10%;">
-			
-												<fieldset>					
-													<div class="form-group" style="display:none">
-															<label> Id FallaRevision</label> <input 
-															class="form-control" name="idFallaRevision" id="txtIdFaRe"/>
-													</div>			
-																	
-													<div class="form-group">
-														<label>Comentario</label> <input id="txtComentario"
-														class="form-control" name="comentario" placeholder="Comentario"></input>
-													</div>
-													
-													<div class="form-group">
-							                            <label>Imagen de ejemplo: </label>
-							                            <input type="file" name="file" id="fileimagen">
-							                        </div>
-															
-												</fieldset>
-											</form>
-                                        </div>
-                                        <div class="modal-footer">
-                                        	<button type="button" class="btn btn-primary" data-dismiss="modal" onclick="registrarMarca();">Guardar</button>
-                                            <button type="button" class="btn btn-default" data-dismiss="modal" onclick="$('#txtIdMC').val('');$('#txtNombre').val('');$('#fileimagen').val('');">Cancelar</button>
-                                        </div>
-                                    </div>
-                                    <!-- /.modal-content -->
-                                </div>
-                                <!-- /.modal-dialog -->
-                            </div>
+					
 						<!-- Nav tabs -->
 						<ul class="nav nav-tabs">
 							<li class="active"><a href="#revision" data-toggle="tab">Revisión</a></li>
@@ -1231,6 +1198,45 @@ $(document).on('click','#btnAsignarEmpleados', function(e){
 									
 								</div>
 								<div class="tab-pane fade" id="archivos">
+								<div class="modal fade" id="myModalEF" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                            <h4 class="modal-title" id="myModalLabelEF">Editar Falla</h4>
+                                        </div>
+                                        <div class="modal-body">
+                                        	<form role="form" id="frmEditarFallaRevision" 
+											 method="post" commandName="fallarevisionBean" enctype="multipart/form-data"  style="width: 30%; margin-left: 10%;">
+			
+												<fieldset>					
+													<div class="form-group" style="display:none">
+															<label> Id FallaRevision</label> <input 
+															class="form-control" name="idFallaRevision" id="txtIdFaRe"/>
+													</div>			
+																	
+													<!-- <div class="form-group">
+														<label>Comentario</label> <input id="txtComentario"
+														class="form-control" name="comentario" placeholder="Comentario"></input>
+													</div> -->
+													
+													<div class="form-group">
+							                            <label>Imagen de ejemplo: </label>
+							                            <input type="file" name="file" id="fileimagen">
+							                        </div>
+															
+												</fieldset>
+											</form>
+                                        </div>
+                                        <div class="modal-footer">
+                                        	<button type="button" class="btn btn-primary" data-dismiss="modal" onclick="registrarMarca();">Guardar</button>
+                                            <button type="button" class="btn btn-default" data-dismiss="modal" onclick="$('#txtIdMC').val('');$('#txtNombre').val('');$('#fileimagen').val('');">Cancelar</button>
+                                        </div>
+                                    </div>
+                                    <!-- /.modal-content -->
+                                </div>
+                                <!-- /.modal-dialog -->
+                            </div>
 								<br>
 								<div class="alert alert-success alert-dismissable" id="resultOkF" style="display:none">
     							<button class="close" aria-hidden="true" data-dismiss="alert" type="button">×</button>

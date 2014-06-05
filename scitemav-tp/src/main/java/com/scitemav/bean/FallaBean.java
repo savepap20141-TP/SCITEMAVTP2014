@@ -6,6 +6,7 @@ public class FallaBean {
 	private Integer idTipoFalla;
 	private String nombreTipoFalla;
 	private String comentario;
+	private String urlImagen;
 	
 	public Integer getIdFalla() {
 		return idFalla;
@@ -36,6 +37,12 @@ public class FallaBean {
 	}
 	public void setComentario(String comentario) {
 		this.comentario = comentario;
+	}
+	public String getUrlImagen() {
+		return urlImagen;
+	}
+	public void setUrlImagen(String urlImagen) {
+		this.urlImagen = urlImagen;
 	}
 	
 	
