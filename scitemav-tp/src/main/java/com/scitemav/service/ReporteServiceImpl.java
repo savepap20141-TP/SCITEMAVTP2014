@@ -36,8 +36,45 @@ public class ReporteServiceImpl implements ReporteService {
 			html+="<h3>Datos de la revisión:</h3> "+"<br />";
 			html+="<table align='center' border='1'><thead><tr>";
 			html+="<th>Fecha de inicio</th>";
+			html+="<th>Fecha de fin</th>";
+			html+="<th>Fecha de Próxima Revision</th>";
+			html+="<th>Kilometraje actual</th>";
+			html+="<th>Kilometraje próximo</th>";
+			html+="<th>Costo total</th>";
+			
 			html+="</tr></thead><tbody><tr>";
 			html+="<td>"+rev.getFechaInicio().toString()+"</td>";
+			if(rev.getFechaFin() == null){
+				html+="<td>No se ha definido</td>";
+			}
+			else{
+				html+="<td>"+rev.getFechaFin().toString()+"</td>";
+			}			
+			if(rev.getFechaProxima() == null){
+				html+="<td>No se ha definido</td>";
+			}
+			else{
+				html+="<td>"+rev.getFechaProxima().toString()+"</td>";
+			}
+			if(rev.getKilometrajeActual() == null){
+				html+="<td>No se ha definido</td>";
+			}
+			else{
+				html+="<td>"+rev.getKilometrajeActual()+"</td>";
+			}			
+			if(rev.getKilometrajeProximo() == null){
+				html+="<td>No se ha definido</td>";
+			}
+			else{
+				html+="<td>"+rev.getKilometrajeProximo()+"</td>";
+			}
+			if(rev.getCostoTotal() == null){
+				html+="<td>No se ha definido</td>";
+			}
+			else{
+				html+="<td>"+rev.getCostoTotal().toString()+"</td>";
+			}
+			
 			html+="</tr></tbody></table>";
 			html+="<br/>";
 			
@@ -79,11 +116,14 @@ public class ReporteServiceImpl implements ReporteService {
 			html+="</tr></tbody></table>";
 			html+="<br/>";
 			
-			html+="<h3>Datos de las fallas:</h3> "+"<br />";
+			
+			
 			Query fallaQuery = em.createQuery("SELECT fxr FROM FallaRevision fxr WHERE farRevision.idRevision=:idR");
 			fallaQuery.setParameter("idR", idRevision);
 			List<FallaRevision> fallas = new ArrayList<>();
 			fallas = fallaQuery.getResultList();
+			if(fallas.size()!=0){
+			html+="<h3>Datos de las fallas:</h3> "+"<br />";
 			html+="<table align='center' border='1'><thead><tr>";
 			html+="<th>#</th>";
 			html+="<th>Descripcion</th>";
@@ -98,13 +138,15 @@ public class ReporteServiceImpl implements ReporteService {
 			}
 			html+="</tbody></table>";
 			html+="<br/>";		
+		}
 			
-			html+="<h3>Datos de los repuestos:</h3> "+"<br />";
+			
 			Query repuestoQuery = em.createQuery("SELECT rxr FROM RepuestoRevision rxr WHERE rerRevision.idRevision=:idR");
 			repuestoQuery.setParameter("idR", idRevision);
 			List<RepuestoRevision> repuestos = new ArrayList<>();
 			repuestos = repuestoQuery.getResultList();
-			
+			if(repuestos.size()!=0){
+			html+="<h3>Datos de los repuestos:</h3> "+"<br />";
 			html+="<table align='center' border='1'><thead><tr>";
 			html+="<th>#</th>";
 			html+="<th>Nombre</th>";
@@ -119,13 +161,15 @@ public class ReporteServiceImpl implements ReporteService {
 			}
 			html+="</tbody></table>";
 			html+="<br/>";			
+			}
 			
-			html+="<h3>Datos de los empleados:</h3> "+"<br />";
+			
 			Query empleadoQuery = em.createQuery("SELECT exr FROM EmpleadoRevision exr WHERE reeRevision.idRevision=:idR");
 			empleadoQuery.setParameter("idR", idRevision);
 			List<EmpleadoRevision> empleados = new ArrayList<>();
 			empleados = empleadoQuery.getResultList();
-			
+			if(empleados.size()!=0){
+			html+="<h3>Datos de los empleados:</h3> "+"<br />";
 			html+="<table align='center' border='1'><thead><tr>";
 			html+="<th>#</th>";
 			html+="<th>Nombre</th>";
@@ -146,6 +190,7 @@ public class ReporteServiceImpl implements ReporteService {
 			}		
 			html+="</tbody></table>";
 			html+="<br/>";	
+			}
 			
 		}
 		catch(Exception ex){
@@ -158,37 +203,61 @@ public class ReporteServiceImpl implements ReporteService {
 
 	@SuppressWarnings("unchecked")
 	@Transactional
-	public String reporteVehiculo(Integer idVehiculo) {
-		String html = "";		
+	public String reporteVehiculo(Integer idVehiculo) {		
+		String html = "<html><head>" +
+				  "</head><body style='font-family: arial;'>";
 		try{
-			html+="<h1>Vehiculo #"+idVehiculo+"</h1><br />";
+			html+="<h2 style='text-align: center; text-transform:uppercase;'>Vehiculo #"+idVehiculo+"</h2><br />";			
 			Query q = em.createQuery("SELECT v FROM Vehiculo v WHERE idVehiculo ="+idVehiculo);
 			Vehiculo veh = (Vehiculo) q.getSingleResult();
 
-			html+="Datos del vehículo: "+"<br />";
-			html+="Marca: "+veh.getVehMarca().getNombre()+"<br />";
-			html+="Modelo: "+veh.getVehModelo().getNombre()+"<br />";
-			html+="Tipo de vehiculo: "+veh.getVehTipoVehiculo().getNombre()+"<br />";			
-			html+="Numero de placa: "+veh.getNumeroPlaca()+"<br />";
-			html+="Numero de motor: "+veh.getNumeroMotor()+"<br />";
-			html+="Color: "+veh.getColor()+"<br />";
+			
+			html+="<h3>Datos del vehículo:</h3> "+"<br />";
+			html+="<table align='center' border='1'><thead><tr>";
+			html+="<th>Marca</th>";
+			html+="<th>Modelo</th>";
+			html+="<th>Tipo de vehículo</th>";
+			html+="<th>Numero de placa</th>";
+			html+="<th>Numero de motor</th>";
+			html+="<th>Color</th>";
+			html+="</tr></thead><tbody><tr>";
+			html+="<td>"+veh.getVehMarca().getNombre()+"</td>";
+			html+="<td>"+veh.getVehModelo().getNombre()+"</td>";
+			html+="<td>"+veh.getVehTipoVehiculo().getNombre()+"</td>";
+			html+="<td>"+veh.getNumeroPlaca()+"</td>";
+			html+="<td>"+veh.getNumeroMotor()+"</td>";
+			html+="<td>"+veh.getColor()+"</td>";
+			html+="</tr></tbody></table>";								
 			html+="<br/>";
-			html+="Datos del cliente: "+"<br />";
-			html+="Nombre: "+veh.getVehCliente().getCliPersona().getNombre()+"<br />";
-			html+="Apellido paterno: "+veh.getVehCliente().getCliPersona().getApellidoPaterno()+"<br />";
-			html+="Apellido materno: "+veh.getVehCliente().getCliPersona().getApellidoMaterno()+"<br />";
-			html+="Celular: "+veh.getVehCliente().getCliPersona().getCelular()+"<br />";
-			html+="Direccion: "+veh.getVehCliente().getCliPersona().getDireccion()+"<br />";
-			html+="Dni: "+veh.getVehCliente().getCliPersona().getDni()+"<br />";			
-			html+="Telefono: "+veh.getVehCliente().getCliPersona().getTelefono()+"<br />";
-			html+="<br/>";			
-
+			
+			html+="<h3>Datos del cliente:</h3> "+"<br />";
+			html+="<table align='center' border='1'><thead><tr>";
+			html+="<th>Nombre</th>";
+			html+="<th>Ap. Paterno</th>";
+			html+="<th>Ap. Materno</th>";
+			html+="<th>Celular</th>";
+			html+="<th>Direccion</th>";
+			html+="<th>DNI</th>";
+			html+="<th>Telefono</th>";
+			html+="</tr></thead><tbody><tr>";
+			html+="<td>"+veh.getVehCliente().getCliPersona().getNombre()+"</td>";
+			html+="<td>"+veh.getVehCliente().getCliPersona().getApellidoPaterno()+"</td>";
+			html+="<td>"+veh.getVehCliente().getCliPersona().getApellidoMaterno()+"</td>";
+			html+="<td>"+veh.getVehCliente().getCliPersona().getCelular()+"</td>";
+			html+="<td>"+veh.getVehCliente().getCliPersona().getDireccion()+"</td>";
+			html+="<td>"+veh.getVehCliente().getCliPersona().getDni()+"</td>";
+			html+="<td>"+veh.getVehCliente().getCliPersona().getTelefono()+"</td>";
+			html+="</tr></tbody></table>";	
+			html+="<br/>";
+						
 			Query queryRevision = em.createQuery("SELECT r FROM Revision r WHERE revVehiculo.idVehiculo ="+idVehiculo);
 			List<Revision> revisiones = new ArrayList<>();
 			revisiones = (List<Revision>) queryRevision.getResultList();
 			
+			html+="<h3>Revisiones:</h3> "+"<br />";
+			
 			for(int i=0; i<revisiones.size(); i++){
-				html+="Revision #"+(i+1)+"<br />";
+				html+="<h4>Revision #"+(i+1)+"</h4><br />";
 				html=auxiliarVehiculo(revisiones.get(i).getIdRevision(), html);
 				html+="<br />";
 			}			
@@ -198,6 +267,7 @@ public class ReporteServiceImpl implements ReporteService {
 			
 		}			
 		html+="</body></html>";
+		System.out.print(html);
 		return html	;
 	}
 		
@@ -206,47 +276,129 @@ public class ReporteServiceImpl implements ReporteService {
 	public String auxiliarVehiculo(Integer idRevision, String html){
 		Revision rev = em.find(Revision.class, idRevision);
 		
-		html+="Fecha de inicio: "+rev.getFechaInicio().toString()+"<br />";
+		html+="<table align='center' border='1'><thead><tr>";
+		html+="<th>Fecha de inicio</th>";
+		html+="<th>Fecha de fin</th>";
+		html+="<th>Fecha de Próxima Revision</th>";
+		html+="<th>Kilometraje actual</th>";
+		html+="<th>Kilometraje próximo</th>";
+		html+="<th>Costo total</th>";
 		
-		html+="Datos de las fallas: "+"<br />";
+		html+="</tr></thead><tbody><tr>";
+		html+="<td>"+rev.getFechaInicio().toString()+"</td>";
+		if(rev.getFechaFin() == null){
+			html+="<td>No se ha definido</td>";
+		}
+		else{
+			html+="<td>"+rev.getFechaFin().toString()+"</td>";
+		}			
+		if(rev.getFechaProxima() == null){
+			html+="<td>No se ha definido</td>";
+		}
+		else{
+			html+="<td>"+rev.getFechaProxima().toString()+"</td>";
+		}
+		if(rev.getKilometrajeActual() == null){
+			html+="<td>No se ha definido</td>";
+		}
+		else{
+			html+="<td>"+rev.getKilometrajeActual()+"</td>";
+		}			
+		if(rev.getKilometrajeProximo() == null){
+			html+="<td>No se ha definido</td>";
+		}
+		else{
+			html+="<td>"+rev.getKilometrajeProximo()+"</td>";
+		}
+		if(rev.getCostoTotal() == null){
+			html+="<td>No se ha definido</td>";
+		}
+		else{
+			html+="<td>"+rev.getCostoTotal().toString()+"</td>";
+		}
+		
+		html+="</tr></tbody></table>";
+		html+="<br/>";
+						
+		
+		
 		Query fallaQuery = em.createQuery("SELECT fxr FROM FallaRevision fxr WHERE farRevision.idRevision=:idR");
 		fallaQuery.setParameter("idR", idRevision);
 		List<FallaRevision> fallas = new ArrayList<>();
 		fallas = fallaQuery.getResultList();
-		
+		if(fallas.size()!=0){
+			html+="<h3>Datos de las fallas:</h3> "+"<br />";
+			html+="<table align='center' border='1'><thead><tr>";
+			html+="<th>#</th>";
+			html+="<th>Descripcion</th>";
+			html+="<th>Tipo de falla</th>";
+			html+="</tr></thead><tbody>";
+								
 		for(int i=0; i<fallas.size(); i++){
-			html+="Falla #"+(i+1)+" :<br />";
-			html+="Descripcion: "+fallas.get(i).getFarFalla().getDescripcion()+"<br />";
-			html+="Tipo de falla: "+fallas.get(i).getFarFalla().getFalTipoFalla().getNombreSistema()+"<br />";			
+			html+="<tr>";
+			html+="<td>"+(i+1)+"</td>";
+			html+="<td>"+fallas.get(i).getFarFalla().getDescripcion()+"</td>";
+			html+="<td>"+fallas.get(i).getFarFalla().getFalTipoFalla().getNombreSistema()+"</td>";			
+			html+="</tr>";
 		}
+		html+="</tbody></table>";
 		html+="<br/>";		
-		html+="Datos de los repuestos: "+"<br />";
+		}
+		
+		
 		Query repuestoQuery = em.createQuery("SELECT rxr FROM RepuestoRevision rxr WHERE rerRevision.idRevision=:idR");
 		repuestoQuery.setParameter("idR", idRevision);
 		List<RepuestoRevision> repuestos = new ArrayList<>();
 		repuestos = repuestoQuery.getResultList();
+		if(repuestos.size()!=0){			
+		html+="<h3>Datos de los repuestos:</h3> "+"<br />";
+		html+="<table align='center' border='1'><thead><tr>";
+		html+="<th>#</th>";
+		html+="<th>Nombre</th>";
+		html+="<th>Tipo de Repuesto</th>";
+		html+="</tr></thead><tbody>";		
 		
 		for(int i=0; i<repuestos.size(); i++){
-			html+="Repuesto #"+(i+1)+" :<br />";
-			html+="Nombre: "+repuestos.get(i).getRerRepuesto().getNombre()+"<br />";
-			html+="Tipo de repuesto: "+repuestos.get(i).getRerRepuesto().getRepTipoRepuesto().getNombre()+"<br />";			
+			html+="<tr>";
+			html+="<td>"+(i+1)+"</td>";
+			html+="<td>"+repuestos.get(i).getRerRepuesto().getNombre()+"</td>";
+			html+="<td>"+repuestos.get(i).getRerRepuesto().getRepTipoRepuesto().getNombre()+"</td>";
+			html+="</tr>";			
 		}
-		html+="<br/>";						
-		html+="Datos de los empleados: "+"<br />";
+		html+="</tbody></table>";
+		html+="<br/>";		
+		}
+						
+		
 		Query empleadoQuery = em.createQuery("SELECT exr FROM EmpleadoRevision exr WHERE reeRevision.idRevision=:idR");
 		empleadoQuery.setParameter("idR", idRevision);
 		List<EmpleadoRevision> empleados = new ArrayList<>();
 		empleados = empleadoQuery.getResultList();
 		
+		if(empleados.size()!=0){
+		html+="<h3>Datos de los empleados:</h3> "+"<br />";
+		html+="<table align='center' border='1'><thead><tr>";
+		html+="<th>#</th>";
+		html+="<th>Nombre</th>";
+		html+="<th>Apellido Paterno</th>";
+		html+="<th>Apellido Materno</th>";
+		html+="<th>Celular</th>";
+		html+="<th>Cargo</th>";
+		html+="</tr></thead><tbody>";
+		
 		for(int i=0; i<empleados.size(); i++){
-			html+="Empleado #"+(i+1)+" :<br />";
-			html+="Nombre: "+empleados.get(i).getReeEmpleado().getEmpPersona().getNombre()+"<br />";
-			html+="Apellido Paterno: "+empleados.get(i).getReeEmpleado().getEmpPersona().getApellidoPaterno()+"<br />";
-			html+="Apellido Materno: "+empleados.get(i).getReeEmpleado().getEmpPersona().getApellidoMaterno()+"<br />";
-			html+="Celular: "+empleados.get(i).getReeEmpleado().getEmpPersona().getCelular()+"<br />";
-			html+="Cargo: "+empleados.get(i).getReeEmpleado().getEmpCargo().getDescripcion()+"<br />";
-		}								
-
+			html+="<tr>";
+			html+="<td>"+(i+1)+"</td>";
+			html+="<td>"+empleados.get(i).getReeEmpleado().getEmpPersona().getNombre()+"</td>";
+			html+="<td>"+empleados.get(i).getReeEmpleado().getEmpPersona().getApellidoPaterno()+"</td>";
+			html+="<td>"+empleados.get(i).getReeEmpleado().getEmpPersona().getApellidoMaterno()+"</td>";
+			html+="<td>"+empleados.get(i).getReeEmpleado().getEmpPersona().getCelular()+"</td>";
+			html+="<td>"+empleados.get(i).getReeEmpleado().getEmpCargo().getDescripcion()+"</td>";
+			html+="</tr>";
+		}		
+		html+="</tbody></table>";
+		html+="<br/>";								
+		}
 	return html;	
 	}
 	
