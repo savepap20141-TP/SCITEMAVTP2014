@@ -41,6 +41,9 @@ public class VehiculoBean {
 	private String celularCliente;
 	
 	
+	//
+	private String urlImagenMarca;
+	
 	public String getDniCliente() {
 		return dniCliente;
 	}
@@ -238,6 +241,12 @@ public class VehiculoBean {
 	}
 	public void setFile(CommonsMultipartFile file) {
 		this.file = file;
+	}
+	public String getUrlImagenMarca() {
+		return urlImagenMarca;
+	}
+	public void setUrlImagenMarca(String urlImagenMarca) {
+		this.urlImagenMarca = urlImagenMarca;
 	}
 	
 	

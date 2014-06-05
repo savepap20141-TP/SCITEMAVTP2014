@@ -61,7 +61,7 @@ public class FallaController {
 	
 	@RequestMapping(value = "getFallaRevision-{idrevision}", method = RequestMethod.POST)
 	@ResponseBody
-	public List<FallaBean> getFallaRevision(@PathVariable("idrevision") Integer idRevision){		
+	public List<FallaRevisionBean> getFallaRevision(@PathVariable("idrevision") Integer idRevision){		
 		//return null;
 		return fallaService.listarFallasRevision(idRevision);
 	}

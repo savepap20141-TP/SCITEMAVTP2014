@@ -75,7 +75,7 @@ public class VehiculoController {
 		
 		VehiculoBean vehiculoB = new VehiculoBean();
 		
-		if(vehiculoService.editInformacionVehiculo(vehiculoBean)){
+		if(vehiculoService.editInformacionVehiculo(vehiculoBean,request)){
 			vehiculoB = vehiculoService.obtenerInfo(vehiculoBean.getIdVehiculo());
 		}else{
 			vehiculoB = null;

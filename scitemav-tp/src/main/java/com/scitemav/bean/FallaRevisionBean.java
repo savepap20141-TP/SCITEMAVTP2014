@@ -12,6 +12,10 @@ public class FallaRevisionBean {
 	private String urlImagen;
 	private CommonsMultipartFile file;
 	
+	private String descripcion;
+	private Integer idTipoFalla;
+	private String nombreTipoFalla;
+	
 	public Integer getIdFallaRevision() {
 		return idFallaRevision;
 	}
@@ -53,6 +57,24 @@ public class FallaRevisionBean {
 	}
 	public void setFile(CommonsMultipartFile file) {
 		this.file = file;
+	}
+	public String getDescripcion() {
+		return descripcion;
+	}
+	public void setDescripcion(String descripcion) {
+		this.descripcion = descripcion;
+	}
+	public Integer getIdTipoFalla() {
+		return idTipoFalla;
+	}
+	public void setIdTipoFalla(Integer idTipoFalla) {
+		this.idTipoFalla = idTipoFalla;
+	}
+	public String getNombreTipoFalla() {
+		return nombreTipoFalla;
+	}
+	public void setNombreTipoFalla(String nombreTipoFalla) {
+		this.nombreTipoFalla = nombreTipoFalla;
 	}
 	
 }

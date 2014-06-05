@@ -1,8 +1,12 @@
 package com.scitemav.service;
 
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.imageio.ImageIO;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
@@ -156,6 +160,8 @@ public class VehiculoServiceImpl implements VehiculoService {
 			vBean.setCelularCliente(v.getVehCliente().getCliPersona().getCelular());
 			vBean.setTelefonoCliente(v.getVehCliente().getCliPersona().getTelefono());
 			vBean.setDniCliente(v.getVehCliente().getCliPersona().getDni().toString());
+			vBean.setUrlImagen(v.getUrlImagen());
+			vBean.setUrlImagenMarca(v.getVehMarca().getUrlImagen());
 		}
 		catch(IllegalArgumentException e){
 			System.out.println(e.getMessage());
@@ -164,7 +170,7 @@ public class VehiculoServiceImpl implements VehiculoService {
 	}
 
 	@Transactional
-	public boolean editInformacionVehiculo(VehiculoBean vb) {
+	public boolean editInformacionVehiculo(VehiculoBean vb, HttpServletRequest req) {
 		boolean resultado = false;		
 		Vehiculo veh = new Vehiculo();
 		try {
@@ -203,6 +209,33 @@ public class VehiculoServiceImpl implements VehiculoService {
 			veh.setNumeroSerie(vb.getNumeroSerie());
 			veh.setPesoBruto(vb.getPesoBruto());
 			veh.setPesoSeco(vb.getPesoSeco());
+			
+			if(vb.getFile()!=null){
+				String fileContentType = vb.getFile().getContentType();
+			     System.out.println("******* FILE CONTENT TYPE: " + fileContentType);
+			     System.out.println("******* PATH: " + req.getSession().getServletContext().getRealPath("/images/"));
+			     System.out.println("******* PATH: " + req.getSession().getServletContext().getRealPath("/"));
+			     System.out.println("******* PATH: " + req.getRequestURL().toString()+"/images/"+vb.getFile().getOriginalFilename());
+			     
+			     //String ruta = req.getRequestURL().toString()+"/images/"+marcab.getFile().getOriginalFilename();
+			     //ruta = ruta.replace(marcab.getUrlImagen(), "");
+			     if(fileContentType.contains("image")){
+			        try {
+						BufferedImage bufferedImage = ImageIO.read(vb.getFile().getInputStream());
+				        File localFile= new File(req.getSession().getServletContext().getRealPath("/images/")+"/"+vb.getFile().getOriginalFilename());
+				        boolean dir = localFile.mkdirs();
+				        vb.getFile().transferTo(localFile);		
+				        //marca.setUrlImagen(ruta);
+				        veh.setUrlImagen("images/"+vb.getFile().getOriginalFilename());
+			        } catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+			      }					     
+				//marca.setUrlImagen(marcab.getUrlImagen());
+			}
+			
+			
 			em.merge(veh);
 			resultado = true;
 		} catch (IllegalArgumentException e) {

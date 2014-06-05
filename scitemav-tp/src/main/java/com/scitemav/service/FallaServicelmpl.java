@@ -80,21 +80,26 @@ public class FallaServicelmpl implements FallaService{
 
 	@SuppressWarnings("unchecked")
 	@Transactional
-	public List<FallaBean> listarFallasRevision(Integer idRevision) {
-		List<Falla> listaFalla = new ArrayList<Falla>();
-		List<FallaBean> listaFallaBean = new ArrayList<FallaBean>();
+	public List<FallaRevisionBean> listarFallasRevision(Integer idRevision) {
+		List<FallaRevision> listaFallaR = new ArrayList<FallaRevision>();
+		List<FallaRevisionBean> listaFallaBean = new ArrayList<FallaRevisionBean>();
 		try{
-			Query q = em.createQuery("SELECT fr.farFalla FROM FallaRevision fr JOIN fr.farRevision f WHERE f.idRevision=:idRevision");
+			//Query q = em.createQuery("SELECT fr.farFalla FROM FallaRevision fr JOIN fr.farRevision f WHERE f.idRevision=:idRevision");
+			Query q = em.createQuery("SELECT fr FROM FallaRevision fr JOIN fr.farRevision f WHERE f.idRevision=:idRevision");
 			q.setParameter("idRevision", idRevision);
-			listaFalla  = q.getResultList();
-			for(int i = 0; i<listaFalla.size(); i++){
-				Falla f = listaFalla.get(i);
-				FallaBean fb = new FallaBean();
+			listaFallaR  = q.getResultList();
+			for(int i = 0; i<listaFallaR.size(); i++){
+				Falla f = listaFallaR.get(i).getFarFalla();
+				FallaRevisionBean fb = new FallaRevisionBean();
 				fb.setIdTipoFalla(f.getIdFalla());
 				fb.setDescripcion(f.getDescripcion());
 				fb.setNombreTipoFalla(f.getFalTipoFalla().getNombreSistema());
 				
 				fb.setIdFalla(f.getIdFalla());
+				
+				fb.setUrlImagen(listaFallaR.get(i).getUrlImagen());
+				fb.setComentario(listaFallaR.get(i).getComentario());
+				
 				listaFallaBean.add(fb);
 			}
 		} catch (IllegalArgumentException e){

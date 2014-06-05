@@ -237,11 +237,19 @@
 				
 			},			
 			submitHandler: function(form){
+				var formElement = document.getElementById("frmEdicionVehiculo");
+				var formData = new FormData(formElement);
 				$.ajax({
 			   		url: 'ajaxEditInformacionVehiculo',
-			   		type: 'post',
-			   		dataType: 'json',
-			   		data: $('#frmEdicionVehiculo').serialize(),
+			   		type: "POST",
+					data:  formData,
+					mimeType:"multipart/form-data",
+					contentType: false,
+				    cache: false,
+					processData:false,
+					beforeSend: function(){
+						//$.blockUI({ message: $('#domMessage') });
+				    },
 			   		success: function(vehiculo){
 			   			IniciarInfoVehiculo(vehiculo);
 			 			$('.vistaInformacion').show();
@@ -339,6 +347,19 @@
 		$('#txtAncho').val(vehiculo.ancho);
 		$('#txtCargaUtil').val(vehiculo.cargaUtil);
 		$('#txtNumRuedas').val(vehiculo.numeroRuedas);
+		
+		//
+		if(vehiculo.urlImagen!=null){
+			$('#imagenVehiculo').empty();
+			$("#imagenVehiculo").append("<a target='_blank'  href='"+vehiculo.urlImagen+"'><img width='150' height='150' src='"+vehiculo.urlImagen+"'></img></a>");
+		}
+
+		if(vehiculo.urlImagenMarca!=null){
+			$('#imagenMarca').empty();
+			$("#imagenMarca").append("<img width='70' height='70' src='"+vehiculo.urlImagenMarca+"'></img>");
+		
+		}
+		
 	}
 	function listarTipoVehiculos(){
 		
@@ -464,6 +485,7 @@
 					<p class="text-primary">Carga util:</p>
 					<span id="spnCargaUtil"></span>
 				</div>
+				<div id="imagenVehiculo"><a target="_blank"  href="images/vehiculo_defecto.jpg"><img width="150" height="150" src="images/vehiculo_defecto.jpg"></img></a></div>
 			</div>
 			<div class="col-lg-12 edicionInformacion" style="display: none;">
 				<!-- BORRAR EN CASO DE ERROR -->
@@ -618,6 +640,11 @@
 									class="form-control" name="numeroRuedas"
 									placeholder="Numero de ruedas"></input>
 							</div>
+							
+							<div class="form-group">
+							    <label>Imagen de Vehiculo: </label>
+							    <input type="file" name="file" id="fileimagen">
+				             </div>
 
 							<!-- FINAL SEGUNDA COLUMNA -->
 						</div>
