@@ -26,7 +26,7 @@ $(document).ready(function(e){
         return this.optional(element) || /^[0-9\-\s]+$/i.test(value);
     }, " ");
 	$.validator.addMethod("LetRegex", function(value, element) {
-        return this.optional(element) || /^[A-Z]+$/.test(value);
+        return this.optional(element) || /^[a-zA-Z]+$/i.test(value);
     }, "");
 	$.validator.addMethod("DecRegex", function(value, element) {
         return this.optional(element) || /^(\d+|\d+.\d{1,4})$/.test(value);
@@ -172,7 +172,7 @@ $(document).ready(function(e){
 			},
 			color:{
 				required:"Debe ingresar un color",
-				LetRegex:"Sólo letras mayuscula en color",
+				LetRegex:"Sólo letras en color",
 				minlength:"Tiene que tener 4 dígitos como minimo",
 				maxlength:"Tiene que tener 25 dígitos como maximo",	
 			},

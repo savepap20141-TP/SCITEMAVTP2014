@@ -25,7 +25,7 @@ public class ReporteServiceImpl implements ReporteService {
 	
 	@SuppressWarnings("unchecked")
 	@Transactional
-	public String reporteRevision(Integer idRevision) {
+	public String reporteRevision(Integer idRevision, String rutaAbsoluta) {
 		String html = "<html><head>" +
 					  "</head><body style='font-family: arial;'>";		
 
@@ -79,6 +79,16 @@ public class ReporteServiceImpl implements ReporteService {
 			html+="<br/>";
 			
 			html+="<h3>Datos del vehículo:</h3> "+"<br />";
+			if(rev.getRevVehiculo().getUrlImagen() == null){
+				html+="<div style='text-align: center;'><img align='middle' src='"+rutaAbsoluta+"vehiculo_defecto.jpg' height='300px;' width='300px;' ></img></div>";
+				html+="<br />";
+				
+			}
+			else{
+				html+="<div style='text-align: center;'><img align='middle' src='"+rutaAbsoluta+rev.getRevVehiculo().getUrlImagen()+"' height='300px;' width='300px;' ></img></div>";
+				html+="<br />";
+				html+="<div style='text-align: right;'><img align='right' height='50px;' width='50px;' src='"+rutaAbsoluta+rev.getRevVehiculo().getVehMarca().getUrlImagen()+"'></img></div>";
+			}		
 			html+="<table align='center' border='1'><thead><tr>";
 			html+="<th>Marca</th>";
 			html+="<th>Modelo</th>";
@@ -211,11 +221,13 @@ public class ReporteServiceImpl implements ReporteService {
 			Query q = em.createQuery("SELECT v FROM Vehiculo v WHERE idVehiculo ="+idVehiculo);
 			Vehiculo veh = (Vehiculo) q.getSingleResult();
 			if(veh.getUrlImagen() == null){
-				html+="<img align='middle' src='"+rutaAbsoluta+"vehiculo_defecto.jpg' height='300px;' width='300px;' ></img>";
+				html+="<div style='text-align: center;'><img align='middle' src='"+rutaAbsoluta+"vehiculo_defecto.jpg' height='300px;' width='300px;' ></img></div>";
+				html+="<div style='text-align: right;'><img align='right' src='"+rutaAbsoluta+veh.getVehMarca().getUrlImagen()+"'></img></div>";
 				
 			}
 			else{
-				html+="<img align='middle' src='"+rutaAbsoluta+veh.getUrlImagen()+"' height='300px;' width='300px;' ></img>";	
+				html+="<div style='text-align: center;'><img align='middle' src='"+rutaAbsoluta+veh.getUrlImagen()+"' height='300px;' width='300px;' ></img></div>";
+				html+="<div style='text-align: right;'><img align='right' height='50px;' width='50px;' src='"+rutaAbsoluta+veh.getVehMarca().getUrlImagen()+"'></img></div>";
 			}			
 			
 			html+="<h3>Datos del vehículo:</h3> "+"<br />";

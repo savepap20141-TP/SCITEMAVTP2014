@@ -45,7 +45,7 @@ function IniciarNotificacion(){
 
 
 function updateStateRev(source,i){
-	$('#changeR_'+i).val(true);
+	$('#changeR_'+i).val('true');
 }
 function inicioConsultaRevision(fechaHoyT){
 	var filas = '';
@@ -78,9 +78,9 @@ function inicioConsultaRevision(fechaHoyT){
  	 				'<td class="center"><input id="chkRev_'+revision.idRevision+'" '+chckeado+' type="checkbox" onclick="updateStateRev(this,'+ i +')"></td>'+
  	 				'<td class="center"><a id="revision_'+i+'" href="toRevisionDetalle-'+revision.idRevision+'">REV-'+revision.idRevision+'</a></td>'+
  	 			//	'<td class="center">'+revision.idRevision+'</td>'+
- 	 				'<td class="center"><a id="vehiculo_"'+i+'" href="toVehiculoDetalle-'+revision.idVehiculo+'">'+revision.numeroPlaca+'</a><input id="changeR_'+i+'" type="hidden" name="changeR"></td>'+
- 	 				'<td class="center"><a id="cliente_"'+i+'" href="toClienteDetalle-'+revision.idCliente+'">'+revision.nombreCliente+'</a></td>'+
- 	 				'<td class="center">'+revision.fechaInicio+'<input type="hidden" value="'+revision.idRevision+'" id="idRev_'+i+'" /></td>'+
+ 	 				'<td class="center"><a id="vehiculo_'+i+'" href="toVehiculoDetalle-'+revision.idVehiculo+'">'+revision.numeroPlaca+'</a><input id="changeR_'+i+'" type="hidden" name="changeR"></td>'+
+ 	 				'<td class="center"><a id="cliente_'+i+'" href="toClienteDetalle-'+revision.idCliente+'">'+revision.nombreCliente+'</a></td>'+
+ 	 				'<td class="center">'+revision.fechaInicio+'<input type="hidden" value="'+revision.idRevision+'" id="idRev_'+i+'" name="idrev"/></td>'+
  	 				'<td class="center">'+revision.fechaFin+'</td>'+
  	 				'<td class="center">'+revision.fechaProxima+'</td>'+
  	 				'<td class="center">'+revision.kilometrajeActual+'</td>'+
@@ -100,9 +100,9 @@ function inicioConsultaRevision(fechaHoyT){
  	 				'<td class="center"><input id="chkRev_'+revision.idRevision+'" '+chckeado+' type="checkbox" onclick="updateStateRev(this,'+ i +')"></td>'+
  	 				'<td class="center"><a id="revision_'+i+'" href="toRevisionDetalle-'+revision.idRevision+'">REV-'+revision.idRevision+'</a></td>'+
  	 			//	'<td class="center">'+revision.idRevision+'</td>'+
- 	 				'<td class="center"><a id="vehiculo_"'+i+'" href="toVehiculoDetalle-'+revision.idVehiculo+'">'+revision.numeroPlaca+'</a><input id="changeR_'+i+'" type="hidden" name="changeR"></td>'+
- 	 				'<td class="center"><a id="cliente_"'+i+'" href="toClienteDetalle-'+revision.idCliente+'">'+revision.nombreCliente+'</a></td>'+
- 	 				'<td class="center">'+revision.fechaInicio+'<input type="hidden" value="'+revision.idRevision+'" id="idRev_'+i+'" /></td>'+
+ 	 				'<td class="center"><a id="vehiculo_'+i+'" href="toVehiculoDetalle-'+revision.idVehiculo+'">'+revision.numeroPlaca+'</a><input id="changeR_'+i+'" type="hidden" name="changeR"></td>'+
+ 	 				'<td class="center"><a id="cliente_'+i+'" href="toClienteDetalle-'+revision.idCliente+'">'+revision.nombreCliente+'</a></td>'+
+ 	 				'<td class="center">'+revision.fechaInicio+'<input type="hidden" value="'+revision.idRevision+'" id="idRev_'+i+'" name="idrev" /></td>'+
  	 				'<td class="center">'+revision.fechaFin+'</td>'+
  	 				'<td class="center">'+revision.fechaProxima+'</td>'+
  	 				'<td class="center">'+revision.kilometrajeActual+'</td>'+
@@ -140,14 +140,18 @@ function inicioConsultaRevision(fechaHoyT){
 $(document).on('click','#btnEnviarNotificacion', function(e){
 	var list_IdRev = '';
 	list_isChangedR = document.getElementsByName('changeR');
+	list_idRev = document.getElementsByName('idrev');
+	//alert(list_isChangedR.length);
 	  for (var x=0; x < list_isChangedR.length; x++) {
-		  if($('#changeR_'+x).val()==true || $('#changeR_'+x).val()=='true'){
-			list_IdRev += $('#idRev_'+x).val()+'_';
+		  //alert("Valor "+list_isChangedR[x].value);
+		  if(list_isChangedR[x].value==true || list_isChangedR[x].value=='true'){
+			list_IdRev += list_idRev[x].value+'_';
+			//alert("Valor id "+list_idRev[x].value);
 			$('#changeR_'+x).val('');
 		  }
 	 }
 	$('#idRevision_list').val(list_IdRev);	
-
+	//alert(list_IdRev);
 	  $.ajax({
 		   url: 'notificarClientes',
 		   type: 'post',

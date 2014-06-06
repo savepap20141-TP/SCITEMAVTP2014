@@ -55,7 +55,11 @@ public class ReportesController {
 			HttpServletRequest request, HttpServletResponse response) {
 		
 		HttpSession session = request.getSession();
-		String output = reporteservice.reporteRevision(idRevision);
+		System.out.println("RUTA: "+request.getRequestURL().toString());
+		String rutatemp = request.getRequestURL().toString();
+		String rutaAbsoluta = rutatemp.replace("verPDFRevision-"+idRevision, "");
+		System.out.println("RUTA ABSOLUTA: "+rutaAbsoluta);
+		String output = reporteservice.reporteRevision(idRevision,rutaAbsoluta);
 		OutputStream os;
 		try {
 			response.setContentType("application/pdf");
