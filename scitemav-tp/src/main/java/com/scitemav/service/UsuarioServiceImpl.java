@@ -48,6 +48,18 @@ public class UsuarioServiceImpl implements UsuarioService{
 			
 			session.setAttribute("email", userResult.getEmail());
 			session.setAttribute("idUsuario", userResult.getIdUsuario());
+			
+			if(userResult.getUsuPersona().getPerCliente()!=null){
+				session.setAttribute("role", "cliente");
+			}else if(userResult.getUsuPersona().getPerEmpleado()!=null){
+				if(userResult.getUsuPersona().getPerEmpleado().getAdministrador()!=null && userResult.getUsuPersona().getPerEmpleado().getAdministrador()==true){
+					session.setAttribute("role", "administrador");
+				}else{
+					session.setAttribute("role", userResult.getUsuPersona().getPerEmpleado().getEmpCargo().toString().toLowerCase());
+				}			
+			}else{
+				session.setAttribute("role", "administrador");
+			}
 			// es Valido
 			session.setAttribute("isValid", true);
 			resultado = true;

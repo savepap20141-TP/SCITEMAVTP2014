@@ -41,6 +41,9 @@ public class Revision {
 	@Column(name = "notificacion", nullable = true)
 	private Boolean notificacion;
 	
+	@Column(length = 60, nullable = false)
+	private String estado;
+	
 	@OneToMany(mappedBy ="farRevision")
 	private Collection<FallaRevision> revFallaRevisiones;
 	
@@ -166,6 +169,14 @@ public class Revision {
 
 	public void setNotificacion(Boolean notificacion) {
 		this.notificacion = notificacion;
+	}
+
+	public String getEstado() {
+		return estado;
+	}
+
+	public void setEstado(String estado) {
+		this.estado = estado;
 	}
 	
 }

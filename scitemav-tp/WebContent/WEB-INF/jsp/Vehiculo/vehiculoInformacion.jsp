@@ -270,6 +270,8 @@
 		listarModelos();
 		listarMarcas();
 		removeNulls();
+		tipoEntidad = 'vehiculo';
+		idEntidad = idvehiculo;
 	});
 
 	function EditInformacionVehiculo(){

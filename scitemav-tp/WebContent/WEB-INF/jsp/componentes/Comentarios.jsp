@@ -1,6 +1,9 @@
 <script>
+var tipoEntidadCom;
+var idEntidadCom;
+
 $(document).ready(function(e) {
-	var idvehiculo = $('#spnIdVehiculo').text();
+	
 
 });
 function consultarComentarios(typoentidad,identidad){

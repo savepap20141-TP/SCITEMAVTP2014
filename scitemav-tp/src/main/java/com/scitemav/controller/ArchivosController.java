@@ -11,6 +11,7 @@ import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -21,11 +22,15 @@ import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import com.scitemav.bean.ArchivosBean;
 import com.scitemav.bean.AttachmentBean;
+import com.scitemav.service.ArchivoService;
 
 
 @Controller
 public class ArchivosController {
 
+	@Autowired
+	ArchivoService archivoServ;
+	
 	@RequestMapping("toArchivos")
 	public String toArchivos() {
 		return "Archivos";
@@ -95,4 +100,50 @@ public class ArchivosController {
 			return null;
 		}
 	}
+	
+	
+	//
+	
+	@RequestMapping(value = "cargarArchivosFile", method = RequestMethod.POST)
+	@ResponseBody
+	public Boolean cargarArchivosFile(@ModelAttribute("archivosbean") AttachmentBean files, HttpServletRequest req, Model model){
+		Integer countAttachment = 0;
+		List<CommonsMultipartFile> cmpf = new ArrayList<CommonsMultipartFile>();
+		for(int i = 0; i < files.getFilesbean().size(); i++){
+			for(int j = 0; j < files.getFilesbean().get(i).getFilesb().size(); j++){
+				System.out.println("Nombre : "+files.getFilesbean().get(i).getFilesb().get(j).getOriginalFilename());
+				countAttachment++;
+				cmpf.add(files.getFilesbean().get(i).getFilesb().get(j));
+			}			
+		}
+		if(cmpf.size()>0){
+			System.out.println("tamaño de files : "+cmpf.size());
+			String [] comentarios = req.getParameterValues("descripcion");
+			String idEntity= req.getParameter("idEntidad");
+			String typeEntity= req.getParameter("tipoEntidad");
+			//
+			AttachmentBean filesbean = new AttachmentBean();
+			List<ArchivosBean> filesbeanlist = new ArrayList<ArchivosBean>();
+			
+			for(int i = 0 ; i <  cmpf.size() ; i++){
+				ArchivosBean s3bean = new ArchivosBean();
+				s3bean.setFile(cmpf.get(i));
+				s3bean.setIdEntidad(Integer.parseInt(idEntity));
+				s3bean.setTipoEntidad(typeEntity);
+				s3bean.setDescripcion(comentarios[i]);
+				filesbeanlist.add(s3bean);
+			}
+			filesbean.setFilesbean(filesbeanlist);
+			
+			
+			if(filesbean.getFilesbean()!=null && archivoServ.cargarFile(filesbean, req.getSession())){
+				return true;
+			}else{
+				return false;
+			}
+		}else{
+			return false;
+		}
+	}
+	
 }
