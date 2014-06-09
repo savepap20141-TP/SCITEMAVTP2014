@@ -85,6 +85,28 @@ public class Vehiculo {
 	@OneToMany(mappedBy ="revVehiculo")
 	private Collection<Revision> vehRevisiones;
 	
+	@OneToMany(mappedBy ="arcVehiculo")
+	private Collection<Archivo> vehArchivos;
+	
+	@OneToMany(mappedBy ="comVehiculo")
+	private Collection<Comentario> vehComentarios;
+	
+	public Collection<Archivo> getVehArchivos() {
+		return vehArchivos;
+	}
+
+	public void setVehArchivos(Collection<Archivo> vehArchivos) {
+		this.vehArchivos = vehArchivos;
+	}
+
+	public Collection<Comentario> getVehComentarios() {
+		return vehComentarios;
+	}
+
+	public void setVehComentarios(Collection<Comentario> vehComentarios) {
+		this.vehComentarios = vehComentarios;
+	}
+
 	public Integer getIdVehiculo() {
 		return idVehiculo;
 	}

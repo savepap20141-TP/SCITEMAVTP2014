@@ -50,6 +50,28 @@ public class Revision {
 	@OneToMany(mappedBy ="reeRevision")
 	private Collection<EmpleadoRevision> revEmpleadoRevisiones;
 	
+	@OneToMany(mappedBy ="arcRevision")
+	private Collection<Archivo> revArchivos;
+	
+	public Collection<Archivo> getRevArchivos() {
+		return revArchivos;
+	}
+
+	public void setRevArchivos(Collection<Archivo> revArchivos) {
+		this.revArchivos = revArchivos;
+	}
+
+	public Collection<Comentario> getRevComentarios() {
+		return revComentarios;
+	}
+
+	public void setRevComentarios(Collection<Comentario> revComentarios) {
+		this.revComentarios = revComentarios;
+	}
+
+	@OneToMany(mappedBy ="comRevision")
+	private Collection<Comentario> revComentarios;
+	
 	public Integer getIdRevision() {
 		return idRevision;
 	}

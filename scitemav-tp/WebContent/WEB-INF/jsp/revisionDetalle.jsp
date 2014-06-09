@@ -1374,7 +1374,7 @@ $(document).on('click','#btnAsignarEmpleados', function(e){
 									<h4>Comentarios</h4>
 									<p><textarea id="txtNComment" class="form-control" name="comentario" placeholder="Escribir nuevo comentario"></textarea>
 									<br><input id="btnEnviarComentario" class="btn btn-lg btn-success btn-block" type="button" value="Enviar" style="width: 20%;"></input>
-									<span>Visiblity:</span>
+									<span>Visibilidad:</span>
 									<select id="visibilidadComentario" class="form-control" name="visibilidad" style="width: 222px;">
 										<option value="Privado (Empleados)">Privado (Empleados)</option>
 										<option value="Privado (Cliente)">Privado (Cliente)</option>
