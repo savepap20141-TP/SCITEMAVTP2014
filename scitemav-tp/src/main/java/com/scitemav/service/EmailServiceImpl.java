@@ -120,7 +120,8 @@ public class EmailServiceImpl implements EmailService {
 		// Generacion de password automatica aleatorio
 		StringBuilder sb = new StringBuilder(10);
 		String firstPassword = "";
-
+		String bodyFinal="";
+		
 		for (int i = 0; i < 10; i++) {
 			sb.append(AB.charAt(rnd.nextInt(AB.length())));
 		}
@@ -130,17 +131,36 @@ public class EmailServiceImpl implements EmailService {
 		Usuario user = em.find(Usuario.class, idUsuario);
 		String asunto = "Bienvenido usuario de scitemav: "
 				+ user.getUsuPersona().getNombre();
-		String body = "Bienvenido nuevo usuario, ha sido habilitado para entrar al sistema<br />" +
+		
+		bodyFinal = "<div style='margin: 0 auto 0 auto; text-align: center; font-family: arial;'>";
+		bodyFinal+= "<h2 style='font-family: arial;'>SCITEMAV</h1>";		
+		bodyFinal+= "</div><br />";
+		bodyFinal+= "<div style='font-family: arial; text-size=150%;'>";
+		bodyFinal+= "Bienvenido al sistema, "+user.getUsuPersona().getNombre()+"<br /><br />";
+		bodyFinal+= "Usted ha sido habilitado para ingresar. Sus datos son los siguientes:<br />";
+		bodyFinal+= "Usuario: "+user.getEmail()+"<br />";
+		bodyFinal+= "Password: "+user.getPassword()+"<br />";
+		bodyFinal+= "Por favor, cambie sus datos al ingresar al sistema.<br />";		
+		bodyFinal+= "</div>";
+		bodyFinal+= "<div style='margin: 0 auto 0 auto; text-align: center;'>";
+		bodyFinal+= "<img src='https://raw.githubusercontent.com/savepap20141-TP/SCITEMAVTP2014/master/scitemav-tp/WebContent/images/scitemavlogo.png' heigth='300px' width='300px' />";
+		bodyFinal+= "</div><br />";
+		
+		
+		
+		/**String body = "Bienvenido nuevo usuario, ha sido habilitado para entrar al sistema<br />" +
 					  "Email: "+user.getEmail()+"<br />"+
-					  "Password: "+firstPassword;
+					  "Password: "+firstPassword;**/
 		
 		String md5 = DigestUtils.md5Hex(firstPassword);
 		user.setPassword(md5);		
 		em.merge(user);
 		
-		EnviarMensaje(user.getEmail(), asunto, body);
+		EnviarMensaje(user.getEmail(), asunto, bodyFinal);
 		return false;
 	}
+	
+	
 
 	@Transactional
 	public boolean NotificarRevisionesUsuario(Integer idRevision, Integer idUsuario) {
