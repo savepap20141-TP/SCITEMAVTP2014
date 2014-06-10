@@ -136,7 +136,7 @@ public class ArchivosController {
 			filesbean.setFilesbean(filesbeanlist);
 			
 			
-			if(filesbean.getFilesbean()!=null && archivoServ.cargarFile(filesbean, req.getSession())){
+			if(filesbean.getFilesbean()!=null && archivoServ.cargarFile(filesbean, req)){
 				return true;
 			}else{
 				return false;
