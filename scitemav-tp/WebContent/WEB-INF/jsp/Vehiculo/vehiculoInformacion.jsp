@@ -274,6 +274,8 @@
 		idEntidad = idvehiculo;
 		$('#hdnIdEntidadc').val(idEntidad);
 		$('#hdnTipoEntidadc').val(tipoEntidad);
+		$('#hdnTipoEntidad').val(tipoEntidad);
+		$('#hdnIdEntidad').val(idEntidad);
 	});
 
 	function EditInformacionVehiculo(){

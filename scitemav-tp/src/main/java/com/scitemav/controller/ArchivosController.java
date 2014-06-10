@@ -22,6 +22,7 @@ import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import com.scitemav.bean.ArchivosBean;
 import com.scitemav.bean.AttachmentBean;
+import com.scitemav.bean.ComentarioBean;
 import com.scitemav.service.ArchivoService;
 
 
@@ -146,4 +147,13 @@ public class ArchivosController {
 		}
 	}
 	
+	
+	@RequestMapping(value = "getArchivos", method = RequestMethod.POST)
+	@ResponseBody
+	public List<ArchivosBean> getComentarios(HttpServletRequest req){		
+		String tipoE, idE;
+		tipoE = req.getParameter("tipoEntidad");
+		idE = req.getParameter("idEntidad");
+		return archivoServ.listarArchivos(req.getSession(), tipoE, idE);
+	}
 }

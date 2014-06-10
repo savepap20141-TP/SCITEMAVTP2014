@@ -4,8 +4,27 @@ var idEntidad;
 var countArchivo = 0;
 	$(document).ready(function(e) {
 		//Metodo para consultar Archivos
-
+		listarArchivos()
 	});
+	function listarArchivos(){
+		var filas = '';
+		var columnas = '';	
+	    $.ajax({
+	 		url: 'getArchivos',
+	 		type: 'post',
+	 		dataType: 'json',
+	 		data:  $('#frmArchivos').serialize(),
+	 		success: function(archs){
+	 			$.each(archs, function(i, arch){
+	 				
+				});		        
+	 		},
+	 		complete: function() {	 			
+	 			//realizarTabla(columnas,filas);
+	 			removeNulls();
+	  		}
+	 	});
+	}
 	
 	function clickAgregarArchivos(){
 		$('#divUpload').append('<input style="display:none" type="file" name="filesbean['+countArchivo+'].filesb" multiple="multiple" id="filesToUpload_'+countArchivo+'" onchange ="countFile();"/>');

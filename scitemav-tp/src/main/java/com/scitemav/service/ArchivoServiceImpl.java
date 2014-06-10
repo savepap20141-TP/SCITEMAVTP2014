@@ -4,11 +4,15 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.imageio.ImageIO;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.apache.commons.io.IOUtils;
 import org.springframework.stereotype.Service;
@@ -85,5 +89,42 @@ public class ArchivoServiceImpl implements ArchivoService{
 		return false;
 	}
 	
-	
+	@SuppressWarnings("unchecked")
+	@Transactional
+	public List<ArchivosBean> listarArchivos(HttpSession session, String tipoEntidad, String idEntidad) {
+		List<Archivo> _la = new ArrayList<Archivo>();
+		List<ArchivosBean> _lab = new ArrayList<ArchivosBean>();
+		try{
+			Query query = null;
+			if(tipoEntidad.equals("vehiculo")){
+				query = em.createQuery("SELECT a FROM Archivo a JOIN a.arcVehiculo v WHERE v.idVehiculo=:idvehiculo");
+			    query.setParameter("idvehiculo", Integer.parseInt(idEntidad));
+				
+			}
+			else if(tipoEntidad.equals("revision")){
+				query = em.createQuery("SELECT a FROM Archivo a JOIN a.arcRevision r WHERE r.idRevision=:idrevision");
+			    query.setParameter("idrevision", Integer.parseInt(idEntidad));
+				
+			}	
+			
+			_la = query.getResultList();
+			for(int i =0; i < _la.size(); i++){
+				Archivo a = _la.get(i);
+				ArchivosBean ab = new ArchivosBean();
+				ab.setFechaCreacion(a.getFechaCreacion());
+				ab.setIdArchivo(a.getIdArchivo());
+				ab.setCreado(a.getArcUsuario().getUsuPersona().getNombre());
+				ab.setUrl(a.getUrlImagen());
+				ab.setDescripcion(a.getDescripcion());
+				_lab.add(ab);
+			}
+			
+			
+		} catch(IllegalArgumentException e){
+			_lab = null;
+		}
+		
+		return _lab;
+		
+	}
 }

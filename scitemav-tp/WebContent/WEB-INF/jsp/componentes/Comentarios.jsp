@@ -10,7 +10,7 @@ function registrarComentarios(){
  		url: 'registrarComentario',
  		type: 'post',
  		dataType: 'json',
- 		data: $('#frmComentario').serializable(),
+ 		data: $('#frmComentario').serialize(),
  		success: function(resultado){
  			
  		}
