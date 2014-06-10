@@ -41,7 +41,7 @@ function consultarComentarios(typoentidad,identidad){
 				(Empleados & Clientes)</option>
 		</select>
 		<input id="hdnIdEntidadc" name="idEntidadC" type="hidden" /> 
-		< id="hdnTipoEntidadc" name="tipoEntidadC" type="hidden" />
+		<input id="hdnTipoEntidadc" name="tipoEntidadC" type="hidden" />
 		</span>
 	</form>
 	</p>
