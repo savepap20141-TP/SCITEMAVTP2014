@@ -132,9 +132,9 @@ public class EmailServiceImpl implements EmailService {
 		String asunto = "Bienvenido usuario de scitemav: "
 				+ user.getUsuPersona().getNombre();
 		
-		bodyFinal = "<div style='margin: 0 auto 0 auto; text-align: center; font-family: arial;'>";
+		bodyFinal = "<div style=' background-color: rgb(235,240,242); margin: 0 auto 0 auto; text-align: center; font-family: arial;'>";
 		bodyFinal+= "<h2 style='font-family: arial;'>SCITEMAV</h1>";		
-		bodyFinal+= "</div><br />";
+		
 		bodyFinal+= "<div style='font-family: arial; text-size=150%;'>";
 		bodyFinal+= "Bienvenido al sistema, "+user.getUsuPersona().getNombre()+"<br /><br />";
 		bodyFinal+= "Usted ha sido habilitado para ingresar. Sus datos son los siguientes:<br />";
@@ -145,6 +145,7 @@ public class EmailServiceImpl implements EmailService {
 		bodyFinal+= "<div style='margin: 0 auto 0 auto; text-align: center;'>";
 		bodyFinal+= "<img src='https://raw.githubusercontent.com/savepap20141-TP/SCITEMAVTP2014/master/scitemav-tp/WebContent/images/scitemavlogo.png' heigth='300px' width='300px' />";
 		bodyFinal+= "</div><br />";
+
 		
 		
 		

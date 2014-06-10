@@ -1,5 +1,6 @@
 package com.scitemav.model;
 
+import java.sql.Date;
 import java.sql.Timestamp;
 
 import javax.persistence.Column;
@@ -74,6 +75,14 @@ public class Comentario {
 
 	public void setComentario(String comentario) {
 		this.comentario = comentario;
+	}		
+
+	public String getVisibilidad() {
+		return visibilidad;
+	}
+
+	public void setVisibilidad(String visibilidad) {
+		this.visibilidad = visibilidad;
 	}
 
 	public Timestamp getFechaCreacion() {
@@ -82,14 +91,6 @@ public class Comentario {
 
 	public void setFechaCreacion(Timestamp fechaCreacion) {
 		this.fechaCreacion = fechaCreacion;
-	}
-
-	public String getVisibilidad() {
-		return visibilidad;
-	}
-
-	public void setVisibilidad(String visibilidad) {
-		this.visibilidad = visibilidad;
 	}
 	
 }

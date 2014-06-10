@@ -272,6 +272,8 @@
 		removeNulls();
 		tipoEntidad = 'vehiculo';
 		idEntidad = idvehiculo;
+		$('#hdnIdEntidadc').val(idEntidad);
+		$('#hdnTipoEntidadc').val(tipoEntidad);
 	});
 
 	function EditInformacionVehiculo(){
