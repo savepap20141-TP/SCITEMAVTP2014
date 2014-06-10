@@ -186,6 +186,13 @@ $(function() {
 		//Repuestos por Revision
 		inicioConsultaRepuestoRevision(idrevision);
 		removeNulls();
+		
+		tipoEntidad = 'revision';
+		idEntidad = idrevision;
+		$('#hdnIdEntidadc').val(idEntidad);
+		$('#hdnTipoEntidadc').val(tipoEntidad);
+		$('#hdnTipoEntidad').val(tipoEntidad);
+		$('#hdnIdEntidad').val(idEntidad);
 	});
 
 	function EditInformacionRevision(){
@@ -1055,14 +1062,11 @@ $(document).on('click','#btnAsignarEmpleados', function(e){
 						<!-- Nav tabs -->
 						<ul class="nav nav-tabs">
 							<li class="active"><a href="#revision" data-toggle="tab">Revisión</a></li>
-							<li class=""><a href="#repuestos" data-toggle="tab">Repuestos</a>
-							</li>
-							<li class=""><a href="#fallas" data-toggle="tab">Fallas</a>
-							</li>
-							<li class=""><a href="#empleado" data-toggle="tab">Empleado</a>
-							</li>
-							<li class=""><a href="#comentarios" data-toggle="tab">Comentarios</a>
-							</li>							
+							<li class=""><a href="#repuestos" data-toggle="tab">Repuestos</a></li>
+							<li class=""><a href="#fallas" data-toggle="tab">Fallas</a></li>
+							<li class=""><a href="#empleado" data-toggle="tab">Empleado</a></li>
+							<li class=""><a href="#archivos" data-toggle="tab">Archivos</a></li>
+							<li class=""><a href="#comentarios" data-toggle="tab">Comentarios</a></li>							
 						</ul>
 
 						<!-- Tab panes -->
@@ -1370,18 +1374,8 @@ $(document).on('click','#btnAsignarEmpleados', function(e){
 								</div>
 								</div>
 						</div>
-								<div class="tab-pane fade" id="comentarios">
-									<h4>Comentarios</h4>
-									<p><textarea id="txtNComment" class="form-control" name="comentario" placeholder="Escribir nuevo comentario"></textarea>
-									<br><input id="btnEnviarComentario" class="btn btn-lg btn-success btn-block" type="button" value="Enviar" style="width: 20%;"></input>
-									<span>Visibilidad:</span>
-									<select id="visibilidadComentario" class="form-control" name="visibilidad" style="width: 222px;">
-										<option value="Privado (Empleados)">Privado (Empleados)</option>
-										<option value="Privado (Cliente)">Privado (Cliente)</option>
-										<option value="Privado (Empleados & Clientes)">Privado (Empleados & Clientes)</option>
-									</select>
-									</p>
-								</div>
+								<jsp:include page="componentes/Archivos.jsp"/>
+								<jsp:include page="componentes/Comentarios.jsp"/>
 						<!-- /.panel-body -->
 					</div>
 					<!-- /.panel -->

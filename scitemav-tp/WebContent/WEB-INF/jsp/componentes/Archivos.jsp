@@ -4,7 +4,7 @@ var idEntidad;
 var countArchivo = 0;
 	$(document).ready(function(e) {
 		//Metodo para consultar Archivos
-		listarArchivos()
+		listarArchivos();
 	});
 	function listarArchivos(){
 		var filas = '';
@@ -16,11 +16,42 @@ var countArchivo = 0;
 	 		data:  $('#frmArchivos').serialize(),
 	 		success: function(archs){
 	 			$.each(archs, function(i, arch){
-	 				
+	 				filas = filas +'<tr class="">'+
+	 				'<td class="center">ARCH-'+arch.idArchivo+'</td>'+
+	 				'<td class="center" id="filaIdA_'+i+'" style="display:none;">'+arch.idArchivo+'</td>'+
+	 				'<td class="center">'+arch.descripcion+'</td>'+
+					'<td class="center">'+arch.creado+'</td>'+
+					'<td class="center">'+timeStampFormatted(arch.fechaCreacion)+'</td>'+
+					'<td class="center"><a target="_blank"  href="'+arch.url+'"><img width="150" height="150" src="'+arch.url+'"></img></a></td>'+					
+					'<td class="center"><button class="btn btn-danger btn-circle" type="button" id="btnDelete_'+i+'" data-toggle="modal" data-target="#myModalR" onclick="mostrarEliminarR('+i+','+arch.idArchivo+')"><i class="fa fa-times"></i></button></td>'+
+					'</tr>';
 				});		        
 	 		},
 	 		complete: function() {	 			
-	 			//realizarTabla(columnas,filas);
+	 			columnas = columnas + 
+ 				'<th class="center">Codigo </th>'+
+ 				'<th class="center" style="display:none;">IdArchivo</th>'+
+ 				'<th class="center">Descripción </th>'+
+ 				'<th class="center">Creado por </th>'+
+ 				'<th class="center">Fecha Creación </th>'+
+				'<th class="center">Archivo </th>'+
+				'<th class="center">Eliminar</th>';
+	 			var id = 'Arch';
+				var contenido = '';
+				$("#spnResultList_"+id).empty();
+	
+				contenido = contenido + '<table cellpadding="0" cellspacing="0" border="0" class="display dataTable" id="example_'+id+'"> '+
+						' <thead class="tableGri"> '+
+				            '<tr role="row">'+
+				            	columnas+							                            
+				            '</tr>'+
+				        '</thead> '+
+				        '<tbody id="'+id+'">';
+				contenido = contenido + filas;   
+				contenido = contenido + '</tbody>'+
+						'</table> ';
+				
+				$("#spnResultList_"+id).append(contenido);
 	 			removeNulls();
 	  		}
 	 	});
@@ -54,6 +85,7 @@ var countArchivo = 0;
 	}
 	
 	function clickCargarArchivos(){
+		$('#resultCargaArch').hide();
 		var formElement = document.getElementById("frmArchivos");
 		var formData = new FormData(formElement);
 		$.ajax({
@@ -65,7 +97,8 @@ var countArchivo = 0;
 		    cache: false,
 			processData:false,
 	   		success: function(result){
-	   			
+	   			listarArchivos();
+	   			$('#resultCargaArch').show();
 	   		},complete: function(){
 	   			LimpiarArchivosSubidos();
 	   		}
@@ -125,6 +158,14 @@ var countArchivo = 0;
 	</div>
 	</form>
 	</div>
+	<br>
+	<div class="alert alert-success alert-dismissable" id="resultCargaArch" style="display:none">
+		<button class="close" aria-hidden="true" data-dismiss="alert" type="button">×</button>
+		<span id="mensajeCarga">Archivos subidos correctamente</span>
+	</div>
+	</br>
+	<div id="spnResultList_Arch" class="resultBox section summaryPane" style="overflow: auto;height: 500px"></div>
+	
 	</p>
 
 </div>

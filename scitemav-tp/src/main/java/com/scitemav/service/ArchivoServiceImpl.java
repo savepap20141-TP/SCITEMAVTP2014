@@ -113,7 +113,7 @@ public class ArchivoServiceImpl implements ArchivoService{
 				ArchivosBean ab = new ArchivosBean();
 				ab.setFechaCreacion(a.getFechaCreacion());
 				ab.setIdArchivo(a.getIdArchivo());
-				ab.setCreado(a.getArcUsuario().getUsuPersona().getNombre());
+				ab.setCreado(a.getArcUsuario().getUsuPersona().getNombre() +" "+a.getArcUsuario().getUsuPersona().getApellidoPaterno()+" "+a.getArcUsuario().getUsuPersona().getApellidoMaterno());
 				ab.setUrl(a.getUrlImagen());
 				ab.setDescripcion(a.getDescripcion());
 				_lab.add(ab);

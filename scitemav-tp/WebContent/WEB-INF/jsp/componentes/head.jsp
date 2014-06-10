@@ -44,3 +44,5 @@
 
 <link href="styles/jquery-ui.min.css" rel="stylesheet">
 <script src="js/tablasConsultaNew.js"></script>
+
+<script src="js/commons0.1.js"></script>
