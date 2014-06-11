@@ -41,7 +41,7 @@ function inicioConsulta(){
  		},
  		complete: function() {
  			columnas = columnas + 
- 				'<th class="center">Id</th>'+
+ 				'<th class="center">Codigo</th>'+
  				'<th class="center">Nombre Modelo</th>'+
 				'<th class="center">Marca</th>';
  			realizarTabla(columnas,filas);

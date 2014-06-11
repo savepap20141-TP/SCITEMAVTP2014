@@ -63,7 +63,7 @@ function inicioConsulta(){
 			});		        
  		},
  		complete: function() {
- 			columnas = columnas + '<th class="center">Id Falla</th><th class="center">descripcion</th><th class="center" style="display:none">Id Tipo Falla</th><th class="center">Nombre Tipo Falla</th><th class="center">Editar</th><th class="center">Eliminar</th>';
+ 			columnas = columnas + '<th class="center">Codigo</th><th class="center">descripcion</th><th class="center" style="display:none">Id Tipo Falla</th><th class="center">Nombre Tipo Falla</th><th class="center">Editar</th><th class="center">Eliminar</th>';
  			realizarTabla(columnas,filas); 			
   		}
  	});	  

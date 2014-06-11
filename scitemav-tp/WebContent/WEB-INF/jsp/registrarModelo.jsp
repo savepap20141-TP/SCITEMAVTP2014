@@ -64,7 +64,7 @@ function inicioConsulta(){
 			});		        
  		},
  		complete: function() {
- 			columnas = columnas + '<th class="center">Id Modelo</th><th class="center">Nombre Modelo</th><th class="center" style="display:none">Id Marca</th><th class="center">Nombre Marca</th><th class="center">Editar</th><th class="center">Eliminar</th>';
+ 			columnas = columnas + '<th class="center">Codigo</th><th class="center">Nombre Modelo</th><th class="center" style="display:none">Id Marca</th><th class="center">Nombre Marca</th><th class="center">Editar</th><th class="center">Eliminar</th>';
  			realizarTabla(columnas,filas); 			
   		}
  	});	  

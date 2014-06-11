@@ -62,7 +62,7 @@ function inicioConsulta(){
 			});		        
  		},
  		complete: function() {
- 			columnas = columnas + '<th class="center">Id Tipo Repuesto</th><th class="center">Nombre</th><th class="center">Editar</th><th class="center">Eliminar</th>';
+ 			columnas = columnas + '<th class="center">Codigo</th><th class="center">Nombre</th><th class="center">Editar</th><th class="center">Eliminar</th>';
  			realizarTabla(columnas,filas); 			
   		}
  	});	  

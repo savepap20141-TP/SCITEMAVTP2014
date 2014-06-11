@@ -50,7 +50,7 @@ function inicioConsulta(){
  		},
  		complete: function() {
  			columnas = columnas + 
- 				'<th class="center">Id</th>'+
+ 				'<th class="center">Codigo</th>'+
  				'<th class="center">DNI</th>'+
 				'<th class="center">Nombre Cliente</th>'+
 				'<th class="center">Apellido Paterno</th>'+

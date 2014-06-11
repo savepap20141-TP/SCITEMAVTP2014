@@ -41,7 +41,7 @@ function inicioConsulta(){
  		},
  		complete: function() {
  			columnas = columnas + 
- 			'<th class="center">Id Repuesto</th>'+
+ 			'<th class="center">Codigo</th>'+
  			'<th class="center">Nombre</th>'+
  			'<th class="center">Tipo Repuesto</th>';
  			realizarTabla(columnas,filas);

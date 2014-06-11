@@ -41,7 +41,7 @@ function inicioConsulta(){
  		},
  		complete: function() {
  			columnas = columnas + 
- 			'<th class="center">Id Falla</th>'+
+ 			'<th class="center">Codigo</th>'+
  			'<th class="center">Descripcion</th>'+
  			'<th class="center">Tipo Falla</th>';
  			realizarTabla(columnas,filas);

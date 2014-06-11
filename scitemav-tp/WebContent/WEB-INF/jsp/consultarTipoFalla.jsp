@@ -40,7 +40,7 @@ function inicioConsulta(){
  		},
  		complete: function() {
  			columnas = columnas + 
- 				'<th class="center">Id</th>'+
+ 				'<th class="center">Codigo</th>'+
 				'<th class="center">Nombre Tipo de Falla</th>';
  			realizarTabla(columnas,filas);
  			removeNulls();

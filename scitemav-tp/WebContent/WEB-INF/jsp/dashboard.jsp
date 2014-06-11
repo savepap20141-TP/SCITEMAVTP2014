@@ -116,7 +116,7 @@ function inicioConsultaRevision(fechaHoyT){
  		complete: function() {
  			columnas = columnas + 
  				'<th class="center">Enviado</th>'+
- 				'<th class="center">Id</th>'+
+ 				'<th class="center">Codigo</th>'+
 				'<th class="center">Vehiculo</th>'+
 				'<th class="center">Nombre Cliente</th>'+
 				'<th class="center">Fecha de inicio</th>'+

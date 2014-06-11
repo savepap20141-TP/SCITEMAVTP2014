@@ -30,7 +30,7 @@ function inicioConsultaRevisiones(idvehiculo){
  		},
  		complete: function() {
  			columnas = columnas + 
- 				'<th class="center">Id</th>'+
+ 				'<th class="center">Codigo</th>'+
 				'<th class="center">Vehiculo</th>'+
 				'<th class="center">Fecha de inicio</th>'+
 				'<th class="center">Fecha de fin</th>'+

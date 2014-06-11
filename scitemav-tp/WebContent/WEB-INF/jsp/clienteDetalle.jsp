@@ -275,7 +275,7 @@
 	 		},
 	 		complete: function() {
 	 			columnas = columnas + 
-	 				'<th class="center">Id</th>'+
+	 				'<th class="center">Codigo</th>'+
 					'<th class="center">Marca</th>'+
 					'<th class="center">Tipo Vehiculo</th>'+
 					'<th class="center">Modelo</th>'+

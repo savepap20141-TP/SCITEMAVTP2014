@@ -323,7 +323,7 @@ $(function() {
 	 		},
 	 		complete: function() {
 	 			columnas = columnas + 
-	 				'<th class="center">Id</th>'+
+	 				'<th class="center">Codigo</th>'+
 	 				'<th class="center" style="display:none;">IdRepuesto</th>'+
 	 				'<th class="center">Comentario</th>'+
 	 				'<th class="center">Nombre Respuesto</th>'+
@@ -382,7 +382,7 @@ $(function() {
 	 		complete: function() {
 	 			columnas = columnas +
 	 				'<th class="center">Estado</th>'+ 		
-	 				'<th class="center">Id Repuesto</th>'+
+	 				'<th class="center">Codigo</th>'+
 	 				'<th class="center">Nombre</th>'+
 					'<th class="center">Nombre Tipo Repuesto</th>';
 					
@@ -534,7 +534,7 @@ function inicioConsultaFallasRevision(idRevision){
  		},
  		complete: function() {
  			columnas = columnas + 
- 				'<th class="center">Id</th>'+
+ 				'<th class="center">Codigo</th>'+
  				'<th class="center" style="display:none;">IdFalla</th>'+
  				'<th class="center">Nombre</th>'+
  				'<th class="center">Tipo de falla</th>'+ 				
@@ -684,7 +684,7 @@ function eliminarFallaRevision(){
 	 		complete: function() {
 	 			columnas = columnas + 
 	 			'<th class="center">Estado</th>'+ 	
-	 			'<th class="center">Id Falla</th>'+
+	 			'<th class="center">Codigo</th>'+
 	 			'<th class="center">Descripcion</th>'+
 	 			'<th class="center">Tipo Falla</th>';
 	 			
@@ -809,7 +809,7 @@ function inicioConsultaEmpleadosRevision(idRevision){
  		},
  		complete: function() {
  			columnas = columnas + 
- 				'<th class="center">Id</th>'+
+ 				'<th class="center">Codigo</th>'+
  				'<th class="center">Nombre</th>'+
  				'<th class="center">Apellido Paterno</th>'+
 				'<th class="center">Apellido Materno</th>'+
@@ -914,7 +914,7 @@ function inicioConsultaEmpleados(){
  		complete: function() {
  			columnas = columnas +
  				'<th class="center">Estado</th>'+ 		
- 				'<th class="center">Id Empleado</th>'+
+ 				'<th class="center">Codigo</th>'+
  				'<th class="center">Email</th>'+
  				'<th class="center">DNI</th>'+
 				'<th class="center">Nombre</th>'+
