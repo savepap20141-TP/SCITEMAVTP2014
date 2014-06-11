@@ -36,6 +36,7 @@ public class ComentarioServiceImpl implements ComentarioService  {
 			if(tipoEntidad.equals("vehiculo")){
 				Vehiculo veh = new Vehiculo();
 				veh.setIdVehiculo(Integer.parseInt(idEntidad));
+				com.setComVehiculo(veh);
 			}
 			else if(tipoEntidad.equals("revision")){
 				Revision rev = new Revision();
@@ -47,7 +48,7 @@ public class ComentarioServiceImpl implements ComentarioService  {
 			java.sql.Timestamp ts = new java.sql.Timestamp(d.getTime());   
 			com.setFechaCreacion(ts);	
 			usu.setIdUsuario(Integer.parseInt(session.getAttribute("idUsuario").toString()));
-			com.setComUsuario(usu);
+			com.setComUsuario(usu);			
 			com.setVisibilidad(comentarioB.getVisibilidad());
 			
 			em.persist(com);	

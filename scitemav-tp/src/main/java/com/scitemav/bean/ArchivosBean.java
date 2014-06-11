@@ -19,6 +19,7 @@ public class ArchivosBean {
 	private Timestamp fechaCreacion;
 	private String url;
 	private String creado;
+	
 	public CommonsMultipartFile getFile() {
 		return file;
 	}
