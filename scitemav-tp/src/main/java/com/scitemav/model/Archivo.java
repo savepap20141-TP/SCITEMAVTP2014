@@ -30,6 +30,12 @@ public class Archivo {
 	@Column(name = "urlimagen",length = 300, nullable = true)
 	private String urlImagen;
 	
+	@Column(name = "tipoarchivo", length = 30, nullable = true)	
+	private String tipoArchivo;
+	
+	@Column(length = 10, nullable = true)	
+	private Long size;
+	
 	@Column(name = "fechacreacion", nullable = false)
 	private Timestamp fechaCreacion;
 	
@@ -90,6 +96,22 @@ public class Archivo {
 
 	public void setDescripcion(String descripcion) {
 		this.descripcion = descripcion;
+	}
+
+	public String getTipoArchivo() {
+		return tipoArchivo;
+	}
+
+	public void setTipoArchivo(String tipoArchivo) {
+		this.tipoArchivo = tipoArchivo;
+	}
+
+	public Long getSize() {
+		return size;
+	}
+
+	public void setSize(Long size) {
+		this.size = size;
 	}
 	
 }

@@ -24,8 +24,11 @@ function listarComentarios(){
 	 				'<td class="center">'+coment.nombreUsuario+'</td>'+
 					'<td class="center">'+coment.comentario+'</td>'+
 					'<td class="center">'+timeStampFormatted(coment.fechaCreacion)+'</td>'+
-				    '<td class="center"><button class="btn btn-danger btn-circle" type="button" id="btnDelete_'+i+'" data-toggle="modal" data-target="#myModalC" onclick="mostrarEliminarC('+i+','+coment.idComentario+')"><i class="fa fa-times"></i></button></td>'+
-					'</tr>';
+					'<td class="center">'+
+						'<button Title="Editar" class="btn btn-success btn-circle" type="button" id="btnEditC_'+i+'" data-toggle="modal" data-target="#myModal" onclick="mostrarEditarC('+i+')"><i class="fa fa-list"></i></button>'+
+						'<button Title="Eliminar" class="btn btn-danger btn-circle" type="button" id="btnDeleteC_'+i+'" data-toggle="modal" data-target="#myModalR" onclick="mostrarEliminarC('+i+','+coment.idComentario+')"><i class="fa fa-times"></i></button>'+
+					'</td>'+
+				    '</tr>';
 				});		        
 	 		},
 	 		complete: function() {	 			

@@ -21,9 +21,20 @@ var countArchivo = 0;
 	 				'<td class="center" id="filaIdA_'+i+'" style="display:none;">'+arch.idArchivo+'</td>'+
 	 				'<td class="center">'+arch.descripcion+'</td>'+
 					'<td class="center">'+arch.creado+'</td>'+
-					'<td class="center">'+timeStampFormatted(arch.fechaCreacion)+'</td>'+
-					'<td class="center"><a target="_blank"  href="'+arch.url+'"><img width="150" height="150" src="'+arch.url+'"></img></a></td>'+					
-					'<td class="center"><button class="btn btn-danger btn-circle" type="button" id="btnDelete_'+i+'" data-toggle="modal" data-target="#myModalR" onclick="mostrarEliminarR('+i+','+arch.idArchivo+')"><i class="fa fa-times"></i></button></td>'+
+					'<td class="center">'+timeStampFormatted(arch.fechaCreacion)+'</td>';
+					var tipo = arch.fileType.split("/")[0];
+					if(tipo=='image'){
+						filas = filas +'<td class="center"><a target="_blank"  href="'+arch.url+'"><img width="150" height="150" src="'+arch.url+'"></img></a></td>';
+					}else{
+						filas = filas +'<td class="center"><a target="_blank"  href="'+arch.url+'"><img width="150" height="150" src="images/ArchivoLogo.jpg"></img></a></td>';
+					}
+									
+					filas = filas + '<td class="center">'+arch.fileType+'</td>'+
+					'<td class="center">'+arch.size+'</td>'+
+					'<td class="center">'+
+						'<button Title="Editar" class="btn btn-success btn-circle" type="button" id="btnEditA_'+i+'" data-toggle="modal" data-target="#myModal" onclick="mostrarEditar('+i+')"><i class="fa fa-list"></i></button>'+
+						'<button Title="Eliminar" class="btn btn-danger btn-circle" type="button" id="btnDeleteA_'+i+'" data-toggle="modal" data-target="#myModalR" onclick="mostrarEliminarR('+i+','+arch.idArchivo+')"><i class="fa fa-times"></i></button>'+
+					'</td>'+
 					'</tr>';
 				});		        
 	 		},
@@ -35,6 +46,8 @@ var countArchivo = 0;
  				'<th class="center">Creado por </th>'+
  				'<th class="center">Fecha Creación </th>'+
 				'<th class="center">Archivo </th>'+
+				'<th class="center">Tipo Archivo </th>'+
+				'<th class="center">Tamaño </th>'+
 				'<th class="center">Acciones</th>';
 	 			var id = 'Arch';
 				var contenido = '';

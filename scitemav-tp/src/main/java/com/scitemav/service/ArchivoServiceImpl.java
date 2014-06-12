@@ -65,7 +65,8 @@ public class ArchivoServiceImpl implements ArchivoService{
 				java.util.Date d = new java.util.Date(System.currentTimeMillis()); 
 				java.sql.Timestamp ts = new java.sql.Timestamp(d.getTime());   
 				arch.setFechaCreacion(ts);
-				
+				arch.setTipoArchivo(metadata.getContentType());
+				arch.setSize(metadata.getContentLength());
 				if(fileForm.getFile()!=null){
 					String fileContentType = fileForm.getFile().getContentType();
 				     //if(fileContentType.contains("image")){
@@ -116,6 +117,7 @@ public class ArchivoServiceImpl implements ArchivoService{
 				ab.setCreado(a.getArcUsuario().getUsuPersona().getNombre() +" "+a.getArcUsuario().getUsuPersona().getApellidoPaterno()+" "+a.getArcUsuario().getUsuPersona().getApellidoMaterno());
 				ab.setUrl(a.getUrlImagen());
 				ab.setDescripcion(a.getDescripcion());
+				ab.setFileType(a.getTipoArchivo());
 				_lab.add(ab);
 			}
 			
