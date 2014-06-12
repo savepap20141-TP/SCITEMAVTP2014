@@ -35,7 +35,7 @@ var countArchivo = 0;
  				'<th class="center">Creado por </th>'+
  				'<th class="center">Fecha Creación </th>'+
 				'<th class="center">Archivo </th>'+
-				'<th class="center">Eliminar</th>';
+				'<th class="center">Acciones</th>';
 	 			var id = 'Arch';
 				var contenido = '';
 				$("#spnResultList_"+id).empty();

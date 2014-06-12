@@ -33,9 +33,9 @@ function listarComentarios(){
  				'<th class="center">Codigo </th>'+
  				'<th class="center" style="display:none;">IdComentario</th>'+
  				'<th class="center">Creador por </th>'+
- 				'<th class="center">Texto </th>'+
+ 				'<th class="center">Comentario </th>'+
  				'<th class="center">Fecha Creación </th>'+				
-				'<th class="center">Eliminar</th>';
+				'<th class="center">Acciones</th>';
 	 			var id = 'Coment';
 				var contenido = '';
 				$("#spnResultList_"+id).empty();

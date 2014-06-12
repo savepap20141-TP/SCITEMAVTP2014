@@ -41,6 +41,7 @@ public class ComentarioServiceImpl implements ComentarioService  {
 			else if(tipoEntidad.equals("revision")){
 				Revision rev = new Revision();
 				rev.setIdRevision(Integer.parseInt(idEntidad));
+				com.setComRevision(rev);
 			}
 			
 			com.setComentario(comentarioB.getComentario());
@@ -91,7 +92,7 @@ public class ComentarioServiceImpl implements ComentarioService  {
 				cb.setFechaCreacion(c.getFechaCreacion());
 				cb.setIdComentario(c.getIdComentario());
 				cb.setIdUsuario(c.getComUsuario().getIdUsuario());
-				cb.setNombreUsuario(c.getComUsuario().getUsuPersona().getNombre());
+				cb.setNombreUsuario(c.getComUsuario().getUsuPersona().getNombre()+" "+c.getComUsuario().getUsuPersona().getApellidoPaterno()+" "+c.getComUsuario().getUsuPersona().getApellidoMaterno());
 				cb.setVisibilidad(c.getVisibilidad());
 				_lcb.add(cb);
 			}
