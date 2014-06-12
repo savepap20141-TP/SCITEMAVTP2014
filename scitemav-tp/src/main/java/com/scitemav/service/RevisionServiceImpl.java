@@ -48,7 +48,7 @@ public class RevisionServiceImpl implements RevisionService {
 			rev.setFechaProxima(revision.getFechaProxima());
 			rev.setKilometrajeActual(revision.getKilometrajeActual());
 			rev.setKilometrajeProximo(revision.getKilometrajeProximo());
-			
+			rev.setEstado("Creada");
 
 			em.persist(rev);
 			revision.setIdRevision(rev.getIdRevision());
@@ -177,7 +177,7 @@ public class RevisionServiceImpl implements RevisionService {
 			rev.setFechaProxima(rb.getFechaProxima());
 			rev.setKilometrajeActual(rb.getKilometrajeActual());
 			rev.setKilometrajeProximo(rb.getKilometrajeProximo());
-			
+			rev.setEstado("Inspeccionada");
 			em.merge(rev);
 			result = true;			
 		} catch(IllegalArgumentException e){
