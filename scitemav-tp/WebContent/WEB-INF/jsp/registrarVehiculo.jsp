@@ -401,8 +401,18 @@ function listarMarcas(){
                                             <select class="form-control" id="comboCliente" name="idCliente">
                                                  <option value="">Seleccione el cliente</option>
                                             </select>
-                                        </div>			
+                                        </div>
                                         
+                                        <div class="form-group input-group" style="display:none">
+											<label>DNI del cliente</label>
+                                            <input type="text" class="form-control" id="txtDniCliente" placeholder="DNI del Cliente">
+                                            <span class="input-group-btn">
+                                                <button style="margin-top:25px; height: 34px;" class="btn btn-default" type="button"><i class="fa fa-search"></i>
+                                                </button>
+                                            </span>
+                                        </div>			
+                                        <div id="resultBusquedaCliente">
+                                        </div>
                                         <div class="form-group">
                                             <label>Marca</label>
                                             <select class="form-control" id="comboMarca" name="idMarca">
