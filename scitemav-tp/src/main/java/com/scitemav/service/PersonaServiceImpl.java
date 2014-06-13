@@ -22,9 +22,9 @@ public class PersonaServiceImpl implements PersonaService{
 	public PersonaBean getInformationPerfil(HttpSession session) {
 		PersonaBean personabean = new PersonaBean();
 		Persona persona = new Persona();		
-		Query q1 = em.createQuery("SELECT p FROM Persona p JOIN p.perUsuario u WHERE u.idUsuario = :idUsuario AND u.activo =:activo");
+		Query q1 = em.createQuery("SELECT p FROM Persona p JOIN p.perUsuario u WHERE u.idUsuario = :idUsuario AND u.estado =:activo");
 		q1.setParameter("idUsuario", Integer.parseInt(session.getAttribute("idUsuario").toString()));
-		q1.setParameter("activo", true);
+		q1.setParameter("activo", "habilitado");
 		persona = (Persona) q1.getSingleResult();
 		personabean.setNombre(persona.getNombre());
 		personabean.setApellidoPaterno(persona.getApellidoPaterno());
@@ -39,9 +39,9 @@ public class PersonaServiceImpl implements PersonaService{
 		boolean resultado = false;
 		Persona personaX = new Persona();
 		try{
-			Query q1 = em.createQuery("SELECT p FROM Persona p JOIN p.perUsuario u WHERE u.idUsuario = :idUsuario AND u.activo =:activo");
+			Query q1 = em.createQuery("SELECT p FROM Persona p JOIN p.perUsuario u WHERE u.idUsuario = :idUsuario AND u.estado =:activo");
 			q1.setParameter("idUsuario", Integer.parseInt(session.getAttribute("idUsuario").toString()));
-			q1.setParameter("activo", true);
+			q1.setParameter("activo", "habilitado");
 			personaX = (Persona) q1.getSingleResult();			
 			Persona profileY = em.merge(personaX);
 			profileY.setNombre(perbean.getNombre());
