@@ -30,7 +30,7 @@ public class Archivo {
 	@Column(name = "urlimagen",length = 300, nullable = true)
 	private String urlImagen;
 	
-	@Column(name = "tipoarchivo", length = 30, nullable = true)	
+	@Column(name = "tipoarchivo", length = 100, nullable = true)	
 	private String tipoArchivo;
 	
 	@Column(length = 10, nullable = true)	

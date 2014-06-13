@@ -59,8 +59,8 @@ public class VehiculoController {
 	
 	@RequestMapping(value = "getVehiculos", method = RequestMethod.POST)
 	@ResponseBody
-	public List<VehiculoBean> getVehiculos(){		
-		return vehiculoService.listarVehiculos();
+	public List<VehiculoBean> getVehiculos(HttpServletRequest request){		
+		return vehiculoService.listarVehiculos(request.getSession());
 	}
 
 	@RequestMapping(value = "getInformacionVehiculo-{idvehiculo}", method = RequestMethod.POST)

@@ -150,7 +150,7 @@ public class ArchivosController {
 	
 	@RequestMapping(value = "getArchivos", method = RequestMethod.POST)
 	@ResponseBody
-	public List<ArchivosBean> getComentarios(HttpServletRequest req){		
+	public List<ArchivosBean> getArchivos(HttpServletRequest req){		
 		String tipoE, idE;
 		tipoE = req.getParameter("tipoEntidad");
 		idE = req.getParameter("idEntidad");

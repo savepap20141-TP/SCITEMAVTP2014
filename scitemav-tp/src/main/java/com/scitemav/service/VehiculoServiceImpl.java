@@ -11,6 +11,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -78,11 +79,19 @@ public class VehiculoServiceImpl implements VehiculoService {
 
 	@SuppressWarnings("unchecked")
 	@Transactional
-	public List<VehiculoBean> listarVehiculos() {
+	public List<VehiculoBean> listarVehiculos(HttpSession session) {
 		List<Vehiculo> listaVehiculo = new ArrayList<Vehiculo>();
 		List<VehiculoBean> listaVehiculoBean = new ArrayList<VehiculoBean>();		
 		try {
-			Query q = em.createQuery("SELECT v FROM Vehiculo v");
+			String query = "SELECT v FROM Vehiculo v";
+			if(session.getAttribute("role").equals("cliente")){
+				query+= " JOIN v.vehCliente cli JOIN cli.cliPersona per JOIN per.perUsuario u WHERE u.idUsuario=:idUsuario";
+			}
+			
+			Query q = em.createQuery(query);
+			if(session.getAttribute("role").equals("cliente")){
+				q.setParameter("idUsuario", Integer.parseInt(session.getAttribute("idUsuario").toString()));
+			}
 			listaVehiculo = q.getResultList();
 			for(int i=0; i < listaVehiculo.size(); i++){
 				Vehiculo v = listaVehiculo.get(i);

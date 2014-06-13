@@ -118,6 +118,7 @@ public class ArchivoServiceImpl implements ArchivoService{
 				ab.setUrl(a.getUrlImagen());
 				ab.setDescripcion(a.getDescripcion());
 				ab.setFileType(a.getTipoArchivo());
+				ab.setSize(a.getSize());
 				_lab.add(ab);
 			}
 			
