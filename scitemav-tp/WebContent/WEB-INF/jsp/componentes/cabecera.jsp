@@ -37,6 +37,8 @@ $(document).ready(function(e){
 		window.location = 'toLogin';
 	}
 	if(role == 'cliente'){
+			$("#confCliente").hide();
+			$("#confEmpleado").hide();
 			$("#Clientes").hide();
 			$("#rVehiculo").hide();
 			$("#rRevision").hide();		
@@ -47,6 +49,8 @@ $(document).ready(function(e){
 			$("#TipoVehiculos").hide();
 	}
 	if(role == 'supervisor'){
+		$("#confCliente").hide();
+		$("#confEmpleado").hide();
 		$("#Marcas").hide();
 		$("#Fallas").hide();
 		$("#Repuestos").hide();
@@ -55,6 +59,8 @@ $(document).ready(function(e){
 		$("#rCliente").hide();
 	}
 	if(role == 'tecnico automotriz'){
+		$("#confCliente").hide();
+		$("#confEmpleado").hide();
 		$("#Marcas").hide();
 		$("#Fallas").hide();
 		$("#Repuestos").hide();
@@ -65,6 +71,8 @@ $(document).ready(function(e){
 		$("#rVehiculo").hide();
 	}
 	if(role == 'jefe automotriz'){
+		$("#confCliente").hide();
+		$("#confEmpleado").hide();
 		$("#Empleados").hide();
 		$("#rCliente").hide();
 	}
@@ -339,9 +347,9 @@ function removeNulls(){
                     <ul class="dropdown-menu dropdown-user">
                         <li><a href="toPerfil"><i class="fa fa-user fa-fw"></i> Perfil de Usuario</a>
                         </li>
-                        <li><a href="toConfiguracionCliente"><i class="fa fa-gear fa-fw"></i>Configuración de Clientes</a>
+                        <li id="confCliente"><a href="toConfiguracionCliente"><i class="fa fa-gear fa-fw"></i>Configuración de Clientes</a>
                         </li>
-                        <li><a href="toConfiguracionEmpleado"><i class="fa fa-gear fa-fw"></i>Configuración de Empleados</a>
+                        <li id="confEmpleado"><a href="toConfiguracionEmpleado"><i class="fa fa-gear fa-fw"></i>Configuración de Empleados</a>
                         </li>
                         <li class="divider"></li>
                         <li><a href="toLogout"><i class="fa fa-sign-out fa-fw"></i> Salir</a>
