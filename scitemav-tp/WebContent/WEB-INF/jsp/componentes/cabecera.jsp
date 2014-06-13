@@ -28,6 +28,7 @@ input.error {
 <script>
 var email = '${pageContext.session.getAttribute("email")}';
 var isValid = '${pageContext.session.getAttribute("isValid")}';
+var role = '${pageContext.session.getAttribute("role")}';
 $(document).ready(function(e){
 	$("#nameUser").empty();
 	$("#nameUser").append(email);
@@ -35,6 +36,40 @@ $(document).ready(function(e){
 	if(isValid==''){
 		window.location = 'toLogin';
 	}
+	if(role == 'cliente'){
+			$("#Clientes").hide();
+			$("#rVehiculo").hide();
+			$("#rRevision").hide();		
+			$("#Marcas").hide();
+			$("#Fallas").hide();
+			$("#Repuestos").hide();
+			$("#Empleados").hide();
+			$("#TipoVehiculos").hide();
+	}
+	if(role == 'supervisor'){
+		$("#Marcas").hide();
+		$("#Fallas").hide();
+		$("#Repuestos").hide();
+		$("#Empleados").hide();
+		$("#TipoVehiculos").hide();	
+		$("#rCliente").hide();
+	}
+	if(role == 'tecnico automotriz'){
+		$("#Marcas").hide();
+		$("#Fallas").hide();
+		$("#Repuestos").hide();
+		$("#Empleados").hide();
+		$("#TipoVehiculos").hide();		
+		$("#rCliente").hide();
+		$("#rRevision").hide();
+		$("#rVehiculo").hide();
+	}
+	if(role == 'jefe automotriz'){
+		$("#Empleados").hide();
+		$("#rCliente").hide();
+	}
+
+	
 });
 function cargarFechaNac(idname){
 	$('#'+idname).datepicker({dateFormat: 'yy-mm-dd',changeMonth: true,changeYear: true, yearRange: '1950:2014',defaultDate: new Date(1980,1-1,1),maxDate: '-18Y'});

@@ -55,7 +55,7 @@ public class UsuarioServiceImpl implements UsuarioService{
 				if(userResult.getUsuPersona().getPerEmpleado().getAdministrador()!=null && userResult.getUsuPersona().getPerEmpleado().getAdministrador()==true){
 					session.setAttribute("role", "administrador");
 				}else{
-					session.setAttribute("role", userResult.getUsuPersona().getPerEmpleado().getEmpCargo().toString().toLowerCase());
+					session.setAttribute("role", userResult.getUsuPersona().getPerEmpleado().getEmpCargo().getDescripcion().toString().toLowerCase());
 				}			
 			}else{
 				session.setAttribute("role", "administrador");
