@@ -31,6 +31,14 @@ public class PersonaServiceImpl implements PersonaService{
 		personabean.setApellidoMaterno(persona.getApellidoMaterno());
 		personabean.setTelefono(persona.getTelefono());
 		personabean.setEmail(persona.getPerUsuario().getEmail());
+		
+		personabean.setFechaNacimiento(persona.getFechaNacimiento());
+		personabean.setDireccion(persona.getDireccion());
+		personabean.setCelular(persona.getCelular());
+		personabean.setIdDistrito(persona.getPerDistrito().getIdDistrito());
+		personabean.setSexo(persona.getSexo());
+		personabean.setDni(persona.getDni());
+		
 		return personabean;
 	}
 
@@ -48,8 +56,12 @@ public class PersonaServiceImpl implements PersonaService{
 			profileY.setApellidoPaterno(perbean.getApellidoPaterno());
 			profileY.setApellidoMaterno(perbean.getApellidoMaterno());
 			profileY.setTelefono(perbean.getTelefono());
+			profileY.setFechaNacimiento(perbean.getFechaNacimiento());
+			profileY.setDireccion(perbean.getDireccion());
+			profileY.setCelular(perbean.getCelular());
+			profileY.setDni(perbean.getDni());
 			Usuario usuarioY = em.merge(personaX.getPerUsuario());
-			usuarioY.setEmail(perbean.getEmail());		
+			usuarioY.setEmail(perbean.getEmail());	
 			resultado = true;
 		}catch(IllegalArgumentException e){
 			System.out.println(e);
