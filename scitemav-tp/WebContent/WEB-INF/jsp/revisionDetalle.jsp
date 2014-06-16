@@ -1061,12 +1061,12 @@ $(document).on('click','#btnAsignarEmpleados', function(e){
 					
 						<!-- Nav tabs -->
 						<ul class="nav nav-tabs">
-							<li class="active"><a href="#revision" data-toggle="tab">Revisión</a></li>
-							<li class=""><a href="#repuestos" data-toggle="tab">Repuestos</a></li>
-							<li class=""><a href="#fallas" data-toggle="tab">Fallas</a></li>
-							<li class=""><a href="#empleado" data-toggle="tab">Empleado</a></li>
-							<li class=""><a href="#archivos" data-toggle="tab">Archivos</a></li>
-							<li class=""><a href="#comentarios" data-toggle="tab">Comentarios</a></li>							
+							<li class="active"><a href="#revision" data-toggle="tab">INFORMACION</a></li>
+							<li class=""><a href="#repuestos" data-toggle="tab">REPUESTOS</a></li>
+							<li class=""><a href="#fallas" data-toggle="tab">FALLAS</a></li>
+							<li class=""><a href="#empleado" data-toggle="tab">EMPLEADO</a></li>
+							<li class=""><a href="#archivos" data-toggle="tab">ARCHIVOS</a></li>
+							<li class=""><a href="#comentarios" data-toggle="tab">COMENTARIOS</a></li>							
 						</ul>
 
 						<!-- Tab panes -->

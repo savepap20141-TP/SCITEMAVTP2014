@@ -22,6 +22,8 @@ import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.scitemav.bean.ArchivosBean;
 import com.scitemav.bean.AttachmentBean;
 import com.scitemav.model.Archivo;
+import com.scitemav.model.Cliente;
+import com.scitemav.model.Empleado;
 import com.scitemav.model.Revision;
 import com.scitemav.model.Usuario;
 import com.scitemav.model.Vehiculo;
@@ -55,6 +57,14 @@ public class ArchivoServiceImpl implements ArchivoService{
 					Revision rev = new Revision();
 					rev.setIdRevision(fileForm.getIdEntidad());
 					arch.setArcRevision(rev);
+				}else if(fileForm.getTipoEntidad().equals("cliente")){
+					Cliente cli = new Cliente();
+					cli.setIdCliente(fileForm.getIdEntidad());
+					arch.setArcCliente(cli);
+				}else if(fileForm.getTipoEntidad().equals("empleado")){
+					Empleado emp = new Empleado();
+					emp.setIdEmpleado(fileForm.getIdEntidad());
+					arch.setArcEmpleado(emp);
 				}
 				Usuario usu = new Usuario();
 				usu.setIdUsuario(Integer.parseInt(req.getSession().getAttribute("idUsuario").toString()));
@@ -100,14 +110,19 @@ public class ArchivoServiceImpl implements ArchivoService{
 			if(tipoEntidad.equals("vehiculo")){
 				query = em.createQuery("SELECT a FROM Archivo a JOIN a.arcVehiculo v WHERE v.idVehiculo=:idvehiculo");
 			    query.setParameter("idvehiculo", Integer.parseInt(idEntidad));
-				
 			}
 			else if(tipoEntidad.equals("revision")){
 				query = em.createQuery("SELECT a FROM Archivo a JOIN a.arcRevision r WHERE r.idRevision=:idrevision");
 			    query.setParameter("idrevision", Integer.parseInt(idEntidad));
-				
 			}	
-			
+			else if(tipoEntidad.equals("cliente")){
+				query = em.createQuery("SELECT a FROM Archivo a JOIN a.arcCliente r WHERE r.idCliente=:idcliente");
+			    query.setParameter("idcliente", Integer.parseInt(idEntidad));
+			}
+			else if(tipoEntidad.equals("empleado")){
+				query = em.createQuery("SELECT a FROM Archivo a JOIN a.arcEmpleado r WHERE r.idEmpleado=:idempleado");
+			    query.setParameter("idempleado", Integer.parseInt(idEntidad));
+			}
 			_la = query.getResultList();
 			for(int i =0; i < _la.size(); i++){
 				Archivo a = _la.get(i);

@@ -2,6 +2,7 @@
 var tipoEntidad;
 var idEntidad;
 var countArchivo = 0;
+var idUsuario = '${pageContext.session.getAttribute("idUsuario")}';
 $(document).ready(function(e) {
 	$('#hdnIdEntidadc').val(idEntidad);
 	$('#hdnTipoEntidadc').val(tipoEntidad);
@@ -24,10 +25,13 @@ function listarComentarios(){
 	 				'<td class="center">'+coment.nombreUsuario+'</td>'+
 					'<td class="center">'+coment.comentario+'</td>'+
 					'<td class="center">'+timeStampFormatted(coment.fechaCreacion)+'</td>'+
-					'<td class="center">'+
-						'<button Title="Editar" class="btn btn-success btn-circle" type="button" id="btnEditC_'+i+'" data-toggle="modal" data-target="#myModal" onclick="mostrarEditarC('+i+')"><i class="fa fa-list"></i></button>'+
-						'<button Title="Eliminar" class="btn btn-danger btn-circle" type="button" id="btnDeleteC_'+i+'" data-toggle="modal" data-target="#myModalR" onclick="mostrarEliminarC('+i+','+coment.idComentario+')"><i class="fa fa-times"></i></button>'+
-					'</td>'+
+					'<td class="center">'+coment.visibilidad+'</td>'+
+					'<td class="center">';
+				    if(idUsuario==coment.idUsuario){
+				    	filas += '<button Title="Editar" class="btn btn-success btn-circle" type="button" id="btnEditC_'+i+'" data-toggle="modal" data-target="#myModal" onclick="mostrarEditarC('+i+')"><i class="fa fa-list"></i></button>'+
+						'<button Title="Eliminar" class="btn btn-danger btn-circle" type="button" id="btnDeleteC_'+i+'" data-toggle="modal" data-target="#myModalR" onclick="mostrarEliminarC('+i+','+coment.idComentario+')"><i class="fa fa-times"></i></button>';
+				    }
+				    filas += '</td>'+
 				    '</tr>';
 				});		        
 	 		},
@@ -37,7 +41,8 @@ function listarComentarios(){
  				'<th class="center" style="display:none;">IdComentario</th>'+
  				'<th class="center">Creador por </th>'+
  				'<th class="center">Comentario </th>'+
- 				'<th class="center">Fecha Creación </th>'+				
+ 				'<th class="center">Fecha Creación </th>'+
+ 				'<th class="center">Visibilidad </th>'+
 				'<th class="center">Acciones</th>';
 	 			var id = 'Coment';
 				var contenido = '';
@@ -66,6 +71,7 @@ function registrarComentarios(){
  		dataType: 'json',
  		data: $('#frmComentario').serialize(),
  		success: function(resultado){
+ 			$('#txtNComment').val('');
  			listarComentarios(); 			
  		}
  	});	

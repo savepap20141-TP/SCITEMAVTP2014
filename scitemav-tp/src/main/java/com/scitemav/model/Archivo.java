@@ -24,6 +24,14 @@ public class Archivo {
 	private Vehiculo arcVehiculo;
 	
 	@ManyToOne
+	@JoinColumn(name = "idempleado",nullable = true)
+	private Empleado arcEmpleado;
+	
+	@ManyToOne
+	@JoinColumn(name = "idcliente",nullable = true)
+	private Cliente arcCliente;
+	
+	@ManyToOne
 	@JoinColumn(name = "idusuario",nullable = false)
 	private Usuario arcUsuario;
 	
@@ -112,6 +120,22 @@ public class Archivo {
 
 	public void setSize(Long size) {
 		this.size = size;
+	}
+
+	public Empleado getArcEmpleado() {
+		return arcEmpleado;
+	}
+
+	public void setArcEmpleado(Empleado arcEmpleado) {
+		this.arcEmpleado = arcEmpleado;
+	}
+
+	public Cliente getArcCliente() {
+		return arcCliente;
+	}
+
+	public void setArcCliente(Cliente arcCliente) {
+		this.arcCliente = arcCliente;
 	}
 	
 }

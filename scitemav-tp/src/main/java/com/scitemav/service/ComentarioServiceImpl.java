@@ -12,7 +12,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.scitemav.bean.ComentarioBean;
+import com.scitemav.model.Cliente;
 import com.scitemav.model.Comentario;
+import com.scitemav.model.Empleado;
 import com.scitemav.model.Revision;
 import com.scitemav.model.Usuario;
 import com.scitemav.model.Vehiculo;
@@ -42,6 +44,16 @@ public class ComentarioServiceImpl implements ComentarioService  {
 				Revision rev = new Revision();
 				rev.setIdRevision(Integer.parseInt(idEntidad));
 				com.setComRevision(rev);
+			}
+			else if(tipoEntidad.equals("cliente")){
+				Cliente cli = new Cliente();
+				cli.setIdCliente(Integer.parseInt(idEntidad));
+				com.setComCliente(cli);
+			}
+			else if(tipoEntidad.equals("empleado")){
+				Empleado emp = new Empleado();
+				emp.setIdEmpleado(Integer.parseInt(idEntidad));
+				com.setComEmpleado(emp);
 			}
 			
 			com.setComentario(comentarioB.getComentario());
@@ -74,15 +86,44 @@ public class ComentarioServiceImpl implements ComentarioService  {
 		try{
 			Query query = null;
 			if(tipoEntidad.equals("vehiculo")){
-				query = em.createQuery("SELECT c FROM Comentario c JOIN c.comVehiculo cv WHERE cv.idVehiculo=:idvehiculo");
+				String Squery = "";
+				Squery = "SELECT c FROM Comentario c JOIN c.comVehiculo cv WHERE cv.idVehiculo=:idvehiculo";
+				query = em.createQuery(Squery);
+				if(session.getAttribute("role").toString().equals("cliente")){
+					Squery += " AND c.visibilidad='Privado (Empleados & Clientes)' AND c.visibilidad='Privado (Cliente)' ";
+				}else if(session.getAttribute("role").toString().equals("supervisor") ||
+						session.getAttribute("role").toString().equals("Tecnico automotriz") || 
+						session.getAttribute("role").toString().equals("Jefe automotriz")){
+					Squery += " AND c.visibilidad='Privado (Empleados & Clientes)' AND c.visibilidad='Privado (Cliente)' ";
+				}
 			    query.setParameter("idvehiculo", Integer.parseInt(idEntidad));
 				
 			}
 			else if(tipoEntidad.equals("revision")){
-				query = em.createQuery("SELECT c FROM Comentario c JOIN c.comRevision cr WHERE cr.idRevision=:idrevision");
-			    query.setParameter("idrevision", Integer.parseInt(idEntidad));
-				
+				String Squery = "";
+				Squery = "SELECT c FROM Comentario c JOIN c.comRevision cr WHERE cr.idRevision=:idrevision";
+				if(session.getAttribute("role").toString().equals("cliente")){
+					Squery += " AND c.visibilidad='Privado (Empleados & Clientes)' AND c.visibilidad='Privado (Cliente)' ";
+				}else if(session.getAttribute("role").toString().equals("supervisor") ||
+						session.getAttribute("role").toString().equals("tecnico automotriz") || 
+						session.getAttribute("role").toString().equals("jefe automotriz")){
+					Squery += " AND c.visibilidad='Privado (Empleados & Clientes)' AND c.visibilidad='Privado (Cliente)' ";
+				}
+				query = em.createQuery(Squery);
+			    query.setParameter("idrevision", Integer.parseInt(idEntidad));				
 			}	
+			else if(tipoEntidad.equals("cliente")){
+				String Squery = "";
+				Squery = "SELECT c FROM Comentario c JOIN c.comCliente cc WHERE cc.idCliente=:idcliente";
+				query = em.createQuery(Squery);
+			    query.setParameter("idcliente", Integer.parseInt(idEntidad));				
+			}
+			else if(tipoEntidad.equals("empleado")){
+				String Squery = "";
+				Squery = "SELECT c FROM Comentario c JOIN c.comEmpleado ce WHERE ce.idEmpleado=:idempleado";
+				query = em.createQuery(Squery);
+			    query.setParameter("idempleado", Integer.parseInt(idEntidad));				
+			}
 			
 			_lc = query.getResultList();
 			for(int i =0; i < _lc.size(); i++){

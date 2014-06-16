@@ -90,19 +90,19 @@
 					<div class="panel-body">
 						<!-- Nav tabs -->
 						<ul class="nav nav-tabs">
-							<li class="active"><a href="#vehiculo" data-toggle="tab">Información</a></li>
-							<li class=""><a href="#revisiones" data-toggle="tab">Revisiones</a></li>
-							<li class=""><a href="#repuestos" data-toggle="tab">Repuestos</a></li>
-							<li class=""><a href="#archivos" data-toggle="tab">Archivos</a></li>
-							<li class=""><a href="#comentarios" data-toggle="tab">Comentarios</a></li>
+							<li class="active"><a href="#vehiculo" data-toggle="tab">INFORMACION</a></li>
+							<li class=""><a href="#revisiones" data-toggle="tab">REVISIONES</a></li>
+							<li class=""><a href="#repuestos" data-toggle="tab">REPUESTOS</a></li>
+							<li class=""><a href="#archivos" data-toggle="tab">ARCHIVOS</a></li>
+							<li class=""><a href="#comentarios" data-toggle="tab">COMENTARIOS</a></li>
 						</ul>
 
 						<!-- Tab panes -->
 
 
 						<div class="tab-content">
-							<jsp:include page="Vehiculo/vehiculoInformacion.jsp"/>
-							<jsp:include page="Vehiculo/vehiculoRevisiones.jsp"/>
+							<jsp:include page="vehiculoDetalle/vehiculoInformacion.jsp"/>
+							<jsp:include page="vehiculoDetalle/vehiculoRevisiones.jsp"/>
 							<div class="tab-pane fade" id="repuestos">
 									<h4>Repuestos</h4>
 									<p>Lorem ipsum dolor sit amet, consectetur adipisicing

@@ -30,6 +30,12 @@ public class Cliente {
 	@OneToMany(mappedBy ="vehCliente")
 	private Collection<Vehiculo> cliVehiculos;
 	
+	@OneToMany(mappedBy ="arcCliente")
+	private Collection<Archivo> cliArchivos;
+	
+	@OneToMany(mappedBy ="comCliente")
+	private Collection<Comentario> cliComentarios;
+	
 	public Integer getIdCliente() {
 		return idCliente;
 	}
@@ -68,6 +74,22 @@ public class Cliente {
 
 	public void setCliVehiculos(Collection<Vehiculo> cliVehiculos) {
 		this.cliVehiculos = cliVehiculos;
+	}
+
+	public Collection<Archivo> getCliArchivos() {
+		return cliArchivos;
+	}
+
+	public void setCliArchivos(Collection<Archivo> cliArchivos) {
+		this.cliArchivos = cliArchivos;
+	}
+
+	public Collection<Comentario> getCliComentarios() {
+		return cliComentarios;
+	}
+
+	public void setCliComentarios(Collection<Comentario> cliComentarios) {
+		this.cliComentarios = cliComentarios;
 	}
 	
 }

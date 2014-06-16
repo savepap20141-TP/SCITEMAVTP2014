@@ -21,7 +21,13 @@ public class EmpleadoRevision {
 	@ManyToOne
 	@JoinColumn(name = "idempleado",nullable = false)
 	private Empleado reeEmpleado;
+	
+	@Column(name = "nrohoras", nullable = true)
+	private Double nroHoras;
 
+	@Column(name = "costo", nullable = true)
+	private Double costo;
+	
 	public Integer getIdEmpleadoRevision() {
 		return idEmpleadoRevision;
 	}
@@ -44,6 +50,22 @@ public class EmpleadoRevision {
 
 	public void setReeEmpleado(Empleado reeEmpleado) {
 		this.reeEmpleado = reeEmpleado;
+	}
+
+	public Double getNroHoras() {
+		return nroHoras;
+	}
+
+	public void setNroHoras(Double nroHoras) {
+		this.nroHoras = nroHoras;
+	}
+
+	public Double getCosto() {
+		return costo;
+	}
+
+	public void setCosto(Double costo) {
+		this.costo = costo;
 	}
 	
 	

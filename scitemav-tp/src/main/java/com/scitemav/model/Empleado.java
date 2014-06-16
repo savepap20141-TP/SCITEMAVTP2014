@@ -39,6 +39,12 @@ public class Empleado {
 	@OneToMany(mappedBy ="reeEmpleado")
 	private Collection<EmpleadoRevision> empEmpleadoRevisiones;
 	
+	@OneToMany(mappedBy ="arcEmpleado")
+	private Collection<Archivo> empArchivos;
+	
+	@OneToMany(mappedBy ="comEmpleado")
+	private Collection<Comentario> empComentarios;
+	
 	public Integer getIdEmpleado() {
 		return idEmpleado;
 	}
@@ -93,5 +99,21 @@ public class Empleado {
 
 	public void setSueldo(Double sueldo) {
 		this.sueldo = sueldo;
+	}
+
+	public Collection<Archivo> getEmpArchivos() {
+		return empArchivos;
+	}
+
+	public void setEmpArchivos(Collection<Archivo> empArchivos) {
+		this.empArchivos = empArchivos;
+	}
+
+	public Collection<Comentario> getEmpComentarios() {
+		return empComentarios;
+	}
+
+	public void setEmpComentarios(Collection<Comentario> empComentarios) {
+		this.empComentarios = empComentarios;
 	}
 }

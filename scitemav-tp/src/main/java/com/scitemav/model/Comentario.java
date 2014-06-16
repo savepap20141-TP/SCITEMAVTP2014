@@ -25,6 +25,14 @@ public class Comentario {
 	private Vehiculo comVehiculo;
 	
 	@ManyToOne
+	@JoinColumn(name = "idempleado",nullable = true)
+	private Empleado comEmpleado;
+	
+	@ManyToOne
+	@JoinColumn(name = "idcliente",nullable = true)
+	private Cliente comCliente;
+	
+	@ManyToOne
 	@JoinColumn(name = "idusuario",nullable = false)
 	private Usuario comUsuario;
 	
@@ -91,6 +99,22 @@ public class Comentario {
 
 	public void setFechaCreacion(Timestamp fechaCreacion) {
 		this.fechaCreacion = fechaCreacion;
+	}
+
+	public Empleado getComEmpleado() {
+		return comEmpleado;
+	}
+
+	public void setComEmpleado(Empleado comEmpleado) {
+		this.comEmpleado = comEmpleado;
+	}
+
+	public Cliente getComCliente() {
+		return comCliente;
+	}
+
+	public void setComCliente(Cliente comCliente) {
+		this.comCliente = comCliente;
 	}
 	
 }
