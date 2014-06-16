@@ -72,9 +72,10 @@ public class RepuestoController {
 		session = request.getSession();
 		List<String> enviados = new ArrayList<String>();
 		String[] idRepList = request.getParameter("idRepuestoList").toString().split("_");
-		
+		String[] cantidadRepList = request.getParameter("cantidadRepuestoList").toString().split("_");
+		String[] costoURepList = request.getParameter("costoRepuestoList").toString().split("_");
 		if(idRepList[0].length() > 0){
-			enviados = repuestoService.administrarRepuestosRevision(idRepList, idRevision);
+			enviados = repuestoService.administrarRepuestosRevision(idRepList,cantidadRepList,costoURepList, idRevision);
 		}
 		return enviados;
 	}

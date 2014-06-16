@@ -101,6 +101,11 @@ public class RepuestoServicelmlp implements RepuestoService {
 				rb.setNombre(r.getRerRepuesto().getNombre());
 				rb.setNombreTipoRepuesto(r.getRerRepuesto().getRepTipoRepuesto().getNombre());
 				rb.setCostoTotal(r.getRerRevision().getCostoTotal());
+				//
+				rb.setCantidad(r.getCantidad());
+				rb.setCostoUnitario(r.getCostoUnitario());
+				rb.setCosto(r.getCosto());
+				
 				listaRepuestoBean.add(rb);
 			}
 		} catch (IllegalArgumentException e) {
@@ -111,7 +116,7 @@ public class RepuestoServicelmlp implements RepuestoService {
 	}
 
 	@Transactional
-	public List<String> administrarRepuestosRevision(String[] ids, Integer IdRevision) {
+	public List<String> administrarRepuestosRevision(String[] ids,String[] cantidadR,String[] costoUR, Integer IdRevision) {
 		List<String> enviados = new ArrayList<String>();
 		try {
 			for (int i = 0; i < ids.length; i++) {				
@@ -122,6 +127,9 @@ public class RepuestoServicelmlp implements RepuestoService {
 				Revision rev = em.find(Revision.class, IdRevision);
 				repuestov.setRerRepuesto(rep);
 				repuestov.setRerRevision(rev);
+				repuestov.setCantidad(Integer.parseInt(cantidadR[i]));
+				repuestov.setCostoUnitario(Double.parseDouble(costoUR[i]));
+				repuestov.setCosto(repuestov.getCostoUnitario()*repuestov.getCantidad());
 				enviados.add( rep.getNombre()+" "+rep.getRepTipoRepuesto().getNombre());
 				em.persist(repuestov);
 			}

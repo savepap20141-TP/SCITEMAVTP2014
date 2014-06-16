@@ -32,6 +32,7 @@ public class EmpleadoBean {
 	private Integer idUsuario;
 	private String estado;
 	
+	private Double nroHoras;
 	
 	
 	public Integer getIdUsuario() {
@@ -177,5 +178,11 @@ public class EmpleadoBean {
 	}
 	public void setEstado(String estado) {
 		this.estado = estado;
+	}
+	public Double getNroHoras() {
+		return nroHoras;
+	}
+	public void setNroHoras(Double nroHoras) {
+		this.nroHoras = nroHoras;
 	}
 }

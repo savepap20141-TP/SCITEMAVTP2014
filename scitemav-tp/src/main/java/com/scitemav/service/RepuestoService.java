@@ -15,6 +15,6 @@ public interface RepuestoService {
 	boolean registro(RepuestoBean tipv);
 	public List<RepuestoBean> listarRepuestos();
 	public List<RepuestoBean> listarRepuestosRevision(Integer idRevision);
-	public List<String> administrarRepuestosRevision(String[] ids, Integer IdRevision);
+	public List<String> administrarRepuestosRevision(String[] ids,String[] cantidadR,String[] costoUR, Integer IdRevision);
 	boolean eliminarRepuestoRev(RepuestoRevisionBean RepuestoRevisionB);
 }

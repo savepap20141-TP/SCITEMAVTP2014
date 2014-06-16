@@ -239,13 +239,16 @@ public class EmpleadoServiceImpl implements EmpleadoService{
 	@Transactional
 	public List<EmpleadoBean> listarEmpleadosRevision(Integer idRevision) {
 		List<Empleado> listaEmpleado = new ArrayList<Empleado>();
-		List<EmpleadoBean> listaEmpleadoBean = new ArrayList<EmpleadoBean>();		
+		List<EmpleadoBean> listaEmpleadoBean = new ArrayList<EmpleadoBean>();	
+		//
+		List<EmpleadoRevision> listaEmpleadoRev = new ArrayList<EmpleadoRevision>();
+		List<EmpleadoRevisionBean> listaEmpleadoRevBean = new ArrayList<EmpleadoRevisionBean>();
 		try {
-			Query q = em.createQuery("SELECT er.reeEmpleado FROM EmpleadoRevision er JOIN er.reeRevision r WHERE r.idRevision=:idRevision");
+			Query q = em.createQuery("SELECT er FROM EmpleadoRevision er JOIN er.reeRevision r WHERE r.idRevision=:idRevision");
 			q.setParameter("idRevision", idRevision);
-			listaEmpleado = q.getResultList();
-			for(int i=0; i < listaEmpleado.size(); i++){
-				Empleado v = listaEmpleado.get(i);
+			listaEmpleadoRev = q.getResultList();
+			for(int i=0; i < listaEmpleadoRev.size(); i++){
+				Empleado v = listaEmpleadoRev.get(i).getReeEmpleado();
 				EmpleadoBean vb = new EmpleadoBean();
 				vb.setNombre(v.getEmpPersona().getNombre());
 				vb.setApellidoPaterno(v.getEmpPersona().getApellidoPaterno());
@@ -256,6 +259,7 @@ public class EmpleadoServiceImpl implements EmpleadoService{
 				vb.setNombreCargo(v.getEmpCargo().getDescripcion());
 				vb.setNombreEspecialidad(v.getEmpEspecialidad().getDescripcion());
 				vb.setIdEmpleado(v.getIdEmpleado());
+				vb.setNroHoras(listaEmpleadoRev.get(i).getNroHoras());
 				listaEmpleadoBean.add(vb);
 			}
 		} catch (IllegalArgumentException e) {

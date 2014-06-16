@@ -30,6 +30,9 @@ public class RepuestoRevision {
 	
 	@Column(name = "cantidad", nullable = true)
 	private Integer cantidad;
+	
+	@Column(name = "costo", nullable = true)
+	private Double costo;
 
 	public Integer getIdRepuestoRevision() {
 		return idRepuestoRevision;
@@ -77,5 +80,13 @@ public class RepuestoRevision {
 
 	public void setCantidad(Integer cantidad) {
 		this.cantidad = cantidad;
+	}
+
+	public Double getCosto() {
+		return costo;
+	}
+
+	public void setCosto(Double costo) {
+		this.costo = costo;
 	}
 }

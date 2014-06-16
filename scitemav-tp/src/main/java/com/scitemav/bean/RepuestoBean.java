@@ -12,6 +12,8 @@ public class RepuestoBean {
 	private Integer idRepuestoRevision;
 	private String comentario;
 	private Double costoUnitario;
+	private Integer cantidad;
+	private Double costo;
 	//revision
 	private Double costoTotal;
 	private Integer idRevision;
@@ -102,6 +104,26 @@ public class RepuestoBean {
 
 	public void setCostoTotal(Double costoTotal) {
 		this.costoTotal = costoTotal;
+	}
+
+
+	public Integer getCantidad() {
+		return cantidad;
+	}
+
+
+	public void setCantidad(Integer cantidad) {
+		this.cantidad = cantidad;
+	}
+
+
+	public Double getCosto() {
+		return costo;
+	}
+
+
+	public void setCosto(Double costo) {
+		this.costo = costo;
 	}
 
 

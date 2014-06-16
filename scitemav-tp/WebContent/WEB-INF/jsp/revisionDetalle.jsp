@@ -312,11 +312,13 @@ $(function() {
 	 				arregloAsignadosRep.push(repuesto.idRepuesto);
 	 				filas = filas +'<tr class="">'+
 	 				'<td class="center">REP-'+repuesto.idRepuesto+'</td>'+
-	 				'<td class="center" id="filaIdR_'+i+'" style="display:none;">'+repuesto.idRepuesto+'</td>'+
-	 				'<td class="center">'+repuesto.comentario+'</td>'+
+	 				'<td class="center" id="filaIdR_'+i+'" style="display:none;">'+repuesto.idRepuesto+'</td>'+	 				
 					'<td class="center">'+repuesto.nombre+'</td>'+
 					'<td class="center">'+repuesto.nombreTipoRepuesto+'</td>'+
-					'<td class="center">'+repuesto.costoUnitario+'</td>'+					
+					'<td class="center">'+repuesto.comentario+'</td>'+
+					'<td class="center">'+repuesto.cantidad+'</td>'+
+					'<td class="center">'+repuesto.costoUnitario+'</td>'+
+					'<td class="center">'+repuesto.costo+'</td>'+
 					'<td class="center"><button class="btn btn-danger btn-circle" type="button" id="btnDelete_'+i+'" data-toggle="modal" data-target="#myModalR" onclick="mostrarEliminarR('+i+','+idRevision+')"><i class="fa fa-times"></i></button></td>'+
 					'</tr>';
 				});		        
@@ -324,11 +326,13 @@ $(function() {
 	 		complete: function() {
 	 			columnas = columnas + 
 	 				'<th class="center">Codigo</th>'+
-	 				'<th class="center" style="display:none;">IdRepuesto</th>'+
-	 				'<th class="center">Comentario</th>'+
+	 				'<th class="center" style="display:none;">IdRepuesto</th>'+	 				
 	 				'<th class="center">Nombre Respuesto</th>'+
 	 				'<th class="center">Tipo Respuesto</th>'+
-					'<th class="center">Costo Unitario</th>'+
+	 				'<th class="center">Comentario</th>'+
+	 				'<th class="center">Cantidad</th>'+
+	 				'<th class="center">Costo Unitario</th>'+
+	 				'<th class="center">Costo</th>'+
 					'<th class="center">Eliminar</th>';
 
 				var id = 'RepRev';
@@ -357,6 +361,8 @@ $(function() {
 
 	function updateStateRep(source,i){
 		$('#changeR_'+i).val(true);
+		$("#cantidadS_"+i).attr('disabled',false);
+		$("#costoUnitS_"+i).attr('disabled',false);
 	}
 	
 	function inicioConsultaRepuestos(){
@@ -371,9 +377,11 @@ $(function() {
 	 			$.each(repuestos, function(i, repuesto){
 		 				filas = filas +'<tr class="">'+
 		 				'<td class="center"><input id="chkRep_'+repuesto.idRepuesto+'" type="checkbox" onclick="updateStateRep(this,'+ i +')"></td>'+ 		
-						'<td class="center">'+repuesto.idRepuesto+'<input id="changeR_'+i+'" type="hidden" name="changeR"></td>'+
+						'<td class="center">REP-'+repuesto.idRepuesto+'<input id="changeR_'+i+'" type="hidden" name="changeR"></td>'+
 						'<td class="center">'+repuesto.nombre+'<input type="hidden" value="'+repuesto.idRepuesto+'" id="idRep_'+i+'" /></td>'+
 						'<td class="center">'+repuesto.nombreTipoRepuesto+'</td>'+				
+						'<td class="center"><input type="text" id="cantidadS_'+i+'" disabled="disabled"/></td>'+
+						'<td class="center"><input type="text" id="costoUnitS_'+i+'" disabled="disabled"/></td>'+
 						'</tr>';
 	 				
 				}); 			
@@ -384,8 +392,9 @@ $(function() {
 	 				'<th class="center">Estado</th>'+ 		
 	 				'<th class="center">Codigo</th>'+
 	 				'<th class="center">Nombre</th>'+
-					'<th class="center">Nombre Tipo Repuesto</th>';
-					
+					'<th class="center">Nombre Tipo Repuesto</th>'+
+					'<th class="center">Cantidad</th>'+
+					'<th class="center">Costo Unitario</th>';
 					//
 		 			var id = 'Rep';
 					var contenido = '';
@@ -463,15 +472,20 @@ $(function() {
 	
 	$(document).on('click','#btnAsignarRepuestos', function(e){
 		var list_IdRep = '';
+		var list_cantidadRep = '';
+		var list_costoRepU = '';
 		list_isChangedR = document.getElementsByName('changeR');
 		  for (var x=0; x < list_isChangedR.length; x++) {
 			  if($('#changeR_'+x).val()==true || $('#changeR_'+x).val()=='true'){
 				list_IdRep += $('#idRep_'+x).val()+'_';
+				list_cantidadRep += $('#cantidadS_'+x).val()+'_';
+				list_costoRepU += $('#costoUnitS_'+x).val()+'_';
 				$('#changeR_'+x).val('');
 			  }
 		 }
 		$('#idRepuesto_list').val(list_IdRep);	
-	
+		$('#cantidadRep_list').val(list_cantidadRep);
+		$('#costoRepU_list').val(list_costoRepU);
 		  var idrevisionAE2 = $('#spnIdRevision').text();
 		  $.ajax({
 			   url: 'asignarRepuestoRevision-'+idrevisionAE2,
@@ -772,6 +786,7 @@ function updateState(source,i){
 	}
 	$('#state_'+i).val(state);
 	$('#change_'+i).val(true);
+	$("#nHorasE_"+i).attr('disabled',false);
 }	
 function ExtractInformacion2(){
 	$('.vistaInformacion2').hide();
@@ -803,6 +818,7 @@ function inicioConsultaEmpleadosRevision(idRevision){
 				'<td class="center">'+empleado.telefono+'</td>'+
 				'<td class="center">'+empleado.nombreCargo+'</td>'+
 				'<td class="center">'+empleado.nombreEspecialidad+'</td>'+
+				'<td class="center">'+empleado.nroHoras+'</td>'+
 				'<td class="center"><button class="btn btn-danger btn-circle" type="button" id="btnDelete_'+i+'" data-toggle="modal" data-target="#myModalE" onclick="mostrarEliminarE('+i+','+idRevision+')"><i class="fa fa-times"></i></button></td>'+
 				'</tr>';
 			});		        
@@ -818,6 +834,7 @@ function inicioConsultaEmpleadosRevision(idRevision){
 				'<th class="center">Telefono</th>'+
 				'<th class="center">Nombre Cargo</th>'+
 				'<th class="center">Nombre Especialidad</th>'+
+				'<th class="center">Nro. Horas</th>'+
 				'<th class="center">Eliminar</th>';
 			//realizarTabla2('EmpRev',columnas,filas);
 			//$('#EmpRev').append(filas);
@@ -905,7 +922,8 @@ function inicioConsultaEmpleados(){
 					'<td class="center">'+empleado.dni+'<input type="hidden" name="id" value="'+empleado.idEmpleado+'" id="idEmp_'+i+'" /></td>'+
 					'<td class="center">'+empleado.nombre+'</td>'+
 					'<td class="center">'+empleado.apellidoPaterno+'</td>'+
-					'<td class="center">'+empleado.apellidoMaterno+'</td>'+				
+					'<td class="center">'+empleado.apellidoMaterno+'</td>'+	
+					'<td class="center"><input type="text" id="nHorasE_'+i+'" disabled="disabled"/></td>'+
 					'</tr>';
  				
 			}); 			
@@ -919,7 +937,8 @@ function inicioConsultaEmpleados(){
  				'<th class="center">DNI</th>'+
 				'<th class="center">Nombre</th>'+
 				'<th class="center">Apellido Paterno</th>'+
-				'<th class="center">Apellido Materno</th>';
+				'<th class="center">Apellido Materno</th>'+
+				'<th class="center">Nro. Horas</th>';
 			//realizarTabla2('Emp',columnas,filas);
 			realizarTabla(columnas,filas);
 			for(var x = 0; x < arregloAsignadosEmp.length;x++){
@@ -1062,9 +1081,9 @@ $(document).on('click','#btnAsignarEmpleados', function(e){
 						<!-- Nav tabs -->
 						<ul class="nav nav-tabs">
 							<li class="active"><a href="#revision" data-toggle="tab">INFORMACION</a></li>
-							<li class=""><a href="#repuestos" data-toggle="tab">REPUESTOS</a></li>
 							<li class=""><a href="#fallas" data-toggle="tab">FALLAS</a></li>
-							<li class=""><a href="#empleado" data-toggle="tab">EMPLEADO</a></li>
+							<li class=""><a href="#repuestos" data-toggle="tab">REPUESTOS</a></li>							
+							<li class=""><a href="#empleado" data-toggle="tab">EMPLEADOS</a></li>
 							<li class=""><a href="#archivos" data-toggle="tab">ARCHIVOS</a></li>
 							<li class=""><a href="#comentarios" data-toggle="tab">COMENTARIOS</a></li>							
 						</ul>
@@ -1073,307 +1092,10 @@ $(document).on('click','#btnAsignarEmpleados', function(e){
 
 
 						<div class="tab-content">
-
-							<div class="tab-pane fade active in" id="revision">
-								<div class="panel panel-default">
-									<div class="panel-heading">
-										Datos de la revisión
-										<div class="pull-right">
-											<div class="btn-group">
-												<span id="btnVerEdicion"
-													class="btn btn-default btn-xs dropdown-toggle"
-													onclick="ExtractInformacion();">Editar</span> 
-													<span id="btnVerInformacion"
-													class="btn btn-default btn-xs dropdown-toggle"
-													onclick="$('.vistaInformacion').show();$('.edicionInformacion').hide();$('#btnVerInformacion').hide();$('#btnVerEdicion').show();"
-													style="display: none">Regresar</span>
-											</div>
-										</div>
-									</div>
-
-									<div class="panel-body">
-
-										<div class="col-lg-12 vistaInformacion">
-											<br>
-											<div class="col-lg-4">
-							<p class="text-primary" style="display:none">Id:</p>
-							<span id="spnidrevision" style="display:none"></span>
-						<!--<p class="text-primary">Costo Total:</p> 
-							<span id="spnCostoTotal2"></span>-->
-							<p class="text-primary">Fecha Inicio:</p>
-							<span id="spnFechaInicio2"></span>
-							<p class="text-primary">Fecha Fin:</p>
-							<span id="spnFechaFin2"></span>
-							<p class="text-primary">Fecha Próxima:</p>
-							<span id="spnFechaProxima2"></span>
-							<p class="text-primary">Kilometraje Actual:</p>
-							<span id="spnKilometrajeActual2"></span>
-							<p class="text-primary">Kilometraje Próximo:</p>
-							<span id="spnKilometrajeProximo2"></span>												
-											</div>											
-										</div>
-										<div class="col-lg-12 edicionInformacion" style="display: none;">
-										<!-- BORRAR EN CASO DE ERROR -->
-										
-										<form role="form" id="frmEdicionRevision" commandName="revisionbean" style="width: 90%; padding-left: 10%;">
-							<fieldset>						
-								<div class="col-lg-6">	
-								
-								    <div class="form-group" style="display:none">
-											<label>Revision</label> 
-											<input id="txtRevision" class="form-control"
-											 name="idRevision" placeholder="Revision"></input>
-											 <input id="txtVehiculo" class="form-control"
-											 name="idVehiculo" placeholder="Vehiculo"></input>
-										</div> 					
-								<!-- 	<div class="form-group" >
-											<label> Costo Total </label> <input id="txtCostoTotal"
-											class="form-control" name="costoTotal" placeholder="Costo total"></input>
-										</div>  
-										-->
-										<div class="form-group input-group">
-											<label> Fecha de Inicio</label> <input id="txtFechaInicio"
-												class="form-control" name="fechaInicio"
-												placeholder="Fecha de Inicio"></input>
-												<span class="input-group-btn">
-												    <button class="btn btn-default fa fa-table fa-fw" type="button" style="margin-top:25px; height: 34px;" onclick="$('#txtFechaInicio').datepicker('show')"></button>
-												</span>
-										</div>
-										
-									 	<div class="form-group input-group" >
-											<label> Fecha de Fin</label> <input id="txtFechaFin"
-												class="form-control" name="fechaFin"
-												placeholder="Fecha de Fin"></input>
-												<span class="input-group-btn">
-												    <button class="btn btn-default fa fa-table fa-fw" type="button" style="margin-top:25px; height: 34px;" onclick="$('#txtFechaFin').datepicker('show')"></button>
-												</span>
-										</div>
-										 
-										 
-										<div class="form-group input-group" >
-											<label> Próxima revisión</label> <input id="txtProximaRevision"
-												class="form-control" name="fechaProxima"
-												placeholder="Fecha próxima"></input>
-												<span class="input-group-btn">
-												    <button class="btn btn-default fa fa-table fa-fw" type="button" style="margin-top:25px; height: 34px;" onclick="$('#txtProximaRevision').datepicker('show')"></button>
-												</span>
-										</div>
-										<div class="form-group">
-											<label> Kilometraje Actual </label> <input id="txtKilometrajeActual"
-											class="form-control" name="kilometrajeActualhdn" placeholder="Kilometraje actual"></input>
-											<input id="txtKilometrajeActualhdn" style="display:none"
-											class="form-control" name="kilometrajeActual" placeholder="Kilometraje actual Hidden"></input>
-										</div>
-										<div class="form-group">
-											<label> Kilometraje Próximo </label> <input id="txtKilometrajeProximo"
-											class="form-control" name="kilometrajeProximohdn" placeholder="Kilometraje próximo"></input>
-											<input id="txtKilometrajeProximohdn" style="display:none"
-											class="form-control" name="kilometrajeProximo" placeholder="Kilometraje próximo"></input>
-										</div>																				
-																																																																				
-																																					
-									<!-- FINAL SEGUNDA COLUMNA -->
-									<span class="btn btn-success" onclick="EditInformacionRevision();">Guardar</span>
-									<span class="btn btn-danger" onclick="$('.vistaInformacion').show();$('.edicionInformacion').hide();$('#btnVerInformacion').hide();$('#btnVerEdicion').show();">Cancelar</span>
-								</div>
-																
-								
-										
-							</fieldset>							
-							</form>
-										
-										
-										<!-- FIN  -->																			
-										</div>
-									</div>
-								</div>
-
-							</div>
-								<div class="tab-pane fade" id="repuestos">
-								
-								<br>
-								<div class="alert alert-success alert-dismissable" id="resultOkR" style="display:none">
-    							<button class="close" aria-hidden="true" data-dismiss="alert" type="button">×</button>
-								Se ha eliminado correctamente
-							</div>
-									<div class="panel panel-default">
-										<div class="panel-heading">
-											Repuestos por Revisión
-											<div class="pull-right">
-												<div class="btn-group">
-													<span id="btnVerEdicion4"
-														class="btn btn-default btn-xs dropdown-toggle"
-														onclick="ExtractInformacion4();">Editar</span> 
-													<span id="btnVerInformacion4"
-														class="btn btn-default btn-xs dropdown-toggle"
-														onclick="$('.edicionInformacion4').hide();$('.vistaInformacion4').show();$('#btnVerInformacion4').hide();$('#btnVerEdicion4').show();$('#resultOkR').hide();$('#resultAsigRep').hide();"
-														style="display: none">Regresar</span>
-												</div>
-											</div>												
-										</div>
-
-									<div class="panel-body">
-										<div class="edicionInformacion4" style="display: none">
-											<br>
-											<input class="btn btn-lg btn-success btn-block" type="button" style="width: 20%;" value="Asignar Respuestos" id="btnAsignarRepuestos"></input><br>
-											<div class="alert alert-success alert-dismissable" id="resultAsigRep" style="display:none">
-				    							<button class="close" aria-hidden="true" data-dismiss="alert" type="button">×</button>
-				    							<span id="mensajeAsignadosRep"></span>
-											</div>
-											<br>	
-												<div id="spnResultList_Rep" class="resultBox section summaryPane"></div>
-											<form id="frmAdministrarRepuestoRevision">		
-												<input id="idRepuesto_list" type="hidden" name="idRepuestoList"/>
-											</form>
-										</div>
-											<br><br>
-										<div class="vistaInformacion4">
-												<div id="spnResultList_RepRev" class="resultBox section summaryPane"></div>								
-										</div>
-									</div>
-											
-							   		</div>
-									
-								</div>
-								<div class="tab-pane fade" id="fallas">
-								<div class="modal fade" id="myModalEF" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                                <div class="modal-dialog">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                                            <h4 class="modal-title" id="myModalLabelEF">Editar Falla</h4>
-                                        </div>
-                                        <div class="modal-body">
-                                        	<form role="form" id="frmEditarFallaRevision" 
-											 method="post" commandName="fallarevisionbean" enctype="multipart/form-data"  style="width: 30%; margin-left: 10%;">
-			
-												<fieldset>					
-													<div class="form-group" style="display:none">
-															<label> Id FallaRevision</label> <input 
-															class="form-control" name="idFallaRevision" id="txtIdFaRe"/>
-													</div>
-													
-													<div class="form-group" style="display:none">
-															<label> Id Falla</label> <input 
-															class="form-control" name="idFalla" id="txtIdFa3"/>
-														</div>
-													
-													<div class="form-group" style="display:none">
-															<label> Id Revision</label> <input 
-															class="form-control" name="idRevision" id="txtIdRe3"/>
-														</div>			
-																	
-													 <div class="form-group">
-														<label>Comentario</label> <textarea id="txtComentario" 
-														class="form-control" name="comentario" placeholder="Comentario"></textarea>														
-													</div> 
-													
-													<div class="form-group">
-							                            <label>Imagen de Falla: </label>
-							                            <input type="file" name="file" id="fileimagen">
-							                        </div>
-															
-												</fieldset>
-											</form>
-                                        </div>
-                                        <div class="modal-footer">
-                                        	<button type="button" class="btn btn-primary" data-dismiss="modal" onclick="editarFallaRevision();">Guardar</button>
-                                            <button type="button" class="btn btn-default" data-dismiss="modal" onclick="$('#txtIdFaRe').val('');$('#txtComentario').val('');$('#fileimagen').val('');">Cancelar</button>
-                                        </div>
-                                    </div>
-                                    <!-- /.modal-content -->
-                                </div>
-                                <!-- /.modal-dialog -->
-                            </div>
-								<br>
-								<div class="alert alert-success alert-dismissable" id="resultOkFa3" style="display:none">
-    							<button class="close" aria-hidden="true" data-dismiss="alert" type="button">×</button>
-								Se ha editado correctamente
-							</div>
-								<div class="alert alert-success alert-dismissable" id="resultOkF" style="display:none">
-    							<button class="close" aria-hidden="true" data-dismiss="alert" type="button">×</button>
-								Se ha eliminado correctamente
-							</div>
-								
-									<div class="panel panel-default">
-										<div class="panel-heading">
-											Fallas por Revisión
-											<div class="pull-right">
-												<div class="btn-group">
-													<span id="btnVerEdicion3"
-														class="btn btn-default btn-xs dropdown-toggle"
-														onclick="ExtractInformacion3();">Editar</span> 
-													<span id="btnVerInformacion3"
-														class="btn btn-default btn-xs dropdown-toggle"
-														onclick="$('.edicionInformacion3').hide();$('.vistaInformacion3').show();$('#btnVerInformacion3').hide();$('#btnVerEdicion3').show();$('#resultOk1').hide();$('#resultAsigFalla').hide();"
-														style="display: none">Regresar</span>
-												</div>
-											</div>												
-										</div>
-
-									<div class="panel-body">
-										<div class="edicionInformacion3" style="display: none">
-											<br>
-											<input class="btn btn-lg btn-success btn-block" type="button" style="width: 20%;" value="Asignar Falla" id="btnAsignarFallas"></input><br>
-											<div class="alert alert-success alert-dismissable" id="resultAsigFalla" style="display:none">
-				    							<button class="close" aria-hidden="true" data-dismiss="alert" type="button">×</button>
-				    							<span id="mensajeAsignadosFalla"></span>
-											</div>
-											<br>	
-												<div id="spnResultList_Fallas" class="resultBox section summaryPane"></div>
-											<form id="frmAdministrarFallasRevision">		
-												<input id="idFalla_list" type="hidden" name="idFallaList"/>
-											</form>
-										</div>
-											<br><br>
-										<div class="vistaInformacion3">
-												<div id="spnResultList_FalRev" class="resultBox section summaryPane" style="overflow: auto;"></div>								
-										</div>
-									</div>
-											
-							   		</div>
-								
-								</div>
-								<div class="tab-pane fade" id="empleado">								
-								<div class="panel panel-default">
-								<div class="panel-heading">
-											Empleados por Revisión
-								<div class="pull-right">
-											<div class="btn-group">
-												<span id="btnVerEdicion2"
-													class="btn btn-default btn-xs dropdown-toggle"
-													onclick="ExtractInformacion2();">Editar</span> 
-													<span id="btnVerInformacion2"
-													class="btn btn-default btn-xs dropdown-toggle"
-													onclick="$('.edicionInformacion2').hide();$('.vistaInformacion2').show();$('#btnVerInformacion2').hide();$('#btnVerEdicion2').show();"
-													style="display: none">Regresar</span>
-											</div>
-											</div>
-							   </div>
-								
-								<br>
-								
-								<div class="edicionInformacion2" style="display: none">
-									<br>
-									<input class="btn btn-lg btn-success btn-block" type="button" style="width: 20%;" value="Asignar Empleado" id="btnAsignarEmpleados"></input><br>
-									<div class="alert alert-success alert-dismissable" id="resultAsigEmp" style="display:none">
-		    							<button class="close" aria-hidden="true" data-dismiss="alert" type="button">×</button>
-		    							<span id="mensajeAsignadosEmp"></span>
-									</div>
-									<br>
-									<div id="spnResultList" class="resultBox section summaryPane"></div>
-									<form id="frmAdministrarEmpleadosRevision">		
-									<input id="isState_list" type="hidden" name="isStateList"/>
-									<input id="idEmpleado_list" type="hidden" name="idEmpleadoList"/>
-									</form>
-									</div>
-									<br><br>
-									<div class="vistaInformacion2">
-									<div id="spnResultList_EmpRev" class="resultBox section summaryPane"></div>
-								
-								</div>
-								</div>
-						</div>
+								<jsp:include page="revisionDetalle/revisionInformacion.jsp"/>								
+								<jsp:include page="revisionDetalle/revisionFallas.jsp"/>
+								<jsp:include page="revisionDetalle/revisionRepuestos.jsp"/>								
+								<jsp:include page="revisionDetalle/revisionEmpleado.jsp"/>							
 								<jsp:include page="componentes/Archivos.jsp"/>
 								<jsp:include page="componentes/Comentarios.jsp"/>
 						<!-- /.panel-body -->
