@@ -260,6 +260,7 @@ public class EmpleadoServiceImpl implements EmpleadoService{
 				vb.setNombreEspecialidad(v.getEmpEspecialidad().getDescripcion());
 				vb.setIdEmpleado(v.getIdEmpleado());
 				vb.setNroHoras(listaEmpleadoRev.get(i).getNroHoras());
+				vb.setCosto(listaEmpleadoRev.get(i).getCosto());
 				listaEmpleadoBean.add(vb);
 			}
 		} catch (IllegalArgumentException e) {
@@ -270,7 +271,7 @@ public class EmpleadoServiceImpl implements EmpleadoService{
 	}
 	
 	@Transactional
-	public List<String> administrarEmpleadosRevision(String[] ids, Integer IdRevision) {
+	public List<String> administrarEmpleadosRevision(String[] ids, Integer IdRevision, String[] nroHoras) {
 		List<String> enviados = new ArrayList<String>();
 		try {
 			for (int i = 0; i < ids.length; i++) {				
@@ -282,6 +283,10 @@ public class EmpleadoServiceImpl implements EmpleadoService{
 				
 				emprev.setReeEmpleado(emp);
 				emprev.setReeRevision(rev);
+				emprev.setNroHoras(Double.parseDouble(nroHoras[i]));
+				
+				emprev.setCosto(emprev.getNroHoras()*emp.getSueldo());
+				
 				enviados.add( emp.getEmpPersona().getNombre()+" "+emp.getEmpPersona().getApellidoPaterno()+" "+emp.getEmpPersona().getApellidoMaterno());
 				em.persist(emprev);
 			}
@@ -355,5 +360,12 @@ public class EmpleadoServiceImpl implements EmpleadoService{
 		}
 
 		return resultado;
+	}
+
+	@Override
+	public void sumarCostoTotal(Integer idRevision) {
+		
+		Revision rev = em.find(Revision.class, idRevision);
+		
 	}
 }

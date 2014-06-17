@@ -32,6 +32,7 @@
 			<form id="frmAdministrarEmpleadosRevision">
 				<input id="isState_list" type="hidden" name="isStateList" /> <input
 					id="idEmpleado_list" type="hidden" name="idEmpleadoList" />
+					<input id="horas_list" type="hidden" name="nroHorasList" />
 			</form>
 		</div>
 		<br>

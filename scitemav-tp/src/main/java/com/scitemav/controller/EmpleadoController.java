@@ -100,9 +100,10 @@ public class EmpleadoController {
 		List<String> enviados = new ArrayList<String>();
 		String[] idUsuList = request.getParameter("idEmpleadoList").toString().split("_");
 		String[] states = request.getParameter("isStateList").toString().split("_");
+		String[] nroHoras = request.getParameter("nroHorasList").toString().split("_");
 		
 		if(idUsuList[0].length() > 0){
-			enviados = empleadoService.administrarEmpleadosRevision(idUsuList, idRevision);
+			enviados = empleadoService.administrarEmpleadosRevision(idUsuList, idRevision, nroHoras);
 		}
 		return enviados;
 	}

@@ -819,6 +819,7 @@ function inicioConsultaEmpleadosRevision(idRevision){
 				'<td class="center">'+empleado.nombreCargo+'</td>'+
 				'<td class="center">'+empleado.nombreEspecialidad+'</td>'+
 				'<td class="center">'+empleado.nroHoras+'</td>'+
+				'<td class="center">'+empleado.costo+'</td>'+
 				'<td class="center"><button class="btn btn-danger btn-circle" type="button" id="btnDelete_'+i+'" data-toggle="modal" data-target="#myModalE" onclick="mostrarEliminarE('+i+','+idRevision+')"><i class="fa fa-times"></i></button></td>'+
 				'</tr>';
 			});		        
@@ -835,6 +836,7 @@ function inicioConsultaEmpleadosRevision(idRevision){
 				'<th class="center">Nombre Cargo</th>'+
 				'<th class="center">Nombre Especialidad</th>'+
 				'<th class="center">Nro. Horas</th>'+
+				'<th class="center">Costo</th>'+
 				'<th class="center">Eliminar</th>';
 			//realizarTabla2('EmpRev',columnas,filas);
 			//$('#EmpRev').append(filas);
@@ -956,16 +958,19 @@ var cont ='first';
 $(document).on('click','#btnAsignarEmpleados', function(e){
 		var list_State = '';
 		var list_IdEmp = '';
+		var list_Horas = '';
 		list_isChanged = document.getElementsByName('change');
 		  for (var x=0; x < list_isChanged.length; x++) {
 			  if($('#change_'+x).val()==true || $('#change_'+x).val()=='true'){
 				list_State += $('#state_'+x).val()+'_';
 				list_IdEmp += $('#idEmp_'+x).val()+'_';
+				list_Horas += $('#nHorasE_'+x).val()+'_';
 				$('#change_'+x).val('');
 			  }
 		 }
 		$('#isState_list').val(list_State);
 		$('#idEmpleado_list').val(list_IdEmp);	
+		$('#horas_list').val(list_Horas);
 		//alert(list_State);
 		//alert(list_IdUsu);
 		  var idrevisionAE = $('#spnIdRevision').text();
