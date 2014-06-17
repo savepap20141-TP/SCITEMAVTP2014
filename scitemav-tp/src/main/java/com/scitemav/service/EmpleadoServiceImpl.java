@@ -399,7 +399,7 @@ public class EmpleadoServiceImpl implements EmpleadoService{
 		List<VehiculoBean> vehxemp = new ArrayList<VehiculoBean>();
 		try {
 			
-			Query q = em.createQuery("SELECT rv FROM EmpleadoRevision er JOIN reeRevision rr JOIN revVehiculo rv WHERE er.idEmpleado=:idEmp");
+			Query q = em.createQuery("SELECT rv FROM EmpleadoRevision er JOIN er.reeRevision rr JOIN rr.revVehiculo rv WHERE er.idEmpleado=:idEmp");
 			q.setParameter("idEmp", idEmpleado);
 			veh = q.getResultList();
 				
