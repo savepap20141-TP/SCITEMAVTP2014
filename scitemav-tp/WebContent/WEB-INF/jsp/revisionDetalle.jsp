@@ -380,10 +380,10 @@ $(function() {
 						'<td class="center">REP-'+repuesto.idRepuesto+'<input id="changeR_'+i+'" type="hidden" name="changeR"></td>'+
 						'<td class="center">'+repuesto.nombre+'<input type="hidden" value="'+repuesto.idRepuesto+'" id="idRep_'+i+'" /></td>'+
 						'<td class="center">'+repuesto.nombreTipoRepuesto+'</td>'+				
-						'<td class="center"><input type="text" id="cantidadS_'+i+'" disabled="disabled"/></td>'+
-						'<td class="center"><input type="text" id="costoUnitS_'+i+'" disabled="disabled"/></td>'+
+						'<td class="center"><input type="number" pattern="^[0-9\-\s]+$" step=00.001 id="cantidadS_'+i+'" disabled="disabled"/></td>'+
+						'<td class="center"><input type="number" pattern="^[0-9\-\s]+$" step=00.001 id="costoUnitS_'+i+'" disabled="disabled"/></td>'+
 						'</tr>';
-	 				
+		 				
 				}); 			
  				
 	 		},
