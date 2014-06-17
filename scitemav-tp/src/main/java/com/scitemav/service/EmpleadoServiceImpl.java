@@ -288,7 +288,9 @@ public class EmpleadoServiceImpl implements EmpleadoService{
 				emprev.setCosto(emprev.getNroHoras()*emp.getSueldo());
 				
 				enviados.add( emp.getEmpPersona().getNombre()+" "+emp.getEmpPersona().getApellidoPaterno()+" "+emp.getEmpPersona().getApellidoMaterno());
+				
 				em.persist(emprev);
+				sumarCostoTotal(IdRevision);
 			}
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
@@ -310,7 +312,7 @@ public class EmpleadoServiceImpl implements EmpleadoService{
 			
 			
 	        em.remove(empleadorevision);				
-				
+	        sumarCostoTotal(EmpleadoRevisionB.getIdRevision());
 		    resultado = true;
 			
 				
@@ -362,10 +364,33 @@ public class EmpleadoServiceImpl implements EmpleadoService{
 		return resultado;
 	}
 
-	@Override
+	@Transactional
 	public void sumarCostoTotal(Integer idRevision) {
-		
+		Double costo=0.0;
 		Revision rev = em.find(Revision.class, idRevision);
+		try{
+			
+			
+			Query q = em.createQuery("SELECT SUM(costo) FROM EmpleadoRevision WHERE idRevision=:idRevision");
+			q.setParameter("idRevision", idRevision);
+			if(q.getSingleResult()!=null){
+			costo += Double.parseDouble(q.getSingleResult().toString());
+			}
+			
+			Query q1 = em.createQuery("SELECT SUM(costo) FROM RepuestoRevision WHERE idRevision=:idRevision");
+			q1.setParameter("idRevision", idRevision);
+			if(q1.getSingleResult()!=null){
+			costo+= Double.parseDouble(q1.getSingleResult().toString());
+			}
+		
+			rev.setCostoTotal(costo);
+			em.merge(rev);
+			
+		} catch (IllegalArgumentException e) {
+			System.out.println(e.getMessage());			
+		}
+
+		
 		
 	}
 }
