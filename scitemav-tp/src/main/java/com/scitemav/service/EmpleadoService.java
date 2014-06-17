@@ -4,8 +4,7 @@ import java.util.List;
 
 import com.scitemav.bean.EmpleadoBean;
 import com.scitemav.bean.EmpleadoRevisionBean;
-import com.scitemav.bean.FallaRevisionBean;
-import com.scitemav.bean.RevisionBean;
+import com.scitemav.bean.VehiculoBean;
 
 public interface EmpleadoService {
 	
@@ -19,4 +18,5 @@ public interface EmpleadoService {
 	public Boolean getDuplicateEmail2(String email);
 	public Boolean getDuplicateDNI2(String dni);
 	public void sumarCostoTotal(Integer idRevision);
+	public List<VehiculoBean> getVehiculos(Integer idEmpleado);
 }

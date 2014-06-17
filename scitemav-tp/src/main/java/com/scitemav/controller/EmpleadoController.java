@@ -17,8 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.scitemav.bean.EmpleadoBean;
 import com.scitemav.bean.EmpleadoRevisionBean;
-import com.scitemav.bean.FallaRevisionBean;
-import com.scitemav.bean.RevisionBean;
+import com.scitemav.bean.VehiculoBean;
 import com.scitemav.service.EmpleadoService;
 
 @Controller
@@ -135,4 +134,13 @@ public class EmpleadoController {
 		String DNI = request.getParameter("DNI");
 		return empleadoService.getDuplicateDNI2(DNI);
 	}
+
+	@RequestMapping(value = "getVehiculosEmpleado-{idempleado}", method = RequestMethod.POST)
+	@ResponseBody
+	public List<VehiculoBean> getVehiculosEmpleado(@PathVariable("idempleado")Integer idEmpleado, HttpServletRequest request, HttpSession session) {
+		return empleadoService.getVehiculos(idEmpleado);
+	}
+
+	
+	
 }

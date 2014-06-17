@@ -390,7 +390,52 @@ public class EmpleadoServiceImpl implements EmpleadoService{
 			System.out.println(e.getMessage());			
 		}
 
-		
-		
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<VehiculoBean> getVehiculos(Integer idEmpleado) {
+		List<Vehiculo> veh = new ArrayList<Vehiculo>();
+		List<VehiculoBean> vehxemp = new ArrayList<VehiculoBean>();
+		try {
+			
+			Query q = em.createQuery("SELECT er.rr.rv FROM EmpleadoRevision er JOIN reeRevision rr JOIN revVehiculo rv WHERE er.idEmpleado=:idEmp");
+			q.setParameter("idEmp", idEmpleado);
+			veh = q.getResultList();
+				
+			for(int i=0; i < veh.size(); i++){
+				Vehiculo v = veh.get(i);
+				VehiculoBean vb = new VehiculoBean();
+				vb.setIdVehiculo(v.getIdVehiculo());
+				vb.setAltura(v.getAltura());
+				vb.setAncho(v.getAncho());
+				vb.setCargaUtil(v.getCargaUtil());
+				vb.setColor(v.getColor());
+				vb.setFabricacion(v.getFabricacion());
+				vb.setLongitud(v.getLongitud());
+				vb.setNumeroAsientos(v.getNumeroAsientos());
+				vb.setNumeroCilindros(v.getNumeroCilindros());
+				vb.setNumeroEjes(v.getNumeroEjes());
+				vb.setNumeroMotor(v.getNumeroMotor());
+				vb.setNumeroPasajeros(v.getNumeroPasajeros());
+				vb.setNumeroPlaca(v.getNumeroPlaca());
+				vb.setNumeroRuedas(v.getNumeroRuedas());
+				vb.setNumeroSerie(v.getNumeroSerie());
+				vb.setPesoBruto(v.getPesoBruto());
+				vb.setPesoSeco(v.getPesoSeco());
+				vb.setIdCliente(v.getVehCliente().getIdCliente());
+				vb.setNombreCliente(v.getVehCliente().getCliPersona().getNombre()+" "+v.getVehCliente().getCliPersona().getApellidoPaterno()+" "+v.getVehCliente().getCliPersona().getApellidoMaterno());
+				vb.setIdMarca(v.getVehMarca().getIdMarca());
+				vb.setNombreMarca(v.getVehMarca().getNombre());
+				vb.setIdModelo(v.getVehModelo().getIdModelo());
+				vb.setNombreModelo(v.getVehModelo().getNombre());
+				vb.setIdTipoVehiculo(v.getVehTipoVehiculo().getIdTipoVehiculo());		
+				vb.setNombreTipoVehiculo(v.getVehTipoVehiculo().getNombre());
+				vehxemp.add(vb);
+			}
+		} catch (IllegalArgumentException e) {
+			vehxemp = null;			
+		}
+		return vehxemp;
 	}
 }
