@@ -1,6 +1,7 @@
 package com.scitemav.service;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -395,44 +396,49 @@ public class EmpleadoServiceImpl implements EmpleadoService{
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<VehiculoBean> getVehiculos(Integer idEmpleado) {
-		List<Vehiculo> veh = new ArrayList<Vehiculo>();
+		List<Vehiculo> veh = new ArrayList<Vehiculo>();		
 		List<VehiculoBean> vehxemp = new ArrayList<VehiculoBean>();
 		try {
 			
-			Query q = em.createQuery("SELECT rv FROM EmpleadoRevision er JOIN er.reeRevision rr JOIN rr.revVehiculo rv WHERE er.idEmpleado=:idEmp");
+			//Query q = em.createQuery("SELECT rv.idVehiculo FROM EmpleadoRevision er JOIN er.reeRevision rr JOIN rr.revVehiculo rv WHERE er.idEmpleado=:idEmp and er.idRevision=rr.idRevision");
+			Query q = em.createNativeQuery("SELECT vehiculo.* FROM EmpleadoRevision er JOIN Revision JOIN Vehiculo WHERE er.idEmpleado=:idEmp and er.idRevision=Revision.idRevision", Vehiculo.class);
 			q.setParameter("idEmp", idEmpleado);
 			veh = q.getResultList();
-				
+			
 			for(int i=0; i < veh.size(); i++){
-				Vehiculo v = veh.get(i);
-				VehiculoBean vb = new VehiculoBean();
-				vb.setIdVehiculo(v.getIdVehiculo());
-				vb.setAltura(v.getAltura());
-				vb.setAncho(v.getAncho());
-				vb.setCargaUtil(v.getCargaUtil());
-				vb.setColor(v.getColor());
-				vb.setFabricacion(v.getFabricacion());
-				vb.setLongitud(v.getLongitud());
-				vb.setNumeroAsientos(v.getNumeroAsientos());
-				vb.setNumeroCilindros(v.getNumeroCilindros());
-				vb.setNumeroEjes(v.getNumeroEjes());
-				vb.setNumeroMotor(v.getNumeroMotor());
-				vb.setNumeroPasajeros(v.getNumeroPasajeros());
-				vb.setNumeroPlaca(v.getNumeroPlaca());
-				vb.setNumeroRuedas(v.getNumeroRuedas());
-				vb.setNumeroSerie(v.getNumeroSerie());
-				vb.setPesoBruto(v.getPesoBruto());
-				vb.setPesoSeco(v.getPesoSeco());
-				vb.setIdCliente(v.getVehCliente().getIdCliente());
-				vb.setNombreCliente(v.getVehCliente().getCliPersona().getNombre()+" "+v.getVehCliente().getCliPersona().getApellidoPaterno()+" "+v.getVehCliente().getCliPersona().getApellidoMaterno());
-				vb.setIdMarca(v.getVehMarca().getIdMarca());
-				vb.setNombreMarca(v.getVehMarca().getNombre());
-				vb.setIdModelo(v.getVehModelo().getIdModelo());
-				vb.setNombreModelo(v.getVehModelo().getNombre());
-				vb.setIdTipoVehiculo(v.getVehTipoVehiculo().getIdTipoVehiculo());		
-				vb.setNombreTipoVehiculo(v.getVehTipoVehiculo().getNombre());
-				vehxemp.add(vb);
+					
+					Vehiculo v = veh.get(i);
+					VehiculoBean vb = new VehiculoBean();
+					vb.setIdVehiculo(v.getIdVehiculo());
+					vb.setAltura(v.getAltura());
+					vb.setAncho(v.getAncho());
+					vb.setCargaUtil(v.getCargaUtil());
+					vb.setColor(v.getColor());
+					vb.setFabricacion(v.getFabricacion());
+					vb.setLongitud(v.getLongitud());
+					vb.setNumeroAsientos(v.getNumeroAsientos());
+					vb.setNumeroCilindros(v.getNumeroCilindros());
+					vb.setNumeroEjes(v.getNumeroEjes());
+					vb.setNumeroMotor(v.getNumeroMotor());
+					vb.setNumeroPasajeros(v.getNumeroPasajeros());
+					vb.setNumeroPlaca(v.getNumeroPlaca());
+					vb.setNumeroRuedas(v.getNumeroRuedas());
+					vb.setNumeroSerie(v.getNumeroSerie());
+					vb.setPesoBruto(v.getPesoBruto());
+					vb.setPesoSeco(v.getPesoSeco());
+					vb.setIdCliente(v.getVehCliente().getIdCliente());
+					vb.setNombreCliente(v.getVehCliente().getCliPersona().getNombre()+" "+v.getVehCliente().getCliPersona().getApellidoPaterno()+" "+v.getVehCliente().getCliPersona().getApellidoMaterno());
+					vb.setIdMarca(v.getVehMarca().getIdMarca());
+					vb.setNombreMarca(v.getVehMarca().getNombre());
+					vb.setIdModelo(v.getVehModelo().getIdModelo());
+					vb.setNombreModelo(v.getVehModelo().getNombre());
+					vb.setIdTipoVehiculo(v.getVehTipoVehiculo().getIdTipoVehiculo());		
+					vb.setNombreTipoVehiculo(v.getVehTipoVehiculo().getNombre());
+					vehxemp.add(vb);
+				
 			}
+				
+			
 		} catch (IllegalArgumentException e) {
 			vehxemp = null;			
 		}
