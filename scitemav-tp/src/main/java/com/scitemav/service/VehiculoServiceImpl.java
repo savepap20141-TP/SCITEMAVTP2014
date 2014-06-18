@@ -67,6 +67,9 @@ public class VehiculoServiceImpl implements VehiculoService {
 			veh.setNumeroSerie(vb.getNumeroSerie());
 			veh.setPesoBruto(vb.getPesoBruto());
 			veh.setPesoSeco(vb.getPesoSeco());
+			java.util.Date d = new java.util.Date(System.currentTimeMillis()); 
+			java.sql.Timestamp ts = new java.sql.Timestamp(d.getTime());   
+			veh.setFechaCreacion(ts);
 			em.persist(veh);
 			vb.setIdVehiculo(veh.getIdVehiculo());
 			resultado = true;

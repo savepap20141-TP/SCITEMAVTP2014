@@ -1,5 +1,6 @@
 package com.scitemav.model;
 
+import java.sql.Timestamp;
 import java.util.Collection;
 
 import javax.persistence.Column;
@@ -81,6 +82,9 @@ public class Vehiculo {
 
 	@Column(name = "urlimagen",length = 300, nullable = true)
 	private String urlImagen;
+	
+	@Column(name = "fechacreacion", nullable = true)
+	private Timestamp fechaCreacion;
 	
 	@OneToMany(mappedBy ="revVehiculo")
 	private Collection<Revision> vehRevisiones;
@@ -289,5 +293,13 @@ public class Vehiculo {
 
 	public void setUrlImagen(String urlImagen) {
 		this.urlImagen = urlImagen;
+	}
+
+	public Timestamp getFechaCreacion() {
+		return fechaCreacion;
+	}
+
+	public void setFechaCreacion(Timestamp fechaCreacion) {
+		this.fechaCreacion = fechaCreacion;
 	}
 }

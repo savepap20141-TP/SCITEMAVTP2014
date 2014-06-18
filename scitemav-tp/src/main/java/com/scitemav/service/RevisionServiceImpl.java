@@ -49,6 +49,9 @@ public class RevisionServiceImpl implements RevisionService {
 			rev.setKilometrajeActual(revision.getKilometrajeActual());
 			rev.setKilometrajeProximo(revision.getKilometrajeProximo());
 			rev.setEstado("Creada");
+			java.util.Date d = new java.util.Date(System.currentTimeMillis()); 
+			java.sql.Timestamp ts = new java.sql.Timestamp(d.getTime());   
+			rev.setFechaCreacion(ts);
 
 			em.persist(rev);
 			revision.setIdRevision(rev.getIdRevision());

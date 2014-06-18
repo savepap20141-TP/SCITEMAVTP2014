@@ -1,6 +1,7 @@
 package com.scitemav.model;
 
 import java.sql.Date;
+import java.sql.Timestamp;
 import java.util.Collection;
 
 import javax.persistence.Column;
@@ -43,6 +44,9 @@ public class Revision {
 	
 	@Column(length = 60, nullable = false)
 	private String estado;
+	
+	@Column(name = "fechacreacion", nullable = true)
+	private Timestamp fechaCreacion;
 	
 	@OneToMany(mappedBy ="farRevision")
 	private Collection<FallaRevision> revFallaRevisiones;
@@ -177,6 +181,14 @@ public class Revision {
 
 	public void setEstado(String estado) {
 		this.estado = estado;
+	}
+
+	public Timestamp getFechaCreacion() {
+		return fechaCreacion;
+	}
+
+	public void setFechaCreacion(Timestamp fechaCreacion) {
+		this.fechaCreacion = fechaCreacion;
 	}
 	
 }
