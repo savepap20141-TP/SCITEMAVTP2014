@@ -91,4 +91,11 @@ public class ClientController {
 		String DNI = request.getParameter("DNI");
 		return clienteService.getDuplicateDNI(DNI);
 	}
+	
+	@RequestMapping(value="getClienteRevisiones-{idCliente}", method = RequestMethod.POST)
+	@ResponseBody
+	public List<RevisionBean> getRevisionesCliente(@PathVariable("idCliente") Integer idCliente){
+		return clienteService.clienteRevisiones(idCliente);
+	}
+	
 }

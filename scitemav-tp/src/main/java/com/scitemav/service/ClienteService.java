@@ -12,4 +12,5 @@ public interface ClienteService {
 	boolean editInformacionCliente(ClienteBean rb);
 	public Boolean getDuplicateEmail(String email);
 	public Boolean getDuplicateDNI(String dni);
+	public List<RevisionBean> clienteRevisiones(Integer idCliente);
 }

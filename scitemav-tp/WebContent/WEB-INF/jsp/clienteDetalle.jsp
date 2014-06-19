@@ -96,7 +96,7 @@
 						<ul class="nav nav-tabs">						
 						<li class="active"><a href="#cliente" data-toggle="tab">INFORMACION</a></li>
 						<li class=""><a href="#vehiculo" data-toggle="tab">VEHICULO</a></li>		
-						<li class=""><a href="#revisiones" data-toggle="tab">REVISIONES</a></li>
+						<li class=""><a href="#revision" data-toggle="tab">REVISIONES</a></li>
 						<li class=""><a href="#archivos" data-toggle="tab">ARCHIVOS</a></li>
 						<li class=""><a href="#comentarios" data-toggle="tab">COMENTARIOS</a></li>					
 						</ul>

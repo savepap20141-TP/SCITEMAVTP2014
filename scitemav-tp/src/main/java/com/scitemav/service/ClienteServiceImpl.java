@@ -242,4 +242,63 @@ public class ClienteServiceImpl implements ClienteService{
 
 		return resultado;
 	}
+
+	@SuppressWarnings("unchecked")
+	@Transactional
+	public List<RevisionBean> clienteRevisiones(Integer idCliente) {
+		List<Revision> revs = new ArrayList<Revision>();
+		List<RevisionBean> revBeans = new ArrayList<RevisionBean>();
+
+		try {
+
+			Query q = em.createQuery("SELECT r FROM Revision r JOIN r.revVehiculo rv JOIN rv.vehCliente vc WHERE vc.idCliente=:idCli");
+			q.setParameter("idCli", idCliente);
+
+			revs = q.getResultList();
+
+			for (int i = 0; i < revs.size(); i++) {
+
+				Revision rev = revs.get(i);
+				RevisionBean revBean = new RevisionBean();
+
+				revBean.setCostoTotal(rev.getCostoTotal());
+				revBean.setFechaFin(rev.getFechaFin());
+				revBean.setFechaInicio(rev.getFechaInicio());
+				revBean.setFechaProxima(rev.getFechaProxima());
+				revBean.setKilometrajeActual(rev.getKilometrajeActual());
+				revBean.setKilometrajeProximo(rev.getKilometrajeProximo());
+				revBean.setIdRevision(rev.getIdRevision());
+				revBean.setIdVehiculo(rev.getRevVehiculo().getIdVehiculo());
+				revBean.setIdCliente(rev.getRevVehiculo().getVehCliente()
+						.getIdCliente());
+				revBean.setNumeroPlaca(rev.getRevVehiculo().getNumeroPlaca());
+				revBean.setNombreMarca(rev.getRevVehiculo().getVehMarca()
+						.getNombre());
+				revBean.setNombreModelo(rev.getRevVehiculo().getVehModelo()
+						.getNombre());
+				if (rev.getNotificacion() != null) {
+					if (rev.getNotificacion() == true) {
+						revBean.setNotificacion(true);
+					} else {
+						revBean.setNotificacion(false);
+					}
+				} else {
+					revBean.setNotificacion(false);
+				}
+				revBean.setEstado(rev.getEstado());
+				Persona per = rev.getRevVehiculo().getVehCliente()
+						.getCliPersona();
+				revBean.setNombreCliente(per.getNombre() + " "
+						+ per.getApellidoPaterno() + " "
+						+ per.getApellidoMaterno());
+
+				revBeans.add(revBean);
+			}
+		} catch (IllegalArgumentException e) {
+			System.out.println(e.getMessage());
+			revBeans = null;
+		}
+
+		return revBeans;
+	}
 }
