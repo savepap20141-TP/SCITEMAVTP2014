@@ -143,7 +143,7 @@ public class ReporteServiceImpl implements ReporteService {
 				html+="<tr>";
 				html+="<td>"+(i+1)+"</td>";
 				html+="<td>"+fallas.get(i).getFarFalla().getDescripcion()+"</td>";
-				html+="<td>"+fallas.get(i).getFarFalla().getFalTipoFalla().getNombreSistema()+"</td>";
+				html+="<td>"+fallas.get(i).getFarFalla().getFalTipoFalla().getNombreSistema()+"</td>";				
 				html+="</tr>";
 			}
 			html+="</tbody></table>";
@@ -161,12 +161,18 @@ public class ReporteServiceImpl implements ReporteService {
 			html+="<th>#</th>";
 			html+="<th>Nombre</th>";
 			html+="<th>Tipo de Repuesto</th>";
+			html+="<th>Costo Unitario</th>";
+			html+="<th>Cantidad</th>";
+			html+="<th>Costo</th>";			
 			html+="</tr></thead><tbody>";		
 			for(int i=0; i<repuestos.size(); i++){
 				html+="<tr>";
 				html+="<td>"+(i+1)+"</td>";
 				html+="<td>"+repuestos.get(i).getRerRepuesto().getNombre()+"</td>";
 				html+="<td>"+repuestos.get(i).getRerRepuesto().getRepTipoRepuesto().getNombre()+"</td>";
+				html+="<td>"+repuestos.get(i).getCostoUnitario()+"</td>";
+				html+="<td>"+repuestos.get(i).getCantidad()+"</td>";
+				html+="<td>"+repuestos.get(i).getCosto()+"</td>";
 				html+="</tr>";
 			}
 			html+="</tbody></table>";
@@ -183,19 +189,23 @@ public class ReporteServiceImpl implements ReporteService {
 			html+="<table align='center' border='1'><thead><tr>";
 			html+="<th>#</th>";
 			html+="<th>Nombre</th>";
-			html+="<th>Apellido Paterno</th>";
-			html+="<th>Apellido Materno</th>";
+			html+="<th>Apellido Paterno</th>";			
 			html+="<th>Celular</th>";
 			html+="<th>Cargo</th>";
+			html+="<th>Sueldo/Hora</th>";
+			html+="<th>Horas</th>";
+			html+="<th>Costo</th>";
 			html+="</tr></thead><tbody>";		
 			for(int i=0; i<empleados.size(); i++){
 				html+="<tr>";
 				html+="<td>"+(i+1)+"</td>";
 				html+="<td>"+empleados.get(i).getReeEmpleado().getEmpPersona().getNombre()+"</td>";
-				html+="<td>"+empleados.get(i).getReeEmpleado().getEmpPersona().getApellidoPaterno()+"</td>";
-				html+="<td>"+empleados.get(i).getReeEmpleado().getEmpPersona().getApellidoMaterno()+"</td>";
+				html+="<td>"+empleados.get(i).getReeEmpleado().getEmpPersona().getApellidoPaterno()+"</td>";				
 				html+="<td>"+empleados.get(i).getReeEmpleado().getEmpPersona().getCelular()+"</td>";
 				html+="<td>"+empleados.get(i).getReeEmpleado().getEmpCargo().getDescripcion()+"</td>";
+				html+="<td>"+empleados.get(i).getReeEmpleado().getSueldo()+"</td>";
+				html+="<td>"+empleados.get(i).getNroHoras()+"</td>";
+				html+="<td>"+empleados.get(i).getCosto()+"</td>";
 				html+="</tr>";
 			}		
 			html+="</tbody></table>";
