@@ -18,6 +18,7 @@ import com.scitemav.bean.EmpleadoBean;
 import com.scitemav.bean.EmpleadoBean;
 import com.scitemav.bean.EmpleadoRevisionBean;
 import com.scitemav.bean.RepuestoRevisionBean;
+import com.scitemav.bean.RevisionBean;
 import com.scitemav.bean.VehiculoBean;
 import com.scitemav.model.Cargo;
 import com.scitemav.model.Empleado;
@@ -483,5 +484,42 @@ public class EmpleadoServiceImpl implements EmpleadoService{
 			vehxemp = null;			
 		}
 		return vehxemp;
+	}
+	
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<RevisionBean> getRevisiones(Integer idEmpleado) {
+		List<Revision> rev = new ArrayList<Revision>();		
+		List<RevisionBean> revB = new ArrayList<RevisionBean>();
+		try {
+			
+			Query q = em.createQuery("SELECT rr FROM EmpleadoRevision er JOIN er.reeRevision rr JOIN er.reeEmpleado r WHERE r.idEmpleado=:idEmp");
+			//Query q = em.createNativeQuery("SELECT vehiculo.* FROM EmpleadoRevision er JOIN Revision JOIN Vehiculo WHERE er.idEmpleado=:idEmp and er.idRevision=Revision.idRevision", Vehiculo.class);
+			q.setParameter("idEmp", idEmpleado);
+			
+			rev = q.getResultList();
+			
+			for(int i=0; i < rev.size(); i++){
+					
+					Revision r = rev.get(i);
+					RevisionBean rb = new RevisionBean();
+					
+					rb.setIdRevision(r.getIdRevision());
+					rb.setCostoTotal(r.getCostoTotal());
+					rb.setFechaInicio(r.getFechaInicio());
+					rb.setFechaFin(r.getFechaFin());
+					rb.setFechaProxima(r.getFechaProxima());
+					rb.setKilometrajeActual(r.getKilometrajeActual());
+					rb.setKilometrajeProximo(r.getKilometrajeProximo());
+					
+					revB.add(rb);
+				
+			}
+				
+			
+		} catch (IllegalArgumentException e) {
+			revB = null;			
+		}
+		return revB;
 	}
 }

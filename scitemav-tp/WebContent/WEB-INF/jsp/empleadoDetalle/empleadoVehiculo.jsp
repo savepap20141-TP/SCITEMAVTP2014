@@ -39,12 +39,28 @@
 					'<th class="center">Número Placa</th>'+
 					'<th class="center">Número Ejes</th>'+
 					'<th class="center">Número Ruedas</th>';
-	 			realizarTabla(columnas,filas);
+					
+					var id = 'Veh';
+					var contenido = '';
+					$("#spnResultList_"+id).empty();
+		
+					contenido = contenido + '<table cellpadding="0" cellspacing="0" border="0" class="display dataTable" id="example_'+id+'"> '+
+							' <thead class="tableGri"> '+
+					            '<tr role="row">'+
+					            	columnas+							                            
+					            '</tr>'+
+					        '</thead> '+
+					        '<tbody id="'+id+'">';
+					contenido = contenido + filas;   
+					contenido = contenido + '</tbody>'+
+							'</table> ';
+					
+					$("#spnResultList_"+id).append(contenido);
 	 			removeNulls();
 	  		}
 	 	});
 	}
 </script>
 <div class="tab-pane fade" id="vehiculo">
-	<div id="spnResultList" class="resultBox section summaryPane"></div>
+	<div id="spnResultList_Veh" class="resultBox section summaryPane"></div>
 </div>

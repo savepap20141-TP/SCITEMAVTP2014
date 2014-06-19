@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.scitemav.bean.EmpleadoBean;
 import com.scitemav.bean.EmpleadoRevisionBean;
 import com.scitemav.bean.RepuestoRevisionBean;
+import com.scitemav.bean.RevisionBean;
 import com.scitemav.bean.VehiculoBean;
 import com.scitemav.service.EmpleadoService;
 
@@ -140,6 +141,12 @@ public class EmpleadoController {
 	@ResponseBody
 	public List<VehiculoBean> getVehiculosEmpleado(@PathVariable("idempleado")Integer idEmpleado, HttpServletRequest request, HttpSession session) {
 		return empleadoService.getVehiculos(idEmpleado);
+	}
+	
+	@RequestMapping(value = "getRevisionesEmpleado-{idempleado}", method = RequestMethod.POST)
+	@ResponseBody
+	public List<RevisionBean> getRevisionesEmpleado(@PathVariable("idempleado")Integer idEmpleado, HttpServletRequest request, HttpSession session) {
+		return empleadoService.getRevisiones(idEmpleado);
 	}
 
 	@RequestMapping(value="editarEmpleadoRevision", method = RequestMethod.POST)

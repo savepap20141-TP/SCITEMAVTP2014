@@ -103,6 +103,7 @@
 						<div class="tab-content">
 							<jsp:include page="empleadoDetalle/empleadoInformacion.jsp"/>
 							<jsp:include page="empleadoDetalle/empleadoVehiculo.jsp"/>
+							<jsp:include page="empleadoDetalle/empleadoRevision.jsp"/>
 							<jsp:include page="componentes/Archivos.jsp"/>
 							<jsp:include page="componentes/Comentarios.jsp"/>
 						</div>
