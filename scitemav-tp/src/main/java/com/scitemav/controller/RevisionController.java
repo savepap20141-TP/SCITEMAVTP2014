@@ -107,4 +107,10 @@ public class RevisionController {
 		}
 		return enviados;
 	}
+	
+	@RequestMapping(value = "ajaxEditRevisionEstado-{idRevision}-{estado}", method = RequestMethod.POST)
+	@ResponseBody
+	public Boolean ajaxEditRevision(@PathVariable("idRevision") Integer idRevision,@PathVariable("estado") String estado, HttpServletRequest request){		
+		return revisionService.cambiarEstadoRevision(idRevision, estado);
+	}
 }

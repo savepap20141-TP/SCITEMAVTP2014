@@ -253,4 +253,20 @@ public class RevisionServiceImpl implements RevisionService {
 		}
 		return enviados;
 	}
+	
+	@Transactional
+	public boolean cambiarEstadoRevision(Integer idRevision,String estado) {
+		boolean flag = true;    		
+		try {
+			Revision rev = em.find(Revision.class, idRevision);
+			rev.setEstado(estado);
+			em.merge(rev);
+			flag = true;
+
+		} catch (IllegalArgumentException e) {
+			System.out.println(e.getMessage());
+			flag = false;
+		}
+		return flag;
+	}
 }
