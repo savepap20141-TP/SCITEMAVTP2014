@@ -6,6 +6,7 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -132,6 +133,7 @@ public class RepuestoServicelmlp implements RepuestoService {
 				repuestov.setCosto(repuestov.getCostoUnitario()*repuestov.getCantidad());
 				enviados.add( rep.getNombre()+" "+rep.getRepTipoRepuesto().getNombre());
 				em.persist(repuestov);
+				sumarCostoTotal(IdRevision);
 			}
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
@@ -143,6 +145,7 @@ public class RepuestoServicelmlp implements RepuestoService {
 	public boolean eliminarRepuestoRev(RepuestoRevisionBean RepuestoRevisionB) {
 		boolean resultado = false;
 
+		
 		RepuestoRevision repuestorevision = new RepuestoRevision();
 
 		try {					
@@ -153,7 +156,7 @@ public class RepuestoServicelmlp implements RepuestoService {
 			
 			
 	        em.remove(repuestorevision);				
-				
+	        sumarCostoTotal(RepuestoRevisionB.getIdRevision());
 		    resultado = true;
 			
 				
@@ -163,5 +166,71 @@ public class RepuestoServicelmlp implements RepuestoService {
 			resultado = false;
 		}
 		return resultado;
+	}
+
+	@Transactional
+	public boolean editarRepuestoRev(RepuestoRevisionBean repuestoRevisionB,HttpServletRequest req) {
+		boolean resultado = false;
+				
+		RepuestoRevision repuestoRevision = new RepuestoRevision();
+		Repuesto rep = new Repuesto();
+		Revision rev = new Revision();
+		
+		try{
+			
+			Query q1 = em.createQuery("SELECT rr FROM RepuestoRevision rr JOIN rr.rerRevision r JOIN rr.rerRepuesto p WHERE r.idRevision=:idrevision AND p.idRepuesto=:idrepuesto");
+			q1.setParameter("idrevision", repuestoRevisionB.getIdRevision());
+			q1.setParameter("idrepuesto", repuestoRevisionB.getIdRepuesto());			
+			repuestoRevision = (RepuestoRevision) q1.getSingleResult();
+			
+			repuestoRevision.setComentario(repuestoRevisionB.getComentario());
+			repuestoRevision.setCantidad(repuestoRevisionB.getCantidad());
+			repuestoRevision.setCostoUnitario(repuestoRevisionB.getCostoUnitario());
+			repuestoRevision.setCosto(repuestoRevision.getCostoUnitario()*repuestoRevision.getCantidad());
+			
+			
+			em.merge(repuestoRevision);
+			sumarCostoTotal(repuestoRevisionB.getIdRevision());
+			resultado = true;			
+			
+			
+		} catch(IllegalArgumentException e){
+			System.out.println(e);
+			resultado = false;
+		}
+		
+		return resultado;
+		
+		
+		
+		
+	}
+	
+	@Transactional
+	public void sumarCostoTotal(Integer idRevision) {
+		Double costo=0.0;
+		Revision rev = em.find(Revision.class, idRevision);
+		try{
+			
+			
+			Query q = em.createQuery("SELECT SUM(costo) FROM EmpleadoRevision WHERE idRevision=:idRevision");
+			q.setParameter("idRevision", idRevision);
+			if(q.getSingleResult()!=null){
+			costo += Double.parseDouble(q.getSingleResult().toString());
+			}
+			
+			Query q1 = em.createQuery("SELECT SUM(costo) FROM RepuestoRevision WHERE idRevision=:idRevision");
+			q1.setParameter("idRevision", idRevision);
+			if(q1.getSingleResult()!=null){
+			costo+= Double.parseDouble(q1.getSingleResult().toString());
+			}
+		
+			rev.setCostoTotal(costo);
+			em.merge(rev);
+			
+		} catch (IllegalArgumentException e) {
+			System.out.println(e.getMessage());			
+		}
+
 	}
 }

@@ -1,4 +1,67 @@
 <div class="tab-pane fade" id="repuestos">
+<div class="modal fade" id="myModalER" tabindex="-1" role="dialog"
+		aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"
+						aria-hidden="true">&times;</button>
+					<h4 class="modal-title" id="myModalLabelER">Editar Repuesto</h4>
+				</div>
+				<div class="modal-body">
+					<form role="form" id="frmEditarRepuestoRevision" method="post"
+						commandName="repuestorevisionbean" enctype="multipart/form-data"
+						style="width: 30%; margin-left: 10%;">
+
+						<fieldset>
+							<div class="form-group" style="display: none">
+								<label> Id RepuestoRevision</label> <input class="form-control"
+									name="idRepuestoRevision" id="txtIdReRe" />
+							</div>
+
+							<div class="form-group" style="display: none">
+								<label> Id Repuesto</label> <input class="form-control"
+									name="idRepuesto" id="txtIdRep3" />
+							</div>
+
+							<div class="form-group" style="display: none">
+								<label> Id Revision</label> <input class="form-control"
+									name="idRevision" id="txtIdRe4" />
+							</div>
+
+							<div class="form-group">
+								<label>Comentario</label>
+								<textarea id="txtComentario1" class="form-control"
+									name="comentario" placeholder="Comentario"></textarea>
+							</div>
+							
+							<div class="form-group">
+								<label>Cantidad</label>
+								<textarea id="txtCantidad" class="form-control"
+									name="cantidad" placeholder="Cantidad"></textarea>
+							</div>
+							
+							<div class="form-group">
+								<label>Costo unitario</label>
+								<textarea id="txtCostoUnitario" class="form-control"
+									name="costoUnitario" placeholder="Costo Unitario"></textarea>
+							</div>
+
+
+						</fieldset>
+					</form>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-primary" data-dismiss="modal"
+						onclick="editarRepuestoRevision();">Guardar</button>
+					<button type="button" class="btn btn-default" data-dismiss="modal"
+						onclick="$('#txtIdReRe').val('');$('#txtComentario1').val('');$('#txtCantidad').val('');$('#txtCostoUnitario').val('');">Cancelar</button>
+				</div>
+			</div>
+			<!-- /.modal-content -->
+		</div>
+		<!-- /.modal-dialog -->
+	</div>
 
 	<br>
 	<div class="alert alert-success alert-dismissable" id="resultOkR"

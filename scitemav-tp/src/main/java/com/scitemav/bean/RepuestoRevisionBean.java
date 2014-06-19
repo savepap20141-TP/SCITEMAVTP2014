@@ -6,6 +6,7 @@ public class RepuestoRevisionBean {
 	private Integer idRepuesto;
 	private Integer idRevision;
 	private Double costoUnitario;
+	private Integer cantidad;
 	private String comentario;
 	
 	public Integer getIdRepuestoRevision() {
@@ -37,6 +38,12 @@ public class RepuestoRevisionBean {
 	}
 	public void setComentario(String comentario) {
 		this.comentario = comentario;
+	}
+	public Integer getCantidad() {
+		return cantidad;
+	}
+	public void setCantidad(Integer cantidad) {
+		this.cantidad = cantidad;
 	}
 	
 

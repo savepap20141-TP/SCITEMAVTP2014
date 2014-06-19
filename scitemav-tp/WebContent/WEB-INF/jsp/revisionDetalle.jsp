@@ -315,10 +315,11 @@ $(function() {
 	 				'<td class="center" id="filaIdR_'+i+'" style="display:none;">'+repuesto.idRepuesto+'</td>'+	 				
 					'<td class="center">'+repuesto.nombre+'</td>'+
 					'<td class="center">'+repuesto.nombreTipoRepuesto+'</td>'+
-					'<td class="center">'+repuesto.comentario+'</td>'+
-					'<td class="center">'+repuesto.cantidad+'</td>'+
-					'<td class="center">'+repuesto.costoUnitario+'</td>'+
+					'<td class="center" id="filaComentarior_'+i+'">'+repuesto.comentario+'</td>'+
+					'<td class="center" id="filaCantidad_'+i+'">'+repuesto.cantidad+'</td>'+
+					'<td class="center" id="filaCostoUnit_'+i+'">'+repuesto.costoUnitario+'</td>'+
 					'<td class="center">'+repuesto.costo+'</td>'+
+					'<td class="center"><button class="btn btn-success btn-circle" type="button" id="btnEdit_'+i+'" data-toggle="modal" data-target="#myModalER" onclick="mostrarEditarR('+i+','+idRevision+','+repuesto.idRepuesto+')"><i class="fa fa-list"></i></button></td>'+
 					'<td class="center"><button class="btn btn-danger btn-circle" type="button" id="btnDelete_'+i+'" data-toggle="modal" data-target="#myModalR" onclick="mostrarEliminarR('+i+','+idRevision+')"><i class="fa fa-times"></i></button></td>'+
 					'</tr>';
 				});		        
@@ -333,6 +334,7 @@ $(function() {
 	 				'<th class="center">Cantidad</th>'+
 	 				'<th class="center">Costo Unitario</th>'+
 	 				'<th class="center">Costo</th>'+
+	 				'<th class="center">Editar</th>'+
 					'<th class="center">Eliminar</th>';
 
 				var id = 'RepRev';
@@ -579,6 +581,19 @@ function inicioConsultaFallasRevision(idRevision){
  	});
 } 
 
+function mostrarEditarR(ind,idRevision,idRepuesto){
+	$('#myModalLabelER').empty();
+	$('#myModalLabelER').append('Editar Repuesto');
+	$('#txtIdReRe').val($('#filaId_'+ind).text());
+	$('#txtComentario1').val($('#filaComentarior_'+ind).text());
+	$('#txtCantidad').val($('#filaCantidad_'+ind).text());
+	$('#txtCostoUnitario').val($('#filaCostoUnit_'+ind).text());
+	$('#txtIdRe4').val(idRevision);	
+	$('#txtIdRep3').val(idRepuesto);
+	
+	idRev = idRevision;
+}
+
 function mostrarEditar(ind,idRevision,idFalla){
 	$('#myModalLabelEF').empty();
 	$('#myModalLabelEF').append('Editar Falla');
@@ -627,6 +642,41 @@ function editarFallaRevision(){
    				$('#txtIdFaRe').val('');
    				arregloAsignadosFalla = [];
    				inicioConsultaFallasRevision(idRev);
+   				//inicioConsultaFalla();
+   			}else{
+   				$('#resultFalse').show();
+   				//$('#resultFalse').append('Se ha producido un error al registrarse');
+   			}
+   		}
+   	});
+
+}
+
+function editarRepuestoRevision(){
+	
+	var formElement = document.getElementById("frmEditarRepuestoRevision");
+	var formData = new FormData(formElement);	
+	$.ajax({
+   		url: 'editarRepuestoRevision',
+   		type: 'post',
+   		data:  formData,
+		mimeType:"multipart/form-data",
+		contentType: false,
+	    cache: false,
+		processData:false,
+		beforeSend: function(){
+			//$.blockUI({ message: $('#domMessage') });
+	    },
+   		success: function(result){
+   			$('#resultOkFa3').hide();
+			$('#resultFalse').hide();	
+			//alert(result);
+			var res  = ''+result;
+   			if(res == 'true'){   				
+   				//$('#resultOk').append('Se ha registrado correctamente');
+   				$('#resultOkFa3').show();
+   				$('#txtIdReRe').val('');   				
+   				inicioConsultaRepuestoRevision(idRev);
    				//inicioConsultaFalla();
    			}else{
    				$('#resultFalse').show();

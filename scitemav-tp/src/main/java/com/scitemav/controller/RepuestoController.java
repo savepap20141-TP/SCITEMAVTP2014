@@ -93,4 +93,22 @@ public class RepuestoController {
 		}
 		return result;
 	}
+	
+	@RequestMapping(value="editarRepuestoRevision", method = RequestMethod.POST)
+	@ResponseBody
+	public boolean editarRepuestoRevision(@ModelAttribute("repuestorevisionbean") RepuestoRevisionBean rrbean, Model model, HttpServletRequest req){
+		boolean result = false;
+		if(repuestoService.editarRepuestoRev(rrbean, req)){
+			//model.addAttribute("msg", "Se registro correctamente");
+			//path = "registrarMarca";
+			result = true;
+		}else{
+			//model.addAttribute("msg", "Fallo al registrarse");
+			//path = "registrarMarca";
+			result = false;
+		}
+		return result;
+	}
+	
+	
 }
