@@ -1,10 +1,10 @@
 <script>
 	$(document).ready(function(e) {
 		var idCliente = $('#spnIdCliente').text();
-		inicioConsulta(idCliente);
+		inicioConsultaR(idCliente);
 	});
 
-	function inicioConsulta(idCliente){
+	function inicioConsultaR(idCliente){
 		var filas = '';		
 		var columnas = '';	
 	    $.ajax({
