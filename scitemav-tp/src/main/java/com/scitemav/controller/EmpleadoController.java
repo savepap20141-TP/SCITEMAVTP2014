@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.scitemav.bean.EmpleadoBean;
 import com.scitemav.bean.EmpleadoRevisionBean;
+import com.scitemav.bean.RepuestoRevisionBean;
 import com.scitemav.bean.VehiculoBean;
 import com.scitemav.service.EmpleadoService;
 
@@ -141,6 +142,21 @@ public class EmpleadoController {
 		return empleadoService.getVehiculos(idEmpleado);
 	}
 
+	@RequestMapping(value="editarEmpleadoRevision", method = RequestMethod.POST)
+	@ResponseBody
+	public boolean editarEmpleadoRevision(@ModelAttribute("empleadorevisionbean") EmpleadoRevisionBean erbean, Model model, HttpServletRequest req){
+		boolean result = false;
+		if(empleadoService.editarEmpRev(erbean, req)){
+			//model.addAttribute("msg", "Se registro correctamente");
+			//path = "registrarMarca";
+			result = true;
+		}else{
+			//model.addAttribute("msg", "Fallo al registrarse");
+			//path = "registrarMarca";
+			result = false;
+		}
+		return result;
+	}
 	
 	
 }
