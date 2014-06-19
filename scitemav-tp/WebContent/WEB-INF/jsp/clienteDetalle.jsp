@@ -96,6 +96,7 @@
 						<ul class="nav nav-tabs">						
 						<li class="active"><a href="#cliente" data-toggle="tab">INFORMACION</a></li>
 						<li class=""><a href="#vehiculo" data-toggle="tab">VEHICULO</a></li>		
+						<li class=""><a href="#revisiones" data-toggle="tab">REVISIONES</a></li>
 						<li class=""><a href="#archivos" data-toggle="tab">ARCHIVOS</a></li>
 						<li class=""><a href="#comentarios" data-toggle="tab">COMENTARIOS</a></li>					
 						</ul>
@@ -106,6 +107,7 @@
 						<div class="tab-content">
 							<jsp:include page="clienteDetalle/clienteInformacion.jsp"/>
 							<jsp:include page="clienteDetalle/clienteVehiculo.jsp"/>
+							<jsp:include page="clienteDetalle/clienteRevision.jsp"/>
 							<jsp:include page="componentes/Archivos.jsp"/>
 							<jsp:include page="componentes/Comentarios.jsp"/>
 						</div>
