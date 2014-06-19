@@ -53,7 +53,7 @@
                                 <a href="toRegistroRevision">Registrar Revision</a>
                             </li>
                             <li id="cRevision">
-                                <a href="toConsultarRevision">Consultar Revisiones</a>
+                                <a href="toConsultarRevision-normal">Consultar Revisiones</a>
                             </li>
                           <!--   <li>
                                 <a href="toDetalleRevision">Detalle Revision</a>

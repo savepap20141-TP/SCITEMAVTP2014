@@ -34,6 +34,14 @@ public class RevisionController {
 	public String toConsultarRevision(){
 		return "consultarRevisiones";
 	}
+
+	//
+	@RequestMapping(value="toConsultarRevision-{estado}", method = RequestMethod.GET)
+	public String toConsultarRevision(@PathVariable("estado") String estado, Model model){
+		model.addAttribute("estadoR", estado);
+		return "consultarRevisiones";
+	}
+	//
 	
 	@RequestMapping(value="toRevisionDetalle-{idrevision}" , method = RequestMethod.GET)
 	public String toRevisionDetalle(@PathVariable("idrevision") Integer idRevision, Model model){
@@ -54,10 +62,10 @@ public class RevisionController {
 		return path;
 	}
 	
-	@RequestMapping(value = "getRevisiones", method = RequestMethod.POST)
+	@RequestMapping(value = "getRevisiones-{estado}", method = RequestMethod.POST)
 	@ResponseBody
-	public List<RevisionBean> getRevisiones(){
-		return revisionService.listarRevisiones();
+	public List<RevisionBean> getRevisiones(@PathVariable("estado") String estado){
+		return revisionService.listarRevisiones(estado);
 	}
 	
 	@RequestMapping(value = "getInformacionRevision-{idrevision}", method = RequestMethod.POST)

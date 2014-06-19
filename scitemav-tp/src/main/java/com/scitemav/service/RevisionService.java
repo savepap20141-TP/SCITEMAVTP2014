@@ -9,7 +9,7 @@ import com.scitemav.bean.VehiculoBean;
 public interface RevisionService {
 
 	public boolean registrarRevision(RevisionBean revision);
-	public List<RevisionBean> listarRevisiones();
+	public List<RevisionBean> listarRevisiones(String estado);
 	public RevisionBean obtenerInfo(int idRevision);
 	boolean editInformacionRevision(RevisionBean rb);	
 	public List<RevisionBean> listarRevisionesVehiculo(Integer idVehiculo);

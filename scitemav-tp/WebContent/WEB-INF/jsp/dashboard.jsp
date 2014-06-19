@@ -51,7 +51,7 @@ function inicioConsultaRevision(fechaHoyT){
 	var filas = '';
 	var columnas = '';	
     $.ajax({
- 		url: 'getRevisiones',
+ 		url: 'getRevisiones-normal',
  		type: 'post',
  		dataType: 'json',
  		data: '',
@@ -248,37 +248,37 @@ function revision1(){
                         <!-- /.panel-heading -->
                         <div class="panel-body">
                             <div class="list-group">
-                                <a href="#" class="list-group-item">
+                                <a href="toConsultarRevision-Creada" class="list-group-item">
                                     <i class="fa fa-tasks fa-fw"></i> Creada
                                     <span class="pull-right text-muted small"><em> </em>
                                     </span>
                                 </a>
-                                <a href="#" class="list-group-item">
+                                <a href="toConsultarRevision-Inspeccionada"  class="list-group-item">
                                     <i class="fa fa-tasks fa-fw"></i> Inspeccionada
                                     <span class="pull-right text-muted small"><em> </em>
                                     </span>
                                 </a>
-                                <a href="#" class="list-group-item">
+                                <a href="toConsultarRevision-Supervisada"  class="list-group-item">
                                     <i class="fa fa-tasks fa-fw"></i> Supervisada
                                     <span class="pull-right text-muted small"><em> </em>
                                     </span>
                                 </a>
-                                <a href="#" class="list-group-item">
+                                <a href="toConsultarRevision-Deshaprobada"  class="list-group-item">
                                     <i class="fa fa-tasks fa-fw"></i> Verificada por el Cliente - Deshaprobada
                                     <span class="pull-right text-muted small"><em> </em>
                                     </span>
                                 </a>
-                                <a href="#" class="list-group-item">
+                                <a href="toConsultarRevision-Aprobada"  class="list-group-item">
                                     <i class="fa fa-tasks fa-fw"></i> Verificada por el Cliente - Aprobada
                                     <span class="pull-right text-muted small"><em> </em>
                                     </span>
                                 </a>                                
-                                <a href="#" class="list-group-item">
+                                <a href="toConsultarRevision-Ejecutada"  class="list-group-item">
                                     <i class="fa fa-tasks fa-fw"></i> Ejecutada
                                     <span class="pull-right text-muted small"><em> </em>
                                     </span>
                                 </a>
-                                <a href="#" class="list-group-item">
+                                <a href="toConsultarRevision-Terminada"  class="list-group-item">
                                     <i class="fa fa-tasks fa-fw"></i> Terminada
                                     <span class="pull-right text-muted small"><em> </em>
                                     </span>

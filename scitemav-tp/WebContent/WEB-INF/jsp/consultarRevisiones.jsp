@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
+<%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
@@ -19,14 +21,20 @@
 </style>
 <script>
 $(document).ready(function(e){
-	inicioConsulta();
+	var estado = $('#spnEstado').text();
+	inicioConsulta(estado);	
+	//$('#sfiltro').text(estado);
+	//alert(estado);
+	if(estado==''){
+		estado = 'normal';
+	}
 });
 
-function inicioConsulta(){
+function inicioConsulta(estado){
 	var filas = '';
 	var columnas = '';	
     $.ajax({
- 		url: 'getRevisiones',
+ 		url: 'getRevisiones-'+estado,
  		type: 'post',
  		dataType: 'json',
  		data: '',
@@ -42,6 +50,7 @@ function inicioConsulta(){
  				'<td class="center">'+revision.kilometrajeActual+'</td>'+
  				'<td class="center">'+revision.kilometrajeProximo+'</td>'+ 				
  				'<td class="center">'+revision.costoTotal+'</td>'+
+ 				'<td class="center">'+revision.estado+'</td>'+
  				'<td class="center"><a target="_blank" href="verPDFRevision-'+revision.idRevision+'"><img width="50" height="50" src="images/pdfReport.jpg"></a></td>'+
 				'</tr>';
 			});		        
@@ -56,6 +65,7 @@ function inicioConsulta(){
 				'<th class="center">Kilometraje Actual</th>'+
 				'<th class="center">Kilometraje Próximo</th>'+
 				'<th class="center">Costo total</th>'+
+				'<th class="center">Estado</th>'+
 				'<th class="center">Reporte</th>';	
  			realizarTabla(columnas,filas);
  			removeNulls();
@@ -83,6 +93,7 @@ function inicioConsulta(){
                     <div class="panel panel-default">
                         <div class="panel-heading">
                             Lista de Revisiones
+                            <span id="spnEstado"><c:out	value="${estadoR}"/></span>
                         </div>
                         <!-- /.panel-heading -->
                         <div class="panel-body">

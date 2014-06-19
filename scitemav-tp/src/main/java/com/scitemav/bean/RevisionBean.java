@@ -13,7 +13,7 @@ public class RevisionBean {
 	private Integer kilometrajeActual;
 	private Integer kilometrajeProximo;
 	private Boolean notificacion;
-	
+	private String estado;
 
 	//Vehiculo
 	private Integer idVehiculo;
@@ -233,6 +233,12 @@ public class RevisionBean {
 	}
 	public void setNombreCliente(String nombreCliente) {
 		this.nombreCliente = nombreCliente;
+	}
+	public String getEstado() {
+		return estado;
+	}
+	public void setEstado(String estado) {
+		this.estado = estado;
 	}
 	
 	

@@ -67,12 +67,19 @@ public class RevisionServiceImpl implements RevisionService {
 
 	@SuppressWarnings("unchecked")
 	@Transactional
-	public List<RevisionBean> listarRevisiones() {
+	public List<RevisionBean> listarRevisiones(String estado) {
 		List<Revision> _rev = new ArrayList<Revision>();
 		List<RevisionBean> _revBean = new ArrayList<RevisionBean>();
 
 		try {
-			Query query = em.createQuery("SELECT r FROM Revision r");
+			String queryS = "SELECT r FROM Revision r";
+			if(!estado.equals("normal")){
+				queryS+=" WHERE r.estado=:estado";
+			}
+			Query query = em.createQuery(queryS);
+			if(!estado.equals("normal")){
+				query.setParameter("estado", estado);
+			}
 			_rev = query.getResultList();
 
 			for (int i = 0; i < _rev.size(); i++) {
@@ -100,6 +107,7 @@ public class RevisionServiceImpl implements RevisionService {
 				}else{
 					revBean.setNotificacion(false);
 				}
+				revBean.setEstado(rev.getEstado());
 				Persona per = rev.getRevVehiculo().getVehCliente().getCliPersona();
 				revBean.setNombreCliente(per.getNombre()+" "+per.getApellidoPaterno()+" "+per.getApellidoMaterno());
 				
