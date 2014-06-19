@@ -34,7 +34,7 @@
 				<div class="col-lg-12">
 					<div class="col-lg-4 col-lg-offset-8">
 						<br>
-						<div class="alert alert-danger" style="text-align: center;">Estado
+						<div style="display: none;" class="alert alert-danger" style="text-align: center;">Estado
 							de revisión: En cliente</div>
 					</div>
 

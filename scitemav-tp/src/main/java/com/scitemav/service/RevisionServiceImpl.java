@@ -163,6 +163,7 @@ public class RevisionServiceImpl implements RevisionService {
 			rBean.setPesoSeco(r.getRevVehiculo().getPesoSeco());	
 			rBean.setNombreMarca(r.getRevVehiculo().getVehMarca().getNombre());
 			rBean.setNombreModelo(r.getRevVehiculo().getVehModelo().getNombre());
+			rBean.setEstado(r.getEstado());
 			
 		} catch (Exception e) {
 			System.out.println(e.getMessage());

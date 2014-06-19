@@ -229,6 +229,7 @@ $(function() {
 		
 		$('#divReporte').html("<a target='_blank' href='verPDFRevision-"+revision.idRevision+"' ><img width='50' height='50' src='images/pdfReport.jpg'></a>");
 		
+		$('#estadoRealspn').text(revision.estado);
 		$('#spnidrevision').text(revision.idRevision);
 		$('#spnCostoTotal').text(revision.costoTotal);
 		$('#spnFechaInicio').text(revision.fechaInicio);
@@ -1121,7 +1122,7 @@ $(document).on('click','#btnAsignarEmpleados', function(e){
 					<div class="col-lg-4 col-lg-offset-8">
 						<br>
 						<div class="alert alert-danger" style="text-align: center;">Estado
-							de revisión: En revisión</div>
+							de revisión: <span id="estadoRealspn"></span></div>
 					</div>
 
 					<br></br>
