@@ -868,8 +868,9 @@ function inicioConsultaEmpleadosRevision(idRevision){
 				'<td class="center">'+empleado.telefono+'</td>'+
 				'<td class="center">'+empleado.nombreCargo+'</td>'+
 				'<td class="center">'+empleado.nombreEspecialidad+'</td>'+
-				'<td class="center">'+empleado.nroHoras+'</td>'+
+				'<td class="center" id="filaNroHoras_'+i+'" >'+empleado.nroHoras+'</td>'+
 				'<td class="center">'+empleado.costo+'</td>'+
+				'<td class="center"><button class="btn btn-success btn-circle" type="button" id="btnEdit_'+i+'" data-toggle="modal" data-target="#myModalEE" onclick="mostrarEditarE('+i+','+idRevision+','+empleado.idEmpleado+')"><i class="fa fa-list"></i></button></td>'+
 				'<td class="center"><button class="btn btn-danger btn-circle" type="button" id="btnDelete_'+i+'" data-toggle="modal" data-target="#myModalE" onclick="mostrarEliminarE('+i+','+idRevision+')"><i class="fa fa-times"></i></button></td>'+
 				'</tr>';
 			});		        
@@ -887,6 +888,7 @@ function inicioConsultaEmpleadosRevision(idRevision){
 				'<th class="center">Nombre Especialidad</th>'+
 				'<th class="center">Nro. Horas</th>'+
 				'<th class="center">Costo</th>'+
+				'<th class="center">Editar</th>'+
 				'<th class="center">Eliminar</th>';
 			//realizarTabla2('EmpRev',columnas,filas);
 			//$('#EmpRev').append(filas);
@@ -911,6 +913,53 @@ function inicioConsultaEmpleadosRevision(idRevision){
  			inicioConsultaEmpleados();
   		}
  	});
+}
+
+function editarEmpleadoRevision(){
+	
+	var formElement = document.getElementById("frmEditarEmpleadoRevision");
+	var formData = new FormData(formElement);	
+	$.ajax({
+   		url: 'editarEmpleadoRevision',
+   		type: 'post',
+   		data:  formData,
+		mimeType:"multipart/form-data",
+		contentType: false,
+	    cache: false,
+		processData:false,
+		beforeSend: function(){
+			//$.blockUI({ message: $('#domMessage') });
+	    },
+   		success: function(result){
+   			$('#resultOkFa3').hide();
+			$('#resultFalse').hide();	
+			//alert(result);
+			var res  = ''+result;
+   			if(res == 'true'){   				
+   				//$('#resultOk').append('Se ha registrado correctamente');
+   				$('#resultOkFa3').show();
+   				$('#txtIdEmRe').val('');   	
+   				arregloAsignadosEmp = [];
+   				inicioConsultaEmpleadosRevision(idRev);
+   				//inicioConsultaFalla();
+   			}else{
+   				$('#resultFalse').show();
+   				//$('#resultFalse').append('Se ha producido un error al registrarse');
+   			}
+   		}
+   	});
+
+}
+
+function mostrarEditarE(ind,idRevision,idEmpleado){
+	$('#myModalLabelEE').empty();
+	$('#myModalLabelEE').append('Editar Empleado');
+	$('#txtIdEmRe').val($('#filaIdE_'+ind).text());
+	$('#txtNroHoras').val($('#filaNroHoras_'+ind).text());	
+	$('#txtIdRe5').val(idRevision);	
+	$('#txtIdEmp3').val(idEmpleado);
+	
+	idRev = idRevision;
 }
 
 function mostrarEliminarE(ind,idRevision){

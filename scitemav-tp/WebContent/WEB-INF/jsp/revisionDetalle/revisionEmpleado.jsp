@@ -1,4 +1,57 @@
 <div class="tab-pane fade" id="empleado">
+<div class="modal fade" id="myModalEE" tabindex="-1" role="dialog"
+		aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"
+						aria-hidden="true">&times;</button>
+					<h4 class="modal-title" id="myModalLabelER">Editar Empleado</h4>
+				</div>
+				<div class="modal-body">
+					<form role="form" id="frmEditarEmpleadoRevision" method="post"
+						commandName="empleadorevisionbean" enctype="multipart/form-data"
+						style="width: 30%; margin-left: 10%;">
+
+						<fieldset>
+							<div class="form-group" style="display: none">
+								<label> Id EmpleadoRevision</label> <input class="form-control"
+									name="idEmpleadoRevision" id="txtIdEmRe" />
+							</div>
+
+							<div class="form-group" style="display: none">
+								<label> Id Empleado</label> <input class="form-control"
+									name="idEmpleado" id="txtIdEmp3" />
+							</div>
+
+							<div class="form-group" style="display: none">
+								<label> Id Revision</label> <input class="form-control"
+									name="idRevision" id="txtIdRe5" />
+							</div>
+
+							<div class="form-group">
+								<label>Nro. Horas</label>
+								<textarea id="txtNroHoras" class="form-control"
+									name="nroHoras" placeholder="Nro Horas"></textarea>
+							</div>
+							
+							
+
+
+						</fieldset>
+					</form>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-primary" data-dismiss="modal"
+						onclick="editarEmpleadoRevision();">Guardar</button>
+					<button type="button" class="btn btn-default" data-dismiss="modal"
+						onclick="$('#txtIdEmRe').val('');$('#txtNroHoras').val('');">Cancelar</button>
+				</div>
+			</div>
+			<!-- /.modal-content -->
+		</div>
+		<!-- /.modal-dialog -->
+	</div>
 	<div class="panel panel-default">
 		<div class="panel-heading">
 			Empleados por Revisión

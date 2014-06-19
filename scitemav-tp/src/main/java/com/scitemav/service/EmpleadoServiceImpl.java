@@ -7,6 +7,7 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.stereotype.Service;
@@ -16,6 +17,7 @@ import com.scitemav.bean.EmpleadoBean;
 import com.scitemav.bean.EmpleadoBean;
 import com.scitemav.bean.EmpleadoBean;
 import com.scitemav.bean.EmpleadoRevisionBean;
+import com.scitemav.bean.RepuestoRevisionBean;
 import com.scitemav.bean.VehiculoBean;
 import com.scitemav.model.Cargo;
 import com.scitemav.model.Empleado;
@@ -26,6 +28,8 @@ import com.scitemav.model.EmpleadoRevision;
 import com.scitemav.model.Especialidad;
 import com.scitemav.model.FallaRevision;
 import com.scitemav.model.Persona;
+import com.scitemav.model.Repuesto;
+import com.scitemav.model.RepuestoRevision;
 import com.scitemav.model.Revision;
 import com.scitemav.model.Usuario;
 import com.scitemav.model.Vehiculo;
@@ -363,6 +367,41 @@ public class EmpleadoServiceImpl implements EmpleadoService{
 		}
 
 		return resultado;
+	}
+	
+	@Transactional
+	public boolean editarEmpRev(EmpleadoRevisionBean empleadoRevisionB, HttpServletRequest req) {
+		boolean resultado = false;
+				
+		EmpleadoRevision empleadoRevision = new EmpleadoRevision();
+		Empleado emp = new Empleado();
+		Revision rev = new Revision();
+		
+		try{
+			
+			Query q1 = em.createQuery("SELECT er FROM EmpleadoRevision er JOIN er.reeRevision r JOIN er.reeEmpleado e WHERE r.idRevision=:idrevision AND e.idEmpleado=:idempleado");
+			q1.setParameter("idrevision", empleadoRevisionB.getIdRevision());
+			q1.setParameter("idempleado", empleadoRevisionB.getIdEmpleado());			
+			empleadoRevision = (EmpleadoRevision) q1.getSingleResult();
+			
+			empleadoRevision.setNroHoras(empleadoRevisionB.getNroHoras());
+			empleadoRevision.setCosto(empleadoRevision.getNroHoras()*empleadoRevision.getReeEmpleado().getSueldo());
+			
+			em.merge(empleadoRevision);
+			sumarCostoTotal(empleadoRevisionB.getIdRevision());
+			resultado = true;			
+			
+			
+		} catch(IllegalArgumentException e){
+			System.out.println(e);
+			resultado = false;
+		}
+		
+		return resultado;
+		
+		
+		
+		
 	}
 
 	@Transactional

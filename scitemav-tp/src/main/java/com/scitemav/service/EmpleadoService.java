@@ -2,6 +2,8 @@ package com.scitemav.service;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import com.scitemav.bean.EmpleadoBean;
 import com.scitemav.bean.EmpleadoRevisionBean;
 import com.scitemav.bean.VehiculoBean;
@@ -19,4 +21,5 @@ public interface EmpleadoService {
 	public Boolean getDuplicateDNI2(String dni);
 	public void sumarCostoTotal(Integer idRevision);
 	public List<VehiculoBean> getVehiculos(Integer idEmpleado);
+	public boolean editarEmpRev(EmpleadoRevisionBean empleadoRevisionB, HttpServletRequest req);
 }

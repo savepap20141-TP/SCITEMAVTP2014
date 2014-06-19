@@ -13,6 +13,7 @@ public class EmpleadoRevisionBean {
 	private Integer idEspecialidad;
 	private String nombreEspecialidad;
 	private Boolean administrador;
+	private Double sueldo;
 	// Persona
 	private Integer idPersona;
 	private String nombre;
@@ -198,5 +199,11 @@ public class EmpleadoRevisionBean {
 	}
 	public void setIdEmpleado(Integer idEmpleado) {
 		this.idEmpleado = idEmpleado;
+	}
+	public Double getSueldo() {
+		return sueldo;
+	}
+	public void setSueldo(Double sueldo) {
+		this.sueldo = sueldo;
 	}
 }
