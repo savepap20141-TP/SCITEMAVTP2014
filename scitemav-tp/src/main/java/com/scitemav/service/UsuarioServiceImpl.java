@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.scitemav.bean.PersonaBean;
+import com.scitemav.model.Empleado;
 import com.scitemav.model.Persona;
 import com.scitemav.model.Usuario;
 
@@ -110,7 +111,7 @@ public class UsuarioServiceImpl implements UsuarioService{
 	}
 	
 	@Transactional
-	public List<String> administrarLogin(String[] ids, String[] state) {
+	public List<String> administrarLogin(String[] ids, String[] state, String[] admin, String[] sueldo) {
 		List<String> enviados = new ArrayList<String>();
 		try {
 			for (int i = 0; i < ids.length; i++) {				
@@ -125,6 +126,14 @@ public class UsuarioServiceImpl implements UsuarioService{
 				}
 				Usuario userx = em.merge(usu);
 				userx.setEstado(state[i]);
+				Empleado empx = em.merge(usu.getUsuPersona().getPerEmpleado());
+				empx.setSueldo(Double.parseDouble(sueldo[i]));
+				if(admin[i].equals("true")){
+					empx.setAdministrador(true);
+				}else{
+					empx.setAdministrador(false);
+				}
+				
 			}
 		} catch (Exception e) {
 			System.out.println(e.getMessage());

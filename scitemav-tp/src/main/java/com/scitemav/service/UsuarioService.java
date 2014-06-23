@@ -11,5 +11,5 @@ public interface UsuarioService {
 
 	boolean login(Usuario usu, HttpSession session);
 	boolean registro(PersonaBean repb);
-	public List<String> administrarLogin(String[] ids, String[] state);
+	public List<String> administrarLogin(String[] ids, String[] state, String[] admin, String[] sueldo);
 }

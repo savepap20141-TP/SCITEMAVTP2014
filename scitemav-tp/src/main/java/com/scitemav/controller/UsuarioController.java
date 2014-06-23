@@ -27,9 +27,10 @@ public class UsuarioController {
 		List<String> enviados = new ArrayList<String>();
 		String[] idUsuList = request.getParameter("idUsuarioList").toString().split("_");
 		String[] states = request.getParameter("isStateList").toString().split("_");
-		
+		String[] isadmin = request.getParameter("isAdminList").toString().split("_");
+		String[] sueldo = request.getParameter("isSueldoList").toString().split("_");
 		if(idUsuList[0].length() > 0){
-			enviados = usuarioService.administrarLogin(idUsuList, states);
+			enviados = usuarioService.administrarLogin(idUsuList, states, isadmin, sueldo);
 		}
 		return enviados;
 	}

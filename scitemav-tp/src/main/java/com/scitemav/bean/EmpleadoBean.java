@@ -22,6 +22,7 @@ public class EmpleadoBean {
 	private String direccion;
 	private Date fechaNacimiento;
 	private Boolean activoC;
+	private Double sueldo;
 	// Distrito
 	private Integer idDistrito;
 	private String nombreDistrito;
@@ -191,5 +192,11 @@ public class EmpleadoBean {
 	}
 	public void setCosto(Double costo) {
 		this.costo = costo;
+	}
+	public Double getSueldo() {
+		return sueldo;
+	}
+	public void setSueldo(Double sueldo) {
+		this.sueldo = sueldo;
 	}
 }

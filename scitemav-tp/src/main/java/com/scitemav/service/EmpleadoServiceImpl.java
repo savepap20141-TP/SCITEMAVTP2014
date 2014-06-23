@@ -133,6 +133,7 @@ public class EmpleadoServiceImpl implements EmpleadoService{
 				empb.setIdEspecialidad(emp.getEmpEspecialidad().getIdEspecialidad());
 				empb.setNombreEspecialidad(emp.getEmpEspecialidad().getDescripcion());
 				empb.setAdministrador(emp.getAdministrador());
+				empb.setSueldo(emp.getSueldo());
 				lempb.add(empb);
 			}
 		} catch (IllegalArgumentException e) {

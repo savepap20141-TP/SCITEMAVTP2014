@@ -49,24 +49,39 @@ function inicioConsulta(){
  				}
  				
  				
+ 				var checkAdmin = '';
+ 				var valueAdmin = '';
+ 				if(empleado.administrador == true){
+ 					checkAdmin = 'checked';
+ 					valueAdmin = 'Administrador';
+ 				}
+ 				if(empleado.administrador == null || empleado.administrador == false){
+ 					checkAdmin =  '';
+ 					valueAdmin = '';
+ 				}
+ 				
  				filas = filas +'<tr class="">'+
  				'<td class="center">'+valueCreado+valueHabilitado+' <input type="checkbox" '+checkHabilitado+' onclick="updateState(this,'+ i +')"><input type="hidden" name="state"  id="state_'+i+'" value="'+empleado.estado+'" /></td>'+ 		
+ 				'<td class="center">'+valueAdmin+' <input type="checkbox" '+checkAdmin+' onclick="updateStateAdm(this,'+ i +')"><input type="hidden" name="adminE"  id="adminE_'+i+'"/></td>'+
  				'<td class="center">'+empleado.email+'<input id="change_'+i+'" type="hidden" name="change"></td>'+
 				'<td class="center">'+empleado.dni+'<input type="hidden" name="id" value="'+empleado.idUsuario+'" id="idUsu_'+i+'" /></td>'+
 				'<td class="center">'+empleado.nombre+'</td>'+
 				'<td class="center">'+empleado.apellidoPaterno+'</td>'+
-				'<td class="center">'+empleado.apellidoMaterno+'</td>'+				
+				'<td class="center">'+empleado.apellidoMaterno+'</td>'+	
+				'<td class="center"><input type="text" id="sueldoE_'+i+'" value="'+empleado.sueldo+'" onchange="updateStateS('+ i +')"/></td>'+
 				'</tr>';
 			});		        
  		},
  		complete: function() {
  			columnas = columnas +
  				'<th class="center">Estado</th>'+ 			
+ 				'<th class="center">Administrador</th>'+
  				'<th class="center">Email</th>'+
  				'<th class="center">DNI</th>'+
 				'<th class="center">Nombre Cliente</th>'+
 				'<th class="center">Apellido Paterno</th>'+
-				'<th class="center">Apellido Materno</th>';
+				'<th class="center">Apellido Materno</th>'+
+				'<th class="center">Sueldo x Hora</th>';
  			realizarTabla(columnas,filas);
  			removeNulls();
   		}
@@ -80,11 +95,24 @@ function updateState(source,i){
 	   }
 	   else{
 	    state="deshabilitado";
-	      }
+	   }
 	   $('#state_'+i).val(state);
 	   $('#change_'+i).val(true);
 }
-
+function updateStateAdm(source,i){
+	   var state;
+	   if(source.checked==true){
+	    state=true;
+	   }
+	   else{
+	    state=false;
+	   }
+	   $('#adminE_'+i).val(state);
+	   $('#change_'+i).val(true);
+}
+function updateStateS(i){
+	   $('#change_'+i).val(true);
+}
 </script>
 
 <script>
@@ -93,16 +121,22 @@ var cont ='first';
 $(document).on('click','#btnEnviarInv', function(e){
 		var list_State = '';
 		var list_IdUsu = '';
+		var list_Admin = '';
+		var list_Sueldo = '';
 		list_isChanged = document.getElementsByName('change');
 		  for (var x=0; x < list_isChanged.length; x++) {
 			  if($('#change_'+x).val()==true || $('#change_'+x).val()=='true'){
 				list_State += $('#state_'+x).val()+'_';
 				list_IdUsu += $('#idUsu_'+x).val()+'_';
+				list_Admin += $('#adminE_'+x).val()+'_';
+				list_Sueldo += $('#sueldoE_'+x).val()+'_';
 				$('#change_'+x).val('');
 			  }
 		 }
 		$('#isState_list').val(list_State);
-		$('#idUsuario_list').val(list_IdUsu);	
+		$('#idUsuario_list').val(list_IdUsu);
+		$('#isAdmin_list').val(list_Admin);
+		$('#sueldo_list').val(list_Sueldo);
 		//alert(list_State);
 		//alert(list_IdUsu);
 		  $.ajax({
@@ -160,7 +194,7 @@ $(document).on('click','#btnEnviarInv', function(e){
                         <!-- /.panel-heading -->
                         <div class="panel-body">
                             <div class="table-responsive">
-                            	<input class="btn btn-lg btn-success btn-block" type="button" style="width: 20%;" value="Habilitar Empleado" id="btnEnviarInv"></input><br>
+                            	<input class="btn btn-lg btn-success btn-block" type="button" style="width: 20%;" value="Guardar Cambios" id="btnEnviarInv"></input><br>
                             	<div class="alert alert-success alert-dismissable" id="resultOk" style="display:none">
 	    							<button class="close" aria-hidden="true" data-dismiss="alert" type="button">×</button>
 	    							<span id="mensajeEmails"></span>
@@ -170,6 +204,8 @@ $(document).on('click','#btnEnviarInv', function(e){
                             	<form id="frmAdministradorLogin">		
 									<input id="isState_list" type="hidden" name="isStateList"/>
 									<input id="idUsuario_list" type="hidden" name="idUsuarioList"/>
+									<input id="isAdmin_list" type="hidden" name="isAdminList"/>
+									<input id="sueldo_list" type="hidden" name="isSueldoList"/>
 								</form>
                             </div>
                         </div>
