@@ -113,4 +113,10 @@ public class RevisionController {
 	public Boolean ajaxEditRevision(@PathVariable("idRevision") Integer idRevision,@PathVariable("estado") String estado, HttpServletRequest request){		
 		return revisionService.cambiarEstadoRevision(idRevision, estado);
 	}
+	
+	@RequestMapping(value = "cargarContadorRevisiones", method = RequestMethod.POST)
+	@ResponseBody
+	public List<Integer> cargarContadorRevisiones(HttpServletRequest request, HttpSession session) {		
+		return revisionService.cargarContadorRevisiones();
+	}
 }

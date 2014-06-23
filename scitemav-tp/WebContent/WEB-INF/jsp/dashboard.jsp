@@ -16,8 +16,21 @@
 var arregloReviEnv = [];
 $(document).ready(function(){
 	IniciarNotificacion();
+	cargarContadorRevisiones();
 });
-
+function cargarContadorRevisiones(){
+	$.ajax({
+		   url: 'cargarContadorRevisiones',
+		   type: 'post',
+		   dataType: 'json',
+		   data: '',
+		   success: function(contadores){
+				  $.each(contadores, function(z, cont){
+					  $('#countRev_'+(z+1)).text('('+cont+')');
+				  });		
+			}
+	  });
+}
 function IniciarNotificacion(){
 	var fechaHoy = new Date();
 	//alert(fechaHoy);
@@ -250,38 +263,31 @@ function revision1(){
                             <div class="list-group">
                                 <a href="toConsultarRevision-Creada" class="list-group-item">
                                     <i class="fa fa-tasks fa-fw"></i> Creada
-                                    <span class="pull-right text-muted small"><em> </em>
-                                    </span>
+                                    <span class="pull-right text-muted small" id="countRev_1">(0)</span>
                                 </a>
                                 <a href="toConsultarRevision-Inspeccionada"  class="list-group-item">
                                     <i class="fa fa-tasks fa-fw"></i> Inspeccionada
-                                    <span class="pull-right text-muted small"><em> </em>
-                                    </span>
+                                    <span class="pull-right text-muted small" id="countRev_2">(0)</span>
                                 </a>
                                 <a href="toConsultarRevision-Supervisada"  class="list-group-item">
                                     <i class="fa fa-tasks fa-fw"></i> Supervisada
-                                    <span class="pull-right text-muted small"><em> </em>
-                                    </span>
+                                    <span class="pull-right text-muted small" id="countRev_3">(0)</span>
                                 </a>
                                 <a href="toConsultarRevision-Deshaprobada"  class="list-group-item">
                                     <i class="fa fa-tasks fa-fw"></i> Verificada por el Cliente - Deshaprobada
-                                    <span class="pull-right text-muted small"><em> </em>
-                                    </span>
+                                    <span class="pull-right text-muted small" id="countRev_4">(0)</span>
                                 </a>
                                 <a href="toConsultarRevision-Aprobada"  class="list-group-item">
                                     <i class="fa fa-tasks fa-fw"></i> Verificada por el Cliente - Aprobada
-                                    <span class="pull-right text-muted small"><em> </em>
-                                    </span>
+                                    <span class="pull-right text-muted small" id="countRev_5">(0)</span>
                                 </a>                                
                                 <a href="toConsultarRevision-Ejecutada"  class="list-group-item">
                                     <i class="fa fa-tasks fa-fw"></i> Ejecutada
-                                    <span class="pull-right text-muted small"><em> </em>
-                                    </span>
+                                    <span class="pull-right text-muted small" id="countRev_6">(0)</span>
                                 </a>
                                 <a href="toConsultarRevision-Terminada"  class="list-group-item">
                                     <i class="fa fa-tasks fa-fw"></i> Terminada
-                                    <span class="pull-right text-muted small"><em> </em>
-                                    </span>
+                                    <span class="pull-right text-muted small" id="countRev_7">(0)</span>
                                 </a>
                             </div>
                         </div>

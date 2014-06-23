@@ -270,4 +270,30 @@ public class RevisionServiceImpl implements RevisionService {
 		}
 		return flag;
 	}
+	
+	@SuppressWarnings("unchecked")
+	@Transactional
+	public List<Integer> cargarContadorRevisiones() {
+		List<Integer> revCount = new ArrayList<Integer>();
+		String estados[] = new String[7];
+		estados[0] = "Creada";
+		estados[1] = "Inspeccionada";
+		estados[2] = "Supervisada";
+		estados[3] = "Desaprobada";
+		estados[4] = "Aprobada";
+		estados[5] = "Ejecutada";
+		estados[6] = "Terminada";
+		try {
+			for(int i = 0; i <estados.length; i++ ){
+				Query q = em.createQuery("SELECT COUNT(r.idRevision) FROM Revision r WHERE r.estado=:estado");
+				q.setParameter("estado", estados[i]);
+				Integer encontro = Integer.parseInt(q.getSingleResult().toString());
+				revCount.add(encontro);
+			}
+			
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+		return revCount;
+	}
 }
