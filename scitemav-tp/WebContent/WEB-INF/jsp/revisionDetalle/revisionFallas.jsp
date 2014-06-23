@@ -97,7 +97,8 @@
 					<span id="mensajeAsignadosFalla"></span>
 				</div>
 				<br>
-				<div id="spnResultList_Fallas" class="resultBox section summaryPane"></div>
+				<div id="spnResultList_Fallas" class="resultBox section summaryPane"
+					style="overflow: auto;"></div>
 				<form id="frmAdministrarFallasRevision">
 					<input id="idFalla_list" type="hidden" name="idFallaList" />
 				</form>

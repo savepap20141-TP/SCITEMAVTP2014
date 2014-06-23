@@ -50,21 +50,32 @@ var countArchivo = 0;
 				'<th class="center">Tamaño </th>'+
 				'<th class="center">Acciones</th>';
 	 			var id = 'Arch';
-				var contenido = '';
+	 			var contenido = '';
 				$("#spnResultList_"+id).empty();
-	
+
 				contenido = contenido + '<table cellpadding="0" cellspacing="0" border="0" class="display dataTable" id="example_'+id+'"> '+
-						' <thead class="tableGri"> '+
-				            '<tr role="row">'+
-				            	columnas+							                            
-				            '</tr>'+
-				        '</thead> '+
+							' <thead class="tableGri"> '+
+					            '<tr role="row">'+
+					            	columnas+							                            
+					            '</tr>'+
+					        '</thead> '+
+					        ' <thead class="tableGri" id="FiltroCol_'+id+'"> '+
+					            '<tr role="row">'+
+					            	columnas+							                            
+					            '</tr>'+
+					        '</thead> '+
 				        '<tbody id="'+id+'">';
 				contenido = contenido + filas;   
 				contenido = contenido + '</tbody>'+
 						'</table> ';
 				
 				$("#spnResultList_"+id).append(contenido);
+				$('#example_'+id+' #FiltroCol_'+id+' th').each( function () {
+				    var title = $('#example_'+id+' #FiltroCol_'+id+' th').eq( $(this).index() ).text();
+				    $(this).html( '<input type="text" class="search_init" name="search_'+title+'" placeholder="Buscar '+title+'" />' );
+				});	
+				
+				multiFiltrosColumnasId(id);
 	 			removeNulls();
 	  		}
 	 	});

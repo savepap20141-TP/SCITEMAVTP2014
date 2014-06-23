@@ -100,6 +100,55 @@ function multiFiltrosColumnas(){
 		}
 	} );
 }
+
+function multiFiltrosColumnasId(id){
+	var oTable = $('#example_'+id+" ").dataTable({
+		    "aaSorting": [],
+		    "oLanguage": {
+				           "sLengthMenu": '<select class="form-control input-sm" style="" id="valshow_'+id+'">'+
+				             '<option value="10">10</option>'+
+				             '<option value="25">25</option>'+
+				             '<option value="50">50</option>'+
+				             '<option value="100">100</option>'+
+				             '<option value="200">200</option>'+
+				             '</select>'
+				         ,"sInfo": "Mostrando _START_ a _END_ de _TOTAL_ Resultados"
+				         ,"sZeroRecords": "No se encontraron resultados"
+				         ,"sInfoEmpty": "Mostrando 0 a 0 de 0 Resultados"
+				         ,"sInfoFiltered": "(filtrado de _MAX_ totales Resultados)"}
+		
+		});
+	
+	$('#example_'+id+' #FiltroCol_'+id+' input').keyup( function () {
+		//alert('Entre');
+		/* Filter on the column (the index) of this element */
+		oTable.fnFilter( this.value, $('#example_'+id+' #FiltroCol_'+id+' input').index(this) );
+	} );
+	
+	/*
+	 * Support functions to provide a little bit of 'user friendlyness' to the textboxes in 
+	 * the footer
+	 */
+	$('#example_'+id+' #FiltroCol_'+id+' input').each( function (i) {
+		asInitVals[i] = this.value;
+	} );
+	
+	$('#example_'+id+' #FiltroCol_'+id+' input').focus( function () {
+		if ( this.className == "search_init" )
+		{
+			this.className = "";
+			this.value = "";
+		}
+	} );
+	
+	$('#example_'+id+' #FiltroCol_'+id+' input').blur( function (i) {
+		if ( this.value == "" )
+		{
+			this.className = "search_init";
+			this.value = asInitVals[$('#example_'+id+' #FiltroCol_'+id+' input').index(this)];
+		}
+	} );
+}
 function realizarTabla2(id,columnas,filas){
 	var contenido = '';
 	$("#spnResultList_"+id).empty();

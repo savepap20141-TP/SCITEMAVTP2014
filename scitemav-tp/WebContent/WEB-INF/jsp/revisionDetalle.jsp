@@ -312,6 +312,10 @@ $(function() {
 	 			$.each(repuestos, function(i, repuesto){
 	 				arregloAsignadosRep.push(repuesto.idRepuesto);
 	 				filas = filas +'<tr class="">'+
+	 				'<td class="center">'+
+	 					'<button class="btn btn-success btn-circle" type="button" id="btnEdit_'+i+'" data-toggle="modal" data-target="#myModalER" onclick="mostrarEditarR('+i+','+idRevision+','+repuesto.idRepuesto+')"><i class="fa fa-list"></i></button>'+
+						'<button class="btn btn-danger btn-circle" type="button" id="btnDelete_'+i+'" data-toggle="modal" data-target="#myModalR" onclick="mostrarEliminarR('+i+','+idRevision+')"><i class="fa fa-times"></i></button>'+
+					'</td>'+
 	 				'<td class="center">REP-'+repuesto.idRepuesto+'</td>'+
 	 				'<td class="center" id="filaIdR_'+i+'" style="display:none;">'+repuesto.idRepuesto+'</td>'+	 				
 					'<td class="center">'+repuesto.nombre+'</td>'+
@@ -320,13 +324,12 @@ $(function() {
 					'<td class="center" id="filaCantidad_'+i+'">'+repuesto.cantidad+'</td>'+
 					'<td class="center" id="filaCostoUnit_'+i+'">'+repuesto.costoUnitario+'</td>'+
 					'<td class="center">'+repuesto.costo+'</td>'+
-					'<td class="center"><button class="btn btn-success btn-circle" type="button" id="btnEdit_'+i+'" data-toggle="modal" data-target="#myModalER" onclick="mostrarEditarR('+i+','+idRevision+','+repuesto.idRepuesto+')"><i class="fa fa-list"></i></button></td>'+
-					'<td class="center"><button class="btn btn-danger btn-circle" type="button" id="btnDelete_'+i+'" data-toggle="modal" data-target="#myModalR" onclick="mostrarEliminarR('+i+','+idRevision+')"><i class="fa fa-times"></i></button></td>'+
 					'</tr>';
 				});		        
 	 		},
 	 		complete: function() {
 	 			columnas = columnas + 
+	 				'<th class="center">Acciones</th>'+
 	 				'<th class="center">Codigo</th>'+
 	 				'<th class="center" style="display:none;">IdRepuesto</th>'+	 				
 	 				'<th class="center">Nombre Respuesto</th>'+
@@ -334,26 +337,35 @@ $(function() {
 	 				'<th class="center">Comentario</th>'+
 	 				'<th class="center">Cantidad</th>'+
 	 				'<th class="center">Costo Unitario</th>'+
-	 				'<th class="center">Costo</th>'+
-	 				'<th class="center">Editar</th>'+
-					'<th class="center">Eliminar</th>';
+	 				'<th class="center">Costo</th>';
 
 				var id = 'RepRev';
 				var contenido = '';
 				$("#spnResultList_"+id).empty();
-	
+
 				contenido = contenido + '<table cellpadding="0" cellspacing="0" border="0" class="display dataTable" id="example_'+id+'"> '+
-						' <thead class="tableGri"> '+
-				            '<tr role="row">'+
-				            	columnas+							                            
-				            '</tr>'+
-				        '</thead> '+
+							' <thead class="tableGri"> '+
+					            '<tr role="row">'+
+					            	columnas+							                            
+					            '</tr>'+
+					        '</thead> '+
+					        ' <thead class="tableGri" id="FiltroCol_'+id+'"> '+
+					            '<tr role="row">'+
+					            	columnas+							                            
+					            '</tr>'+
+					        '</thead> '+
 				        '<tbody id="'+id+'">';
 				contenido = contenido + filas;   
 				contenido = contenido + '</tbody>'+
 						'</table> ';
 				
 				$("#spnResultList_"+id).append(contenido);
+				$('#example_'+id+' #FiltroCol_'+id+' th').each( function () {
+				    var title = $('#example_'+id+' #FiltroCol_'+id+' th').eq( $(this).index() ).text();
+				    $(this).html( '<input type="text" class="search_init" name="search_'+title+'" placeholder="Buscar '+title+'" />' );
+				});	
+				
+				multiFiltrosColumnasId(id);
 				//realizarTabla(columnas,filas);
 	 			removeNulls();
 	 			inicioConsultaRepuestos();
@@ -400,22 +412,32 @@ $(function() {
 					'<th class="center">Costo Unitario</th>';
 					//
 		 			var id = 'Rep';
-					var contenido = '';
+		 			var contenido = '';
 					$("#spnResultList_"+id).empty();
-		
+
 					contenido = contenido + '<table cellpadding="0" cellspacing="0" border="0" class="display dataTable" id="example_'+id+'"> '+
-							' <thead class="tableGri"> '+
-					            '<tr role="row">'+
-					            	columnas+							                            
-					            '</tr>'+
-					        '</thead> '+
+								' <thead class="tableGri"> '+
+						            '<tr role="row">'+
+						            	columnas+							                            
+						            '</tr>'+
+						        '</thead> '+
+						        ' <thead class="tableGri" id="FiltroCol_'+id+'"> '+
+						            '<tr role="row">'+
+						            	columnas+							                            
+						            '</tr>'+
+						        '</thead> '+
 					        '<tbody id="'+id+'">';
 					contenido = contenido + filas;   
 					contenido = contenido + '</tbody>'+
 							'</table> ';
 					
 					$("#spnResultList_"+id).append(contenido);
-		 			//
+					$('#example_'+id+' #FiltroCol_'+id+' th').each( function () {
+					    var title = $('#example_'+id+' #FiltroCol_'+id+' th').eq( $(this).index() ).text();
+					    $(this).html( '<input type="text" class="search_init" name="search_'+title+'" placeholder="Buscar '+title+'" />' );
+					});	
+					
+					multiFiltrosColumnasId(id);
 					
 				for(var x = 0; x < arregloAsignadosRep.length;x++){
  					//alert(arregloAsignados[x]);
@@ -538,43 +560,55 @@ function inicioConsultaFallasRevision(idRevision){
  				}
  				arregloAsignadosFalla.push(falla.idFalla);
  				filas = filas +'<tr class="">'+
+ 				'<td class="center">'+
+					'<button class="btn btn-success btn-circle" type="button" id="btnEdit_'+i+'" data-toggle="modal" data-target="#myModalEF" onclick="mostrarEditar('+i+','+idRevision+','+falla.idFalla+')"><i class="fa fa-list"></i></button>'+
+					'<button class="btn btn-danger btn-circle" type="button" id="btnDelete_'+falla.idFalla+'" data-toggle="modal" data-target="#myModalF" onclick="mostrarEliminar('+i+','+idRevision+')"><i class="fa fa-times"></i></button>'+
+				'</td>'+
  				'<td class="center">FAL-'+falla.idFalla+'</td>'+
  				'<td class="center" id="filaId_'+i+'" style="display:none;">'+falla.idFalla+'</td>'+
  				'<td class="center">'+falla.descripcion+'</td>'+
 				'<td class="center">'+falla.nombreTipoFalla+'</td>'+
 				'<td class="center">'+imagen+'</td>'+
-				'<td class="center" id="filaComentario_'+i+'">'+falla.comentario+'</td>'+
-				'<td class="center"><button class="btn btn-success btn-circle" type="button" id="btnEdit_'+i+'" data-toggle="modal" data-target="#myModalEF" onclick="mostrarEditar('+i+','+idRevision+','+falla.idFalla+')"><i class="fa fa-list"></i></button></td>'+
-				'<td class="center"><button class="btn btn-danger btn-circle" type="button" id="btnDelete_'+falla.idFalla+'" data-toggle="modal" data-target="#myModalF" onclick="mostrarEliminar('+i+','+idRevision+')"><i class="fa fa-times"></i></button></td>'+
+				'<td class="center" id="filaComentario_'+i+'">'+falla.comentario+'</td>'+				
 				'</tr>';
 			});		        
  		},
  		complete: function() {
  			columnas = columnas + 
+ 				'<th class="center">Acciones</th>'+
  				'<th class="center">Codigo</th>'+
  				'<th class="center" style="display:none;">IdFalla</th>'+
  				'<th class="center">Nombre</th>'+
  				'<th class="center">Tipo de falla</th>'+ 				
  				'<th class="center">Imagen</th>'+
- 				'<th class="center">Comentario</th>'+
- 				'<th class="center">Editar</th>'+
- 				'<th class="center">Eliminar</th>';
+ 				'<th class="center">Comentario</th>';
 			var id = 'FalRev';
 			var contenido = '';
 			$("#spnResultList_"+id).empty();
 
 			contenido = contenido + '<table cellpadding="0" cellspacing="0" border="0" class="display dataTable" id="example_'+id+'"> '+
-					' <thead class="tableGri"> '+
-			            '<tr role="row">'+
-			            	columnas+							                            
-			            '</tr>'+
-			        '</thead> '+
+						' <thead class="tableGri"> '+
+				            '<tr role="row">'+
+				            	columnas+							                            
+				            '</tr>'+
+				        '</thead> '+
+				        ' <thead class="tableGri" id="FiltroCol_'+id+'"> '+
+				            '<tr role="row">'+
+				            	columnas+							                            
+				            '</tr>'+
+				        '</thead> '+
 			        '<tbody id="'+id+'">';
 			contenido = contenido + filas;   
 			contenido = contenido + '</tbody>'+
 					'</table> ';
 			
 			$("#spnResultList_"+id).append(contenido);
+			$('#example_'+id+' #FiltroCol_'+id+' th').each( function () {
+			    var title = $('#example_'+id+' #FiltroCol_'+id+' th').eq( $(this).index() ).text();
+			    $(this).html( '<input type="text" class="search_init" name="search_'+title+'" placeholder="Buscar '+title+'" />' );
+			});	
+			
+			multiFiltrosColumnasId(id);
 			//realizarTabla(columnas,filas);
 			inicioConsultaFalla();
  			removeNulls();
@@ -755,21 +789,32 @@ function eliminarFallaRevision(){
 	 			
 	 			//
 	 			var id = 'Fallas';
-				var contenido = '';
+	 			var contenido = '';
 				$("#spnResultList_"+id).empty();
-	
+
 				contenido = contenido + '<table cellpadding="0" cellspacing="0" border="0" class="display dataTable" id="example_'+id+'"> '+
-						' <thead class="tableGri"> '+
-				            '<tr role="row">'+
-				            	columnas+							                            
-				            '</tr>'+
-				        '</thead> '+
+							' <thead class="tableGri"> '+
+					            '<tr role="row">'+
+					            	columnas+							                            
+					            '</tr>'+
+					        '</thead> '+
+					        ' <thead class="tableGri" id="FiltroCol_'+id+'"> '+
+					            '<tr role="row">'+
+					            	columnas+							                            
+					            '</tr>'+
+					        '</thead> '+
 				        '<tbody id="'+id+'">';
 				contenido = contenido + filas;   
 				contenido = contenido + '</tbody>'+
 						'</table> ';
 				
 				$("#spnResultList_"+id).append(contenido);
+				$('#example_'+id+' #FiltroCol_'+id+' th').each( function () {
+				    var title = $('#example_'+id+' #FiltroCol_'+id+' th').eq( $(this).index() ).text();
+				    $(this).html( '<input type="text" class="search_init" name="search_'+title+'" placeholder="Buscar '+title+'" />' );
+				});	
+				
+				multiFiltrosColumnasId(id);
 	 			//
 				for(var x = 0; x < arregloAsignadosFalla.length;x++){
 					//alert(arregloAsignadosEmp[x]);
@@ -859,6 +904,10 @@ function inicioConsultaEmpleadosRevision(idRevision){
  			$.each(empleados, function(i, empleado){
  				arregloAsignadosEmp.push(empleado.idEmpleado);
  				filas = filas +'<tr class="">'+
+				'<td class="center">'+
+					'<button title="Editar" class="btn btn-success btn-circle" type="button" id="btnEdit_'+i+'" data-toggle="modal" data-target="#myModalEE" onclick="mostrarEditarE('+i+','+idRevision+','+empleado.idEmpleado+')"><i class="fa fa-list"></i></button>'+
+					'<button title="Eliminar" class="btn btn-danger btn-circle" type="button" id="btnDelete_'+i+'" data-toggle="modal" data-target="#myModalE" onclick="mostrarEliminarE('+i+','+idRevision+')"><i class="fa fa-times"></i></button>'+
+				'</td>'+
  				'<td class="center"><a id="empleado_"'+i+'" href="toEmpleadoDetalle-'+empleado.idEmpleado+'">EMP-'+empleado.idEmpleado+'</a></td>'+
  				'<td class="center" id="filaIdE_'+i+'" style="display:none;">'+empleado.idEmpleado+'</td>'+
  				'<td class="center">'+empleado.nombre+'</td>'+
@@ -871,13 +920,13 @@ function inicioConsultaEmpleadosRevision(idRevision){
 				'<td class="center">'+empleado.nombreEspecialidad+'</td>'+
 				'<td class="center" id="filaNroHoras_'+i+'" >'+empleado.nroHoras+'</td>'+
 				'<td class="center">'+empleado.costo+'</td>'+
-				'<td class="center"><button class="btn btn-success btn-circle" type="button" id="btnEdit_'+i+'" data-toggle="modal" data-target="#myModalEE" onclick="mostrarEditarE('+i+','+idRevision+','+empleado.idEmpleado+')"><i class="fa fa-list"></i></button></td>'+
-				'<td class="center"><button class="btn btn-danger btn-circle" type="button" id="btnDelete_'+i+'" data-toggle="modal" data-target="#myModalE" onclick="mostrarEliminarE('+i+','+idRevision+')"><i class="fa fa-times"></i></button></td>'+
 				'</tr>';
 			});		        
  		},
  		complete: function() {
+ 			inicioConsultaEmpleados();
  			columnas = columnas + 
+ 				'<th class="center">Acciones</th>'+
  				'<th class="center">Codigo</th>'+
  				'<th class="center">Nombre</th>'+
  				'<th class="center">Apellido Paterno</th>'+
@@ -888,30 +937,10 @@ function inicioConsultaEmpleadosRevision(idRevision){
 				'<th class="center">Nombre Cargo</th>'+
 				'<th class="center">Nombre Especialidad</th>'+
 				'<th class="center">Nro. Horas</th>'+
-				'<th class="center">Costo</th>'+
-				'<th class="center">Editar</th>'+
-				'<th class="center">Eliminar</th>';
-			//realizarTabla2('EmpRev',columnas,filas);
-			//$('#EmpRev').append(filas);
-			var id = 'EmpRev';
-			var contenido = '';
-			$("#spnResultList_"+id).empty();
-
-			contenido = contenido + '<table cellpadding="0" cellspacing="0" border="0" class="display dataTable" id="example_'+id+'"> '+
-					' <thead class="tableGri"> '+
-			            '<tr role="row">'+
-			            	columnas+							                            
-			            '</tr>'+
-			        '</thead> '+
-			        '<tbody id="'+id+'">';
-			contenido = contenido + filas;   
-			contenido = contenido + '</tbody>'+
-					'</table> ';
-			
-			$("#spnResultList_"+id).append(contenido);
-			//realizarTabla(columnas,filas);
+				'<th class="center">Costo</th>';
+			realizarTabla(columnas,filas);
  			removeNulls();
- 			inicioConsultaEmpleados();
+ 			
   		}
  	});
 }
@@ -1020,12 +1049,12 @@ function inicioConsultaEmpleados(){
 	 				filas = filas +'<tr class="">'+
 	 				'<td class="center"><input id="chkEmp_'+empleado.idEmpleado+'" type="checkbox" onclick="updateState(this,'+ i +')"><input type="hidden" name="state"  id="state_'+i+'" value="'+empleado.estado+'" /></td>'+ 		
 	 				'<td class="center"><a id="empleado_"'+i+'" href="toEmpleadoDetalle-'+empleado.idEmpleado+'">EMP-'+empleado.idEmpleado+'</a></td>'+
+	 				'<td class="center"><input type="text" id="nHorasE_'+i+'" disabled="disabled"/></td>'+
 	 				'<td class="center">'+empleado.email+'<input id="change_'+i+'" type="hidden" name="change"></td>'+
 					'<td class="center">'+empleado.dni+'<input type="hidden" name="id" value="'+empleado.idEmpleado+'" id="idEmp_'+i+'" /></td>'+
 					'<td class="center">'+empleado.nombre+'</td>'+
 					'<td class="center">'+empleado.apellidoPaterno+'</td>'+
-					'<td class="center">'+empleado.apellidoMaterno+'</td>'+	
-					'<td class="center"><input type="text" id="nHorasE_'+i+'" disabled="disabled"/></td>'+
+					'<td class="center">'+empleado.apellidoMaterno+'</td>'+						
 					'</tr>';
  				
 			}); 			
@@ -1035,14 +1064,43 @@ function inicioConsultaEmpleados(){
  			columnas = columnas +
  				'<th class="center">Estado</th>'+ 		
  				'<th class="center">Codigo</th>'+
+ 				'<th class="center">Nro. Horas</th>'+
  				'<th class="center">Email</th>'+
  				'<th class="center">DNI</th>'+
 				'<th class="center">Nombre</th>'+
 				'<th class="center">Apellido Paterno</th>'+
-				'<th class="center">Apellido Materno</th>'+
-				'<th class="center">Nro. Horas</th>';
+				'<th class="center">Apellido Materno</th>';
 			//realizarTabla2('Emp',columnas,filas);
-			realizarTabla(columnas,filas);
+			
+			var id = 'Emp';
+			var contenido = '';
+			$("#spnResultList_"+id).empty();
+
+			contenido = contenido + '<table cellpadding="0" cellspacing="0" border="0" class="display dataTable" id="example_'+id+'"> '+
+						' <thead class="tableGri"> '+
+				            '<tr role="row">'+
+				            	columnas+							                            
+				            '</tr>'+
+				        '</thead> '+
+				        ' <thead class="tableGri" id="FiltroCol_'+id+'"> '+
+				            '<tr role="row">'+
+				            	columnas+							                            
+				            '</tr>'+
+				        '</thead> '+
+			        '<tbody id="'+id+'">';
+			contenido = contenido + filas;   
+			contenido = contenido + '</tbody>'+
+					'</table> ';
+			
+			$("#spnResultList_"+id).append(contenido);
+			$('#example_'+id+' #FiltroCol_'+id+' th').each( function () {
+			    var title = $('#example_'+id+' #FiltroCol_'+id+' th').eq( $(this).index() ).text();
+			    $(this).html( '<input type="text" class="search_init" name="search_'+title+'" placeholder="Buscar '+title+'" />' );
+			});	
+			
+			multiFiltrosColumnasId(id);
+			
+			//realizarTabla(columnas,filas);
 			for(var x = 0; x < arregloAsignadosEmp.length;x++){
 					//alert(arregloAsignadosEmp[x]);
 					document.getElementById("chkEmp_"+arregloAsignadosEmp[x]).checked=true;

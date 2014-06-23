@@ -81,7 +81,8 @@
 				<span id="mensajeAsignadosEmp"></span>
 			</div>
 			<br>
-			<div id="spnResultList" class="resultBox section summaryPane"></div>
+			<div id="spnResultList_Emp" class="resultBox section summaryPane"
+				style="overflow: auto;"></div>
 			<form id="frmAdministrarEmpleadosRevision">
 				<input id="isState_list" type="hidden" name="isStateList" /> <input
 					id="idEmpleado_list" type="hidden" name="idEmpleadoList" />
@@ -91,7 +92,8 @@
 		<br>
 		<br>
 		<div class="vistaInformacion2">
-			<div id="spnResultList_EmpRev" class="resultBox section summaryPane"></div>
+			<div id="spnResultList" class="resultBox section summaryPane"
+				style="overflow: auto;"></div>
 
 		</div>
 	</div>

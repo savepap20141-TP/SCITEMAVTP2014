@@ -98,7 +98,8 @@
 					<span id="mensajeAsignadosRep"></span>
 				</div>
 				<br>
-				<div id="spnResultList_Rep" class="resultBox section summaryPane"></div>
+				<div id="spnResultList_Rep" class="resultBox section summaryPane"
+					style="overflow: auto;"></div>
 				<form id="frmAdministrarRepuestoRevision">
 					<input id="idRepuesto_list" type="hidden" name="idRepuestoList" />
 					<input id="cantidadRep_list" type="hidden" name="cantidadRepuestoList" />
@@ -108,7 +109,8 @@
 			<br>
 			<br>
 			<div class="vistaInformacion4">
-				<div id="spnResultList_RepRev" class="resultBox section summaryPane"></div>
+				<div id="spnResultList_RepRev" class="resultBox section summaryPane"
+					style="overflow: auto;"></div>
 			</div>
 		</div>
 
