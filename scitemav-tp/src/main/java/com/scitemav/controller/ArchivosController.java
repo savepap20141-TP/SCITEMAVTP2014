@@ -23,6 +23,7 @@ import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import com.scitemav.bean.ArchivosBean;
 import com.scitemav.bean.AttachmentBean;
 import com.scitemav.bean.ComentarioBean;
+import com.scitemav.bean.EmpleadoRevisionBean;
 import com.scitemav.service.ArchivoService;
 
 
@@ -155,5 +156,21 @@ public class ArchivosController {
 		tipoE = req.getParameter("tipoEntidad");
 		idE = req.getParameter("idEntidad");
 		return archivoServ.listarArchivos(req.getSession(), tipoE, idE);
+	}
+	
+	@RequestMapping(value="editarArchivos", method = RequestMethod.POST)
+	@ResponseBody
+	public boolean editarArchivos(@ModelAttribute("archivosbean") ArchivosBean arbean, Model model, HttpServletRequest req){
+		boolean result = false;
+		if(archivoServ.editArchivo(arbean, req)){
+			//model.addAttribute("msg", "Se registro correctamente");
+			//path = "registrarMarca";
+			result = true;
+		}else{
+			//model.addAttribute("msg", "Fallo al registrarse");
+			//path = "registrarMarca";
+			result = false;
+		}
+		return result;
 	}
 }

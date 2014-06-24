@@ -21,9 +21,14 @@ import org.springframework.transaction.annotation.Transactional;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.scitemav.bean.ArchivosBean;
 import com.scitemav.bean.AttachmentBean;
+import com.scitemav.bean.EmpleadoBean;
 import com.scitemav.model.Archivo;
+import com.scitemav.model.Cargo;
 import com.scitemav.model.Cliente;
+import com.scitemav.model.Distrito;
 import com.scitemav.model.Empleado;
+import com.scitemav.model.Especialidad;
+import com.scitemav.model.Persona;
 import com.scitemav.model.Revision;
 import com.scitemav.model.Usuario;
 import com.scitemav.model.Vehiculo;
@@ -145,4 +150,31 @@ public class ArchivoServiceImpl implements ArchivoService{
 		return _lab;
 		
 	}
+	
+	@Transactional
+	public boolean editArchivo(ArchivosBean arb, HttpServletRequest req) {
+		boolean resultado = false;
+		Archivo ar = new Archivo();
+		try{
+			
+			Query q = em.createQuery("SELECT a FROM Archivo a WHERE idArchivo=:idArch");
+			//Query q = em.createNativeQuery("SELECT vehiculo.* FROM EmpleadoRevision er JOIN Revision JOIN Vehiculo WHERE er.idEmpleado=:idEmp and er.idRevision=Revision.idRevision", Vehiculo.class);
+			q.setParameter("idArch", arb.getIdArchivo());
+			
+			ar = (Archivo) q.getSingleResult();
+			ar.setDescripcion(arb.getDescripcion());
+			
+			em.merge(ar);
+			
+			
+			resultado = true;			
+		}
+		catch(IllegalArgumentException ex){
+			System.out.println(ex);
+			resultado = false;
+		}
+		return resultado;
+	}
+
+
 }
