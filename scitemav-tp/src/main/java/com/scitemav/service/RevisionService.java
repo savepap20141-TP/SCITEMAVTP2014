@@ -15,5 +15,6 @@ public interface RevisionService {
 	public List<RevisionBean> listarRevisionesVehiculo(Integer idVehiculo);
 	public List<String> notificarRevisionesClientes(String[] ids);
 	public boolean cambiarEstadoRevision(Integer idRevision,String estado);
+	public boolean cambiarEstadoSiguienteRevision(Integer idRevision);
 	public List<Integer> cargarContadorRevisiones();
 }

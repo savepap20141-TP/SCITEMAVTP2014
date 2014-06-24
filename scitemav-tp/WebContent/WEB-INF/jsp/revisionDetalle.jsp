@@ -224,12 +224,16 @@ $(function() {
 				});
 	}
 	
+	
 	function IniciarInfoRevision(revision){
 		//Vista de Informacion
 		
 		$('#divReporte').html("<a target='_blank' href='verPDFRevision-"+revision.idRevision+"' ><img width='50' height='50' src='images/pdfReport.jpg'></a>");
 		
-		$('#estadoRealspn').text(revision.estado);
+		$('#estadoRealspn').text(revision.estado);		
+	
+		$('#btnCambioEstado').html("<button type='button' onclick='cambiarEstado("+revision.idRevision+")'>Cambiar estado</button>");
+		
 		$('#spnidrevision').text(revision.idRevision);
 		$('#spnCostoTotal').text(revision.costoTotal);
 		$('#spnFechaInicio').text(revision.fechaInicio);
@@ -268,6 +272,18 @@ $(function() {
 		$('#txtKilometrajeProximo').val(revision.kilometrajeProximo);
 
 	}	
+	
+	function cambiarEstado(idRevision, estado){
+	    $.ajax({
+	 		url: 'ajaxEditProximaRevisionEstado-'+idRevision,
+	 		type: 'post',
+	 		dataType: 'json',
+	 		data: '',
+	 		success: function(){			
+	 			alert('Se ha cambiado el estado de la revisión');	
+	 		}
+	    });
+	}
 	
 	function ExtractInformacion(){
 		$('.vistaInformacion').hide();
@@ -1193,6 +1209,9 @@ $(document).on('click','#btnAsignarEmpleados', function(e){
 					<div class="panel-heading">
 						Detalles generales de la revisión <span id="spnIdRevision"><c:out
 								value="${idrevision}" /></span>
+								<div id="btnCambioEstado" align="Right">
+								
+								</div>
 					<div id="divReporte"></div>
 					</div>
 					
@@ -1392,14 +1411,16 @@ $(document).on('click','#btnAsignarEmpleados', function(e){
                                         	<button type="button" class="btn btn-primary" data-dismiss="modal" onclick="eliminarEmpleadoRevision();">Eliminar</button>
                                             <button type="button" class="btn btn-default" data-dismiss="modal" onclick="$('#txtIdEmp').val('');$('#txtIdRev1').val('');">Cancelar</button>
                                         </div>
+                                        
                                     </div>
+                                    
                                     <!-- /.modal-content -->
                                 </div>
                                 <!-- /.modal-dialog -->
+                    
                             </div>
                             <!-- /.modal -->
                     
-							
                         </div>
 
 

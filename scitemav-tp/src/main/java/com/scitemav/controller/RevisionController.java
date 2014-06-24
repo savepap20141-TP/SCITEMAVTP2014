@@ -114,6 +114,12 @@ public class RevisionController {
 		return revisionService.cambiarEstadoRevision(idRevision, estado);
 	}
 	
+	@RequestMapping(value = "ajaxEditProximaRevisionEstado-{idRevision}", method = RequestMethod.POST)
+	@ResponseBody
+	public Boolean ajaxEditProximaRevisionEstado(@PathVariable("idRevision") Integer idRevision, HttpServletRequest request){		
+		return revisionService.cambiarEstadoSiguienteRevision(idRevision);
+	}
+	
 	@RequestMapping(value = "cargarContadorRevisiones", method = RequestMethod.POST)
 	@ResponseBody
 	public List<Integer> cargarContadorRevisiones(HttpServletRequest request, HttpSession session) {		

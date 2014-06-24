@@ -271,6 +271,31 @@ public class RevisionServiceImpl implements RevisionService {
 		return flag;
 	}
 	
+	@Transactional
+	public boolean cambiarEstadoSiguienteRevision(Integer idRevision) {
+		boolean flag = true;    		
+		try {
+			Revision rev = em.find(Revision.class, idRevision);		
+			String estadoActual=rev.getEstado();
+			String estadoProximo="";
+			if(estadoActual.equalsIgnoreCase("Creada")){
+				estadoProximo="Inspeccionada";
+			}
+			if(estadoActual.equalsIgnoreCase("Inspeccionada")){
+				estadoProximo="Supervisada";
+			}			
+			//Modificar aquí
+			rev.setEstado(estadoProximo);
+			em.merge(rev);
+			flag = true;
+
+		} catch (IllegalArgumentException e) {
+			System.out.println(e.getMessage());
+			flag = false;
+		}
+		return flag;
+	}
+	
 	@SuppressWarnings("unchecked")
 	@Transactional
 	public List<Integer> cargarContadorRevisiones() {
