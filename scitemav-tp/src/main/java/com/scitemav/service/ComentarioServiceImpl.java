@@ -6,12 +6,15 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.scitemav.bean.ArchivosBean;
 import com.scitemav.bean.ComentarioBean;
+import com.scitemav.model.Archivo;
 import com.scitemav.model.Cliente;
 import com.scitemav.model.Comentario;
 import com.scitemav.model.Empleado;
@@ -145,6 +148,31 @@ public class ComentarioServiceImpl implements ComentarioService  {
 		
 		return _lcb;
 		
+	}
+
+	@Transactional
+	public boolean editComentario(ComentarioBean cb, HttpServletRequest req) {
+		boolean resultado = false;
+		Comentario co = new Comentario();
+		try{
+			
+			Query q = em.createQuery("SELECT c FROM Comentario c WHERE idComentario=:idComent");
+			//Query q = em.createNativeQuery("SELECT vehiculo.* FROM EmpleadoRevision er JOIN Revision JOIN Vehiculo WHERE er.idEmpleado=:idEmp and er.idRevision=Revision.idRevision", Vehiculo.class);
+			q.setParameter("idComent", cb.getIdComentario());
+			
+			co = (Comentario) q.getSingleResult();
+			co.setComentario(cb.getComentario());
+			
+			em.merge(co);
+			
+			
+			resultado = true;			
+		}
+		catch(IllegalArgumentException ex){
+			System.out.println(ex);
+			resultado = false;
+		}
+		return resultado;
 	}
 
 }

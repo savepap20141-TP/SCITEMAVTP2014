@@ -23,12 +23,12 @@ function listarComentarios(){
 	 				'<td class="center">COM-'+coment.idComentario+'</td>'+
 	 				'<td class="center" id="filaIdC_'+i+'" style="display:none;">'+coment.idComentario+'</td>'+
 	 				'<td class="center">'+coment.nombreUsuario+'</td>'+
-					'<td class="center">'+coment.comentario+'</td>'+
+					'<td class="center" id="Comentario_'+i+'">'+coment.comentario+'</td>'+
 					'<td class="center">'+timeStampFormatted(coment.fechaCreacion)+'</td>'+
 					'<td class="center">'+coment.visibilidad+'</td>'+
 					'<td class="center">';
 				    if(idUsuario==coment.idUsuario){
-				    	filas += '<button Title="Editar" class="btn btn-success btn-circle" type="button" id="btnEditC_'+i+'" data-toggle="modal" data-target="#myModal" onclick="mostrarEditarC('+i+')"><i class="fa fa-list"></i></button>'+
+				    	filas += '<button Title="Editar" class="btn btn-success btn-circle" type="button" id="btnEditC_'+i+'" data-toggle="modal" data-target="#myModalEC" onclick="mostrarEditarCom('+i+')"><i class="fa fa-list"></i></button>'+
 						'<button Title="Eliminar" class="btn btn-danger btn-circle" type="button" id="btnDeleteC_'+i+'" data-toggle="modal" data-target="#myModalR" onclick="mostrarEliminarC('+i+','+coment.idComentario+')"><i class="fa fa-times"></i></button>';
 				    }
 				    filas += '</td>'+
@@ -88,6 +88,49 @@ function registrarComentarios(){
  	});	
 }
 
+function mostrarEditarCom(ind){
+	$('#myModalLabel').empty();
+	$('#myModalLabel').append('Editar Comentario');
+	$('#txtIdCo').val($('#filaIdC_'+ind).text());
+	$('#txtComentario1').val($('#Comentario_'+ind).text());
+	
+}
+
+function editarComentario(){
+	
+	var formElement = document.getElementById("frmEditarComentario");
+	var formData = new FormData(formElement);	
+	$.ajax({
+   		url: 'editarComentario',
+   		type: 'post',
+   		data:  formData,
+		mimeType:"multipart/form-data",
+		contentType: false,
+	    cache: false,
+		processData:false,
+		beforeSend: function(){
+			//$.blockUI({ message: $('#domMessage') });
+	    },
+   		success: function(result){
+   			$('#resultOkFa3').hide();
+			$('#resultFalse').hide();	
+			//alert(result);
+			var res  = ''+result;
+   			if(res == 'true'){   				
+   				//$('#resultOk').append('Se ha registrado correctamente');
+   				$('#resultOkFa3').show();
+   				$('#txtIdEmRe').val('');   
+   				listarComentarios();
+   				//inicioConsultaFalla();
+   			}else{
+   				$('#resultFalse').show();
+   				//$('#resultFalse').append('Se ha producido un error al registrarse');
+   			}
+   		}
+   	});
+
+}
+
 </script>
 
 <div class="tab-pane fade" id="comentarios">
@@ -113,8 +156,59 @@ function registrarComentarios(){
 		</span>
 	</form>
 	</p>
+	
+	<div class="modal fade" id="myModalEC" tabindex="-1" role="dialog"
+		aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"
+						aria-hidden="true">&times;</button>
+					<h4 class="modal-title" id="myModalLabelEC">Editar Comentario</h4>
+				</div>
+				<div class="modal-body">
+					<form role="form" id="frmEditarComentario" method="post"
+						commandName="comentariobean" enctype="multipart/form-data"
+						style="width: 30%; margin-left: 10%;">
+
+						<fieldset>
+							<div class="form-group" style="display: none">
+								<label> Id Revision</label> <input class="form-control"
+									name="idRevision" id="txtIdCoRe" />
+							</div>
+
+							<div class="form-group" style="display: none">
+								<label> Id Comentario</label> <input class="form-control"
+									name="idComentario" id="txtIdCo" />
+							</div>
+
+							<div class="form-group">
+								<label>Comentario:</label>
+								<textarea id="txtComentario1" class="form-control"
+									name="comentario" placeholder="Comentario"></textarea>
+							</div>
+							
+							
+
+
+						</fieldset>
+					</form>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-primary" data-dismiss="modal"
+						onclick="editarComentario();">Guardar</button>
+					<button type="button" class="btn btn-default" data-dismiss="modal"
+						onclick="$('#txtIdCoRe').val('');$('#txtIdCo').val('');$('#txtComentario1').val('');">Cancelar</button>
+				</div>
+			</div>
+			<!-- /.modal-content -->
+		</div>
+		<!-- /.modal-dialog -->
+	</div>
+	
 	</br>
 	<div id="spnResultList_Coment" class="resultBox section summaryPane" style="overflow: auto;height: 500px"></div>
 	
 	</p>
 </div>
+
