@@ -16,7 +16,7 @@
 
     <!-- SB Admin CSS - Include with every page -->
     <link href="styles/sb-admin.css" rel="stylesheet">
-
+   
 </head>
 <style>
 label.error {
@@ -27,14 +27,18 @@ label.error {
 	font-weight:bold;
 }
 </style>
-<body>
-
+<body background="images/FondoScitemav.jpg">
+  <div class="panel panel-default">
+  <br/>
+                        <h3 style="text-align: center;"  class="panel-title"> <strong>SISTEMA DE CONTROL DE INSPECCIONES TECNICAS Y MANTENIMIENTOS DE VEHICULOS AUTOMOTORES</strong></h3>
+  <br/>
+  </div>
     <div class="container">
         <div class="row">
             <div class="col-md-4 col-md-offset-4">
                 <div class="login-panel panel panel-default">
                     <div class="panel-heading">
-                        <h3 class="panel-title">Please Sign In</h3>
+                        <h3 class="panel-title">Login</h3>
                     </div>
                     <div class="panel-body">
                         <form role="form" id="frmLogin" action="login" method="post" commandName="usuario">
@@ -49,7 +53,10 @@ label.error {
                                     <label>
                                         <input name="remember" type="checkbox" value="Remember Me">Recordarme
                                     </label>
-                                    <br><a href="toRegistro">Registrar</a>
+                                    <div style="text-align: center;">
+                                    <a href="toRegistro">Registrar</a>
+                                    </div>
+                                    <br>
                                 </div>
                                 <!-- Change this to a button or input when using this as a form -->
                                 <input class="btn btn-lg btn-success btn-block" type="submit" value="Login"/>

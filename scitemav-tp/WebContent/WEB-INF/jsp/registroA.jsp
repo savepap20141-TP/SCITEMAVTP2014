@@ -27,8 +27,12 @@ label.error {
 	font-weight: bold;
 }
 </style>
-<body>
-
+<body background="images/FondoScitemav.jpg">
+ <div class="panel panel-default">
+  <br/>
+                        <h3 style="text-align: center;"  class="panel-title"> <strong>SISTEMA DE CONTROL DE INSPECCIONES TECNICAS Y MANTENIMIENTOS DE VEHICULOS AUTOMOTORES</strong></h3>
+  <br/>
+  </div>
 	<div class="container">
 		<div class="row">
 			<div class="col-md-4 col-md-offset-4">
