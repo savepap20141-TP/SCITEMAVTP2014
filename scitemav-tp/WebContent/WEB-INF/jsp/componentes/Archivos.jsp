@@ -19,7 +19,7 @@ var countArchivo = 0;
 	 				filas = filas +'<tr class="">'+
 	 				'<td class="center">ARCH-'+arch.idArchivo+'</td>'+
 	 				'<td class="center" id="filaIdA_'+i+'" style="display:none;">'+arch.idArchivo+'</td>'+
-	 				'<td class="center">'+arch.descripcion+'</td>'+
+	 				'<td class="center" id="descripcionA_'+i+'">'+arch.descripcion+'</td>'+
 					'<td class="center">'+arch.creado+'</td>'+
 					'<td class="center">'+timeStampFormatted(arch.fechaCreacion)+'</td>';
 					var tipo = arch.fileType.split("/")[0];
@@ -32,7 +32,7 @@ var countArchivo = 0;
 					filas = filas + '<td class="center">'+arch.fileType+'</td>'+
 					'<td class="center">'+arch.size+'</td>'+
 					'<td class="center">'+
-						'<button Title="Editar" class="btn btn-success btn-circle" type="button" id="btnEditA_'+i+'" data-toggle="modal" data-target="#myModal" onclick="mostrarEditar('+i+')"><i class="fa fa-list"></i></button>'+
+						'<button Title="Editar" class="btn btn-success btn-circle" type="button" id="btnEditA_'+i+'" data-toggle="modal" data-target="#myModalEA" onclick="mostrarEditar('+i+')"><i class="fa fa-list"></i></button>'+
 						'<button Title="Eliminar" class="btn btn-danger btn-circle" type="button" id="btnDeleteA_'+i+'" data-toggle="modal" data-target="#myModalR" onclick="mostrarEliminarR('+i+','+arch.idArchivo+')"><i class="fa fa-times"></i></button>'+
 					'</td>'+
 					'</tr>';
@@ -79,6 +79,14 @@ var countArchivo = 0;
 	 			removeNulls();
 	  		}
 	 	});
+	}
+	
+	function mostrarEditar(ind){
+		$('#myModalLabel').empty();
+		$('#myModalLabel').append('Editar Archivo');
+		$('#txtIdAr').val($('#filaIdA_'+ind).text());
+		$('#txtDescripcion').val($('#descripcionA_'+ind).text());
+		
 	}
 	
 	function clickAgregarArchivos(){
@@ -134,6 +142,41 @@ var countArchivo = 0;
 		$('#divUpload').empty();
 	}
 	
+	function editarArchivo(){
+		
+		var formElement = document.getElementById("frmEditarArchivo");
+		var formData = new FormData(formElement);	
+		$.ajax({
+	   		url: 'editarArchivos',
+	   		type: 'post',
+	   		data:  formData,
+			mimeType:"multipart/form-data",
+			contentType: false,
+		    cache: false,
+			processData:false,
+			beforeSend: function(){
+				//$.blockUI({ message: $('#domMessage') });
+		    },
+	   		success: function(result){
+	   			$('#resultOkFa3').hide();
+				$('#resultFalse').hide();	
+				//alert(result);
+				var res  = ''+result;
+	   			if(res == 'true'){   				
+	   				//$('#resultOk').append('Se ha registrado correctamente');
+	   				$('#resultOkFa3').show();
+	   				$('#txtIdEmRe').val('');   
+	   				listarArchivos();
+	   				//inicioConsultaFalla();
+	   			}else{
+	   				$('#resultFalse').show();
+	   				//$('#resultFalse').append('Se ha producido un error al registrarse');
+	   			}
+	   		}
+	   	});
+
+	}
+	
 </script>
 <div class="tab-pane fade" id="archivos">
 	<h4>Archivos</h4>
@@ -169,6 +212,10 @@ var countArchivo = 0;
 		</tbody>
 
 	</table>
+	
+	
+	
+	
 	<div class="detailHeader"
 		style="background-color: #EBF0F2; padding-bottom: 2px; padding-left: 4px;height: 50px;">
 		<div id="divUpload"></div>
@@ -182,6 +229,56 @@ var countArchivo = 0;
 	</div>
 	</form>
 	</div>
+	
+	<div class="modal fade" id="myModalEA" tabindex="-1" role="dialog"
+		aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"
+						aria-hidden="true">&times;</button>
+					<h4 class="modal-title" id="myModalLabelER">Editar Archivo</h4>
+				</div>
+				<div class="modal-body">
+					<form role="form" id="frmEditarArchivo" method="post"
+						commandName="archivosbean" enctype="multipart/form-data"
+						style="width: 30%; margin-left: 10%;">
+
+						<fieldset>
+							<div class="form-group" style="display: none">
+								<label> Id Revision</label> <input class="form-control"
+									name="idRevision" id="txtIdArRe" />
+							</div>
+
+							<div class="form-group" style="display: none">
+								<label> Id Archivo</label> <input class="form-control"
+									name="idArchivo" id="txtIdAr" />
+							</div>
+
+							<div class="form-group">
+								<label>Descripción:</label>
+								<textarea id="txtDescripcion" class="form-control"
+									name="descripcion" placeholder="Descripción"></textarea>
+							</div>
+							
+							
+
+
+						</fieldset>
+					</form>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-primary" data-dismiss="modal"
+						onclick="editarArchivo();">Guardar</button>
+					<button type="button" class="btn btn-default" data-dismiss="modal"
+						onclick="$('#txtIdArRe').val('');$('#txtIdAr').val('');$('#t').val('');">Cancelar</button>
+				</div>
+			</div>
+			<!-- /.modal-content -->
+		</div>
+		<!-- /.modal-dialog -->
+	</div>
+	
 	<br>
 	<div class="alert alert-success alert-dismissable" id="resultCargaArch" style="display:none">
 		<button class="close" aria-hidden="true" data-dismiss="alert" type="button">×</button>
@@ -191,5 +288,7 @@ var countArchivo = 0;
 	<div id="spnResultList_Arch" class="resultBox section summaryPane" style="overflow: auto;height: 500px"></div>
 	
 	</p>
+	
+	
 
 </div>

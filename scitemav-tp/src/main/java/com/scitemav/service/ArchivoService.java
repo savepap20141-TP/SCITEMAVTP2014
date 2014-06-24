@@ -13,4 +13,6 @@ public interface ArchivoService {
 
 	boolean cargarFile(AttachmentBean fileBean, HttpServletRequest req);
 	public List<ArchivosBean> listarArchivos(HttpSession session, String tipoEntidad, String idEntidad);
+	public boolean editArchivo(ArchivosBean arb, HttpServletRequest req);
+
 }
