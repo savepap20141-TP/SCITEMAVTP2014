@@ -263,7 +263,8 @@ public class RevisionServiceImpl implements RevisionService {
 			rev.setEstado(estado);
 			em.merge(rev);
 			flag = true;
-
+			emailService.NotificarRevisionesUsuarioEstado(idRevision,rev.getRevVehiculo().getVehCliente().getCliPersona().getPerUsuario().getIdUsuario(),estado);
+			
 		} catch (IllegalArgumentException e) {
 			System.out.println(e.getMessage());
 			flag = false;

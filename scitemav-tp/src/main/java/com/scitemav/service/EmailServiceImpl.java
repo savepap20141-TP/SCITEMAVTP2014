@@ -1,5 +1,8 @@
 package com.scitemav.service;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.Properties;
 import java.util.Random;
 
@@ -175,6 +178,27 @@ public class EmailServiceImpl implements EmailService {
 					  "Su Vehiculo de Nro. Placa : "+rev.getRevVehiculo().getNumeroPlaca()+"<br />"+
 					  "La Fecha de su proxima revisión es : "+rev.getFechaProxima()+"<br />"+
 					  "El Kilometraje para esta revisión es : "+rev.getKilometrajeProximo()+"<br />";
+		
+		
+		EnviarMensaje(user.getEmail(), asunto, body);
+		return false;
+	}
+	
+	@Transactional
+	public boolean NotificarRevisionesUsuarioEstado(Integer idRevision, Integer idUsuario, String estado) {
+
+		Revision rev = em.find(Revision.class, idRevision);
+		Usuario user = em.find(Usuario.class, idUsuario);
+		String asunto = "Notificacion de SCITEMAV cambio de estado en la revision: REV-"+idRevision+ " a : "+estado.toUpperCase()+" "
+				+ user.getUsuPersona().getNombre();
+		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+		Date today = Calendar.getInstance().getTime();        
+		String DateNow = df.format(today);
+		String body = "Se le notifica que se su vehiculo esta siendo cambiado al estado: "+estado+" <br/>" +
+						"Sr. o Sra. : "+user.getUsuPersona().getNombre()+" "+user.getUsuPersona().getApellidoPaterno()+" "+user.getUsuPersona().getApellidoMaterno()+"<br />"+
+						"Su Nro. Documento : "+user.getUsuPersona().getDni()+"<br />"+
+						"Su Vehiculo de Nro. Placa : "+rev.getRevVehiculo().getNumeroPlaca()+"<br />"+
+						"La Fecha en la que se efectuo esta operacion es : "+DateNow+"<br />";
 		
 		
 		EnviarMensaje(user.getEmail(), asunto, body);

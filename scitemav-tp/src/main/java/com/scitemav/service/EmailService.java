@@ -12,5 +12,5 @@ public interface EmailService {
 	public boolean EnviarMensaje(String to, String cabecera, String cuerpo);
 	public boolean habilitarUsuario(Integer idUsuario);
 	public boolean NotificarRevisionesUsuario(Integer idRevision, Integer idUsuario);
-
+	public boolean NotificarRevisionesUsuarioEstado(Integer idRevision, Integer idUsuario, String estado);
 }
