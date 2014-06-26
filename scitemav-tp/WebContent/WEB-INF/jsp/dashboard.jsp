@@ -274,7 +274,7 @@ function revision1(){
                                     <span class="pull-right text-muted small" id="countRev_3">(0)</span>
                                 </a>
                                 <a href="toConsultarRevision-Deshaprobada"  class="list-group-item">
-                                    <i class="fa fa-tasks fa-fw"></i> Verificada por el Cliente - Deshaprobada
+                                    <i class="fa fa-tasks fa-fw"></i> Verificada por el Cliente - Desaprobada
                                     <span class="pull-right text-muted small" id="countRev_4">(0)</span>
                                 </a>
                                 <a href="toConsultarRevision-Aprobada"  class="list-group-item">

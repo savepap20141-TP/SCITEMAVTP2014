@@ -13,6 +13,7 @@
 var arregloAsignadosEmp = [];
 var arregloAsignadosFalla = [];
 var arregloAsignadosRep = [];
+var estadoView = '';
 $(function() {
 	$('#frmEdicionRevision').validate({
 		rules:{
@@ -232,8 +233,39 @@ $(function() {
 		
 		$('#estadoRealspn').text(revision.estado);		
 	
-		$('#btnCambioEstado').html("<button type='button' onclick='cambiarEstado("+revision.idRevision+")'>Cambiar estado</button>");
 		
+		if(revision.estado=='Creada'){
+			estadoView = 'Inspeccionada';
+			$('#btnCambioEstado').empty();
+			$('#btnCambioEstado').append('<button style="width: 20%;" class="btn btn-lg btn-success btn-block" type="button" onclick="cambiarEstado('+revision.idRevision+',0)">'+estadoView+'</button>');
+			
+		}else if(revision.estado=='Inspeccionada'){
+			estadoView = 'Supervisada';
+			$('#btnCambioEstado').empty();
+			$('#btnCambioEstado').append('<button style="width: 20%;" class="btn btn-lg btn-success btn-block" type="button" onclick="cambiarEstado('+revision.idRevision+',0)">'+estadoView+'</button>');
+			
+		}else if(revision.estado=='Supervisada'){
+			estadoView = '';
+			$('#btnCambioEstado').empty();
+			$('#btnCambioEstado').append('<button style="width: 20%;" class="btn btn-lg btn-success btn-block" type="button" onclick="cambiarEstado('+revision.idRevision+',1)">Aprobada</button>');
+			$('#btnCambioEstado').append('<button style="width: 20%;" class="btn btn-lg btn-success btn-block" type="button" onclick="cambiarEstado('+revision.idRevision+',2)">Desaprobada</button>');
+		}else if(revision.estado=='Aprobada'){
+			estadoView = 'Ejecutada';
+			$('#btnCambioEstado').empty();
+			$('#btnCambioEstado').append('<button style="width: 20%;" class="btn btn-lg btn-success btn-block" type="button" onclick="cambiarEstado('+revision.idRevision+',0)">'+estadoView+'</button>');
+			
+		}else if(revision.estado=='Ejecutada'){
+			estadoView = 'Terminada';
+			$('#btnCambioEstado').empty();
+			$('#btnCambioEstado').append('<button style="width: 20%;" class="btn btn-lg btn-success btn-block" type="button" onclick="cambiarEstado('+revision.idRevision+',0)">'+estadoView+'</button>');
+			
+		}else if(revision.estado=='Terminada'){
+			$('#btnCambioEstado').empty();
+			$('.btn-default').hide();
+		}else if(revision.estado=='Desaprobada'){
+			$('#btnCambioEstado').empty();
+			$('.btn-default').hide();
+		}
 		$('#spnidrevision').text(revision.idRevision);
 		$('#spnCostoTotal').text(revision.costoTotal);
 		$('#spnFechaInicio').text(revision.fechaInicio);
@@ -273,14 +305,26 @@ $(function() {
 
 	}	
 	
-	function cambiarEstado(idRevision, estado){
+	function cambiarEstado(idRevision,valor){
+		if(valor==1){
+			estadoView = 'Aprobada';
+		}if(valor==2){
+			estadoView = 'Desaprobada';
+		}
 	    $.ajax({
-	 		url: 'ajaxEditProximaRevisionEstado-'+idRevision,
+	 		url: 'ajaxEditRevisionEstado-'+idRevision+'-'+estadoView,
 	 		type: 'post',
 	 		dataType: 'json',
 	 		data: '',
-	 		success: function(){			
-	 			alert('Se ha cambiado el estado de la revisión');	
+	 		success: function(result){			
+	 			//alert('Se ha cambiado el estado de la revisión');	
+	 			if(result==true){
+	 				$('#estadoRealspn').text(estadoView);
+	 				var idrevision = $('#spnIdRevision').text();
+	 				inicioConsulta(idrevision);
+	 			}else{
+	 				console.log('Error al cambiar de estado');
+	 			}
 	 		}
 	    });
 	}
@@ -1219,8 +1263,8 @@ $(document).on('click','#btnAsignarEmpleados', function(e){
 						<div class="col-lg-6">
 							<h4>Datos de la revisión</h4>
 							<br>
-						<!-- <p class="text-primary">Costo Total:</p>
-							<span id="spnCostoTotal"></span>  -->
+							<p class="text-primary">Costo Total:</p>
+							<span id="spnCostoTotal"></span>
 							<p class="text-primary">Fecha Inicio:</p>
 							<span id="spnFechaInicio"></span>
 							<p class="text-primary">Fecha Fin:</p>
