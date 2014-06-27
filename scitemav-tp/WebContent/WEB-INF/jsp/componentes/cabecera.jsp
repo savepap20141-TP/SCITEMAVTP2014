@@ -101,7 +101,7 @@ function cargarFechaNac(idname){
 	 $.datepicker.setDefaults($.datepicker.regional['es']);
 }
 function cargarFechaRevis(idname){
-	$('#'+idname).datepicker({dateFormat: 'yy-mm-dd',changeMonth: true,changeYear: true, yearRange: '1950:2014'});
+	$('#'+idname).datepicker({dateFormat: 'yy-mm-dd',changeMonth: true,changeYear: true, yearRange: '1950:2014',minDate: 'dd'});
 	 $.datepicker.regional['es'] = {
 		 closeText: 'Cerrar',
 		 prevText: '<Ant',

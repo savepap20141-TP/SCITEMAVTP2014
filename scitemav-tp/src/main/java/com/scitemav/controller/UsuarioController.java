@@ -34,4 +34,17 @@ public class UsuarioController {
 		}
 		return enviados;
 	}
+	
+	@RequestMapping(value = "enviarInvitacionesClientes", method = RequestMethod.POST)
+	@ResponseBody
+	public List<String> toSentInvitatiosCliente(HttpServletRequest request, HttpSession session) {
+		session = request.getSession();
+		List<String> enviados = new ArrayList<String>();
+		String[] idUsuList = request.getParameter("idUsuarioList").toString().split("_");
+		String[] states = request.getParameter("isStateList").toString().split("_");
+		if(idUsuList[0].length() > 0){
+			enviados = usuarioService.administrarLoginCliente(idUsuList, states);
+		}
+		return enviados;
+	}
 }

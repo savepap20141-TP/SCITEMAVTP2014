@@ -22,7 +22,17 @@ $(document).ready(function(e){
 <script>
 $(document).ready(function(e){
 
-	
+	$.validator.addMethod("NumRegex", function(value, element) {
+		var primer = value.substring(0, 1);
+		if(primer!='9'){
+			return false;
+		}else{
+			return true;
+		}
+        //return this.optional(element) || /^[9][0-9]{9}$/i.test(value);
+		return false;
+    }, "Ingrese el primer digito con 9 ");
+  
 	$('#frmRegistroEmpleado').validate({
 		rules:{
 			dni:{
@@ -49,7 +59,7 @@ $(document).ready(function(e){
 			},
 			celular:{
 				required:true,
-				number:true,
+				NumRegex:true,
 				maxlength:9,
 				minlength:9
 				

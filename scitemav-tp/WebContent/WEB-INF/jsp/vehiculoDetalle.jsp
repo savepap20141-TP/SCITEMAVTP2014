@@ -92,7 +92,7 @@
 						<ul class="nav nav-tabs">
 							<li class="active"><a href="#vehiculo" data-toggle="tab">INFORMACION</a></li>
 							<li class=""><a href="#revisiones" data-toggle="tab">REVISIONES</a></li>
-							<li class=""><a href="#repuestos" data-toggle="tab">REPUESTOS</a></li>
+							<li class=""><a href="#repuestos" data-toggle="tab" style="display:none">REPUESTOS</a></li>
 							<li class=""><a href="#archivos" data-toggle="tab">ARCHIVOS</a></li>
 							<li class=""><a href="#comentarios" data-toggle="tab">COMENTARIOS</a></li>
 						</ul>

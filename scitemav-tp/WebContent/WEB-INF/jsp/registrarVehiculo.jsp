@@ -173,7 +173,7 @@ $(document).ready(function(e){
 			color:{
 				required:"Debe ingresar un color",
 				LetRegex:"Sólo letras en color",
-				minlength:"Tiene que tener 4 dígitos como minimo",
+				minlength:"Tiene que tener 4 caracteres como minimo",
 				maxlength:"Tiene que tener 25 dígitos como maximo",	
 			},
 			numeroPasajeros:{
@@ -413,26 +413,24 @@ function listarMarcas(){
                                         </div>			
                                         <div id="resultBusquedaCliente">
                                         </div>
+                                         <div class="form-group">
+                                            <label>Tipo de Vehiculo</label>
+                                            <select class="form-control" id="comboTipovehiculo" name="idTipoVehiculo">
+                                            <option value="">Seleccione el tipo</option>
+                                            </select>
+                                        </div>    
+                                         <div class="form-group">
+                                            <label>Modelo</label>
+                                            <select class="form-control" id="comboModelo" name="idModelo">
+                                                 <option value="">Seleccione el modelo</option>
+                                            </select>
+                                        </div> 
                                         <div class="form-group">
                                             <label>Marca</label>
                                             <select class="form-control" id="comboMarca" name="idMarca">
                                                  <option value="">Seleccione la marca</option>
                                             </select>
-                                        </div>         
-
-                                        <div class="form-group">
-                                            <label>Modelo</label>
-                                            <select class="form-control" id="comboModelo" name="idModelo">
-                                                 <option value="">Seleccione el modelo</option>
-                                            </select>
-                                        </div>           
-                                        
-                                        <div class="form-group">
-                                            <label>Tipo de Vehiculo</label>
-                                            <select class="form-control" id="comboTipovehiculo" name="idTipoVehiculo">
-                                            <option value="">Seleccione el tipo</option>
-                                            </select>
-                                        </div>                                                                                                                    																											
+                                        </div>                                                                                                                                                                                                                                          																											
 										
 										<div class="form-group">
 											<label>Año de fabricacion</label> 
@@ -453,12 +451,10 @@ function listarMarcas(){
 										</div>	
 										
 										<div class="form-group">
-											<label style="margin-top: 7px; margin-bottom: 10px;" for="numeroEjes">Número de ejes</label><br>
-											<label class="radio-inline"><input type="radio" name="numeroEjes" id="numEje1" value="1">1</label> 											
+											<label style="margin-top: 7px; margin-bottom: 10px;" for="numeroEjes">Número de ejes</label><br>														
 											<label class="radio-inline"><input type="radio" name="numeroEjes" id="numEje2" value="2">2</label>
 											<label class="radio-inline"><input type="radio" name="numeroEjes" id="numEje3" value="3">3</label>
 											<label class="radio-inline"><input type="radio" name="numeroEjes" id="numEje4" value="4">4</label>
-											<label class="radio-inline"><input type="radio" name="numeroEjes" id="numEje5" value="5">5</label>
 											 <br>
 											<label class="error" for="numeroEjes"></label>
 										</div>																																

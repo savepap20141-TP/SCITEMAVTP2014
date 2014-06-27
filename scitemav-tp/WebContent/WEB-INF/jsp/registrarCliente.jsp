@@ -22,20 +22,31 @@ $(document).ready(function(e){
 	cargarFechaNac(nfechaNac);
 	listarDistritos();
 	
+		$.validator.addMethod("NumRegex", function(value, element) {
+			var primer = value.substring(0, 1);
+			if(primer!='9'){
+				return false;
+			}else{
+				return true;
+			}
+	        //return this.optional(element) || /^[9][0-9]{9}$/i.test(value);
+			return false;
+	    }, "Ingrese el primer digito con 9 ");
+	  
 	$('#frmRegistroCliente').validate({
 		rules:{
 			telefono:{
-				required:true,
-				number:true,
+				required:true,			
 				maxlength:9,
-				minlength:7
-				
+				minlength:7,
+				number:true
 			},
 			celular:{
 				required:true,
-				number:true,
+				
 				maxlength:9,
-				minlength:9
+				minlength:9,
+				NumRegex:true
 				
 			},
 			dni:{

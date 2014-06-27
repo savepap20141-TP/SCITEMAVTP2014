@@ -140,4 +140,27 @@ public class UsuarioServiceImpl implements UsuarioService{
 		}
 		return enviados;
 	}
+	
+	@Transactional
+	public List<String> administrarLoginCliente(String[] ids, String[] state) {
+		List<String> enviados = new ArrayList<String>();
+		try {
+			for (int i = 0; i < ids.length; i++) {				
+				Usuario usu = em.find(Usuario.class, Integer.parseInt(ids[i]));
+				if(usu.getEstado().equals("creado")){										
+						//Enviar Email al usuario
+						if(!state[i].equals("deshabilitado")){
+							enviados.add( usu.getUsuPersona().getNombre()+" "+usu.getUsuPersona().getApellidoPaterno()+" "+usu.getUsuPersona().getApellidoMaterno());
+							//Agregar metodo que envia correos electronicos
+							emailservice.habilitarUsuario(usu.getIdUsuario());							
+						}
+				}
+				Usuario userx = em.merge(usu);
+				userx.setEstado(state[i]);				
+			}
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+		return enviados;
+	}
 }

@@ -106,7 +106,7 @@ $(document).on('click','#btnEnviarInv', function(e){
 		//alert(list_State);
 		//alert(list_IdUsu);
 		  $.ajax({
-			   url: 'enviarInvitaciones',
+			   url: 'enviarInvitacionesClientes',
 			   type: 'post',
 			   dataType: 'json',
 			   data: $('#frmAdministradorLogin').serialize(),

@@ -7,7 +7,7 @@
 	        return this.optional(element) || /^[0-9\-\s]+$/i.test(value);
 	    }, " ");
 		$.validator.addMethod("LetRegex", function(value, element) {
-	        return this.optional(element) || /^[A-Z]+$/.test(value);
+	        return this.optional(element) || /^[a-zA-Z]+$/i.test(value);
 	    }, "");
 		$.validator.addMethod("DecRegex", function(value, element) {
 	        return this.optional(element) || /^(\d+|\d+.\d{1,4})$/.test(value);
@@ -567,12 +567,10 @@
 								<label style="margin-top: 7px; margin-bottom: 10px;">Número
 									de ejes</label><br> <select class="form-control"
 									id="comboNumeroEjes" name="numeroEjes">
-									<option value="">Seleccione el Nro. de ejes</option>
-									<option value="1">1</option>
+									<option value="">Seleccione el Nro. de ejes</option>							
 									<option value="2">2</option>
 									<option value="3">3</option>
-									<option value="4">4</option>
-									<option value="5">5</option>
+									<option value="4">4</option>							
 								</select>
 							</div>
 

@@ -9,5 +9,6 @@ public interface ModeloService {
 	
 	boolean registro(ModeloBean modeloBean);
 	public List<ModeloBean> listarModelos();
+	/*public void buscarPorMarca(ModeloBean mod);*/
 
 }
